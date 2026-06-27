@@ -28,7 +28,7 @@ body{background:radial-gradient(circle at 20% 0%,#2a2730 0%,var(--bg) 55%);
   flex:1;display:flex;flex-direction:column;}
 header{padding-bottom:10px;}
 .title-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;}
-.title-th{font-family:'Sarabun',sans-serif;font-weight:600;font-size:22px;color:#fff;}
+.title-th{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:20px;color:#fff;}
 .title-sub{font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
 .mode-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:10px;}
 .mode-tabs::-webkit-scrollbar{display:none;}
@@ -145,7 +145,7 @@ footer{text-align:center;padding:6px 0 2px;}
 <div class="wrap">
   <header>
     <div class="title-row">
-      <div><div class="title-th">ป้ายไทย</div><div class="title-sub">TAKA's Thai pocket cards</div></div>
+      <div><div class="title-th">TAKA's Thai Pocket Cards</div></div>
     </div>
     <div class="mode-tabs">
       <div class="mode-tab" data-mode="vocab">単語</div>
@@ -200,7 +200,7 @@ const CONV = [{"id":"cv01","scene":"挨拶","th":"สวัสดี{PT}","ro":"
 
 const GRAM = [{"id":"gr01","title":"文末の丁寧語 ครับ / ค่ะ","explain":"男性は文末に khráp、女性は khâ を付けると丁寧になる。挨拶や依頼など、ほぼ全ての文に付けられる。","ex_th":"สวัสดี{PT}","ex_ro":"sàwàtdii {PR}","ex_jp":"こんにちは"},{"id":"gr02","title":"疑問文を作る ไหม","explain":"文末に mai を付けるとYes/No疑問文になる。形容詞・動詞どちらにも使える。","ex_th":"อร่อยไหม","ex_ro":"aròi mǎi","ex_jp":"おいしいですか"},{"id":"gr03","title":"否定形 ไม่","explain":"動詞や形容詞の前に mai を置くと否定になる。「〜ない」の意味。","ex_th":"ไม่แพง","ex_ro":"mâi phɛɛng","ex_jp":"高くない"},{"id":"gr04","title":"程度を表す มาก","explain":"形容詞の後ろに maak を置くと「とても」になる。タイ語の形容詞は名詞の後に置く。","ex_th":"อร่อยมาก","ex_ro":"aròi mâak","ex_jp":"とてもおいしい"},{"id":"gr05","title":"類別詞(助数詞)の基本","explain":"「数字 + 類別詞」の語順。คน・ตัว・ขวดなど物の種類によって使い分ける。","ex_th":"น้ำสองขวด","ex_ro":"nám sɔɔng khùat","ex_jp":"水2本"},{"id":"gr06","title":"完了・過去を表す แล้ว","explain":"動詞や文末に laeo を置くと「もう〜した」の完了の意味になる。","ex_th":"กินแล้ว","ex_ro":"kin lɛɛo","ex_jp":"もう食べた"},{"id":"gr07","title":"〜したい อยาก + 動詞","explain":"「อยาก + 動詞」で希望・欲求を表す。英語の want to に相当。","ex_th":"อยากกินข้าว","ex_ro":"yàak kin khâao","ex_jp":"ご飯が食べたい"},{"id":"gr08","title":"〜できる 動詞 + ได้","explain":"動詞の後ろに dai を置くと能力・許可を表す。","ex_th":"พูดภาษาไทยได้","ex_ro":"phuut phaasǎa thai dâai","ex_jp":"タイ語が話せる"}];
 
-const NUMS = [{"th_num":"๐","arabic":"0","ro":"sǔun","th_word":"ศูนย์"},{"th_num":"๑","arabic":"1","ro":"nɯɯng","th_word":"หนึ่ง"},{"th_num":"๒","arabic":"2","ro":"sɔɔng","th_word":"สอง"},{"th_num":"๓","arabic":"3","ro":"sǎam","th_word":"สาม"},{"th_num":"๔","arabic":"4","ro":"sìi","th_word":"สี่"},{"th_num":"๕","arabic":"5","ro":"hâa","th_word":"ห้า"},{"th_num":"๖","arabic":"6","ro":"hòk","th_word":"หก"},{"th_num":"๗","arabic":"7","ro":"cèt","th_word":"เจ็ด"},{"th_num":"๘","arabic":"8","ro":"pɛɛt","th_word":"แปด"},{"th_num":"๙","arabic":"9","ro":"kâao","th_word":"เก้า"},{"th_num":"๑๐","arabic":"10","ro":"sìp","th_word":"สิบ"},{"th_num":"๒๐","arabic":"20","ro":"yîi sìp","th_word":"ยี่สิบ"},{"th_num":"๑๐๐","arabic":"100","ro":"rɔɔi","th_word":"ร้อย"},{"th_num":"๑,๐๐๐","arabic":"1000","ro":"phan","th_word":"พัน"}];
+const NUMS = [{"th_num":"๐","arabic":"0","ro":"sǔun","th_word":"ศูนย์"},{"th_num":"๑","arabic":"1","ro":"nɯɯng","th_word":"หนึ่ง"},{"th_num":"๒","arabic":"2","ro":"sɔɔng","th_word":"สอง"},{"th_num":"๓","arabic":"3","ro":"sǎam","th_word":"สาม"},{"th_num":"๔","arabic":"4","ro":"sìi","th_word":"สี่"},{"th_num":"๕","arabic":"5","ro":"hâa","th_word":"ห้า"},{"th_num":"๖","arabic":"6","ro":"hòk","th_word":"หก"},{"th_num":"๗","arabic":"7","ro":"cèt","th_word":"เจ็ด"},{"th_num":"๘","arabic":"8","ro":"pɛɛt","th_word":"แปด"},{"th_num":"๙","arabic":"9","ro":"kâao","th_word":"เก้า"},{"th_num":"๑๐","arabic":"10","ro":"sìp","th_word":"สิบ"},{"th_num":"๒๐","arabic":"20","ro":"yîi sìp","th_word":"ยี่สิบ"},{"th_num":"๑๐๐","arabic":"100","ro":"rɔɔi","th_word":"ร้อย"},{"th_num":"๑,๐๐๐","arabic":"1000","ro":"phan","th_word":"พัน"},{"th_num":"๑๐,๐๐๐","arabic":"10000","ro":"mɯ̀ɯn","th_word":"หมื่น"},{"th_num":"๑๐๐,๐๐๐","arabic":"100000","ro":"sɛ̌ɛn","th_word":"แสน"}];
 
 const POS_LABELS = {noun:'名詞',verb:'動詞',adj:'形容詞',adv:'副詞',classifier:'類別詞',question:'疑問詞',greeting:'挨拶'};
 const SCENES = ["すべて","挨拶","レストラン","市場","交通","ホテル","病院","道案内","日常会話","電話・SNS","緊急","観光","銀行"];
@@ -208,15 +208,13 @@ const PT = {male:{th:'ครับ',ro:'khrap'},female:{th:'ค่ะ',ro:'kha'}
 
 let st = {
   mode:'vocab',pos:'noun',scene:'すべて',dir:'th-jp',
-  level:'beginner',gender:'male',filterUn:false,filterUnEx:false,
+  level:'beginner',gender:'male',filterUn:false,
+  shuffle:false,shuffled:{},
   idx:0,flipped:false,fontTab:'compare',
   learned:{noun:new Set(),verb:new Set(),adj:new Set(),adv:new Set(),
     classifier:new Set(),question:new Set(),greeting:new Set(),
     conversation:new Set(),grammar:new Set(),thaienglish:new Set()}
 };
-// 例文確認済みセット（LocalStorageで永続化）
-const exChecked = new Set();
-function saveExChecked(){ sto_set('s:exChecked',[...exChecked]); }
 
 const fTH = s => s ? s.replace(/\{PT}/g, PT[st.gender].th) : s;
 const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro) : s;
@@ -229,7 +227,6 @@ async function loadAll(){
   for(const k of Object.keys(st.learned)){
     const d=await sto_get('l:'+k); if(d) st.learned[k]=new Set(d);
   }
-  const ex=await sto_get('s:exChecked'); if(ex) ex.forEach(id=>exChecked.add(id));
 }
 
 // ── 例文データ（ルールベース静的生成） ────────────────────────────
@@ -1160,6 +1157,248 @@ const FIXED_EX = {
   'n580': {th:'ราคาพิเศษสำหรับสมาชิกเท่านั้นครับ',ro:'raakhaa phísèet sǎmràp sàmáachik thâo nán khráp',jp:'特別価格は会員のみです'},
   'n615': {th:'สนามกีฬาแห่งชาติจุคนได้เยอะมากครับ',ro:'sànǎam kiilaa hɛ̀ng châat cu khon dâai yɯ́ mâak khráp',jp:'国立競技場はとても多くの人を収容できます'},
   'n618': {th:'การแข่งขันฟุตบอลคืนนี้มันส์มากครับ',ro:'kaan khɛ̀ɛng khan fúttabɔɔn khɯɯn níi man mâak khráp',jp:'今夜のサッカーの試合はとても盛り上がっています'},
+  'v101': {th:'อยู่บ้านดีกว่าออกไปฝนตกครับ',ro:'yùu bâan dii kwàa ɔ̀ɔk pai fǒn tòk khráp',jp:'雨が降っているので家にいる方が良いです'},
+  'v102': {th:'ได้ยินเสียงนกร้องตอนเช้าครับ',ro:'dâai yin sǐang nók rɔ́ɔng tɔɔn cháo khráp',jp:'朝に鳥の鳴き声が聞こえます'},
+  'v103': {th:'ตกใจมากตอนได้ยินข่าวนั้นครับ',ro:'tòk cai mâak tɔɔn dâai yin khàao nán khráp',jp:'そのニュースを聞いてとても驚きました'},
+  'v104': {th:'ต้องการความช่วยเหลือไหมครับ',ro:'tɔ̂ɔng kaan khwaam chûai lɯ̌a mǎi khráp',jp:'何か助けが必要ですか'},
+  'v105': {th:'ยินดีต้อนรับสู่ประเทศไทยครับ',ro:'yin dii tɔ̂ɔn ráp sùu pràthêet thai khráp',jp:'タイへようこそ'},
+  'v106': {th:'ตั้งใจเรียนภาษาไทยทุกวันครับ',ro:'tâng cai riian phaasǎa thai thúk wan khráp',jp:'毎日一生懸命タイ語を勉強しています'},
+  'v107': {th:'ตัดผมเดือนละครั้งที่ร้านประจำครับ',ro:'tàt phǒm dɯan lá khráng thîi ráan pràcam khráp',jp:'いつもの店で月1回散髪します'},
+  'v108': {th:'ตื่นแต่เช้าแล้วออกกำลังกายครับ',ro:'tɯ̂ɯn tɛ̀ɛ cháo lɛ́ɛo ɔ̀ɔk kamlang kaai khráp',jp:'早起きして運動します'},
+  'v109': {th:'ตื่นเต้นมากก่อนขึ้นเครื่องบินครับ',ro:'tɯ̀ɯn tên mâak kɔ̀ɔn khɯ̂n khrɯ̂ɯang bin khráp',jp:'飛行機に乗る前にとても興奮しました'},
+  'v110': {th:'เตรียมของใส่กระเป๋าก่อนเดินทางครับ',ro:'triiam khɔ̌ɔng sài kràpǎo kɔ̀ɔn dɯɯn thaang khráp',jp:'旅行前にバッグに荷物を準備します'},
+  'v111': {th:'แต่งห้องด้วยดอกไม้สวยๆ ครับ',ro:'tɛ̀ɛng hɔ̂ɔng dûai dɔ̀ɔk máai sǔai sǔai khráp',jp:'きれいな花で部屋を飾ります'},
+  'v112': {th:'ทาครีมกันแดดทุกวันครับ',ro:'thaa khriim kan dɛɛt thúk wan khráp',jp:'毎日日焼け止めを塗ります'},
+  'v113': {th:'ทานข้าวกลางวันด้วยกันไหมครับ',ro:'thaan khâao klaang wan dûai kan mǎi khráp',jp:'一緒にランチを食べませんか'},
+  'v114': {th:'ทำบุญที่วัดทุกวันพระครับ',ro:'tham bun thîi wát thúk wan phrá khráp',jp:'仏の日に寺でお布施をします'},
+  'v115': {th:'ประชุมทุกเช้าวันจันทร์ครับ',ro:'pràchum thúk cháo wan can khráp',jp:'毎週月曜日の朝にミーティングがあります'},
+  'v116': {th:'แปรงฟันหลังกินข้าวทุกมื้อครับ',ro:'prɛɛng fan lǎng kin khâao thúk mɯ́ɯ khráp',jp:'毎食後に歯を磨きます'},
+  'v117': {th:'แปลภาษาไทยเป็นภาษาญี่ปุ่นครับ',ro:'plɛɛ phaasǎa thai pen phaasǎa yîipùn khráp',jp:'タイ語を日本語に訳します'},
+  'v118': {th:'ผัดผักกับกระเทียมครับ',ro:'phàt phàk kàp kràthiam khráp',jp:'野菜とにんにくを炒めます'},
+  'v119': {th:'เพิ่มเงินเดือนปีนี้ครับ',ro:'phɯ̂ɯm ngɯn dɯan pii níi khráp',jp:'今年給料が上がりました'},
+  'v120': {th:'มองท้องฟ้าแล้วรู้สึกสบายใจครับ',ro:'mɔɔng thɔ́ɔng fáa lɛ́ɛo rúu sɯ̀k sàbaai cai khráp',jp:'空を見上げると気持ちが楽になります'},
+  'v121': {th:'มาถึงสนามบินก่อนเวลาครับ',ro:'maa thɯ̌ɯng sànǎam bin kɔ̀ɔn weelaa khráp',jp:'予定より早く空港に到着しました'},
+  'v122': {th:'ยินดีต้อนรับทุกท่านครับ',ro:'yin dii tɔ̂ɔn ráp thúk thân khráp',jp:'皆様、ようこそいらっしゃいました'},
+  'v123': {th:'เยี่ยมเพื่อนที่โรงพยาบาลครับ',ro:'yîam phɯ̂ɯan thîi roong phayaabaan khráp',jp:'病院に友達のお見舞いに行きます'},
+  'v124': {th:'ขอโทษที่รบกวนครับ',ro:'khɔ̌ɔ thôot thîi róp kuan khráp',jp:'お邪魔してすみません'},
+  'v125': {th:'นกร้องเสียงดังตอนเช้าครับ',ro:'nók rɔ́ɔng sǐang dang tɔɔn cháo khráp',jp:'朝、鳥が大きな声で鳴きます'},
+  'v126': {th:'ร้องไห้ตอนดูหนังเศร้าครับ',ro:'rɔ́ɔng hâi tɔɔn duu nǎng sâo khráp',jp:'悲しい映画を見て泣きます'},
+  'v127': {th:'รักครอบครัวมากที่สุดครับ',ro:'rák krɔ̂ɔp khrua mâak thîi sùt khráp',jp:'家族が一番大好きです'},
+  'v128': {th:'เรียนจบปีนี้แล้วจะทำงานครับ',ro:'riian còp pii níi lɛ́ɛo cà tham ngaan khráp',jp:'今年卒業したら働きます'},
+  'v129': {th:'ลาออกจากบริษัทเดือนหน้าครับ',ro:'laa ɔ̀ɔk càak bɔɔrisàt dɯan nâa khráp',jp:'来月会社を辞めます'},
+  'v130': {th:'เว้นวรรคระหว่างประโยคด้วยครับ',ro:'wên wák ráwàang pràyôok dûai khráp',jp:'文の間に空白を入れてください'},
+  'v131': {th:'แวะซื้อกาแฟระหว่างทางครับ',ro:'wɛ̀ sɯ̂ɯ kaafɛɛ ráwàang thaang khráp',jp:'途中でコーヒーを買い寄りました'},
+  'v132': {th:'สงสัยว่าทำไมมาสายครับ',ro:'sǒng sǎi wâa thammai maa sǎai khráp',jp:'なぜ遅刻したのか不思議です'},
+  'v133': {th:'แสดงบัตรประชาชนด้วยครับ',ro:'sàdɛɛng bàt pràchachon dûai khráp',jp:'身分証明書を提示してください'},
+  'v134': {th:'หวังว่าจะได้เจอกันอีกครับ',ro:'wǎng wâa cà dâai cɯɯ kan ìik khráp',jp:'またお会いできることを願っています'},
+  'v135': {th:'ห้ามถ่ายรูปในพิพิธภัณฑ์ครับ',ro:'hâam thàai rûup nai phíphíttháphan khráp',jp:'博物館内での撮影は禁止です'},
+  'v136': {th:'อย่าลืมเอาหนังสือเดินทางด้วยครับ',ro:'yàa lɯɯm ao nǎng sɯ̌ɯ dɯɯn thaang dûai khráp',jp:'パスポートを忘れないでください'},
+  'v137': {th:'ออกไปข้างนอกสักครู่ครับ',ro:'ɔ̀ɔk pai khâang nɔ̂ɔk sák khrûu khráp',jp:'少し外に出ます'},
+  'v138': {th:'ใส่เสื้อกันหนาวเพราะอากาศเย็นครับ',ro:'sài sɯ̂ɯa kan nǎao phrɔ́ aakàat yen khráp',jp:'寒いのでジャケットを着ます'},
+  'v139': {th:'จัดกระเป๋าเดินทางเรียบร้อยแล้วครับ',ro:'càt kràpǎo dɯɯn thaang rîap rɔ́ɔi lɛ́ɛo khráp',jp:'旅行バッグの荷造りが終わりました'},
+  'v140': {th:'จัดงานเลี้ยงวันเกิดให้เพื่อนครับ',ro:'càt ngaan líang wan kɯɯt hâi phɯ̂ɯan khráp',jp:'友達のために誕生日パーティーを開きます'},
+  'v141': {th:'โทรศัพท์เสียซ่อมไม่ได้ครับ',ro:'thoorasàp sǐa sɔ̂ɔm mâi dâai khráp',jp:'スマホが壊れて修理できません'},
+  'v142': {th:'อาหารไหม้เพราะลืมดูไฟครับ',ro:'aahǎan mâi phrɔ́ lɯɯm duu fai khráp',jp:'火を見ていなくて料理が焦げました'},
+  'v143': {th:'กระโดดขึ้นรถเมล์ก่อนปิดประตูครับ',ro:'kràdòot khɯ̂n rót mee kɔ̀ɔn pìt pràtuu khráp',jp:'ドアが閉まる前にバスに飛び乗りました'},
+  'v144': {th:'กลัวงูมากเลยครับ',ro:'klua nguu mâak lɯɯi khráp',jp:'蛇がとても怖いです'},
+  'v145': {th:'อย่ากวนกันตอนทำงานครับ',ro:'yàa kuan kan tɔɔn tham ngaan khráp',jp:'仕事中に邪魔しないでください'},
+  'v146': {th:'หมากัดขาตอนวิ่งผ่านครับ',ro:'mǎa kàt khǎa tɔɔn wîng phàan khráp',jp:'走って通ったら犬に足を噛まれました'},
+  'v147': {th:'กินยาหลังอาหารเช้าครับ',ro:'kin yaa lǎng aahǎan cháo khráp',jp:'朝食後に薬を飲みます'},
+  'v148': {th:'เก็บของในบ้านให้เป็นระเบียบครับ',ro:'kèp khɔ̌ɔng nai bâan hâi pen rábiap khráp',jp:'家の中を整理整頓します'},
+  'v149': {th:'เก็บเงินซื้อรถมาหลายปีแล้วครับ',ro:'kèp ngɯn sɯ̂ɯ rót maa lǎai pii lɛ́ɛo khráp',jp:'何年も車を買うためにお金を貯めています'},
+  'v150': {th:'เรื่องนี้เกี่ยวกับอะไรครับ',ro:'rɯ̂ɯang níi kìao kàp àrai khráp',jp:'これはどんな内容に関係していますか'},
+  'v151': {th:'แก้โจทย์คณิตศาสตร์ได้แล้วครับ',ro:'kɛ̂ɛ còot khanít sàat dâai lɛ́ɛo khráp',jp:'数学の問題が解けました'},
+  'v152': {th:'โกรธเมื่อถูกโกหกครับ',ro:'krôot mɯ̂a thùuk koolòk khráp',jp:'嘘をつかれると怒ります'},
+  'v153': {th:'ข้ามถนนที่ทางม้าลายครับ',ro:'khâam thànǒn thîi thaang máa laai khráp',jp:'横断歩道で道路を渡ります'},
+  'v154': {th:'ขายของออนไลน์ได้กำไรดีครับ',ro:'khǎai khɔ̌ɔng oon lai dâai kamrai dii khráp',jp:'オンライン販売で良い利益が出ています'},
+  'v155': {th:'สินค้าตัวนี้ขายดีมากครับ',ro:'sǐn kháa tua níi khǎai dii mâak khráp',jp:'この商品はとても売れています'},
+  'v156': {th:'ราคาสูงขึ้นไปทุกปีครับ',ro:'raakhaa sǔung khɯ̂n pai thúk pii khráp',jp:'毎年値段が上がっています'},
+  'v157': {th:'ครูคนนี้เข้มงวดมากครับ',ro:'khruu khon níi khêmnguat mâak khráp',jp:'この先生はとても厳しいです'},
+  'v158': {th:'เข้าใจผิดเรื่องเวลานัดครับ',ro:'khâo cai phìt rɯ̂ɯang weelaa nát khráp',jp:'待ち合わせの時間を誤解していました'},
+  'v159': {th:'เข้านอนก่อนสี่ทุ่มทุกคืนครับ',ro:'khâo nɔɔn kɔ̀ɔn sìi thûm thúk khɯɯn khráp',jp:'毎晩22時前に就寝します'},
+  'v160': {th:'เชิญเข้ามาได้เลยครับ',ro:'chɯɯn khâo maa dâai lɯɯi khráp',jp:'どうぞ中にお入りください'},
+  'v161': {th:'แข่งวิ่งกับเพื่อนทุกเช้าครับ',ro:'khɛ̀ɛng wîng kàp phɯ̂ɯan thúk cháo khráp',jp:'毎朝友達とランニングを競います'},
+  'v162': {th:'ค้นหาข้อมูลผ่านอินเตอร์เน็ตครับ',ro:'khón hǎa khɔ̂o muun phàan in tɤɤ nèt khráp',jp:'インターネットで情報を検索します'},
+  'v163': {th:'คิดเงินให้ถูกต้องด้วยครับ',ro:'khít ngɯn hâi thùuk tɔ̂ɔng dûai khráp',jp:'正確に計算してください'},
+  'v164': {th:'ค้าขายที่ตลาดนัดทุกสุดสัปดาห์ครับ',ro:'kháa khǎai thîi tàlàat nát thúk sùt sàpdaa khráp',jp:'毎週末ナイトマーケットで売買します'},
+  'v165': {th:'จดที่อยู่ลงในสมุดครับ',ro:'còt thîi yùu long nai sàmùt khráp',jp:'住所をノートに書き留めます'},
+  'v166': {th:'ตำรวจจับกุมผู้ร้ายได้แล้วครับ',ro:'tamrùat càp kum phûu ráai dâai lɛ́ɛo khráp',jp:'警察が犯人を逮捕しました'},
+  'v167': {th:'จำเป็นต้องมีวีซ่าครับ',ro:'cam pen tɔ̂ɔng mii wiisâa khráp',jp:'ビザが必要です'},
+  'v168': {th:'จองที่นั่งล่วงหน้าสามวันครับ',ro:'cɔɔng thîi nâng lûang nâa sǎam wan khráp',jp:'3日前に席を予約します'},
+  'v169': {th:'แจกใบปลิวที่หน้าร้านครับ',ro:'cɛ̀ɛk bai pliu thîi nâa ráan khráp',jp:'店の前でチラシを配ります'},
+  'v170': {th:'กระดาษฉีกออกเป็นสองส่วนครับ',ro:'kràdàat chîik ɔ̀ɔk pen sɔɔng sùan khráp',jp:'紙を2つに裂きます'},
+  'v171': {th:'ฉีดน้ำให้ต้นไม้ทุกเช้าครับ',ro:'chìit nám hâi tôn máai thúk cháo khráp',jp:'毎朝植物に水をかけます'},
+  'v172': {th:'หมอฉีดยาให้เพื่อป้องกันไข้หวัดครับ',ro:'mɔ̌ɔ chìit yaa hâi phɯ̂a pɔ̂ɔng kan khâi wàt khráp',jp:'インフルエンザ予防のために注射を打ちます'},
+  'v173': {th:'ชนะการแข่งขันวิ่งมาราธอนครับ',ro:'chánā kaan khɛ̀ɛng khan wîng maaraa thɔɔn khráp',jp:'マラソン大会で優勝しました'},
+  'v174': {th:'ชมวิวทะเลที่ระยองครับ',ro:'chom wiw thálee thîi ráyɔɔng khráp',jp:'ラヨーンで海の景色を鑑賞します'},
+  'v175': {th:'ชวนเพื่อนไปดูหนังด้วยกันครับ',ro:'chuan phɯ̂ɯan pai duu nǎng dûai kan khráp',jp:'友達を映画に誘います'},
+  'v176': {th:'ชิมอาหารก่อนปรุงรสเพิ่มครับ',ro:'chim aahǎan kɔ̀ɔn prung rót phɯ̂ɯm khráp',jp:'調味料を足す前に味見します'},
+  'v177': {th:'ชี้ทางให้นักท่องเที่ยวครับ',ro:'chíi thaang hâi nák thɔ̂ɔng thîao khráp',jp:'観光客に道を指して教えます'},
+  'v178': {th:'เชื่อในตัวเองและพยายามต่อไปครับ',ro:'chɯ̂a nai tua eeng lɛ́ɛo phayaaiam tɔ̀ɔ pai khráp',jp:'自分を信じてこれからも頑張ります'},
+  'v179': {th:'แบตเตอรี่ใช้ได้อีกนานครับ',ro:'bɛ̀t tɤɤ rîi châi dâai ìik naan khráp',jp:'バッテリーはまだ長く使えます'},
+  'v180': {th:'ใช้เวลาสองชั่วโมงไปสนามบินครับ',ro:'châi weelaa sɔɔng chûa moong pai sànǎam bin khráp',jp:'空港まで2時間かかります'},
+  'v181': {th:'ซ่อนของขวัญไว้ในตู้เสื้อผ้าครับ',ro:'sɔ̂ɔn khɔ̌ɔng khwǎn wâi nai tûu sɯ̂ɯa phâa khráp',jp:'クローゼットにプレゼントを隠しました'},
+  'v182': {th:'ซ้อมร้องเพลงก่อนการแสดงครับ',ro:'sɔ́ɔm rɔ̂ɔng phleeng kɔ̀ɔn kaan sàdɛɛng khráp',jp:'本番前に歌の練習をします'},
+  'v183': {th:'ดัดผมแล้วดูดีขึ้นมากครับ',ro:'dàt phǒm lɛ́ɛo duu dii khɯ̂n mâak khráp',jp:'髪をカールしてとても見栄えが良くなりました'},
+  'v184': {th:'ดูดน้ำผ่านหลอดดูดครับ',ro:'dùut nám phàan lɔ̀ɔt dùut khráp',jp:'ストローで飲み物を吸います'},
+  'v185': {th:'เดินเล่นในสวนสาธารณะตอนเย็นครับ',ro:'dɯɯn lên nai sǔan sǎathaaran tɔɔn yen khráp',jp:'夕方に公園で散歩します'},
+  'v186': {th:'โดดลงน้ำจากโขดหินครับ',ro:'dòot long nám càak khòot hǐn khráp',jp:'岩から水に飛び込みます'},
+  'v187': {th:'ตกปลาที่แม่น้ำทุกเสาร์ครับ',ro:'tòk plaa thîi mɛ̂ɛ nám thúk sǎo khráp',jp:'毎週土曜日に川で釣りをします'},
+  'v188': {th:'ตรวจสุขภาพทุกปีครับ',ro:'trùat sùkkaphâap thúk pii khráp',jp:'毎年健康診断を受けます'},
+  'v189': {th:'ตอนที่เด็กชอบเล่นฟุตบอลครับ',ro:'tɔɔn thîi dèk chɔ̂ɔp lên fúttabɔɔn khráp',jp:'子供の頃はサッカーをするのが好きでした'},
+  'v190': {th:'ดอกไม้ในแจกันตายแล้วครับ',ro:'dɔ̀ɔk máai nai cɛɛkaan taai lɛ́ɛo khráp',jp:'花瓶の花が枯れました'},
+  'v191': {th:'ปลาในตู้ตายเพราะน้ำสกปรกครับ',ro:'plaa nai tûu taai phrɔ́ nám sòkkapròk khráp',jp:'水槽の魚が水が汚れて死にました'},
+  'v192': {th:'ตำพริกแกงเองที่บ้านครับ',ro:'tam phrík kɛɛng eeng thîi bâan khráp',jp:'家でカレーペーストを自分で挽きます'},
+  'v193': {th:'ติดต่อลูกค้าทางอีเมลทุกวันครับ',ro:'tìt tɔ̀ɔ lûuk kháa thaang iimee thúk wan khráp',jp:'毎日メールでお客さんに連絡します'},
+  'v194': {th:'ตีกลองในวงดนตรีครับ',ro:'tii klong nai wong don trii khráp',jp:'バンドでドラムを叩きます'},
+  'v195': {th:'ตื่นสายเพราะลืมตั้งนาฬิกาปลุกครับ',ro:'tɯ̀ɯn sǎai phrɔ́ lɯɯm tâng naalikaa plùk khráp',jp:'目覚まし時計をセットするのを忘れて寝坊しました'},
+  'v196': {th:'เต้นแอโรบิคทุกเช้ากับเพื่อนบ้านครับ',ro:'tên ɛɛrooobík thúk cháo kàp phɯ̂ɯan bâan khráp',jp:'毎朝近所の人とエアロビクスを踊ります'},
+  'v197': {th:'เต้นรำในงานเลี้ยงบริษัทครับ',ro:'tên ram nai ngaan líang bɔɔrisàt khráp',jp:'会社の宴会でダンスをしました'},
+  'v198': {th:'เตรียมตัวสัมภาษณ์งานมาหลายวันครับ',ro:'triiam tua sǎmphàat ngaan maa lǎai wan khráp',jp:'何日も就職面接の準備をしてきました'},
+  'v199': {th:'เติมน้ำมันรถก่อนออกเดินทางครับ',ro:'tɯɯm nám man rót kɔ̀ɔn ɔ̀ɔk dɯɯn thaang khráp',jp:'出発前に車にガソリンを入れます'},
+  'v200': {th:'เตือนเพื่อนว่าอย่าลืมนัดครับ',ro:'tɯan phɯ̂ɯan wâa yàa lɯɯm nát khráp',jp:'友達に約束を忘れないよう注意します'},
+  'v201': {th:'แก้วแตกตอนล้างจานครับ',ro:'kɛ̂ɛo tɛ̀ɛk tɔɔn láang caan khráp',jp:'皿洗いのときにグラスが割れました'},
+  'v202': {th:'แต่งตัวสวยไปงานแต่งงานครับ',ro:'tɛ̀ɛng tua sǔai pai ngaan tɛ̀ɛng ngaan khráp',jp:'結婚式におしゃれをして行きます'},
+  'v203': {th:'เด็กโตเร็วมากในช่วงขวบปีแรกครับ',ro:'dèk too reo mâak nai chûang khùap pii rɛ̀ɛk khráp',jp:'子供は最初の1年でとても早く成長します'},
+  'v204': {th:'ถอดรองเท้าก่อนเข้าบ้านครับ',ro:'thɔ̀ɔt rɔɔng tháo kɔ̀ɔn khâo bâan khráp',jp:'家に入る前に靴を脱ぎます'},
+  'v205': {th:'ถือกระเป๋าแล้วเดินเข้าไปครับ',ro:'thɯɯ kràpǎo lɛ́ɛo dɯɯn khâo pai khráp',jp:'バッグを持って中に歩いて入ります'},
+  'v206': {th:'ทนรอรถเมล์นานครึ่งชั่วโมงครับ',ro:'thon rɔɔ rót mee naan khrɯ̂ng chûa moong khráp',jp:'30分もバスを我慢して待ちました'},
+  'v207': {th:'ทบทวนบทเรียนก่อนสอบทุกครั้งครับ',ro:'thóp tuan bòt riian kɔ̀ɔn sɔ̀ɔp thúk khráng khráp',jp:'毎回試験前に授業の復習をします'},
+  'v208': {th:'กินผักผลไม้มากๆ แก้ท้องผูกครับ',ro:'kin phàk phǒn lámaai mâak mâak kɛ̂ɛ thɔ́ɔng phûuk khráp',jp:'野菜や果物をたくさん食べると便秘が改善します'},
+  'v209': {th:'ร้านค้าทอนเงินไม่ครบครับ',ro:'ráan kháa thɔɔn ngɯn mâi khróp khráp',jp:'お店のお釣りが足りませんでした'},
+  'v210': {th:'ทุกคนในออฟฟิศทำงานหนักทั้งนั้นครับ',ro:'thúk khon nai ɔ̀ɔffít tham ngaan nàk tháng nán khráp',jp:'オフィスの全員が一生懸命働いています'},
+  'v211': {th:'ทานข้าวที่ร้านอาหารไทยกับเพื่อนครับ',ro:'thaan khâao thîi ráan aahǎan thai kàp phɯ̂ɯan khráp',jp:'友達とタイ料理店で食事をします'},
+  'v212': {th:'เสียงดังทำให้นอนไม่หลับครับ',ro:'sǐang dang tham hâi nɔɔn mâi làp khráp',jp:'騒音で眠れませんでした'},
+  'v213': {th:'ล้างมือทุกครั้งก่อนกินข้าวครับ',ro:'láang mɯɯ thúk khráng kɔ̀ɔn kin khâao khráp',jp:'食事の前には毎回手を洗います'},
+  'v214': {th:'ซื้อของทุกอย่างที่อยู่ในรายการแล้วครับ',ro:'sɯ̂ɯ khɔ̌ɔng thúk yàang thîi yùu nai raai kaan lɛ́ɛo khráp',jp:'リストにある全部のものを買いました'},
+  'v215': {th:'ทุบหัวหอมก่อนสับครับ',ro:'thúp hǔa hɔ̌ɔm kɔ̀ɔn sàp khráp',jp:'みじん切りにする前に玉ねぎを叩きます'},
+  'v216': {th:'ทุ่มลูกบอลให้เพื่อนครับ',ro:'thûm lûuk bɔɔn hâi phɯ̂ɯan khráp',jp:'友達にボールを投げます'},
+  'v217': {th:'แม่โทรมาตอนเที่ยงทุกวันครับ',ro:'mɛ̂ɛ thoo maa tɔɔn thîang thúk wan khráp',jp:'毎日お昼に母から電話がかかってきます'},
+  'v218': {th:'โทรหาหมอนัดตรวจสุขภาพครับ',ro:'thoo hǎa mɔ̌ɔ nát trùat sùkkaphâap khráp',jp:'医者に電話して健康診断の予約をします'},
+  'v219': {th:'น้อยใจที่เพื่อนไม่ชวนไปด้วยครับ',ro:'nɔ́oi cai thîi phɯ̂ɯan mâi chuan pai dûai khráp',jp:'友達が誘ってくれなかったことが不満です'},
+  'v220': {th:'ส้มตำหน้าตาน่ากินมากครับ',ro:'sômtam nâa taa nâa kin mâak khráp',jp:'ソムタムがとてもおいしそうです'},
+  'v221': {th:'น่าจะถึงก่อนสี่โมงเย็นครับ',ro:'nâa cà thɯ̌ɯng kɔ̀ɔn sìi moong yen khráp',jp:'午後4時前には着くはずです'},
+  'v222': {th:'ลูกแมวตัวนี้น่ารักมากครับ',ro:'lûuk mɛɛo tua níi nâa rák mâak khráp',jp:'この子猫はとてもかわいいです'},
+  'v223': {th:'ใฝ่ฝันอยากเป็นนักดนตรีมาตั้งแต่เด็กครับ',ro:'fǎi fan yàak pen nák don trii maa tâng tɛ̀ɛ dèk khráp',jp:'子供の頃から音楽家になることを夢見ています'},
+  'v224': {th:'พยายามฝึกภาษาไทยทุกวันครับ',ro:'phayaaiam fɯ̀k phaasǎa thai thúk wan khráp',jp:'毎日タイ語の練習を頑張っています'},
+  'v225': {th:'พาลูกไปเที่ยวทะเลทุกปีครับ',ro:'phaa lûuk pai thîao thálee thúk pii khráp',jp:'毎年子供を海に連れて行きます'},
+  'v226': {th:'พิมพ์เอกสารส่งให้ลูกค้าครับ',ro:'phim èkàsǎan sòng hâi lûuk kháa khráp',jp:'書類を印刷してお客さんに送ります'},
+  'v227': {th:'เพิ่มเติมรายละเอียดในรายงานครับ',ro:'phɯ̂ɯm tɯɯm raai lá ìat nai raai ngaan khráp',jp:'レポートに詳細を追加します'},
+  'v228': {th:'แพ้การแข่งขันแต่ก็ได้ประสบการณ์ครับ',ro:'phɛ́ɛ kaan khɛ̀ɛng khan tɛ̀ɛ kɔ̂ɔ dâai pràsòpkaan khráp',jp:'試合に負けましたが経験を積みました'},
+  'v229': {th:'ไฟไหม้อาคารข้างๆ เมื่อคืนครับ',ro:'fai mâi aakaan khâang khâang mɯ̂a khɯɯn khráp',jp:'昨夜隣の建物で火事がありました'},
+  'v230': {th:'มอบรางวัลให้นักเรียนดีเด่นครับ',ro:'mɔ̂ɔp raang wan hâi nák riian dii dèn khráp',jp:'優秀な生徒に賞を授与します'},
+  'v231': {th:'เพื่อนชาวต่างชาติมาเที่ยวไทยครับ',ro:'phɯ̂ɯan chaao tàang châat maa thîao thai khráp',jp:'外国人の友達がタイに遊びに来ます'},
+  'v232': {th:'มารับที่สนามบินตอนหกโมงเย็นครับ',ro:'maa ráp thîi sànǎam bin tɔɔn hòk moong yen khráp',jp:'夕方6時に空港に迎えに来ます'},
+  'v233': {th:'มาส่งลูกที่โรงเรียนทุกเช้าครับ',ro:'maa sòng lûuk thîi roong riian thúk cháo khráp',jp:'毎朝子供を学校に送り届けます'},
+  'v234': {th:'มีความสุขมากเมื่ออยู่กับครอบครัวครับ',ro:'mii khwaam sùk mâak mɯ̂a yùu kàp krɔ̂ɔp khrua khráp',jp:'家族と一緒にいるときがとても幸せです'},
+  'v235': {th:'ร้านอาหารนี้มีชื่อเสียงมากในจังหวัดครับ',ro:'ráan aahǎan níi mii chɯ̂a sǐang mâak nai cangwàt khráp',jp:'このレストランは県内でとても有名です'},
+  'v236': {th:'เรียนภาษาไทยมีประโยชน์มากในการทำงานครับ',ro:'riian phaasǎa thai mii pràyòot mâak nai kaan tham ngaan khráp',jp:'タイ語を学ぶことは仕事にとても役立ちます'},
+  'v237': {th:'ยกเลิกการจองเพราะมีธุระด่วนครับ',ro:'yók lɯ̂ɯk kaan cɔɔng phrɔ́ mii thúrá dùan khráp',jp:'急用ができたので予約をキャンセルしました'},
+  'v238': {th:'ทุกคนยกเว้นผมไปงานปาร์ตี้ครับ',ro:'thúk khon yók wên phǒm pai ngaan paatîi khráp',jp:'私以外の全員がパーティーに行きました'},
+  'v239': {th:'ย้ายบ้านไปอยู่ใกล้ที่ทำงานครับ',ro:'yáai bâan pai yùu klâi thîi tham ngaan khráp',jp:'職場に近い場所に引っ越しました'},
+  'v240': {th:'ยินดีที่ได้รู้จักคุณครับ',ro:'yin dii thîi dâai rúu càk khun khráp',jp:'お知り合いになれて光栄です'},
+  'v241': {th:'ยิ้มทักทายลูกค้าทุกคนครับ',ro:'yîm thák thaai lûuk kháa thúk khon khráp',jp:'全てのお客さんに笑顔で挨拶します'},
+  'v242': {th:'แยกขยะก่อนทิ้งทุกวันครับ',ro:'yɛ̀ɛk khàyà kɔ̀ɔn thíng thúk wan khráp',jp:'毎日ゴミを分別してから捨てます'},
+  'v243': {th:'รวมค่าอาหารทุกโต๊ะแล้วจ่ายพร้อมกันครับ',ro:'ruam khâa aahǎan thúk tó lɛ́ɛo càai phrɔ́m kan khráp',jp:'全テーブルの食事代をまとめて一緒に払います'},
+  'v244': {th:'รองเท้าคู่นี้รองรับน้ำหนักได้ดีครับ',ro:'rɔɔng tháo khûu níi rɔɔng ráp nám nàk dâai dii khráp',jp:'この靴は体重をしっかり支えます'},
+  'v245': {th:'รีดเสื้อก่อนใส่ไปทำงานครับ',ro:'rîit sɯ̂ɯa kɔ̀ɔn sài pai tham ngaan khráp',jp:'仕事に着て行く前にシャツにアイロンをかけます'},
+  'v246': {th:'รีดผ้าทุกอาทิตย์วันอาทิตย์ครับ',ro:'rîit phâa thúk aathít wan aathít khráp',jp:'毎週日曜日にアイロンがけをします'},
+  'v247': {th:'รีบออกจากบ้านเพราะสายครับ',ro:'rîip ɔ̀ɔk càak bâan phrɔ́ sǎai khráp',jp:'遅刻しそうなので急いで家を出ます'},
+  'v248': {th:'เรียงหนังสือในชั้นให้เป็นระเบียบครับ',ro:'riiang nǎng sɯ̌ɯ nai chán hâi pen rábiap khráp',jp:'本棚の本を整列させます'},
+  'v249': {th:'เรียนจบแล้วอยากเรียนต่อต่างประเทศครับ',ro:'riian còp lɛ́ɛo yàak riian tɔ̀ɔ tàang pràthêet khráp',jp:'卒業後は海外で進学したいです'},
+  'v250': {th:'รักษาสุขภาพด้วยการออกกำลังกายครับ',ro:'ráksǎa sùkkaphâap dûai kaan ɔ̀ɔk kamlang kaai khráp',jp:'運動で健康を維持します'},
+  'v251': {th:'รับประทานอาหารเย็นกับครอบครัวทุกวันครับ',ro:'ráp prathaan aahǎan yen kàp krɔ̂ɔp khrua thúk wan khráp',jp:'毎日家族と夕食をいただきます'},
+  'v252': {th:'รับฝากสัมภาระที่เคาน์เตอร์ครับ',ro:'ráp fàak sǎmphaará thîi khao tɤɤ khráp',jp:'カウンターで荷物を預かります'},
+  'v253': {th:'ลองชิมเมนูใหม่ที่ร้านครับ',ro:'lɔɔng chim meenuu mài thîi ráan khráp',jp:'お店の新メニューを試食します'},
+  'v254': {th:'ลาหยุดพักผ่อนช่วงปีใหม่ครับ',ro:'laa yùt phák phɔ̀ɔn chûang pii mài khráp',jp:'年末年始に休暇を取ります'},
+  'v255': {th:'พื้นเปียกลื่นมากระวังด้วยครับ',ro:'phɯ́ɯn pìak lɯ̂ɯn mâak ráwang dûai khráp',jp:'床が濡れていてとても滑りやすいので気をつけてください'},
+  'v256': {th:'ลืมตาขึ้นแล้วเห็นแสงแดดครับ',ro:'lɯɯm taa khɯ̂n lɛ́ɛo hěn sɛ̌ɛng dɛɛt khráp',jp:'目を開けると日差しが見えました'},
+  'v257': {th:'เลี้ยงแมวสองตัวที่บ้านครับ',ro:'líang mɛɛo sɔɔng tua thîi bâan khráp',jp:'家で猫を2匹飼っています'},
+  'v258': {th:'เด็กวอกแวกไม่ยอมนั่งนิ่งครับ',ro:'dèk wɔɔk wɛ̂ɛk mâi yɔɔm nâng nîng khráp',jp:'子供がじっとしていないでうろうろしています'},
+  'v259': {th:'ศึกษาวัฒนธรรมไทยก่อนเดินทางครับ',ro:'sɯ̀ksǎa wátthánatham thai kɔ̀ɔn dɯɯn thaang khráp',jp:'旅行前にタイの文化を勉強します'},
+  'v260': {th:'สมัครงานผ่านเว็บไซต์ครับ',ro:'sàmàk ngaan phàan wép sài khráp',jp:'ウェブサイトで仕事に応募します'},
+  'v261': {th:'สระผมด้วยแชมพูสมุนไพรครับ',ro:'sà phom dûai chɛɛmpuu sàmǔn phrai khráp',jp:'ハーブシャンプーで洗髪します'},
+  'v262': {th:'สวมหมวกกันน็อคทุกครั้งที่ขี่มอเตอร์ไซค์ครับ',ro:'suam mùak kan nók thúk khráng thîi khìi mɔɔtɔɔsai khráp',jp:'バイクに乗るときはいつもヘルメットをかぶります'},
+  'v263': {th:'ส่องแสงไฟฉายในที่มืดครับ',ro:'sòng sɛ̌ɛng fai chǎai nai thîi mɯ̂ɯt khráp',jp:'暗い場所で懐中電灯を当てます'},
+  'v264': {th:'ขอลองสักครั้งได้ไหมครับ',ro:'khɔ̌ɔ lɔɔng sák khráng dâai mǎi khráp',jp:'一度だけ試してみていいですか'},
+  'v265': {th:'สัญญาว่าจะกลับมาหาครับ',ro:'sǎnyaa wâa cà klàp maa hǎa khráp',jp:'また会いに来ると約束します'},
+  'v266': {th:'โทรศัพท์สั่นในระหว่างประชุมครับ',ro:'thoorasàp sân nai ráwàang pràchum khráp',jp:'会議中にスマホが振動しました'},
+  'v267': {th:'กระเป๋าเงินสูญหายที่ตลาดครับ',ro:'kràpǎo ngɯn sǔun hǎai thîi tàlàat khráp',jp:'市場で財布を紛失しました'},
+  'v268': {th:'สูบบุหรี่ไม่ได้ในอาคารครับ',ro:'sùup bùrìi mâi dâai nai aakaan khráp',jp:'建物内での喫煙は禁止です'},
+  'v269': {th:'หกล้มบนบันไดลื่นครับ',ro:'hòk lôm bon bandan lɯ̂ɯn khráp',jp:'滑りやすい階段で転んでしまいました'},
+  'v270': {th:'หนีฝนเข้าไปหลบในร้านสะดวกซื้อครับ',ro:'nǐi fǒn khâo pai lòp nai ráan sàduak sɯ́ɯ khráp',jp:'雨宿りのためにコンビニに入りました'},
+  'v271': {th:'กิ๊บหนีบผมหลุดตอนวิ่งครับ',ro:'kíp nîip phom lùt tɔɔn wîng khráp',jp:'走っているときにヘアピンが外れました'},
+  'v272': {th:'คำว่า สวัสดี หมายถึงอะไรครับ',ro:'kham wâa sàwàtdii mǎai thɯ̌ɯng àrai khráp',jp:'「สวัสดี」という言葉はどういう意味ですか'},
+  'v273': {th:'หยอดน้ำมันเครื่องให้จักรยานครับ',ro:'yɔ̀ɔt nám man khrɯ̂ɯang hâi càkráyaan khráp',jp:'自転車にオイルをさします'},
+  'v274': {th:'หยอดตาวันละสองครั้งตามที่หมอสั่งครับ',ro:'yɔ̀ɔt taa wan lá sɔɔng khráng taam thîi mɔ̌ɔ sàng khráp',jp:'医者の指示通り1日2回目薬をさします'},
+  'v275': {th:'หวังว่าจะหายป่วยเร็วๆ นี้ครับ',ro:'wǎng wâa cà hǎai pùai reo reo níi khráp',jp:'早く回復することを願っています'},
+  'v276': {th:'กิ่งไม้หักเพราะลมแรงครับ',ro:'kîng máai hàk phrɔ́ lom rɛɛng khráp',jp:'強風で木の枝が折れました'},
+  'v277': {th:'แมวหายไปจากบ้านสามวันแล้วครับ',ro:'mɛɛo hǎai pai càak bâan sǎam wan lɛ́ɛo khráp',jp:'猫が家からいなくなって3日経ちます'},
+  'v278': {th:'อย่าเหยียบดอกไม้ในสวนครับ',ro:'yàa hìap dɔ̀ɔk máai nai sǔan khráp',jp:'庭の花を踏まないでください'},
+  'v279': {th:'อพยพออกจากเมืองเพราะน้ำท่วมครับ',ro:'ópphayóp ɔ̀ɔk càak mɯang phrɔ́ nám thûam khráp',jp:'洪水のため街から避難しました'},
+  'v280': {th:'อวยพรให้มีความสุขมากๆ ในวันเกิดครับ',ro:'uay phɔɔn hâi mii khwaam sùk mâak mâak nai wan kɯɯt khráp',jp:'お誕生日おめでとう、たくさんの幸せがありますように'},
+  'v281': {th:'ออกกำลังกายที่ฟิตเนสทุกเย็นครับ',ro:'ɔ̀ɔk kamlang kaai thîi fítnês thúk yen khráp',jp:'毎晩ジムで運動します'},
+  'v282': {th:'ออกเสียงภาษาไทยได้ถูกต้องขึ้นครับ',ro:'ɔ̀ɔk sǐang phaasǎa thai dâai thùuk tɔ̂ɔng khɯ̂n khráp',jp:'タイ語の発音がより正確になりました'},
+  'v283': {th:'อาบน้ำฝนตอนเด็กๆ สนุกมากครับ',ro:'àap nám fǒn tɔɔn dèk dèk sànùk mâak khráp',jp:'子供の頃に雨に濡れて遊ぶのがとても楽しかったです'},
+  'v284': {th:'อาบน้ำเสร็จแล้วรู้สึกสดชื่นครับ',ro:'àap nám sèt lɛ́ɛo rúu sɯ̀k sòt chɯ̂ɯn khráp',jp:'シャワーを浴びた後はスッキリします'},
+  'v285': {th:'อาศัยอยู่ที่กรุงเทพฯ มาสิบปีแล้วครับ',ro:'aasǎi yùu thîi krungthêep maa sìp pii lɛ́ɛo khráp',jp:'バンコクに10年住んでいます'},
+  'v286': {th:'เอาหนังสือมาให้จากห้องสมุดครับ',ro:'ao nǎng sɯ̌ɯ maa hâi càak hɔ̂ɔng sàmùt khráp',jp:'図書館から本を持ってきてくれました'},
+  'v287': {th:'นกบินสูงมากจนมองแทบไม่เห็นครับ',ro:'nók bin sǔung mâak con mɔɔng thɛ̂ɛp mâi hěn khráp',jp:'鳥がとても高く飛んでほとんど見えません'},
+  'v288': {th:'กระดาษลอยอยู่บนน้ำครับ',ro:'kràdàat looi yùu bon nám khráp',jp:'紙が水に浮いています'},
+  'v289': {th:'เรือจมในทะเลลึกครับ',ro:'rɯa com nai thálee lɯ̂k khráp',jp:'船が深い海に沈みました'},
+  'v290': {th:'ว่ายน้ำทะเลกับเพื่อนทุกฤดูร้อนครับ',ro:'wâai nám thálee kàp phɯ̂ɯan thúk rɯ́duu rɔ́ɔn khráp',jp:'毎年夏に友達と海で泳ぎます'},
+  'v291': {th:'ดำน้ำลึกเห็นปลาหลายชนิดครับ',ro:'dam nám lɯ̂k hěn plaa lǎai chanít khráp',jp:'深くに潜るとたくさんの種類の魚が見えます'},
+  'v292': {th:'ปีนต้นมะพร้าวเก็บมะพร้าวครับ',ro:'piin tôn máphráao kèp máphráao khráp',jp:'ヤシの木に登ってヤシの実を取ります'},
+  'v293': {th:'หกล้มตอนวิ่งในสนามหญ้าครับ',ro:'hòk lôm tɔɔn wîng nai sànǎam yâa khráp',jp:'芝生のグラウンドで走って転びました'},
+  'v294': {th:'รถล้มตอนเลี้ยวโค้งเร็วเกินไปครับ',ro:'rót lôm tɔɔn líao khóong reo kɯɯn pai khráp',jp:'カーブを曲がるのが速すぎて車が倒れました'},
+  'v295': {th:'ราคาน้ำมันขึ้นทุกสัปดาห์ครับ',ro:'raakhaa nám man khɯ̂n thúk sàpdaa khráp',jp:'ガソリン代が毎週上がっています'},
+  'v296': {th:'เห็นรุ้งกินน้ำหลังฝนตกครับ',ro:'hěn rûng kin nám lǎng fǒn tòk khráp',jp:'雨上がりに虹が見えます'},
+  'v297': {th:'ได้กลิ่นดอกไม้หอมจากสวนครับ',ro:'dâai klìn dɔ̀ɔk máai hɔ̌ɔm càak sǔan khráp',jp:'庭から花の良い匂いがします'},
+  'v298': {th:'หายป่วยแล้วกลับมาทำงานได้ครับ',ro:'hǎai pùai lɛ́ɛo klàp maa tham ngaan dâai khráp',jp:'病気が治って仕事に戻れます'},
+  'v299': {th:'ไอตลอดคืนเพราะเป็นหวัดครับ',ro:'ai tàlɔ̀ɔt khɯɯn phrɔ́ pen wàt khráp',jp:'風邪で一晩中咳が出ました'},
+  'v300': {th:'จามหลายครั้งเพราะแพ้ฝุ่นครับ',ro:'caam lǎai khráng phrɔ́ phɛ́ɛ fùn khráp',jp:'埃アレルギーで何度もくしゃみが出ます'},
+  'v301': {th:'สั่งน้ำมูกแล้วรู้สึกโล่งขึ้นครับ',ro:'sàng nám muuk lɛ́ɛo rúu sɯ̀k lôong khɯ̂n khráp',jp:'鼻をかんだらスッキリしました'},
+  'v302': {th:'เป็นไข้มาสองวันต้องไปหาหมอครับ',ro:'pen khâi maa sɔɔng wan tɔ̂ɔng pai hǎa mɔ̌ɔ khráp',jp:'2日間熱があるので医者に行かなければなりません'},
+  'v303': {th:'อาเจียนหลังกินอาหารทะเลที่เน่าครับ',ro:'aacian lǎng kin aahǎan thálee thîi nâo khráp',jp:'腐った海鮮を食べた後に吐きました'},
+  'v304': {th:'เป็นลมเพราะอากาศร้อนมากครับ',ro:'pen lom phrɔ́ aakàat rɔ́ɔn mâak khráp',jp:'暑さで気絶しました'},
+  'v305': {th:'นอนหลับทันทีที่นอนลงครับ',ro:'nɔɔn làp thantii thîi nɔɔn long khráp',jp:'横になったとたんにすぐ眠りにつきます'},
+  'v306': {th:'ฝันว่าได้ไปเที่ยวญี่ปุ่นครับ',ro:'fan wâa dâai pai thîao yîipùn khráp',jp:'日本に旅行する夢を見ました'},
+  'v307': {th:'แปรงฟันก่อนนอนทุกคืนครับ',ro:'prɛɛng fan kɔ̀ɔn nɔɔn thúk khɯɯn khráp',jp:'毎晩寝る前に歯磨きをします'},
+  'v308': {th:'หวีผมให้เรียบก่อนออกจากบ้านครับ',ro:'wǐi phom hâi rîap kɔ̀ɔn ɔ̀ɔk càak bâan khráp',jp:'家を出る前に髪をとかします'},
+  'v309': {th:'แต่งหน้าเบาๆ ก่อนไปทำงานครับ',ro:'tɛ̀ɛng nâa bao bao kɔ̀ɔn pai tham ngaan khráp',jp:'仕事前に軽くメイクをします'},
+  'v310': {th:'โกนหนวดทุกเช้าหลังอาบน้ำครับ',ro:'koon nùat thúk cháo lǎng àap nám khráp',jp:'毎朝シャワーの後にひげを剃ります'},
+  'v311': {th:'ตัดเล็บแล้วรู้สึกสะอาดขึ้นครับ',ro:'tàt lép lɛ́ɛo rúu sɯ̀k sàʔàat khɯ̂n khráp',jp:'爪を切るとスッキリした気分になります'},
+  'v312': {th:'ทำอาหารเองที่บ้านประหยัดกว่าครับ',ro:'tham aahǎan eeng thîi bâan pràyàt kwàa khráp',jp:'家で自炊する方が節約になります'},
+  'v313': {th:'ล้างจานหลังกินข้าวทุกมื้อครับ',ro:'láang caan lǎng kin khâao thúk mɯ́ɯ khráp',jp:'毎食後に皿を洗います'},
+  'v314': {th:'กวาดบ้านทุกเช้าก่อนออกไปทำงานครับ',ro:'kwàat bâan thúk cháo kɔ̀ɔn ɔ̀ɔk pai tham ngaan khráp',jp:'毎朝仕事に出かける前に家を掃きます'},
+  'v315': {th:'ถูบ้านทุกอาทิตย์ให้สะอาดครับ',ro:'thǔu bâan thúk aathít hâi sàʔàat khráp',jp:'毎週床を拭いて清潔にします'},
+  'v316': {th:'จัดโต๊ะสำหรับแขกสิบคนครับ',ro:'càt tó sǎmràp khɛ̀ɛk sìp khon khráp',jp:'10人分のテーブルを用意します'},
+  'v317': {th:'ลืมล็อคประตูทำให้กังวลตลอดวันครับ',ro:'lɯɯm lók pràtuu tham hâi kangwon tàlɔ̀ɔt wan khráp',jp:'鍵をかけ忘れて一日中心配でした'},
+  'v318': {th:'เปิดไฟในห้องที่มืดครับ',ro:'pɯɯt fai nai hɔ̂ɔng thîi mɯ̂ɯt khráp',jp:'暗い部屋の電気をつけます'},
+  'v319': {th:'ปิดไฟทุกดวงก่อนนอนครับ',ro:'pìt fai thúk duang kɔ̀ɔn nɔɔn khráp',jp:'寝る前に全ての電気を消します'},
+  'v320': {th:'เช็ดถูพื้นห้องครัวหลังทำอาหารครับ',ro:'chét thǔu phɯ́ɯn hɔ̂ɔng khrua lǎng tham aahǎan khráp',jp:'料理の後にキッチンの床を拭きます'},
+  'v321': {th:'ซ่อมแซมบ้านที่ชำรุดก่อนฤดูฝนครับ',ro:'sɔɔm sɛɛm bâan thîi chamrút kɔ̀ɔn rɯ́duu fǒn khráp',jp:'雨季の前に傷んだ家を修繕します'},
+  'v322': {th:'สร้างบ้านใหม่ใกล้ทะเลครับ',ro:'sâang bâan mài klâi thálee khráp',jp:'海の近くに新しい家を建てます'},
+  'v323': {th:'รื้อบ้านเก่าเพื่อสร้างใหม่ครับ',ro:'rɯ́a bâan kào phɯ̂a sâang mài khráp',jp:'新しく建て替えるために古い家を取り壊します'},
+  'v324': {th:'เช่าบ้านใกล้ที่ทำงานราคาถูกครับ',ro:'chào bâan klâi thîi tham ngaan raakhaa thùuk khráp',jp:'職場近くの安い家を借ります'},
+  'v325': {th:'ย้ายบ้านไปอยู่ต่างจังหวัดครับ',ro:'yáai bâan pai yùu tàang cangwàt khráp',jp:'地方に引っ越しをします'},
+  'v326': {th:'จอดรถในที่จอดรถใต้ดินครับ',ro:'cɔ̀ɔt rót nai thîi cɔ̀ɔt rót tâi din khráp',jp:'地下駐車場に車を駐車します'},
+  'v327': {th:'เติมน้ำมันรถที่ปั้มน้ำมันใกล้บ้านครับ',ro:'tɯɯm nám man rót thîi pâm nám man klâi bâan khráp',jp:'家の近くのガソリンスタンドで給油します'},
+  'v328': {th:'จองตั๋วเครื่องบินล่วงหน้าสองเดือนครับ',ro:'cɔɔng tǔa khrɯ̂ɯang bin lûang nâa sɔɔng dɯan khráp',jp:'2ヶ月前に飛行機のチケットを予約します'},
+  'v329': {th:'เช็คอินออนไลน์ก่อนไปสนามบินครับ',ro:'chék in oon lai kɔ̀ɔn pai sànǎam bin khráp',jp:'空港に行く前にオンラインでチェックインします'},
+  'v330': {th:'เช็คเอาท์แล้วฝากกระเป๋าไว้ที่โรงแรมครับ',ro:'chék ao lɛ́ɛo fàak kràpǎo wâi thîi roong rɛɛm khráp',jp:'チェックアウト後、荷物をホテルに預けます'},
+  'v331': {th:'แลกเงินที่ธนาคารได้อัตราดีกว่าครับ',ro:'lɛ̂ɛk ngɯn thîi thanákhaan dâai àttráa dii kwàa khráp',jp:'銀行で両替するとレートが良いです'},
+  'v332': {th:'กู้เงินธนาคารเพื่อซื้อบ้านครับ',ro:'kûu ngɯn thanákhaan phɯ̂a sɯ̂ɯ bâan khráp',jp:'家を買うために銀行からお金を借ります'},
+  'v333': {th:'จ่ายเงินผ่านแอปธนาคารสะดวกดีครับ',ro:'càai ngɯn phàan ɛ̀ɛp thanákhaan sàduak dii khráp',jp:'銀行アプリで支払うと便利です'},
+  'v334': {th:'ลงทุนในตลาดหุ้นระยะยาวครับ',ro:'long thun nai tàlàat hûn ráyá yaao khráp',jp:'長期で株式市場に投資します'},
+  'v335': {th:'สมัครงานบริษัทใหม่ผ่านออนไลน์ครับ',ro:'sàmàk ngaan bɔɔrisàt mài phàan oon lai khráp',jp:'オンラインで新しい会社に応募します'},
+  'v336': {th:'สัมภาษณ์งานพรุ่งนี้เช้าครับ',ro:'sǎmphàat ngaan phrûng níi cháo khráp',jp:'明日の朝、仕事の面接があります'},
+  'v337': {th:'เลิกงานแล้วไปกินข้าวกับเพื่อนครับ',ro:'lɯ̂ɯk ngaan lɛ́ɛo pai kin khâao kàp phɯ̂ɯan khráp',jp:'仕事が終わったら友達とご飯を食べに行きます'},
+  'v338': {th:'ทำงานล่วงเวลาเพราะงานด่วนครับ',ro:'tham ngaan lûang weelaa phrɔ́ ngaan dùan khráp',jp:'急ぎの仕事があるので残業します'},
+  'v339': {th:'นำเสนอโปรเจกต์ให้ผู้บริหารครับ',ro:'nam sànɯɯ proocheck hâi phûu bɔɔrihǎan khráp',jp:'経営陣にプロジェクトをプレゼンします'},
+  'v340': {th:'รายงานผลการดำเนินงานให้หัวหน้าครับ',ro:'raai ngaan phon kaan dam nɯɯn ngaan hâi hǔa nâa khráp',jp:'上司に業務の進捗を報告します'},
+  'v341': {th:'เซ็นชื่อในสัญญาก่อนส่งครับ',ro:'sen chɯ̂ɯ nai sǎnyaa kɔ̀ɔn sòng khráp',jp:'送る前に契約書に署名します'},
+  'v342': {th:'พิมพ์ดีดรายงานเสร็จแล้วครับ',ro:'phim diit raai ngaan sèt lɛ́ɛo khráp',jp:'レポートのタイピングが終わりました'},
 };
 
 // ── 例文生成ロジック v4 ────────────────────────────────────────────
@@ -1359,16 +1598,30 @@ function speak(text){
   }catch(e){}
 }
 
+function shuffleArr(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
 function list(){
   if(st.mode==='vocab'){
     let l=DATA[st.pos]||[];
     if(st.filterUn){ const f=l.filter(i=>!st.learned[st.pos].has(i.id)); if(f.length) l=f; }
-    if(st.filterUnEx){ const f2=l.filter(i=>!exChecked.has(i.id)); if(f2.length) l=f2; }
+    if(st.shuffle){
+      const key=st.pos+'_'+(st.filterUn?'u':'');
+      if(!st.shuffled[key]||st.shuffled[key].length!==l.length) st.shuffled[key]=shuffleArr(l);
+      return st.shuffled[key];
+    }
     return l;
   }
   if(st.mode==='conversation'){
     let l=st.scene==='すべて'?CONV:CONV.filter(i=>i.scene===st.scene);
     if(st.filterUn){ const f=l.filter(i=>!st.learned.conversation.has(i.id)); if(f.length) l=f; }
+    if(st.shuffle){
+      const key='conv_'+st.scene+(st.filterUn?'_u':'');
+      if(!st.shuffled[key]||st.shuffled[key].length!==l.length) st.shuffled[key]=shuffleArr(l);
+      return st.shuffled[key];
+    }
     return l;
   }
   if(st.mode==='grammar') return GRAM;
@@ -1394,7 +1647,7 @@ function renderSub(){
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.scene=c.dataset.sc;st.idx=0;st.flipped=false;render();}));
   } else if(st.mode==='font'){
     sr.style.display='flex';
-    const tabs=[['compare','比較'],['mid','中子音'],['high','高子音'],['low','低子音'],['tone','声調'],['vowel','母音']];
+    const tabs=[['compare','フォント'],['mid','中子音'],['high','高子音'],['low','低子音'],['vowel','母音'],['tone','声調']];
     sr.innerHTML=tabs.map(([k,v])=>
       `<button class="chip ${k===st.fontTab?'active-font':''}" data-ft="${k}">${v}</button>`).join('');
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.fontTab=c.dataset.ft;render();}));
@@ -1411,13 +1664,13 @@ function renderSettings(){
   h+=`<button class="pill ${st.level==='beginner'?'on':''}" id="lvPill">${st.level==='beginner'?'初心者':'中級者+'}</button>`;
   h+=`<button class="pill on" id="gdPill">${st.gender==='male'?'♂ 男性':'♀ 女性'}</button>`;
   if(st.mode!=='grammar') h+=`<button class="pill ${st.filterUn?'on':''}" id="unPill">未学習だけ</button>`;
-  if(st.mode==='vocab') h+=`<button class="pill ${st.filterUnEx?'on':''}" id="unExPill">例文未確認</button>`;
+  if(st.mode!=='grammar') h+=`<button class="pill ${st.shuffle?'on':''}" id="shfPill">🔀 シャッフル</button>`;
   sr.innerHTML=h;
   const dp=document.getElementById('dirPill'); if(dp) dp.onclick=()=>{st.dir=st.dir==='th-jp'?'jp-th':'th-jp';st.flipped=false;render();};
   const lp=document.getElementById('lvPill'); if(lp) lp.onclick=()=>{st.level=st.level==='beginner'?'intermediate':'beginner';sto_set('s:level',st.level);render();};
   const gp=document.getElementById('gdPill'); if(gp) gp.onclick=()=>{st.gender=st.gender==='male'?'female':'male';sto_set('s:gender',st.gender);render();};
   const up=document.getElementById('unPill'); if(up) up.onclick=()=>{st.filterUn=!st.filterUn;st.idx=0;st.flipped=false;render();};
-  const uep=document.getElementById('unExPill'); if(uep) uep.onclick=()=>{st.filterUnEx=!st.filterUnEx;st.idx=0;st.flipped=false;render();};
+  const shp=document.getElementById('shfPill'); if(shp) shp.onclick=()=>{st.shuffle=!st.shuffle;if(st.shuffle) st.shuffled={};st.idx=0;st.flipped=false;render();};
 }
 
 const VOWEL_DATA = [
@@ -1759,16 +2012,17 @@ function renderFont(){
 </tr>
 ${rows.map(([ch,ro,name,tname,cls],i)=>`
 <tr style="${i%2===0?'':'background:rgba(255,255,255,.025)'}">
-  <td>
+  <td style="padding:6px 6px;">
     <div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;">
       <span style="font-family:'Sarabun',sans-serif;font-size:12px;color:#ccc;">${tname}</span>
       ${badge(cls)}
+      <button onclick="(function(){const u=new SpeechSynthesisUtterance('${ch}');u.lang='th-TH';speechSynthesis.speak(u);})()" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0 2px;line-height:1;">🔊</button>
     </div>
     <span style="font-family:monospace;font-size:11px;color:#9c8d68;">${name}</span>
   </td>
-  <td style="text-align:center;padding:6px 4px;"><span style="font-family:'Sarabun',sans-serif;font-size:34px;background:#f3ead8;border-radius:8px;padding:4px 10px;display:inline-block;color:#2b2118;">${ch}</span></td>
-  <td style="text-align:center;padding:6px 4px;"><span style="font-family:Noto Sans Thai,sans-serif;font-weight:700;font-size:34px;background:#e8f0ff;border-radius:8px;padding:4px 10px;display:inline-block;color:#2b2118;">${ch}</span></td>
-  <td style="text-align:center;padding:6px 4px;"><span style="font-family:'Sriracha',cursive;font-size:34px;background:#fff8ee;border-radius:8px;padding:4px 10px;display:inline-block;color:#2b2118;">${ch}</span></td>
+  <td style="text-align:center;padding:6px 4px;"><span style="font-family:'Sarabun',sans-serif;font-size:34px;background:#f3ead8;border-radius:8px;width:52px;height:52px;display:inline-flex;align-items:center;justify-content:center;color:#2b2118;">${ch}</span></td>
+  <td style="text-align:center;padding:6px 4px;"><span style="font-family:Noto Sans Thai,sans-serif;font-weight:700;font-size:34px;background:#f3ead8;border-radius:8px;width:52px;height:52px;display:inline-flex;align-items:center;justify-content:center;color:#2b2118;">${ch}</span></td>
+  <td style="text-align:center;padding:6px 4px;"><span style="font-family:'Sriracha',cursive;font-size:34px;background:#f3ead8;border-radius:8px;width:52px;height:52px;display:inline-flex;align-items:center;justify-content:center;color:#2b2118;">${ch}</span></td>
 </tr>`).join('')}
 </table>`;
 }
@@ -1853,57 +2107,100 @@ function renderConsonants(cls){
 
 function renderToneSection(){
   return `
-<div class="sec-title" style="margin-top:4px;">🎼 子音クラス × 声調符号 → 声調</div>
-<p style="font-size:11px;color:var(--muted);margin:0 0 10px;">
-平音節 = 長母音・m/n/ng/y/w終　促音節 = p/t/k終
+<div class="sec-title" style="margin-top:4px;">🎼 声調規則（子音クラス × 声調符号）</div>
+<p style="font-size:11px;color:var(--muted);margin:0 0 8px;">
+📌 <b style="color:var(--muted2);">平音節</b>＝長母音で終わる音節、またはm・n・ng・y・wで終わる音節<br>
+　　（例：มา・กิน・นาง）<br>
+📌 <b style="color:var(--muted2);">促音節</b>＝p・t・kで終わる音節（短く詰まる音）<br>
+　　（例：กับ・มาก・นัด）
 </p>
-<table style="width:100%;border-collapse:collapse;font-size:12px;">
-<tr style="background:#2a2730;">
-  <th style="padding:8px 6px;text-align:left;font-size:11px;color:var(--muted2);width:35%;"></th>
-  <th style="padding:8px 4px;text-align:center;font-size:11px;color:var(--muted2);">符号なし<br>平音節</th>
-  <th style="padding:8px 4px;text-align:center;font-size:11px;color:var(--muted2);">符号なし<br>促音節</th>
-  <th style="padding:8px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;">ก่</div><div style="font-size:10px;color:var(--muted);">エーク</div></th>
-  <th style="padding:8px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;">ก้</div><div style="font-size:10px;color:var(--muted);">トー</div></th>
-  <th style="padding:8px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;">ก๊</div><div style="font-size:10px;color:var(--muted);">トリー</div></th>
-  <th style="padding:8px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;">ก๋</div><div style="font-size:10px;color:var(--muted);">ジャッタ</div></th>
-</tr>
-<tr style="background:rgba(192,57,43,.18);border-bottom:1px solid rgba(255,255,255,.06);">
-  <td style="padding:10px 8px;">
-    <span style="background:#c0392b;color:#fff;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:700;">中子音</span>
-    <div style="font-family:'Sarabun',sans-serif;font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;">ก จ ด ต บ ป อ</div>
-  </td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#fff;">─</div><div style="font-size:10px;color:var(--muted);">サーマン</div></td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#fff;">─</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#f2b705;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#f2b705;">↗↘</div><div style="font-size:10px;color:var(--muted);">トー</div></td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#f2b705;">↑</div><div style="font-size:10px;color:var(--muted);">トリー</div></td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#f2b705;">↗</div><div style="font-size:10px;color:var(--muted);">ジャッタ</div></td>
-</tr>
-<tr style="background:rgba(76,154,106,.18);border-bottom:1px solid rgba(255,255,255,.06);">
-  <td style="padding:10px 8px;">
-    <span style="background:#4c9a6a;color:#fff;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:700;">高子音</span>
-    <div style="font-family:'Sarabun',sans-serif;font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;">ข ฉ ถ ผ ฝ ส ห</div>
-  </td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#fff;">↗</div><div style="font-size:10px;color:var(--muted);">ジャッタ</div></td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#fff;">↘</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#f2b705;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#f2b705;">↗↘</div><div style="font-size:10px;color:var(--muted);">トー</div></td>
-  <td style="text-align:center;padding:10px 4px;color:var(--muted);">—</td>
-  <td style="text-align:center;padding:10px 4px;color:var(--muted);">—</td>
-</tr>
-<tr style="background:rgba(74,124,196,.18);">
-  <td style="padding:10px 8px;">
-    <span style="background:#4a7cc4;color:#fff;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:700;">低子音</span>
-    <div style="font-family:'Sarabun',sans-serif;font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;">ค ง ช น พ ม ย ร ล ว</div>
-  </td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#fff;">─</div><div style="font-size:10px;color:var(--muted);">サーマン</div></td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:14px;color:#fff;">長:─<br>短:↑</div></td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#f2b705;">↗↘</div><div style="font-size:10px;color:var(--muted);">トー</div></td>
-  <td style="text-align:center;padding:10px 4px;"><div style="font-size:16px;color:#f2b705;">↑</div><div style="font-size:10px;color:var(--muted);">トリー</div></td>
-  <td style="text-align:center;padding:10px 4px;color:var(--muted);">—</td>
-  <td style="text-align:center;padding:10px 4px;color:var(--muted);">—</td>
-</tr>
-</table>`;
+
+<!-- 中子音 -->
+<div style="margin-bottom:10px;">
+  <div style="background:#c0392b;color:#fff;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:6px;">中子音　ก จ ด ต บ ป อ ฎ ฏ</div>
+  <table style="width:100%;border-collapse:collapse;font-size:12px;">
+  <tr style="background:#2a2730;">
+    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>平音節</th>
+    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>促音節</th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ก่</div><div style="font-size:9px;color:var(--muted);">エーク</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ก้</div><div style="font-size:9px;color:var(--muted);">トー</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ก๊</div><div style="font-size:9px;color:var(--muted);">トリー</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ก๋</div><div style="font-size:9px;color:var(--muted);">ジャッタ</div></th>
+  </tr>
+  <tr style="background:rgba(192,57,43,.1);">
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">─</div><div style="font-size:10px;color:var(--muted);">サーマン</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">─</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↗↘</div><div style="font-size:10px;color:var(--muted);">トー</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↑</div><div style="font-size:10px;color:var(--muted);">トリー</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↗</div><div style="font-size:10px;color:var(--muted);">ジャッタ</div></td>
+  </tr>
+  </table>
+</div>
+
+<!-- 高子音 -->
+<div style="margin-bottom:10px;">
+  <div style="background:#4c9a6a;color:#fff;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:6px;">高子音　ข ฃ ฉ ถ ผ ฝ ศ ษ ส ห</div>
+  <table style="width:100%;border-collapse:collapse;font-size:12px;">
+  <tr style="background:#2a2730;">
+    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>平音節</th>
+    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>促音節</th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ข่</div><div style="font-size:9px;color:var(--muted);">エーク</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ข้</div><div style="font-size:9px;color:var(--muted);">トー</div></th>
+    <th colspan="2" style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">トリー・ジャッタ<br>使用なし</th>
+  </tr>
+  <tr style="background:rgba(76,154,106,.1);">
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">↗</div><div style="font-size:10px;color:var(--muted);">ジャッタ</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↗↘</div><div style="font-size:10px;color:var(--muted);">トー</div></td>
+    <td colspan="2" style="text-align:center;padding:8px 4px;color:var(--muted);font-size:11px;">—</td>
+  </tr>
+  </table>
+</div>
+
+<!-- 低子音 -->
+<div style="margin-bottom:10px;">
+  <div style="background:#4a7cc4;color:#fff;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:6px;">低子音　ค ง ช ซ ท น พ ฟ ม ย ร ล ว ฬ ฮ 他</div>
+  <table style="width:100%;border-collapse:collapse;font-size:12px;">
+  <tr style="background:#2a2730;">
+    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>平音節</th>
+    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>促音節</th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ค่</div><div style="font-size:9px;color:var(--muted);">エーク</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ค้</div><div style="font-size:9px;color:var(--muted);">トー</div></th>
+    <th colspan="2" style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">トリー・ジャッタ<br>使用なし</th>
+  </tr>
+  <tr style="background:rgba(74,124,196,.1);">
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">─</div><div style="font-size:10px;color:var(--muted);">サーマン</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">↘高</div><div style="font-size:10px;color:var(--muted);">トー</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↗↘</div><div style="font-size:10px;color:var(--muted);">トー</div></td>
+    <td colspan="2" style="text-align:center;padding:8px 4px;color:var(--muted);font-size:11px;">—</td>
+  </tr>
+  </table>
+</div>
+
+<!-- 5声調まとめ -->
+<div style="margin-top:4px;margin-bottom:8px;">
+  <div style="font-size:11px;color:var(--muted2);margin-bottom:6px;font-weight:600;">5声調</div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">
+    <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
+      <div style="font-size:13px;color:#f2b705;">─</div><div style="font-size:10px;color:var(--muted);">サーマン<br>（普通）</div>
+    </div>
+    <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
+      <div style="font-size:13px;color:#f2b705;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク<br>（低下降）</div>
+    </div>
+    <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
+      <div style="font-size:13px;color:#f2b705;">↗↘</div><div style="font-size:10px;color:var(--muted);">トー<br>（下降）</div>
+    </div>
+    <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
+      <div style="font-size:13px;color:#f2b705;">↑</div><div style="font-size:10px;color:var(--muted);">トリー<br>（高上昇）</div>
+    </div>
+    <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
+      <div style="font-size:13px;color:#f2b705;">↗</div><div style="font-size:10px;color:var(--muted);">ジャッタ<br>（上昇）</div>
+    </div>
+  </div>
+</div>`;
 }
 
 function renderNumbers(){
@@ -1954,7 +2251,7 @@ function render(){
     };color:${cls==='vocab'?'#2b2118':'#fff'}">${lbl}</span>`;
 
   const ribHtml=rib(modeRibbon.cls, modeRibbon.lbl);
-  const hole=`<span class="hole${(st.mode==='vocab'&&item&&exChecked.has(item.id))?' hole-checked':''}"></span>`;
+  const hole=`<span class="hole"></span>`;
 
   let front='', back='', spk='';
 
@@ -2008,23 +2305,21 @@ function render(){
         ${beg?`<div class="ro-front">${item.ro}</div>`:''}
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップして意味を見る</div>`;
-      back=`${ribHtml}${hole}${lvB}
+      back=`${ribHtml}${hole}
         ${beg?`<div class="back-ro">${item.ro}</div>`:''}
         <div class="back-jp" style="${beg?'':'margin-top:38px;'}">${item.jp}</div>
         <div id="exampleBox" style="overflow-y:auto;"></div>
         <div class="back-actions">
-          <button class="ex-ok-btn ${exChecked.has(item.id)?'done':''}" id="exOkB">${exChecked.has(item.id)?'例文OK ✓':'例文OK'}</button>
           <button class="learn-btn ${isLearned?'done':''}" id="lrnB">${isLearned?'覚えた ✓':'覚えた'}</button>
         </div>`;
     } else {
       front=`${ribHtml}${hole}${lvB}<div class="jp-big">${item.jp}</div>
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップしてタイ語を見る</div>`;
-      back=`${ribHtml}${hole}${lvB}<div class="th-big sm" style="margin-top:24px;">${item.th}</div>
+      back=`${ribHtml}${hole}<div class="th-big sm" style="margin-top:24px;">${item.th}</div>
         ${beg?`<div class="back-ro">${item.ro}</div>`:''}
         <div id="exampleBox" style="overflow-y:auto;"></div>
         <div class="back-actions">
-          <button class="ex-ok-btn ${exChecked.has(item.id)?'done':''}" id="exOkB">${exChecked.has(item.id)?'例文OK ✓':'例文OK'}</button>
           <button class="learn-btn ${isLearned?'done':''}" id="lrnB">${isLearned?'覚えた ✓':'覚えた'}</button>
         </div>`;
     }
@@ -2042,12 +2337,6 @@ function render(){
     e.stopPropagation();
     if(lset.has(item.id)) lset.delete(item.id); else lset.add(item.id);
     sto_set('l:'+lk,[...lset]); render();
-  };
-  // 例文OKボタン
-  const exOk=document.getElementById('exOkB'); if(exOk) exOk.onclick=e=>{
-    e.stopPropagation();
-    if(exChecked.has(item.id)) exChecked.delete(item.id); else exChecked.add(item.id);
-    saveExChecked(); render();
   };
   // vocab裏面が表示されたとき例文を表示
   if(st.mode==='vocab' && st.flipped && item){
@@ -2081,7 +2370,6 @@ document.getElementById('flipWrap').addEventListener('touchend',e=>{
 // ─── エクスポート/インポート ────────────────────────────────────
 function exportData(){
   const data = {
-    exChecked: [...exChecked],
     learned: {},
     level: st.level,
     gender: st.gender,
@@ -2114,11 +2402,6 @@ function importData(){
   if(!input) return;
   try{
     const data = JSON.parse(input.trim());
-    // exChecked
-    if(Array.isArray(data.exChecked)){
-      data.exChecked.forEach(id=>exChecked.add(id));
-      saveExChecked();
-    }
     // learned
     if(data.learned){
       for(const k of Object.keys(st.learned)){
@@ -2131,7 +2414,7 @@ function importData(){
     // settings
     if(data.level){ st.level=data.level; sto_set('s:level',st.level); }
     if(data.gender){ st.gender=data.gender; sto_set('s:gender',st.gender); }
-    alert('✅ インポート完了！\n例文OK: '+exChecked.size+'件');
+    alert('✅ インポート完了！');
     render();
   } catch(e){
     alert('❌ データの形式が正しくありません。\nエクスポートしたテキストをそのまま貼り付けてください。');
