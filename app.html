@@ -139,6 +139,26 @@ footer{text-align:center;padding:6px 0 2px;}
 .reset-btn{font-size:11px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;}
 .audio-note{font-size:10px;color:#5e5968;margin-top:6px;line-height:1.6;}
 @media(max-height:700px){.flip-wrap{height:355px;}}
+
+/* --- レベルpill色 --- */
+.pill-level[data-level="beginner"]{background:#2d6a4f;color:#b7e4c7;border-color:#40916c;}
+.pill-level[data-level="intermediate"]{background:#7c3a00;color:#ffd8a8;border-color:#e07a00;}
+/* --- 性別pill色 --- */
+.pill-gender[data-gender="male"]{background:#1a3a5c;color:#90caf9;border-color:#2979bb;}
+.pill-gender[data-gender="female"]{background:#5c1a3a;color:#f48fb1;border-color:#bb2963;}
+/* --- リストタブ --- */
+#listPage{padding:4px 0;}
+.list-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .15s;}
+.list-item:active{background:rgba(255,255,255,.07);}
+.list-item.learned-item{background:rgba(76,154,106,.08);}
+.list-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);min-width:28px;text-align:right;}
+.list-th{font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;min-width:90px;}
+.list-ro{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted2);flex:1;}
+.list-jp{font-size:12px;color:var(--muted2);max-width:120px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.list-badge{font-size:9px;background:#2d6a4f;color:#b7e4c7;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;}
+/* --- 戻るボタン --- */
+.back-btn{display:none;position:fixed;bottom:80px;right:16px;background:var(--yellow);color:#2b2118;border:none;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.4);}
+.mode-tab[data-mode="wordlist"].active{background:#a78bfa;color:#1a0050;border-color:#a78bfa;}
 </style>
 </head>
 <body>
@@ -149,6 +169,7 @@ footer{text-align:center;padding:6px 0 2px;}
     </div>
     <div class="mode-tabs">
       <div class="mode-tab" data-mode="vocab">単語</div>
+      <div class="mode-tab" data-mode="wordlist">リスト</div>
       <div class="mode-tab" data-mode="conversation">会話</div>
       <div class="mode-tab" data-mode="grammar">文法</div>
       <div class="mode-tab" data-mode="font">タイ文字</div>
@@ -174,6 +195,8 @@ footer{text-align:center;padding:6px 0 2px;}
   </div>
 
   <div class="static-page" id="staticPage" style="display:none;"></div>
+  <div id="listPage" style="display:none;"></div>
+  <button class="back-btn" id="backBtn">← リストへ戻る</button>
 
   <footer>
     <button class="reset-btn" id="resetBtn">この分類の学習記録をリセット</button>
@@ -208,13 +231,16 @@ const PT = {male:{th:'ครับ',ro:'khrap'},female:{th:'ค่ะ',ro:'kha'}
 
 let st = {
   mode:'vocab',pos:'noun',scene:'すべて',dir:'th-jp',
-  level:'beginner',gender:'male',filterUn:false,
+  level:'beginner',gender:'male',filterUn:false,wordlistPos:'noun',fromList:false,fromListPos:'noun',fromListItemId:null,filterUnEx:false,
   shuffle:false,shuffled:{},
   idx:0,flipped:false,fontTab:'compare',
   learned:{noun:new Set(),verb:new Set(),adj:new Set(),adv:new Set(),
     classifier:new Set(),question:new Set(),greeting:new Set(),
     conversation:new Set(),grammar:new Set(),thaienglish:new Set()}
 };
+// 例文確認済みセット（LocalStorageで永続化）
+const exChecked = new Set();
+function saveExChecked(){ sto_set('s:exChecked',[...exChecked]); }
 
 const fTH = s => s ? s.replace(/\{PT}/g, PT[st.gender].th) : s;
 const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro) : s;
@@ -227,6 +253,7 @@ async function loadAll(){
   for(const k of Object.keys(st.learned)){
     const d=await sto_get('l:'+k); if(d) st.learned[k]=new Set(d);
   }
+  const ex=await sto_get('s:exChecked'); if(ex) ex.forEach(id=>exChecked.add(id));
 }
 
 // ── 例文データ（ルールベース静的生成） ────────────────────────────
@@ -1606,9 +1633,11 @@ function shuffleArr(arr){
 function list(){
   if(st.mode==='vocab'){
     let l=DATA[st.pos]||[];
+    if(st.level==='beginner') l=l.filter(i=>i.level==='5');
     if(st.filterUn){ const f=l.filter(i=>!st.learned[st.pos].has(i.id)); if(f.length) l=f; }
+    if(st.filterUnEx){ const f2=l.filter(i=>!exChecked.has(i.id)); if(f2.length) l=f2; }
     if(st.shuffle){
-      const key=st.pos+'_'+(st.filterUn?'u':'');
+      const key=st.pos+'_'+(st.filterUn?'u':'')+(st.filterUnEx?'e':'');
       if(!st.shuffled[key]||st.shuffled[key].length!==l.length) st.shuffled[key]=shuffleArr(l);
       return st.shuffled[key];
     }
@@ -1639,7 +1668,7 @@ function renderSub(){
     sr.style.display='flex';
     sr.innerHTML=Object.entries(POS_LABELS).map(([k,v])=>
       `<button class="chip ${k===st.pos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
-    sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.pos=c.dataset.pos;st.idx=0;st.flipped=false;render();}));
+    sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.pos=c.dataset.pos;st.idx=0;st.flipped=false;st.fromList=false;render();}));
   } else if(st.mode==='conversation'){
     sr.style.display='flex';
     sr.innerHTML=SCENES.map(s=>
@@ -1651,18 +1680,64 @@ function renderSub(){
     sr.innerHTML=tabs.map(([k,v])=>
       `<button class="chip ${k===st.fontTab?'active-font':''}" data-ft="${k}">${v}</button>`).join('');
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.fontTab=c.dataset.ft;render();}));
+  } else if(st.mode==='wordlist'){
+    sr.style.display='flex';
+    sr.innerHTML=Object.entries(POS_LABELS).map(([k,v])=>
+      `<button class="chip ${k===st.wordlistPos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
+    sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.wordlistPos=c.dataset.pos;render();}));
   } else { sr.style.display='none'; sr.innerHTML=''; }
+}
+
+function renderWordList(){
+  const lp=document.getElementById('listPage');
+  const pos=st.wordlistPos;
+  const items=DATA[pos]||[];
+  const lset=st.learned[pos]||new Set();
+  const beg=st.level==='beginner';
+  const filtered=beg?items.filter(i=>i.level==='5'):items;
+  let html=`<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);padding:6px 12px 4px;">${filtered.length}語</div>`;
+  filtered.forEach((item,idx)=>{
+    const learned=lset.has(item.id);
+    html+=`<div class="list-item${learned?' learned-item':''}" data-id="${item.id}" data-pos="${pos}">
+      <span class="list-num">${idx+1}</span>
+      <span class="list-th">${item.th}</span>
+      <span class="list-ro">${item.ro}</span>
+      <span class="list-jp">${item.jp}</span>
+      ${learned?'<span class="list-badge">済</span>':'<span style="min-width:22px;"></span>'}
+    </div>`;
+  });
+  lp.innerHTML=html;
+  lp.querySelectorAll('.list-item').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const id=el.dataset.id;
+      const pos2=el.dataset.pos;
+      const beg2=st.level==='beginner';
+      const arr=(beg2?(DATA[pos2]||[]).filter(i=>i.level==='5'):(DATA[pos2]||[]));
+      const idx2=arr.findIndex(i=>i.id===id);
+      if(idx2<0) return;
+      st.fromList=true;
+      st.fromListPos=pos2;
+      st.fromListItemId=id;
+      st.mode='vocab';
+      st.pos=pos2;
+      st.idx=idx2;
+      st.flipped=false;
+      st.filterUn=false;
+      st.shuffle=false;
+      render();
+    });
+  });
 }
 
 function renderSettings(){
   const sr=document.getElementById('settingsRow');
-  const noCtrl=['font','numbers'].includes(st.mode);
+  const noCtrl=['font','numbers','wordlist'].includes(st.mode);
   if(noCtrl){ sr.innerHTML=''; return; }
   const noDir=['grammar'].includes(st.mode);
   let h='';
-  if(!noDir) h+=`<button class="pill" id="dirPill">出題: ${st.dir==='th-jp'?'TH→JP':'JP→TH'}</button>`;
-  h+=`<button class="pill ${st.level==='beginner'?'on':''}" id="lvPill">${st.level==='beginner'?'初心者':'中級者+'}</button>`;
-  h+=`<button class="pill on" id="gdPill">${st.gender==='male'?'♂ 男性':'♀ 女性'}</button>`;
+  if(!noDir) h+=`<button class="pill" id="dirPill">${st.dir==='th-jp'?'TH→JP':'JP→TH'}</button>`;
+  h+=`<button class="pill pill-level" id="lvPill" data-level="${st.level}">${st.level==='beginner'?'初心者':'中級者+'}</button>`;
+  h+=`<button class="pill pill-gender" id="gdPill" data-gender="${st.gender}">${st.gender==='male'?'♂ 男性語尾':'♀ 女性語尾'}</button>`;
   if(st.mode!=='grammar') h+=`<button class="pill ${st.filterUn?'on':''}" id="unPill">未学習だけ</button>`;
   if(st.mode!=='grammar') h+=`<button class="pill ${st.shuffle?'on':''}" id="shfPill">🔀 シャッフル</button>`;
   sr.innerHTML=h;
@@ -2225,15 +2300,27 @@ function render(){
   renderSettings();
 
   const isStatic=['font','numbers'].includes(st.mode);
-  document.getElementById('cardStage').style.display=isStatic?'none':'flex';
-  document.getElementById('resetBtn').style.display=isStatic?'none':'inline';
+  const isWordlist=(st.mode==='wordlist');
+  document.getElementById('cardStage').style.display=(isStatic||isWordlist)?'none':'flex';
+  document.getElementById('resetBtn').style.display=(isStatic||isWordlist)?'none':'inline';
   const sp=document.getElementById('staticPage');
+  const lp=document.getElementById('listPage');
+  const bb=document.getElementById('backBtn');
   if(isStatic){
-    sp.style.display='block';
+    sp.style.display='block'; lp.style.display='none';
+    if(bb) bb.style.display='none';
     sp.innerHTML=st.mode==='font'?renderFont():renderNumbers();
     return;
   }
-  sp.style.display='none';
+  if(isWordlist){
+    sp.style.display='none'; lp.style.display='block';
+    if(bb) bb.style.display='none';
+    renderWordList();
+    return;
+  }
+  sp.style.display='none'; lp.style.display='none';
+  // ★戻るボタン：リストからジャンプした時だけ表示
+  if(bb) bb.style.display=st.fromList?'block':'none';
 
   const l=list();
   if(st.idx>=l.length) st.idx=0;
@@ -2338,6 +2425,12 @@ function render(){
     if(lset.has(item.id)) lset.delete(item.id); else lset.add(item.id);
     sto_set('l:'+lk,[...lset]); render();
   };
+  // 例文OKボタン
+  const exOk=document.getElementById('exOkB'); if(exOk) exOk.onclick=e=>{
+    e.stopPropagation();
+    if(exChecked.has(item.id)) exChecked.delete(item.id); else exChecked.add(item.id);
+    saveExChecked(); render();
+  };
   // vocab裏面が表示されたとき例文を表示
   if(st.mode==='vocab' && st.flipped && item){
     const exDiv = document.getElementById('exampleBox');
@@ -2353,7 +2446,7 @@ function render(){
 document.getElementById('flipWrap').addEventListener('click',()=>{st.flipped=!st.flipped;render();});
 document.getElementById('nextBtn').addEventListener('click',e=>{e.stopPropagation();const l=list();st.idx=(st.idx+1)%l.length;st.flipped=false;render();});
 document.getElementById('prevBtn').addEventListener('click',e=>{e.stopPropagation();const l=list();st.idx=(st.idx-1+l.length)%l.length;st.flipped=false;render();});
-document.querySelectorAll('.mode-tab').forEach(t=>t.addEventListener('click',()=>{st.mode=t.dataset.mode;st.idx=0;st.flipped=false;render();}));
+document.querySelectorAll('.mode-tab').forEach(t=>t.addEventListener('click',()=>{st.mode=t.dataset.mode;if(st.mode!=='vocab') st.fromList=false;st.idx=0;st.flipped=false;render();}));
 document.getElementById('resetBtn').addEventListener('click',()=>{
   const k=lkKey(); st.learned[k]=new Set(); sto_set('l:'+k,[]); render();
 });
@@ -2370,6 +2463,7 @@ document.getElementById('flipWrap').addEventListener('touchend',e=>{
 // ─── エクスポート/インポート ────────────────────────────────────
 function exportData(){
   const data = {
+    exChecked: [...exChecked],
     learned: {},
     level: st.level,
     gender: st.gender,
@@ -2402,6 +2496,11 @@ function importData(){
   if(!input) return;
   try{
     const data = JSON.parse(input.trim());
+    // exChecked
+    if(Array.isArray(data.exChecked)){
+      data.exChecked.forEach(id=>exChecked.add(id));
+      saveExChecked();
+    }
     // learned
     if(data.learned){
       for(const k of Object.keys(st.learned)){
@@ -2414,7 +2513,7 @@ function importData(){
     // settings
     if(data.level){ st.level=data.level; sto_set('s:level',st.level); }
     if(data.gender){ st.gender=data.gender; sto_set('s:gender',st.gender); }
-    alert('✅ インポート完了！');
+    alert('✅ インポート完了！\n例文OK: '+exChecked.size+'件');
     render();
   } catch(e){
     alert('❌ データの形式が正しくありません。\nエクスポートしたテキストをそのまま貼り付けてください。');
@@ -2423,6 +2522,21 @@ function importData(){
 
 document.getElementById('exportBtn').addEventListener('click', exportData);
 document.getElementById('importBtn').addEventListener('click', importData);
+
+document.getElementById('backBtn').addEventListener('click',function(){
+  const scrollToId=st.fromListItemId;
+  st.fromList=false;
+  st.mode='wordlist';
+  st.wordlistPos=st.fromListPos;
+  render();
+  // 戻った単語の位置にスクロール
+  if(scrollToId){
+    requestAnimationFrame(()=>{
+      const el=document.querySelector(`.list-item[data-id="${scrollToId}"]`);
+      if(el) el.scrollIntoView({block:'center',behavior:'smooth'});
+    });
+  }
+});
 
 if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged=()=>{};
 (async()=>{ await loadAll(); render(); })();
