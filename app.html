@@ -159,6 +159,28 @@ footer{text-align:center;padding:6px 0 2px;}
 /* --- 戻るボタン --- */
 .back-btn{display:none;position:fixed;bottom:80px;right:16px;background:var(--yellow);color:#2b2118;border:none;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.4);}
 .mode-tab[data-mode="wordlist"].active{background:#a78bfa;color:#1a0050;border-color:#a78bfa;}
+
+
+/* === 方向pillに国旗背景 === */
+#dirPill {
+  background-size: cover;
+  background-position: center;
+  font-weight: 800;
+  font-size: 11px;
+  text-shadow: 0 0 4px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.7);
+  border: 1.5px solid rgba(255,255,255,.25);
+  color: #fff;
+  min-width: 68px;
+  text-align: center;
+}
+/* TH→JP: タイ国旗 */
+#dirPill[data-dir="th-jp"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 375'%3E%3Crect width='900' height='375' fill='%23A51931'/%3E%3Crect y='75' width='900' height='225' fill='%23F4F5F8'/%3E%3Crect y='150' width='900' height='75' fill='%232D2A4A'/%3E%3C/svg%3E");
+}
+/* JP→TH: 日本国旗 */
+#dirPill[data-dir="jp-th"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Crect width='900' height='600' fill='%23fff'/%3E%3Ccircle cx='450' cy='300' r='180' fill='%23BC002D'/%3E%3C/svg%3E");
+}
 </style>
 </head>
 <body>
@@ -226,11 +248,11 @@ const GRAM = [{"id":"gr01","title":"文末の丁寧語 ครับ / ค่ะ"
 const NUMS = [{"th_num":"๐","arabic":"0","ro":"sǔun","th_word":"ศูนย์"},{"th_num":"๑","arabic":"1","ro":"nɯɯng","th_word":"หนึ่ง"},{"th_num":"๒","arabic":"2","ro":"sɔɔng","th_word":"สอง"},{"th_num":"๓","arabic":"3","ro":"sǎam","th_word":"สาม"},{"th_num":"๔","arabic":"4","ro":"sìi","th_word":"สี่"},{"th_num":"๕","arabic":"5","ro":"hâa","th_word":"ห้า"},{"th_num":"๖","arabic":"6","ro":"hòk","th_word":"หก"},{"th_num":"๗","arabic":"7","ro":"cèt","th_word":"เจ็ด"},{"th_num":"๘","arabic":"8","ro":"pɛɛt","th_word":"แปด"},{"th_num":"๙","arabic":"9","ro":"kâao","th_word":"เก้า"},{"th_num":"๑๐","arabic":"10","ro":"sìp","th_word":"สิบ"},{"th_num":"๒๐","arabic":"20","ro":"yîi sìp","th_word":"ยี่สิบ"},{"th_num":"๑๐๐","arabic":"100","ro":"rɔɔi","th_word":"ร้อย"},{"th_num":"๑,๐๐๐","arabic":"1000","ro":"phan","th_word":"พัน"},{"th_num":"๑๐,๐๐๐","arabic":"10000","ro":"mɯ̀ɯn","th_word":"หมื่น"},{"th_num":"๑๐๐,๐๐๐","arabic":"100000","ro":"sɛ̌ɛn","th_word":"แสน"}];
 
 const POS_LABELS = {noun:'名詞',verb:'動詞',adj:'形容詞',adv:'副詞',classifier:'類別詞',question:'疑問詞',greeting:'挨拶'};
-const SCENES = ["すべて","挨拶","レストラン","市場","交通","ホテル","病院","道案内","日常会話","電話・SNS","緊急","観光","銀行"];
+const SCENES = ["ALL","挨拶","レストラン","市場","交通","ホテル","病院","道案内","日常会話","電話・SNS","緊急","観光","銀行"];
 const PT = {male:{th:'ครับ',ro:'khrap'},female:{th:'ค่ะ',ro:'kha'}};
 
 let st = {
-  mode:'vocab',pos:'noun',scene:'すべて',dir:'th-jp',
+  mode:'vocab',pos:'noun',scene:'ALL',dir:'th-jp',
   level:'beginner',gender:'male',filterUn:false,wordlistPos:'noun',fromList:false,fromListPos:'noun',fromListItemId:null,filterUnEx:false,
   shuffle:false,shuffled:{},
   idx:0,flipped:false,fontTab:'compare',
@@ -1632,19 +1654,25 @@ function shuffleArr(arr){
 }
 function list(){
   if(st.mode==='vocab'){
-    let l=DATA[st.pos]||[];
+    let l=st.pos==='all'
+      ?Object.values(DATA).filter(Array.isArray).flat()
+      :DATA[st.pos]||[];
     if(st.level==='beginner') l=l.filter(i=>i.level==='5');
-    if(st.filterUn){ const f=l.filter(i=>!st.learned[st.pos].has(i.id)); if(f.length) l=f; }
-    if(st.filterUnEx){ const f2=l.filter(i=>!exChecked.has(i.id)); if(f2.length) l=f2; }
+    if(st.filterUn){
+      const f=st.pos==='all'
+        ?l.filter(i=>!Object.values(st.learned).some(s=>s.has(i.id)))
+        :l.filter(i=>!st.learned[st.pos].has(i.id));
+      if(f.length) l=f;
+    }
     if(st.shuffle){
-      const key=st.pos+'_'+(st.filterUn?'u':'')+(st.filterUnEx?'e':'');
+      const key=st.pos+'_'+(st.filterUn?'u':'');
       if(!st.shuffled[key]||st.shuffled[key].length!==l.length) st.shuffled[key]=shuffleArr(l);
       return st.shuffled[key];
     }
     return l;
   }
   if(st.mode==='conversation'){
-    let l=st.scene==='すべて'?CONV:CONV.filter(i=>i.scene===st.scene);
+    let l=st.scene==='ALL'?CONV:CONV.filter(i=>i.scene===st.scene);
     if(st.filterUn){ const f=l.filter(i=>!st.learned.conversation.has(i.id)); if(f.length) l=f; }
     if(st.shuffle){
       const key='conv_'+st.scene+(st.filterUn?'_u':'');
@@ -1666,7 +1694,8 @@ function renderSub(){
   const sr=document.getElementById('subRow');
   if(st.mode==='vocab'){
     sr.style.display='flex';
-    sr.innerHTML=Object.entries(POS_LABELS).map(([k,v])=>
+    const allChip=`<button class="chip ${'all'===st.pos?'active-vocab':''}" data-pos="all">ALL</button>`;
+    sr.innerHTML=allChip+Object.entries(POS_LABELS).map(([k,v])=>
       `<button class="chip ${k===st.pos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.pos=c.dataset.pos;st.idx=0;st.flipped=false;st.fromList=false;render();}));
   } else if(st.mode==='conversation'){
@@ -1682,7 +1711,8 @@ function renderSub(){
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.fontTab=c.dataset.ft;render();}));
   } else if(st.mode==='wordlist'){
     sr.style.display='flex';
-    sr.innerHTML=Object.entries(POS_LABELS).map(([k,v])=>
+    const allWlChip=`<button class="chip ${'all'===st.wordlistPos?'active-vocab':''}" data-pos="all">ALL</button>`;
+    sr.innerHTML=allWlChip+Object.entries(POS_LABELS).map(([k,v])=>
       `<button class="chip ${k===st.wordlistPos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.wordlistPos=c.dataset.pos;render();}));
   } else { sr.style.display='none'; sr.innerHTML=''; }
@@ -1691,14 +1721,21 @@ function renderSub(){
 function renderWordList(){
   const lp=document.getElementById('listPage');
   const pos=st.wordlistPos;
-  const items=DATA[pos]||[];
-  const lset=st.learned[pos]||new Set();
   const beg=st.level==='beginner';
+  // ALLの場合は全品詞を結合、各itemにposを付与
+  let items;
+  if(pos==='all'){
+    items=Object.entries(DATA)
+      .filter(([,v])=>Array.isArray(v))
+      .flatMap(([k,v])=>v.map(i=>({...i,_pos:k})));
+  } else {
+    items=(DATA[pos]||[]).map(i=>({...i,_pos:pos}));
+  }
   const filtered=beg?items.filter(i=>i.level==='5'):items;
   let html=`<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);padding:6px 12px 4px;">${filtered.length}語</div>`;
   filtered.forEach((item,idx)=>{
-    const learned=lset.has(item.id);
-    html+=`<div class="list-item${learned?' learned-item':''}" data-id="${item.id}" data-pos="${pos}">
+    const learned=Object.values(st.learned).some(s=>s.has(item.id));
+    html+=`<div class="list-item${learned?' learned-item':''}" data-id="${item.id}" data-pos="${item._pos}">
       <span class="list-num">${idx+1}</span>
       <span class="list-th">${item.th}</span>
       <span class="list-ro">${item.ro}</span>
@@ -1735,9 +1772,9 @@ function renderSettings(){
   if(noCtrl){ sr.innerHTML=''; return; }
   const noDir=['grammar'].includes(st.mode);
   let h='';
-  if(!noDir) h+=`<button class="pill" id="dirPill">${st.dir==='th-jp'?'TH→JP':'JP→TH'}</button>`;
+  if(!noDir) h+=`<button class="pill" id="dirPill" data-dir="${st.dir}">${st.dir==='th-jp'?'TH→JP':'JP→TH'}</button>`;
   h+=`<button class="pill pill-level" id="lvPill" data-level="${st.level}">${st.level==='beginner'?'初心者':'中級者+'}</button>`;
-  h+=`<button class="pill pill-gender" id="gdPill" data-gender="${st.gender}">${st.gender==='male'?'♂ 男性語尾':'♀ 女性語尾'}</button>`;
+  if(st.mode==='conversation') h+=`<button class="pill pill-gender" id="gdPill" data-gender="${st.gender}">${st.gender==='male'?'♂ 男性語尾':'♀ 女性語尾'}</button>`;
   if(st.mode!=='grammar') h+=`<button class="pill ${st.filterUn?'on':''}" id="unPill">未学習だけ</button>`;
   if(st.mode!=='grammar') h+=`<button class="pill ${st.shuffle?'on':''}" id="shfPill">🔀 シャッフル</button>`;
   sr.innerHTML=h;
@@ -2327,10 +2364,12 @@ function render(){
   const item=l[st.idx]||l[0];
   if(!item) return;
   const lk=lkKey();
-  const lset=st.learned[lk];
-  const isLearned=lset.has(item.id);
+  const lset=st.pos==='all'?null:st.learned[lk];
+  const isLearned=st.pos==='all'
+    ?Object.values(st.learned).some(s=>s.has(item.id))
+    :lset.has(item.id);
   const beg=st.level==='beginner';
-  const modeRibbon={vocab:{cls:'vocab',lbl:POS_LABELS[st.pos]},
+  const modeRibbon={vocab:{cls:'vocab',lbl:st.pos==='all'?'ALL':POS_LABELS[st.pos]},
     conversation:{cls:'conv',lbl:'会話'},grammar:{cls:'gram',lbl:'文法'},
     thaienglish:{cls:'te',lbl:'タイ英語'}}[st.mode]||{cls:'vocab',lbl:''};
   const rib=(cls,lbl)=>`<span class="ribbon" style="background:${
@@ -2416,14 +2455,28 @@ function render(){
   document.getElementById('faceBack').innerHTML=back;
   document.getElementById('cardInner').classList.toggle('flipped',st.flipped);
   document.getElementById('dotCount').textContent=(st.idx+1)+' / '+l.length;
-  document.getElementById('progressText').textContent=lset.size+' 学習済み / 全'+l.length;
+  const learnedCount=st.pos==='all'
+    ?Object.values(st.learned).reduce((s,x)=>s+x.size,0)
+    :(lset?lset.size:0);
+  document.getElementById('progressText').textContent=learnedCount+' 学習済み / 全'+l.length;
 
   // vocab裏面の音声は例文ボックス内の🔊で対応
   const af=document.getElementById('audF'); if(af) af.onclick=e=>{e.stopPropagation();speak(spk);};
   const lb=document.getElementById('lrnB'); if(lb) lb.onclick=e=>{
     e.stopPropagation();
-    if(lset.has(item.id)) lset.delete(item.id); else lset.add(item.id);
-    sto_set('l:'+lk,[...lset]); render();
+    if(st.pos==='all'){
+      // どの品詞に属するか特定
+      const itemPos=Object.keys(DATA).find(p=>Array.isArray(DATA[p])&&DATA[p].some(i=>i.id===item.id));
+      if(itemPos){
+        const s=st.learned[itemPos];
+        if(s.has(item.id)) s.delete(item.id); else s.add(item.id);
+        sto_set('l:'+itemPos,[...s]);
+      }
+    } else {
+      if(lset.has(item.id)) lset.delete(item.id); else lset.add(item.id);
+      sto_set('l:'+lk,[...lset]);
+    }
+    render();
   };
   // 例文OKボタン
   const exOk=document.getElementById('exOkB'); if(exOk) exOk.onclick=e=>{
