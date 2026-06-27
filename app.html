@@ -75,7 +75,7 @@ header{padding-bottom:10px;}
 .lv{position:absolute;bottom:14px;right:14px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9c8d68;}
 .face-front{justify-content:center;align-items:center;text-align:center;}
 .th-big{font-family:'Sarabun',sans-serif;font-weight:500;font-size:38px;line-height:1.4;margin-top:16px;}
-.th-big.sm{font-size:24px;}
+.th-big.sm{font-size:22px;}
 .jp-big{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:22px;line-height:1.45;margin-top:16px;}
 .ro-front{font-family:'IBM Plex Mono',monospace;font-size:14px;color:#6b5c3e;margin-top:8px;}
 .tap-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:11px;color:#9c8d68;font-family:'IBM Plex Mono',monospace;}
@@ -85,8 +85,8 @@ header{padding-bottom:10px;}
 .front-audio{margin-top:16px;}
 .scene-tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#8a7a55;margin-top:26px;margin-bottom:2px;}
 /* back face content */
-.back-ro{font-family:'IBM Plex Mono',monospace;font-size:14px;color:#6b5c3e;margin-top:28px;}
-.back-jp{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:19px;margin-top:10px;line-height:1.5;}
+.back-ro{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#6b5c3e;margin-top:6px;}
+.back-jp{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:17px;margin-top:6px;line-height:1.4;}
 .gram-title{font-family:'Sarabun',sans-serif;font-weight:600;font-size:18px;margin-top:26px;color:var(--ink);}
 .ex-ok-btn{border:1.5px solid #4caf50;background:transparent;color:#4caf50;
   border-radius:999px;padding:5px 12px;font-size:11px;font-weight:700;
@@ -98,7 +98,7 @@ header{padding-bottom:10px;}
 .ex-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:18px;}
 .ex-ro{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6b5c3e;margin-top:3px;}
 .ex-jp{font-size:13px;margin-top:3px;}
-.back-actions{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:10px;}
+.back-actions{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:6px;}
 .learn-btn{border:1.5px solid var(--ink);background:transparent;color:var(--ink);
   border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;
   font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;}
@@ -1625,13 +1625,13 @@ function buildExampleStatic(item, pos) {
 
 function buildExBox(ex) {
   const noteHtml = ex.note ? `<div style="margin-top:8px;padding:7px 10px;background:rgba(242,183,5,.15);border-left:3px solid #f2b705;border-radius:4px;font-size:11.5px;color:#5a4500;line-height:1.6;">${ex.note}</div>` : '';
-  return `<div style="background:rgba(0,0,0,.06);border-radius:10px;padding:10px 12px;margin-top:10px;">
-    <div style="font-size:10px;color:#9c8d68;font-family:'IBM Plex Mono',monospace;margin-bottom:4px;">例文</div>
-    <div style="font-family:'Sarabun',sans-serif;font-size:18px;font-weight:500;color:#2b2118;">${ex.th}</div>
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6b5c3e;margin-top:3px;">${ex.ro}</div>
-    <div style="font-size:13px;color:#2b2118;margin-top:3px;">${ex.jp}</div>
+  return `<div style="background:rgba(0,0,0,.06);border-radius:10px;padding:8px 12px;margin-top:8px;">
+    <div style="font-size:10px;color:#9c8d68;font-family:'IBM Plex Mono',monospace;margin-bottom:3px;">例文</div>
+    <div style="font-family:'Sarabun',sans-serif;font-size:16px;font-weight:500;color:#2b2118;line-height:1.3;">${ex.th}</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6b5c3e;margin-top:2px;line-height:1.4;">${ex.ro}</div>
+    <div style="font-size:12px;color:#2b2118;margin-top:2px;">${ex.jp}</div>
     ${noteHtml}
-    <button id="exSpkBtn" style="margin-top:6px;width:34px;height:34px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;">🔊</button>
+    <button id="exSpkBtn" style="margin-top:5px;width:30px;height:30px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;">🔊</button>
   </div>`;
 }
 
@@ -2432,7 +2432,7 @@ function render(){
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップして意味を見る</div>`;
       back=`${ribHtml}${hole}
-        <div class="th-big sm" style="margin-top:18px;">${item.th}</div>
+        <div class="th-big sm" style="margin-top:8px;">${item.th}</div>
         ${beg?`<div class="back-ro">${item.ro}</div>`:''}
         <div class="back-jp" style="margin-top:10px;">${item.jp}</div>
         <div id="exampleBox" style="overflow-y:auto;"></div>
