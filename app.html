@@ -148,13 +148,13 @@ footer{text-align:center;padding:6px 0 2px;}
 .pill-gender[data-gender="female"]{background:#5c1a3a;color:#f48fb1;border-color:#bb2963;}
 /* --- リストタブ --- */
 #listPage{padding:4px 0;}
-.list-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .15s;}
+.list-item{display:flex;align-items:center;gap:0;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .15s;}
 .list-item:active{background:rgba(255,255,255,.07);}
 .list-item.learned-item{background:rgba(76,154,106,.08);}
-.list-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);min-width:28px;text-align:right;}
-.list-th{font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;min-width:90px;}
-.list-ro{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted2);flex:1;}
-.list-jp{font-size:12px;color:var(--muted2);max-width:120px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.list-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);width:28px;text-align:right;flex-shrink:0;margin-right:8px;}
+.list-th{font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;width:30%;flex-shrink:0;}
+.list-ro{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted2);width:28%;flex-shrink:0;line-height:1.4;}
+.list-jp{font-size:12px;color:var(--fg);text-align:left;line-height:1.5;flex:1;}
 .list-badge{font-size:9px;background:#2d6a4f;color:#b7e4c7;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;}
 /* --- 戻るボタン --- */
 .back-btn{display:none;position:fixed;bottom:80px;right:16px;background:var(--yellow);color:#2b2118;border:none;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.4);}
@@ -181,6 +181,12 @@ footer{text-align:center;padding:6px 0 2px;}
 #dirPill[data-dir="jp-th"] {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Crect width='900' height='600' fill='%23fff'/%3E%3Ccircle cx='450' cy='300' r='180' fill='%23BC002D'/%3E%3C/svg%3E");
 }
+
+/* --- TOPボタン --- */
+.top-btn{display:none;position:fixed;bottom:80px;left:16px;background:rgba(60,55,70,.92);color:#fff;border:1px solid #55505f;border-radius:20px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.4);}
+/* --- 固定品詞タブ（リスト表示中・スクロール後のみ） --- */
+#stickySubRow{display:none;position:fixed;top:0;left:0;right:0;z-index:50;background:#1a1820;padding:5px 18px 3px;border-bottom:1px solid rgba(255,255,255,.08);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;}
+#stickySubRow .chip{display:inline-flex;margin-right:6px;}
 </style>
 </head>
 <body>
@@ -217,8 +223,10 @@ footer{text-align:center;padding:6px 0 2px;}
   </div>
 
   <div class="static-page" id="staticPage" style="display:none;"></div>
+  <div id="stickySubRow"></div>
   <div id="listPage" style="display:none;"></div>
   <button class="back-btn" id="backBtn">← リストへ戻る</button>
+  <button class="top-btn" id="topBtn">↑ TOP</button>
 
   <footer>
     <button class="reset-btn" id="resetBtn">この分類の学習記録をリセット</button>
@@ -1718,6 +1726,24 @@ function renderSub(){
   } else { sr.style.display='none'; sr.innerHTML=''; }
 }
 
+function updateStickyTab(){
+  const sr=document.getElementById('stickySubRow');
+  if(!sr) return;
+  if(st.mode!=='wordlist'){sr.style.display='none';return;}
+  // スクロール量で表示切替（初期は非表示）
+  sr.style.display=window.scrollY>80?'block':'none';
+  const allChip=`<button class="chip ${'all'===st.wordlistPos?'active-vocab':''}" data-pos="all" style="margin-left:0;">ALL</button>`;
+  sr.innerHTML=allChip+Object.entries(POS_LABELS).map(([k,v])=>
+    `<button class="chip ${k===st.wordlistPos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
+  sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+    st.wordlistPos=c.dataset.pos;
+    render();
+    // タブ切替時にlistPageのトップへスクロール
+    const lp=document.getElementById('listPage');
+    if(lp) lp.scrollIntoView({behavior:'smooth',block:'start'});
+  }));
+}
+
 function renderWordList(){
   const lp=document.getElementById('listPage');
   const pos=st.wordlistPos;
@@ -1732,18 +1758,35 @@ function renderWordList(){
     items=(DATA[pos]||[]).map(i=>({...i,_pos:pos}));
   }
   const filtered=beg?items.filter(i=>i.level==='5'):items;
-  let html=`<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);padding:6px 12px 4px;">${filtered.length}語</div>`;
+  let html=`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 4px;">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);">${filtered.length}語</span>
+    <span style="font-size:13px;color:var(--muted);">👆 単語をタップするとカードで確認できます</span>
+  </div>`;
   filtered.forEach((item,idx)=>{
     const learned=Object.values(st.learned).some(s=>s.has(item.id));
     html+=`<div class="list-item${learned?' learned-item':''}" data-id="${item.id}" data-pos="${item._pos}">
       <span class="list-num">${idx+1}</span>
       <span class="list-th">${item.th}</span>
       <span class="list-ro">${item.ro}</span>
-      <span class="list-jp">${item.jp}</span>
-      ${learned?'<span class="list-badge">済</span>':'<span style="min-width:22px;"></span>'}
+      <span class="list-jp">${(()=>{
+        const jp=item.jp;
+        // カッコ内を保護してから分割
+        const parts=[];
+        let buf='',depth=0;
+        for(const c of jp){
+          if(c==='(')depth++;
+          if(c===')')depth--;
+          if((c==='/'||c==='、')&&depth===0){parts.push(buf.trim());buf='';}
+          else buf+=c;
+        }
+        if(buf.trim())parts.push(buf.trim());
+        return parts.filter(s=>s).map(s=>'･'+s).join('<br>');
+      })()}</span>
+      ${learned?'<span class="list-badge">済</span>':''}
     </div>`;
   });
   lp.innerHTML=html;
+  updateStickyTab();
   lp.querySelectorAll('.list-item').forEach(el=>{
     el.addEventListener('click',()=>{
       const id=el.dataset.id;
@@ -2356,6 +2399,9 @@ function render(){
     return;
   }
   sp.style.display='none'; lp.style.display='none';
+  // stickyタブ非表示
+  const ssr=document.getElementById('stickySubRow');
+  if(ssr) ssr.style.display='none';
   // ★戻るボタン：リストからジャンプした時だけ表示
   if(bb) bb.style.display=st.fromList?'block':'none';
 
@@ -2583,12 +2629,29 @@ document.getElementById('backBtn').addEventListener('click',function(){
   st.mode='wordlist';
   st.wordlistPos=st.fromListPos;
   render();
-  // 戻った単語の位置にスクロール
   if(scrollToId){
     requestAnimationFrame(()=>{
       const el=document.querySelector(`.list-item[data-id="${scrollToId}"]`);
       if(el) el.scrollIntoView({block:'center',behavior:'smooth'});
     });
+  }
+});
+
+// TOPボタン
+document.getElementById('topBtn').addEventListener('click',function(){
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+// スクロール検知：300px以上でTOPボタン表示
+window.addEventListener('scroll',function(){
+  const tb=document.getElementById('topBtn');
+  const sr=document.getElementById('stickySubRow');
+  if(st.mode==='wordlist'){
+    if(tb) tb.style.display=window.scrollY>300?'block':'none';
+    if(sr) sr.style.display=window.scrollY>80?'block':'none';
+  } else {
+    if(tb) tb.style.display='none';
+    if(sr) sr.style.display='none';
   }
 });
 
