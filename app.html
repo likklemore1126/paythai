@@ -1722,7 +1722,7 @@ function renderSub(){
     const allWlChip=`<button class="chip ${'all'===st.wordlistPos?'active-vocab':''}" data-pos="all">ALL</button>`;
     sr.innerHTML=allWlChip+Object.entries(POS_LABELS).map(([k,v])=>
       `<button class="chip ${k===st.wordlistPos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
-    sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.wordlistPos=c.dataset.pos;render();}));
+    sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.wordlistPos=c.dataset.pos;window.scrollTo(0,0);render();}));
   } else { sr.style.display='none'; sr.innerHTML=''; }
 }
 
@@ -1737,10 +1737,8 @@ function updateStickyTab(){
     `<button class="chip ${k===st.wordlistPos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
   sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
     st.wordlistPos=c.dataset.pos;
+    window.scrollTo(0,0);
     render();
-    // タブ切替時にlistPageのトップへスクロール
-    const lp=document.getElementById('listPage');
-    if(lp) lp.scrollIntoView({behavior:'smooth',block:'start'});
   }));
 }
 
