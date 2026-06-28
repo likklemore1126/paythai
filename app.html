@@ -157,7 +157,7 @@ footer{text-align:center;padding:6px 0 2px;}
 .list-jp{font-size:12px;color:var(--fg);text-align:left;line-height:1.5;flex:1;}
 .list-badge{font-size:9px;background:#2d6a4f;color:#b7e4c7;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;}
 /* --- 戻るボタン --- */
-.back-btn{display:none;position:fixed;bottom:80px;right:16px;background:var(--yellow);color:#2b2118;border:none;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.4);}
+.back-btn{display:none;background:var(--yellow);color:#2b2118;border:none;border-radius:20px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
 .mode-tab[data-mode="wordlist"].active{background:#a78bfa;color:#1a0050;border-color:#a78bfa;}
 
 
@@ -215,17 +215,19 @@ footer{text-align:center;padding:6px 0 2px;}
         <div class="face face-back" id="faceBack"></div>
       </div>
     </div>
-    <div class="nav-row">
+    <div class="nav-row" id="navRow">
       <button class="nav-btn" id="prevBtn">&#8249;</button>
       <span class="dot-count" id="dotCount">1 / 1</span>
       <button class="nav-btn" id="nextBtn">&#8250;</button>
+    </div>
+    <div class="nav-row" id="backRow" style="display:none;">
+      <button class="back-btn" id="backBtn" style="display:block;font-size:14px;padding:10px 28px;">← リストへ戻る</button>
     </div>
   </div>
 
   <div class="static-page" id="staticPage" style="display:none;"></div>
   <div id="stickySubRow"></div>
   <div id="listPage" style="display:none;"></div>
-  <button class="back-btn" id="backBtn">← リストへ戻る</button>
   <button class="top-btn" id="topBtn">↑ TOP</button>
 
   <footer>
@@ -2400,7 +2402,11 @@ function render(){
   // stickyタブ非表示
   const ssr=document.getElementById('stickySubRow');
   if(ssr) ssr.style.display='none';
-  // ★戻るボタン：リストからジャンプした時だけ表示
+  // fromListによってnavRowとbackRowを切り替え
+  const navRow=document.getElementById('navRow');
+  const backRow=document.getElementById('backRow');
+  if(navRow) navRow.style.display=st.fromList?'none':'flex';
+  if(backRow) backRow.style.display=st.fromList?'flex':'none';
   if(bb) bb.style.display=st.fromList?'block':'none';
 
   const l=list();
