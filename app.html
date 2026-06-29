@@ -2456,8 +2456,9 @@ function render(){
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップして意味を見る</div>`;
       back=`${ribHtml}${hole}
-        ${beg?`<div class="back-ro" style="margin-top:26px;">${roT}</div>`:''}
-        <div class="back-jp" style="${beg?'':'margin-top:40px;'}">${item.jp}</div>
+        <div class="th-big sm" style="margin-top:10px;">${thT}</div>
+        ${beg?`<div class="back-ro">${roT}</div>`:''}
+        <div class="back-jp" style="margin-top:8px;">${item.jp}</div>
         <div class="back-actions">
           <button class="audio-btn" id="audB">🔊</button>
           <button class="learn-btn ${isLearned?'done':''}" id="lrnB">${isLearned?'覚えた ✓':'覚えた'}</button>
