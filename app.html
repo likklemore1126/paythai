@@ -2760,7 +2760,7 @@ document.getElementById('backBtn').addEventListener('click',function(){
   render();
   if(scrollToId){
     requestAnimationFrame(()=>{
-      const el=document.querySelector(`.list-item[data-id="${scrollToId}"]`);
+      const el=document.querySelector(`.list-item[data-id="${scrollToId}"], .conv-list-item[data-id="${scrollToId}"]`);
       if(el) el.scrollIntoView({block:'center',behavior:'smooth'});
     });
   }
@@ -2802,7 +2802,7 @@ document.getElementById('toListBtn').addEventListener('click',function(){
     st.fromList=false;
     render();
     requestAnimationFrame(()=>{
-      const el=document.querySelector(`.list-item[data-id="${scrollToId}"]`);
+      const el=document.querySelector(`.conv-list-item[data-id="${scrollToId}"]`);
       if(el) el.scrollIntoView({block:'center',behavior:'smooth'});
     });
   }
