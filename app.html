@@ -213,8 +213,12 @@ footer{text-align:center;padding:6px 0 2px;}
       <span class="dot-count" id="dotCount">1 / 1</span>
       <button class="nav-btn" id="nextBtn">&#8250;</button>
     </div>
-    <div class="nav-row" id="backRow" style="display:none;">
-      <button class="back-btn" id="backBtn" style="display:block;font-size:14px;padding:10px 28px;">← リストへ戻る</button>
+    <div class="nav-row" id="toListRow" style="display:none;margin-top:8px;">
+      <button class="back-btn" id="toListBtn" style="display:block;font-size:14px;padding:10px 20px;background:rgba(242,183,5,.15);color:var(--yellow);border:1.5px solid var(--yellow);">📋 リストで見る</button>
+    </div>
+    <div class="nav-row" id="backRow" style="display:none;gap:8px;">
+      <button class="back-btn" id="backBtn" style="display:block;font-size:14px;padding:10px 20px;">← リストへ戻る</button>
+      <button class="back-btn" id="stayBtn" style="display:block;font-size:14px;padding:10px 20px;background:rgba(242,183,5,.15);color:var(--yellow);border:1.5px solid var(--yellow);">ここに残る</button>
     </div>
   </div>
 
@@ -2414,8 +2418,10 @@ function render(){
   // fromListによってnavRowとbackRowを切り替え
   const navRow=document.getElementById('navRow');
   const backRow=document.getElementById('backRow');
+  const toListRow=document.getElementById('toListRow');
   if(navRow) navRow.style.display=st.fromList?'none':'flex';
   if(backRow) backRow.style.display=st.fromList?'flex':'none';
+  if(toListRow) toListRow.style.display=(!st.fromList && st.mode==='vocab')?'flex':'none';
   if(bb) bb.style.display=st.fromList?'block':'none';
 
   const l=list();
@@ -2650,6 +2656,33 @@ document.getElementById('backBtn').addEventListener('click',function(){
       if(el) el.scrollIntoView({block:'center',behavior:'smooth'});
     });
   }
+});
+
+// ここに残る：通常のカード表示モードへ切り替え（同じ単語のまま）
+document.getElementById('stayBtn').addEventListener('click',function(){
+  st.fromList=false;
+  render();
+});
+
+// 単語カードからリストへ飛ぶ
+document.getElementById('toListBtn').addEventListener('click',function(){
+  if(st.mode!=='vocab') return;
+  const l=list();
+  const item=l[st.idx];
+  if(!item) return;
+  // 現在の単語が属する実際の品詞を特定（ALLタブ対応）
+  const itemPos=st.pos==='all'
+    ?Object.keys(DATA).find(p=>Array.isArray(DATA[p])&&DATA[p].some(i=>i.id===item.id))
+    :st.pos;
+  const scrollToId=item.id;
+  st.mode='wordlist';
+  st.wordlistPos=itemPos||st.pos;
+  st.fromList=false;
+  render();
+  requestAnimationFrame(()=>{
+    const el=document.querySelector(`.list-item[data-id="${scrollToId}"]`);
+    if(el) el.scrollIntoView({block:'center',behavior:'smooth'});
+  });
 });
 
 // TOPボタン
