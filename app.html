@@ -195,14 +195,7 @@ footer{text-align:center;padding:6px 0 2px;}
     <div class="title-row">
       <div><div class="title-th">TAKA's Thai Pocket Cards</div></div>
     </div>
-    <div class="mode-tabs">
-      <div class="mode-tab" data-mode="vocab">単語</div>
-      <div class="mode-tab" data-mode="wordlist">リスト</div>
-      <div class="mode-tab" data-mode="conversation">会話</div>
-      <div class="mode-tab" data-mode="grammar">文法</div>
-      <div class="mode-tab" data-mode="font">タイ文字</div>
-      <div class="mode-tab" data-mode="numbers">数字</div>
-    </div>
+    <div class="mode-tabs" id="modeTabs"></div>
     <div class="sub-row" id="subRow"></div>
     <div class="settings-row" id="settingsRow"></div>
     <div class="progress-line"><span class="progress-text" id="progressText"></span></div>
@@ -258,6 +251,7 @@ const GRAM = [{"id":"gr01","title":"文末の丁寧語 ครับ / ค่ะ"
 const NUMS = [{"th_num":"๐","arabic":"0","ro":"sǔun","th_word":"ศูนย์"},{"th_num":"๑","arabic":"1","ro":"nɯɯng","th_word":"หนึ่ง"},{"th_num":"๒","arabic":"2","ro":"sɔɔng","th_word":"สอง"},{"th_num":"๓","arabic":"3","ro":"sǎam","th_word":"สาม"},{"th_num":"๔","arabic":"4","ro":"sìi","th_word":"สี่"},{"th_num":"๕","arabic":"5","ro":"hâa","th_word":"ห้า"},{"th_num":"๖","arabic":"6","ro":"hòk","th_word":"หก"},{"th_num":"๗","arabic":"7","ro":"cèt","th_word":"เจ็ด"},{"th_num":"๘","arabic":"8","ro":"pɛɛt","th_word":"แปด"},{"th_num":"๙","arabic":"9","ro":"kâao","th_word":"เก้า"},{"th_num":"๑๐","arabic":"10","ro":"sìp","th_word":"สิบ"},{"th_num":"๒๐","arabic":"20","ro":"yîi sìp","th_word":"ยี่สิบ"},{"th_num":"๑๐๐","arabic":"100","ro":"rɔɔi","th_word":"ร้อย"},{"th_num":"๑,๐๐๐","arabic":"1000","ro":"phan","th_word":"พัน"},{"th_num":"๑๐,๐๐๐","arabic":"10000","ro":"mɯ̀ɯn","th_word":"หมื่น"},{"th_num":"๑๐๐,๐๐๐","arabic":"100000","ro":"sɛ̌ɛn","th_word":"แสน"}];
 
 const POS_LABELS = {noun:'名詞',verb:'動詞',adj:'形容詞',adv:'副詞',classifier:'類別詞',question:'疑問詞',greeting:'挨拶'};
+const MODE_LABELS_JP = {vocab:'単語',wordlist:'リスト',conversation:'会話',grammar:'文法',font:'タイ文字',numbers:'数字'};
 const SCENES = ["ALL","挨拶","レストラン","市場","交通","ホテル","病院","道案内","日常会話","電話・SNS","緊急","観光","銀行"];
 const PT = {male:{th:'ครับ',ro:'khrap'},female:{th:'ค่ะ',ro:'kha'}};
 
@@ -1700,12 +1694,27 @@ function lkKey(){
   if(st.mode==='grammar') return 'grammar';
 }
 
+function getPosLabels(){ return POS_LABELS; }
+
+function renderModeTabs(){
+  const mt=document.getElementById('modeTabs');
+  if(!mt) return;
+  const labels=MODE_LABELS_JP;
+  mt.innerHTML=Object.entries(labels).map(([k,v])=>
+    `<div class="mode-tab${k===st.mode?' active':''}" data-mode="${k}">${v}</div>`).join('');
+  mt.querySelectorAll('.mode-tab').forEach(t=>t.addEventListener('click',()=>{
+    st.mode=t.dataset.mode;
+    if(st.mode!=='vocab') st.fromList=false;
+    st.idx=0;st.flipped=false;render();
+  }));
+}
+
 function renderSub(){
   const sr=document.getElementById('subRow');
   if(st.mode==='vocab'){
     sr.style.display='flex';
     const allChip=`<button class="chip ${'all'===st.pos?'active-vocab':''}" data-pos="all">ALL</button>`;
-    sr.innerHTML=allChip+Object.entries(POS_LABELS).map(([k,v])=>
+    sr.innerHTML=allChip+Object.entries(getPosLabels()).map(([k,v])=>
       `<button class="chip ${k===st.pos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.pos=c.dataset.pos;st.idx=0;st.flipped=false;st.fromList=false;render();}));
   } else if(st.mode==='conversation'){
@@ -1722,7 +1731,7 @@ function renderSub(){
   } else if(st.mode==='wordlist'){
     sr.style.display='flex';
     const allWlChip=`<button class="chip ${'all'===st.wordlistPos?'active-vocab':''}" data-pos="all">ALL</button>`;
-    sr.innerHTML=allWlChip+Object.entries(POS_LABELS).map(([k,v])=>
+    sr.innerHTML=allWlChip+Object.entries(getPosLabels()).map(([k,v])=>
       `<button class="chip ${k===st.wordlistPos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.wordlistPos=c.dataset.pos;window.scrollTo(0,0);render();}));
   } else { sr.style.display='none'; sr.innerHTML=''; }
@@ -1735,7 +1744,7 @@ function updateStickyTab(){
   // スクロール量で表示切替（初期は非表示）
   sr.style.display=window.scrollY>80?'block':'none';
   const allChip=`<button class="chip ${'all'===st.wordlistPos?'active-vocab':''}" data-pos="all" style="margin-left:0;">ALL</button>`;
-  sr.innerHTML=allChip+Object.entries(POS_LABELS).map(([k,v])=>
+  sr.innerHTML=allChip+Object.entries(getPosLabels()).map(([k,v])=>
     `<button class="chip ${k===st.wordlistPos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
   sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
     st.wordlistPos=c.dataset.pos;
@@ -1817,7 +1826,7 @@ function renderSettings(){
   let h='';
   if(!noDir) h+=`<button class="pill" id="dirPill" data-dir="${st.dir}">${st.dir==='th-jp'?'TH→JP':'JP→TH'}</button>`;
   h+=`<button class="pill pill-level" id="lvPill" data-level="${st.level}">${st.level==='beginner'?'初心者':'中級者+'}</button>`;
-  if(st.mode==='conversation') h+=`<button class="pill pill-gender" id="gdPill" data-gender="${st.gender}">${st.gender==='male'?'♂ 男性語尾':'♀ 女性語尾'}</button>`;
+  if(st.mode==='conversation'||st.mode==='vocab') h+=`<button class="pill pill-gender" id="gdPill" data-gender="${st.gender}">${st.gender==='male'?'♂ 男性語尾':'♀ 女性語尾'}</button>`;
   if(st.mode!=='grammar') h+=`<button class="pill ${st.filterUn?'on':''}" id="unPill">未学習だけ</button>`;
   if(st.mode!=='grammar') h+=`<button class="pill ${st.shuffle?'on':''}" id="shfPill">🔀 シャッフル</button>`;
   sr.innerHTML=h;
@@ -2375,7 +2384,7 @@ ${NUMS.map(n=>`
 }
 
 function render(){
-  document.querySelectorAll('.mode-tab').forEach(t=>t.classList.toggle('active',t.dataset.mode===st.mode));
+  renderModeTabs();
   renderSub();
   renderSettings();
 
@@ -2419,7 +2428,7 @@ function render(){
     ?Object.values(st.learned).some(s=>s.has(item.id))
     :lset.has(item.id);
   const beg=st.level==='beginner';
-  const modeRibbon={vocab:{cls:'vocab',lbl:st.pos==='all'?'ALL':POS_LABELS[st.pos]},
+  const modeRibbon={vocab:{cls:'vocab',lbl:st.pos==='all'?'ALL':getPosLabels()[st.pos]},
     conversation:{cls:'conv',lbl:'会話'},grammar:{cls:'gram',lbl:'文法'},
     thaienglish:{cls:'te',lbl:'タイ英語'}}[st.mode]||{cls:'vocab',lbl:''};
   const rib=(cls,lbl)=>`<span class="ribbon" style="background:${
@@ -2528,6 +2537,7 @@ function render(){
       if(lset.has(item.id)) lset.delete(item.id); else lset.add(item.id);
       sto_set('l:'+lk,[...lset]);
     }
+    if(st.filterUn) st.flipped=false;
     render();
   };
   // 例文OKボタン
@@ -2551,7 +2561,7 @@ function render(){
 document.getElementById('flipWrap').addEventListener('click',()=>{st.flipped=!st.flipped;render();});
 document.getElementById('nextBtn').addEventListener('click',e=>{e.stopPropagation();const l=list();st.idx=(st.idx+1)%l.length;st.flipped=false;render();});
 document.getElementById('prevBtn').addEventListener('click',e=>{e.stopPropagation();const l=list();st.idx=(st.idx-1+l.length)%l.length;st.flipped=false;render();});
-document.querySelectorAll('.mode-tab').forEach(t=>t.addEventListener('click',()=>{st.mode=t.dataset.mode;if(st.mode!=='vocab') st.fromList=false;st.idx=0;st.flipped=false;render();}));
+// mode-tabクリックはrenderModeTabs()内で管理
 document.getElementById('resetBtn').addEventListener('click',()=>{
   const k=lkKey(); st.learned[k]=new Set(); sto_set('l:'+k,[]); render();
 });
