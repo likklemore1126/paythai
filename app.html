@@ -1763,18 +1763,22 @@ function updateStickyTab(){
     sr.innerHTML=modeTabs+SCENES.map(s=>
       `<button class="chip ${s===st.wordlistScene?'active-conv':''}" data-sc="${s}">${s}</button>`).join('');
     sr.querySelectorAll('[data-sc]').forEach(c=>c.addEventListener('click',()=>{
+      const saved=sr.scrollLeft;
       st.wordlistScene=c.dataset.sc;
       window.scrollTo(0,0);
       render();
+      requestAnimationFrame(()=>{const el=document.getElementById('stickySubRow');if(el)el.scrollLeft=saved;});
     }));
   } else {
     const allChip=`<button class="chip ${'all'===st.wordlistPos?'active-vocab':''}" data-pos="all">ALL</button>`;
     sr.innerHTML=modeTabs+allChip+Object.entries(getPosLabels()).map(([k,v])=>
       `<button class="chip ${k===st.wordlistPos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
     sr.querySelectorAll('[data-pos]').forEach(c=>c.addEventListener('click',()=>{
+      const saved=sr.scrollLeft;
       st.wordlistPos=c.dataset.pos;
       window.scrollTo(0,0);
       render();
+      requestAnimationFrame(()=>{const el=document.getElementById('stickySubRow');if(el)el.scrollLeft=saved;});
     }));
   }
   const smv=document.getElementById('wlModeVocabSticky'); if(smv) smv.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
@@ -1838,9 +1842,14 @@ function renderWordList(){
     const wmv0=document.getElementById('wlModeVocab'); if(wmv0) wmv0.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
     const wmc0=document.getElementById('wlModeConv'); if(wmc0) wmc0.onclick=()=>{st.wordlistMode='conversation';window.scrollTo(0,0);render();};
     lp.querySelectorAll('[data-sc]').forEach(c=>c.addEventListener('click',()=>{
+      const row=c.closest('div'); const saved=row?row.scrollLeft:0;
       st.wordlistScene=c.dataset.sc;
       window.scrollTo(0,0);
       render();
+      requestAnimationFrame(()=>{
+        const rows=lp.querySelectorAll('div');
+        for(const r of rows){if(r.style.overflowX==='auto'){r.scrollLeft=saved;break;}}
+      });
     }));
     return;
   }
@@ -1915,9 +1924,14 @@ function renderWordList(){
   const wmv=document.getElementById('wlModeVocab'); if(wmv) wmv.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
   const wmc=document.getElementById('wlModeConv'); if(wmc) wmc.onclick=()=>{st.wordlistMode='conversation';window.scrollTo(0,0);render();};
   lp.querySelectorAll('.chip[data-pos]').forEach(c=>c.addEventListener('click',()=>{
+    const row=c.closest('div'); const saved=row?row.scrollLeft:0;
     st.wordlistPos=c.dataset.pos;
     window.scrollTo(0,0);
     render();
+    requestAnimationFrame(()=>{
+      const rows=lp.querySelectorAll('div');
+      for(const r of rows){if(r.style.overflowX==='auto'){r.scrollLeft=saved;break;}}
+    });
   }));
 }
 
@@ -2498,6 +2512,18 @@ ${NUMS.map(n=>`
 }
 
 function render(){
+  // タブ行のスクロール位置を保存
+  const srEl=document.getElementById('settingsRow');
+  const savedSrScroll=srEl?srEl.scrollLeft:0;
+  const lpEl=document.getElementById('listPage');
+  const tabRows=lpEl?lpEl.querySelectorAll('div'):[];
+  let savedTabScroll=0, tabRowIdx=-1;
+  for(let i=0;i<tabRows.length;i++){
+    if(tabRows[i].style.overflowX==='auto'&&tabRows[i].scrollLeft>0){
+      savedTabScroll=tabRows[i].scrollLeft; tabRowIdx=i; break;
+    }
+  }
+
   renderModeTabs();
   renderSub();
   renderSettings();
@@ -2702,6 +2728,16 @@ function render(){
       if(exSpk) exSpk.onclick = e=>{ e.stopPropagation(); speak(ex.th); };
     }
   }
+  // タブ行のスクロール位置を復元
+  requestAnimationFrame(()=>{
+    const srEl2=document.getElementById('settingsRow');
+    if(srEl2) srEl2.scrollLeft=savedSrScroll;
+    const lpEl2=document.getElementById('listPage');
+    if(lpEl2&&tabRowIdx>=0){
+      const tabRows2=lpEl2.querySelectorAll('div');
+      if(tabRows2[tabRowIdx]) tabRows2[tabRowIdx].scrollLeft=savedTabScroll;
+    }
+  });
 }
 
 document.getElementById('flipWrap').addEventListener('click',()=>{st.flipped=!st.flipped;render();});
