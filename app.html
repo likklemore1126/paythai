@@ -54,7 +54,7 @@ header{padding-bottom:10px;}
 .pill{background:var(--bg2);border:1px solid #38353f;color:var(--muted2);
   border-radius:999px;padding:5px 11px;font-size:11.5px;
   font-family:'IBM Plex Mono',monospace;cursor:pointer;}
-.pill.on{background:#3a3742;color:#fff;border-color:#55505f;}
+.pill.on{background:#f2b705;color:#2b2118;border-color:#f2b705;font-weight:700;}
 .progress-line{display:flex;justify-content:flex-end;margin-top:5px;min-height:16px;}
 .progress-text{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
 /* ─── CARD ─── */
@@ -136,6 +136,10 @@ header{padding-bottom:10px;}
 .num-th-word{font-family:'Sarabun',sans-serif;font-size:15px;color:var(--muted2);margin-top:2px;}
 .num-spk{font-size:16px;color:var(--muted);}
 footer{text-align:center;padding:6px 0 2px;}
+/* ─── 取り消しトースト ─── */
+#undoToast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#2b2118;color:#f3ead8;border-radius:24px;padding:14px 22px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:12px;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:opacity .3s;pointer-events:auto;white-space:nowrap;}
+#undoToast.hide{opacity:0;pointer-events:none;}
+#undoBtn{background:#f2b705;color:#2b2118;border:none;border-radius:14px;padding:10px 20px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;}
 .reset-btn{font-size:11px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;}
 .audio-note{font-size:10px;color:#5e5968;margin-top:6px;line-height:1.6;}
 @media(max-height:700px){.flip-wrap{height:355px;}}
@@ -232,6 +236,7 @@ footer{text-align:center;padding:6px 0 2px;}
   <div id="stickySubRow"></div>
   <div id="listPage" style="display:none;padding-bottom:80px;"></div>
   <button class="top-btn" id="topBtn">↑ TOP</button>
+  <div id="undoToast" class="hide">✅ 覚えた！<button id="undoBtn">↩ 取り消す</button></div>
 
   <footer>
     <button class="reset-btn" id="resetBtn">この分類の学習記録をリセット</button>
@@ -2645,20 +2650,38 @@ function render(){
   };
   const lb=document.getElementById('lrnB'); if(lb) lb.onclick=e=>{
     e.stopPropagation();
+    let undoInfo=null;
     if(st.pos==='all'){
-      // どの品詞に属するか特定
       const itemPos=Object.keys(DATA).find(p=>Array.isArray(DATA[p])&&DATA[p].some(i=>i.id===item.id));
       if(itemPos){
         const s=st.learned[itemPos];
-        if(s.has(item.id)) s.delete(item.id); else s.add(item.id);
+        const wasLearned=s.has(item.id);
+        if(wasLearned){ s.delete(item.id); } else { s.add(item.id); undoInfo={pos:itemPos,id:item.id}; }
         sto_set('l:'+itemPos,[...s]);
       }
     } else {
-      if(lset.has(item.id)) lset.delete(item.id); else lset.add(item.id);
+      const wasLearned=lset.has(item.id);
+      if(wasLearned){ lset.delete(item.id); } else { lset.add(item.id); undoInfo={pos:lk,id:item.id}; }
       sto_set('l:'+lk,[...lset]);
     }
     if(st.filterUn) st.flipped=false;
     render();
+    // 覚えた時だけトーストを表示
+    if(undoInfo){
+      const toast=document.getElementById('undoToast');
+      const undoBtn=document.getElementById('undoBtn');
+      toast.classList.remove('hide');
+      clearTimeout(window._undoTimer);
+      window._undoTimer=setTimeout(()=>toast.classList.add('hide'),3000);
+      undoBtn.onclick=()=>{
+        clearTimeout(window._undoTimer);
+        toast.classList.add('hide');
+        const s=st.learned[undoInfo.pos];
+        s.delete(undoInfo.id);
+        sto_set('l:'+undoInfo.pos,[...s]);
+        render();
+      };
+    }
   };
   // 例文OKボタン
   const exOk=document.getElementById('exOkB'); if(exOk) exOk.onclick=e=>{
