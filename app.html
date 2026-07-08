@@ -2375,7 +2375,7 @@ function renderConsonants(cls){
     html+=sep+`<tr style="border-bottom:1px solid rgba(255,255,255,.06)">
   <td style="padding:10px 10px;"><span style="font-family:'Sarabun',sans-serif;font-size:34px;color:${cfg.color};font-weight:600;line-height:1;">${ch}</span></td>
   <td style="padding:10px 6px;font-family:monospace;font-size:18px;color:#fff;font-weight:700;">${letter}</td>
-  <td style="padding:10px 4px;font-family:monospace;font-size:12px;color:rgba(255,255,255,.85);">${name}<br><span style="font-family:'Sarabun',sans-serif;font-size:13px;color:rgba(255,255,255,.45);">${kw}</span></td>
+  <td style="padding:10px 4px;font-family:monospace;font-size:12px;color:rgba(255,255,255,.85);">${name}<br><span style="font-family:'Sarabun',sans-serif;font-size:13px;color:rgba(255,255,255,.45);">${ch==='\u0e0b'?kw:thaiName}</span></td>
   <td style="padding:10px 8px;text-align:right;"><button onclick="event.stopPropagation();(function(){if('${ch}'==='\u0e0b'){const a=new Audio('so_chain.m4a');a.play();}else{speak('${thaiName}');}})();" style="background:rgba(255,255,255,.1);border:none;border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer;color:rgba(255,255,255,.7);">&#128266;</button></td>
 </tr>`;
   });
