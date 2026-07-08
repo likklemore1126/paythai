@@ -266,7 +266,7 @@ const CONV = [{"id":"cv01","scene":"挨拶","th":"สวัสดี{PT}","ro":"
 
 const GRAM = [{"id":"gr01","title":"文末の丁寧語 ครับ / ค่ะ","explain":"男性は文末に khráp、女性は khâ を付けると丁寧になる。挨拶や依頼など、ほぼ全ての文に付けられる。","ex_th":"สวัสดี{PT}","ex_ro":"sàwàtdii {PR}","ex_jp":"こんにちは"},{"id":"gr02","title":"疑問文を作る ไหม","explain":"文末に mai を付けるとYes/No疑問文になる。形容詞・動詞どちらにも使える。","ex_th":"อร่อยไหม","ex_ro":"aròi mǎi","ex_jp":"おいしいですか"},{"id":"gr03","title":"否定形 ไม่","explain":"動詞や形容詞の前に mai を置くと否定になる。「〜ない」の意味。","ex_th":"ไม่แพง","ex_ro":"mâi phɛɛng","ex_jp":"高くない"},{"id":"gr04","title":"程度を表す มาก","explain":"形容詞の後ろに maak を置くと「とても」になる。タイ語の形容詞は名詞の後に置く。","ex_th":"อร่อยมาก","ex_ro":"aròi mâak","ex_jp":"とてもおいしい"},{"id":"gr05","title":"類別詞(助数詞)の基本","explain":"「数字 + 類別詞」の語順。คน・ตัว・ขวดなど物の種類によって使い分ける。","ex_th":"น้ำสองขวด","ex_ro":"nám sɔɔng khùat","ex_jp":"水2本"},{"id":"gr06","title":"完了・過去を表す แล้ว","explain":"動詞や文末に laeo を置くと「もう〜した」の完了の意味になる。","ex_th":"กินแล้ว","ex_ro":"kin lɛɛo","ex_jp":"もう食べた"},{"id":"gr07","title":"〜したい อยาก + 動詞","explain":"「อยาก + 動詞」で希望・欲求を表す。英語の want to に相当。","ex_th":"อยากกินข้าว","ex_ro":"yàak kin khâao","ex_jp":"ご飯が食べたい"},{"id":"gr08","title":"〜できる 動詞 + ได้","explain":"動詞の後ろに dai を置くと能力・許可を表す。","ex_th":"พูดภาษาไทยได้","ex_ro":"phuut phaasǎa thai dâai","ex_jp":"タイ語が話せる"}];
 
-const NUMS = [{"th_num":"๐","arabic":"0","ro":"sǔun","th_word":"ศูนย์"},{"th_num":"๑","arabic":"1","ro":"nɯɯng","th_word":"หนึ่ง"},{"th_num":"๒","arabic":"2","ro":"sɔɔng","th_word":"สอง"},{"th_num":"๓","arabic":"3","ro":"sǎam","th_word":"สาม"},{"th_num":"๔","arabic":"4","ro":"sìi","th_word":"สี่"},{"th_num":"๕","arabic":"5","ro":"hâa","th_word":"ห้า"},{"th_num":"๖","arabic":"6","ro":"hòk","th_word":"หก"},{"th_num":"๗","arabic":"7","ro":"cèt","th_word":"เจ็ด"},{"th_num":"๘","arabic":"8","ro":"pɛɛt","th_word":"แปด"},{"th_num":"๙","arabic":"9","ro":"kâao","th_word":"เก้า"},{"th_num":"๑๐","arabic":"10","ro":"sìp","th_word":"สิบ"},{"th_num":"๒๐","arabic":"20","ro":"yîi sìp","th_word":"ยี่สิบ"},{"th_num":"๑๐๐","arabic":"100","ro":"rɔɔi","th_word":"ร้อย"},{"th_num":"๑,๐๐๐","arabic":"1000","ro":"phan","th_word":"พัน"},{"th_num":"๑๐,๐๐๐","arabic":"10000","ro":"mɯ̀ɯn","th_word":"หมื่น"},{"th_num":"๑๐๐,๐๐๐","arabic":"100000","ro":"sɛ̌ɛn","th_word":"แสน"}];
+const NUMS = [{"th_num":"๐","arabic":"0","ro":"sǔun","th_word":"ศูนย์"},{"th_num":"๑","arabic":"1","ro":"nɯɯng","th_word":"หนึ่ง"},{"th_num":"๒","arabic":"2","ro":"sɔɔng","th_word":"สอง"},{"th_num":"๓","arabic":"3","ro":"sǎam","th_word":"สาม"},{"th_num":"๔","arabic":"4","ro":"sìi","th_word":"สี่"},{"th_num":"๕","arabic":"5","ro":"hâa","th_word":"ห้า"},{"th_num":"๖","arabic":"6","ro":"hòk","th_word":"หก"},{"th_num":"๗","arabic":"7","ro":"cèt","th_word":"เจ็ด"},{"th_num":"๘","arabic":"8","ro":"pɛɛt","th_word":"แปด"},{"th_num":"๙","arabic":"9","ro":"kâao","th_word":"เก้า"},{"th_num":"๑๐","arabic":"10","ro":"sìp","th_word":"สิบ"},{"th_num":"๒๐","arabic":"20","ro":"yîi sìp","th_word":"ยี่สิบ"},{"th_num":"๑๐๐","arabic":"100","ro":"rɔɔi","th_word":"ร้อย"},{"th_num":"๑,๐๐๐","arabic":"1,000","ro":"phan","th_word":"พัน"},{"th_num":"๑๐,๐๐๐","arabic":"10,000","ro":"mɯ̀ɯn","th_word":"หมื่น"},{"th_num":"๑๐๐,๐๐๐","arabic":"100,000","ro":"sɛ̌ɛn","th_word":"แสน"},{"th_num":"๑,๐๐๐,๐๐๐","arabic":"1,000,000","ro":"láan","th_word":"ล้าน"}];
 
 const POS_LABELS = {noun:'名詞',verb:'動詞',adj:'形容詞',adv:'副詞',classifier:'類別詞',question:'疑問詞',greeting:'挨拶'};
 const MODE_LABELS_JP = {vocab:'単語',conversation:'会話',wordlist:'リスト',grammar:'文法',font:'タイ文字',numbers:'数字'};
@@ -2496,19 +2496,151 @@ function renderToneSection(){
 }
 
 function renderNumbers(){
-  return `<div class="sec-title">🔢 タイ数字（タップで発音）</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;">
-${NUMS.map(n=>`
-<div onclick="speak('${n.th_word}')" style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:10px 10px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;overflow:hidden;">
-  <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:nowrap;">
+  const basic=NUMS.filter(n=>parseInt(n.arabic)<=9||n.arabic==='0');
+  const units=NUMS.filter(n=>['10','100','1,000','10,000','100,000','1,000,000'].includes(n.arabic));
+  const examples=[
+    {arabic:'11',th_num:'๑๑',th_word:'สิบเอ็ด',ro:'sìp èt',note:'10+เอ็ด'},
+    {arabic:'20',th_num:'๒๐',th_word:'ยี่สิบ',ro:'yîi sìp',note:'ยี่+10'},
+    {arabic:'21',th_num:'๒๑',th_word:'ยี่สิบเอ็ด',ro:'yîi sìp èt',note:'ยี่+10+เอ็ด'},
+    {arabic:'31',th_num:'๓๑',th_word:'สามสิบเอ็ด',ro:'sǎam sìp èt',note:'3+10+เอ็ด'},
+    {arabic:'41',th_num:'๔๑',th_word:'สี่สิบเอ็ด',ro:'sìi sìp èt',note:'4+10+เอ็ด'},
+    {arabic:'22',th_num:'๒๒',th_word:'ยี่สิบสอง',ro:'yîi sìp sɔɔng',note:'ยี่+10+2'},
+    {arabic:'25',th_num:'๒๕',th_word:'ยี่สิบห้า',ro:'yîi sìp hâa',note:'ยี่+10+5'},
+    {arabic:'99',th_num:'๙๙',th_word:'เก้าสิบเก้า',ro:'kâao sìp kâao',note:'9+10+9'},
+  ];
+
+  const numCard=(n,highlight)=>`
+<div onclick="speak('${n.th_word}')" style="background:var(--bg2);border:1px solid ${highlight?'#f2b705':'#38353f'};border-radius:12px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;overflow:hidden;">
+  <div style="display:flex;align-items:baseline;gap:6px;">
     <span style="font-family:'Sarabun',sans-serif;font-size:28px;color:#fff;line-height:1;flex-shrink:0;">${n.th_num}</span>
-    <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--yellow);white-space:nowrap;">${n.arabic}</span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--yellow);">${n.arabic}</span>
   </div>
-  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;">${n.ro}</div>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);">${n.ro}</div>
   <div style="font-family:'Sarabun',sans-serif;font-size:14px;color:var(--muted2);">${n.th_word}</div>
-  <div style="font-size:12px;color:#55505f;text-align:right;">🔊</div>
-</div>`).join('')}
+  <div style="font-size:11px;color:#55505f;text-align:right;">🔊</div>
 </div>`;
+
+  const exCard=(n)=>`
+<div onclick="speak('${n.th_word}')" style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;">
+  <div style="display:flex;align-items:baseline;gap:6px;">
+    <span style="font-family:'Sarabun',sans-serif;font-size:28px;color:#fff;line-height:1;">${n.th_num}</span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--yellow);">${n.arabic}</span>
+  </div>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);">${n.ro}</div>
+  <div style="font-family:'Sarabun',sans-serif;font-size:14px;color:var(--muted2);">${n.th_word}</div>
+  <div style="font-size:10px;color:#f2b705;margin-top:2px;">${n.note}</div>
+  <div style="font-size:11px;color:#55505f;text-align:right;">🔊</div>
+</div>`;
+
+  return `
+<div class="sec-title">🔢 タイ数字</div>
+
+<!-- 基本数字 0〜9 -->
+<div style="font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin:8px 0 6px;">基本数字</div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:16px;">
+${NUMS.filter(n=>['0','1','2','3','4','5','6','7','8','9'].includes(n.arabic)).map(n=>numCard(n,false)).join('')}
+</div>
+
+<!-- 位の単位 -->
+<div style="font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin:0 0 6px;">位の単位</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:20px;">
+${units.map(n=>`
+<div onclick="speak('${n.th_word}')" style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:10px 6px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;overflow:hidden;">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--yellow);word-break:break-all;">${n.arabic}</div>
+  <div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;line-height:1.2;">${n.th_word}</div>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);">${n.ro}</div>
+  <div style="font-size:11px;color:#55505f;text-align:right;">🔊</div>
+</div>`).join('')}
+</div>
+
+<!-- ルール解説 -->
+<div style="font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin:0 0 8px;">📌 特別ルール（2桁以上の場合）</div>
+
+<!-- ルール① -->
+<div style="background:rgba(242,183,5,.08);border:1px solid rgba(242,183,5,.3);border-radius:12px;padding:14px;margin-bottom:10px;">
+  <div style="font-size:14px;font-weight:700;color:#f2b705;margin-bottom:8px;">ルール① 一の位が「1」のとき</div>
+  <div style="font-size:13px;color:var(--fg);line-height:1.9;">
+    <b>2桁以上</b>で一の位が <span style="color:#f2b705;font-weight:700;">1</span> の場合（11・21・31…）<br>
+    <span style="font-family:'Sarabun',sans-serif;font-size:16px;">หนึ่ง</span> <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);">nɯɯng</span>（ヌン）ではなく
+    <span style="font-family:'Sarabun',sans-serif;font-size:16px;color:#f2b705;">เอ็ด</span> <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);">èt</span>（エット）を使う<br>
+    <span style="font-size:12px;color:var(--muted);">※ 1単体はヌン（หนึ่ง）のまま。2桁以上の末尾のみ変わる</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap;">
+    <div style="text-align:center;">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">✗ 言わない</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#888;text-decoration:line-through;">สิบหนึ่ง</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#666;">sìp nɯɯng</div>
+    </div>
+    <div style="font-size:20px;color:var(--muted);">→</div>
+    <div onclick="speak('สิบเอ็ด')" style="text-align:center;cursor:pointer;">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">✓ 正しい 🔊</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#f2b705;">สิบเอ็ด</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);">sìp èt</div>
+    </div>
+  </div>
+</div>
+
+<!-- ルール② -->
+<div style="background:rgba(74,124,196,.08);border:1px solid rgba(74,124,196,.3);border-radius:12px;padding:14px;margin-bottom:10px;">
+  <div style="font-size:14px;font-weight:700;color:#4a7cc4;margin-bottom:8px;">ルール② 十の位が「2」のとき</div>
+  <div style="font-size:13px;color:var(--fg);line-height:1.9;">
+    20〜29 の場合、十の位の <span style="color:#4a7cc4;font-weight:700;">2</span> は<br>
+    <span style="font-family:'Sarabun',sans-serif;font-size:16px;">สอง</span> <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);">sɔɔng</span>（ソーン）ではなく
+    <span style="font-family:'Sarabun',sans-serif;font-size:16px;color:#4a7cc4;">ยี่</span> <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);">yîi</span>（イー）を使う<br>
+    <span style="font-size:12px;color:var(--muted);">※ 慣習的なもので理由はない。まるごと覚えるしかない！</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap;">
+    <div style="text-align:center;">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">✗ 言わない</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#888;text-decoration:line-through;">สองสิบ</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#666;">sɔɔng sìp</div>
+    </div>
+    <div style="font-size:20px;color:var(--muted);">→</div>
+    <div onclick="speak('ยี่สิบ')" style="text-align:center;cursor:pointer;">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">✓ 正しい 🔊</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#4a7cc4;">ยี่สิบ</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);">yîi sìp</div>
+    </div>
+  </div>
+</div>
+
+<!-- ルール③ -->
+<div style="background:rgba(76,154,106,.08);border:1px solid rgba(76,154,106,.3);border-radius:12px;padding:14px;margin-bottom:16px;">
+  <div style="font-size:14px;font-weight:700;color:#4c9a6a;margin-bottom:8px;">ルール③ 組み合わせ（21）</div>
+  <div style="font-size:13px;color:var(--fg);line-height:1.9;">
+    ルール①②が重なる <span style="color:#4c9a6a;font-weight:700;">21</span> は両方適用される
+  </div>
+  <div style="margin-top:12px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+      <div style="background:rgba(74,124,196,.15);border-radius:8px;padding:8px 12px;text-align:center;flex:1;">
+        <div style="font-size:11px;color:var(--muted);">十の位（ルール②）</div>
+        <div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#4a7cc4;">ยี่สิบ</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);">yîi sìp</div>
+      </div>
+      <div style="font-size:18px;color:var(--muted);">+</div>
+      <div style="background:rgba(242,183,5,.15);border-radius:8px;padding:8px 12px;text-align:center;flex:1;">
+        <div style="font-size:11px;color:var(--muted);">一の位（ルール①）</div>
+        <div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#f2b705;">เอ็ด</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);">èt</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="font-size:18px;color:var(--muted);padding-left:4px;">=</div>
+      <div onclick="speak('ยี่สิบเอ็ด')" style="background:rgba(76,154,106,.2);border:1px solid #4c9a6a;border-radius:8px;padding:8px 12px;text-align:center;cursor:pointer;flex:1;">
+        <div style="font-size:11px;color:var(--muted);">21　🔊</div>
+        <div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;">ยี่สิบเอ็ด</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);">yîi sìp èt</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 練習 -->
+<div style="font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin:0 0 8px;">🔊 タップして確認</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+${examples.map(n=>exCard(n)).join('')}
+</div>
+`;
 }
 
 function render(){
