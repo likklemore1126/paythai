@@ -28,11 +28,11 @@ body{background:radial-gradient(circle at 20% 0%,#2a2730 0%,var(--bg) 55%);
   flex:1;display:flex;flex-direction:column;}
 header{padding-bottom:10px;}
 .title-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;}
-.title-th{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-weight:600;font-size:20px;color:#fff;}
-.title-sub{font-size:11px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
+.title-th{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-weight:600;font-size:23px;color:#fff;}
+.title-sub{font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
 .mode-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:10px;}
 .mode-tabs::-webkit-scrollbar{display:none;}
-.mode-tab{flex:0 0 auto;padding:7px 13px;border-radius:14px;font-size:12px;font-weight:700;
+.mode-tab{flex:0 0 auto;padding:7px 13px;border-radius:14px;font-size:14px;font-weight:700;
   border:1.5px solid transparent;background:var(--bg2);color:var(--muted2);cursor:pointer;
   transition:transform .12s,background .18s;}
 .mode-tab:active{transform:scale(.95);}
@@ -44,7 +44,7 @@ header{padding-bottom:10px;}
 .mode-tab[data-mode="thaienglish"].active{background:var(--orange);color:#fff;border-color:var(--orange);}
 .sub-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;min-height:28px;}
 .sub-row::-webkit-scrollbar{display:none;}
-.chip{flex:0 0 auto;padding:5px 12px;border-radius:999px;font-size:11px;
+.chip{flex:0 0 auto;padding:5px 12px;border-radius:999px;font-size:13px;
   font-family:'IBM Plex Mono','Noto Sans Mono',monospace;background:var(--bg2);
   border:1px solid #38353f;color:var(--muted2);cursor:pointer;}
 .chip.active-vocab{background:var(--yellow);color:#2b2118;border-color:var(--yellow);}
@@ -52,11 +52,11 @@ header{padding-bottom:10px;}
 .chip.active-font{background:var(--blue);color:#fff;border-color:var(--blue);}
 .settings-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;min-height:28px;}
 .pill{background:var(--bg2);border:1px solid #38353f;color:var(--muted2);
-  border-radius:999px;padding:5px 11px;font-size:11.5px;
+  border-radius:999px;padding:5px 11px;font-size:13px;
   font-family:'IBM Plex Mono','Noto Sans Mono',monospace;cursor:pointer;}
 .pill.on{background:#f2b705;color:#2b2118;border-color:#f2b705;font-weight:700;}
 .progress-line{display:flex;justify-content:flex-end;margin-top:5px;min-height:16px;}
-.progress-text{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);}
+.progress-text{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
 /* ─── CARD ─── */
 .stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0 14px;}
 .flip-wrap{width:100%;max-width:340px;height:390px;perspective:1400px;position:relative;}
@@ -69,58 +69,58 @@ header{padding-bottom:10px;}
   display:flex;flex-direction:column;padding:22px 20px 18px;color:var(--ink);}
 .face-back{transform:rotateY(180deg);overflow-y:auto;}
 .ribbon{position:absolute;top:14px;right:-1px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;
-  font-size:10px;font-weight:500;color:#fff;padding:3px 10px 3px 12px;border-radius:6px 0 0 6px;}
+  font-size:12px;font-weight:500;color:#fff;padding:3px 10px 3px 12px;border-radius:6px 0 0 6px;}
 .hole{width:16px;height:16px;border-radius:50%;background:var(--bg);
   border:3px solid var(--tag-edge);position:absolute;top:14px;left:14px;}
-.lv{position:absolute;bottom:14px;right:14px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:10px;color:#9c8d68;}
+.lv{position:absolute;bottom:14px;right:14px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#9c8d68;}
 .face-front{justify-content:center;align-items:center;text-align:center;}
-.th-big{font-family:'Sarabun',sans-serif;font-weight:500;font-size:38px;line-height:1.4;margin-top:16px;}
-.th-big.sm{font-size:22px;}
-.jp-big{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:22px;line-height:1.45;margin-top:16px;}
-.ro-front{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;margin-top:8px;}
-.tap-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:11px;color:#9c8d68;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
+.th-big{font-family:'Sarabun',sans-serif;font-weight:500;font-size:44px;line-height:1.4;margin-top:16px;}
+.th-big.sm{font-size:25px;}
+.jp-big{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:25px;line-height:1.45;margin-top:16px;}
+.ro-front{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:#6b5c3e;margin-top:8px;}
+.tap-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:13px;color:#9c8d68;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
 .audio-btn{width:54px;height:54px;border-radius:50%;background:var(--ink);color:var(--tag);flex-shrink:0;
-  border:none;font-size:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  border:none;font-size:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .audio-btn:active{transform:scale(.9);}
 .front-audio{margin-top:16px;}
-.scene-tag{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:10.5px;color:#8a7a55;margin-top:26px;margin-bottom:2px;}
+.scene-tag{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#8a7a55;margin-top:26px;margin-bottom:2px;}
 /* back face content */
-.back-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;margin-top:6px;}
-.back-jp{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:17px;margin-top:6px;line-height:1.4;}
-.gram-title{font-family:'Sarabun',sans-serif;font-weight:600;font-size:18px;margin-top:26px;color:var(--ink);}
+.back-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;margin-top:6px;}
+.back-jp{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:20px;margin-top:6px;line-height:1.4;}
+.gram-title{font-family:'Sarabun',sans-serif;font-weight:600;font-size:21px;margin-top:26px;color:var(--ink);}
 .ex-ok-btn{border:1.5px solid #4caf50;background:transparent;color:#4caf50;
-  border-radius:999px;padding:5px 12px;font-size:11px;font-weight:700;
+  border-radius:999px;padding:5px 12px;font-size:13px;font-weight:700;
   font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;white-space:nowrap;}
 .ex-ok-btn.done{background:#4caf50;color:#fff;}
 .hole-checked{background:#4caf50 !important;}
-.gram-explain{font-size:13.5px;line-height:1.7;margin-top:8px;}
+.gram-explain{font-size:16px;line-height:1.7;margin-top:8px;}
 .ex-box{margin-top:12px;background:rgba(0,0,0,.06);border-radius:10px;padding:10px 12px;}
-.ex-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:18px;}
-.ex-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#6b5c3e;margin-top:3px;}
-.ex-jp{font-size:13px;margin-top:3px;}
+.ex-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:21px;}
+.ex-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;margin-top:3px;}
+.ex-jp{font-size:15px;margin-top:3px;}
 .back-actions{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:6px;min-height:62px;}
 .learn-btn{border:1.5px solid var(--ink);background:transparent;color:var(--ink);
-  border-radius:999px;padding:12px 24px;font-size:15px;font-weight:700;
+  border-radius:999px;padding:12px 24px;font-size:17px;font-weight:700;
   font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;}
 .learn-btn.done{background:var(--ink);color:var(--tag);}
 /* ─── NAV ─── */
 .nav-row{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:14px;}
 .nav-btn{width:46px;height:46px;border-radius:50%;background:var(--bg2);
-  border:1px solid #38353f;color:#fff;font-size:18px;cursor:pointer;}
+  border:1px solid #38353f;color:#fff;font-size:21px;cursor:pointer;}
 .nav-btn:active{transform:scale(.9);}
-.dot-count{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);min-width:60px;text-align:center;}
+.dot-count{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);min-width:60px;text-align:center;}
 /* ─── STATIC ─── */
 .static-page{flex:1;overflow-y:auto;padding:4px 0 16px;}
-.sec-title{font-size:12px;font-weight:700;color:var(--muted2);margin:14px 0 8px;letter-spacing:.5px;text-transform:uppercase;}
+.sec-title{font-size:14px;font-weight:700;color:var(--muted2);margin:14px 0 8px;letter-spacing:.5px;text-transform:uppercase;}
 /* font table */
-.font-table{width:100%;border-collapse:collapse;font-size:14px;}
-.font-table th{background:#2e2b35;color:var(--muted2);padding:7px 8px;font-size:11px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-weight:500;text-align:left;}
+.font-table{width:100%;border-collapse:collapse;font-size:16px;}
+.font-table th{background:#2e2b35;color:var(--muted2);padding:7px 8px;font-size:13px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-weight:500;text-align:left;}
 .font-table td{padding:8px 8px;border-bottom:1px solid #2e2b35;vertical-align:middle;}
 .font-table tr:nth-child(even) td{background:rgba(255,255,255,.025);}
-.ft-label{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);}
-.ft-std{font-family:'Sarabun',sans-serif;font-size:24px;}
-.ft-chakra{font-family:'Chakra Petch',sans-serif;font-size:24px;}
-.ft-sriracha{font-family:'Sriracha',cursive;font-size:24px;}
+.ft-label{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
+.ft-std{font-family:'Sarabun',sans-serif;font-size:28px;}
+.ft-chakra{font-family:'Chakra Petch',sans-serif;font-size:28px;}
+.ft-sriracha{font-family:'Sriracha',cursive;font-size:28px;}
 .ft-cell-std{background:var(--tag);border-radius:8px;padding:4px 10px;display:inline-block;color:#2b2118;}
 .ft-cell-t{background:#f0ebe0;border-radius:8px;padding:4px 10px;display:inline-block;color:#2b2118;}
 .ft-cell-s{background:#fff8ee;border-radius:8px;padding:4px 10px;display:inline-block;color:#2b2118;}
@@ -129,22 +129,22 @@ header{padding-bottom:10px;}
 .num-card{background:var(--bg2);border:1px solid #38353f;border-radius:14px;padding:12px 14px;cursor:pointer;
   display:flex;align-items:center;gap:12px;transition:transform .12s;}
 .num-card:active{transform:scale(.96);}
-.num-th-big{font-family:'Sarabun',sans-serif;font-size:30px;color:#fff;line-height:1;}
+.num-th-big{font-family:'Sarabun',sans-serif;font-size:34px;color:#fff;line-height:1;}
 .num-info{flex:1;}
-.num-arabic{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:17px;color:var(--yellow);}
-.num-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);margin-top:3px;}
-.num-th-word{font-family:'Sarabun',sans-serif;font-size:15px;color:var(--muted2);margin-top:2px;}
-.num-spk{font-size:16px;color:var(--muted);}
+.num-arabic{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:20px;color:var(--yellow);}
+.num-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);margin-top:3px;}
+.num-th-word{font-family:'Sarabun',sans-serif;font-size:17px;color:var(--muted2);margin-top:2px;}
+.num-spk{font-size:18px;color:var(--muted);}
 footer{text-align:center;padding:6px 0 2px;}
 /* ─── 取り消しトースト ─── */
-#undoToast{position:absolute;bottom:52px;left:50%;transform:translateX(-50%);background:#2b2118;color:#f3ead8;border-radius:24px;padding:14px 22px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:12px;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:opacity .3s;pointer-events:auto;white-space:nowrap;}
+#undoToast{position:absolute;bottom:52px;left:50%;transform:translateX(-50%);background:#2b2118;color:#f3ead8;border-radius:24px;padding:14px 22px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:12px;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:opacity .3s;pointer-events:auto;white-space:nowrap;}
 @supports (-webkit-touch-callout: none) and (not (display-mode: standalone)){
   #undoToast{bottom:36px;}
 }
 #undoToast.hide{opacity:0;pointer-events:none;}
-#undoBtn{background:#f2b705;color:#2b2118;border:none;border-radius:14px;padding:10px 20px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;}
-.reset-btn{font-size:11px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;}
-.audio-note{font-size:10px;color:#5e5968;margin-top:6px;line-height:1.6;}
+#undoBtn{background:#f2b705;color:#2b2118;border:none;border-radius:14px;padding:10px 20px;font-size:17px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.reset-btn{font-size:13px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;}
+.audio-note{font-size:12px;color:#5e5968;margin-top:6px;line-height:1.6;}
 @media(max-height:700px){.flip-wrap{height:355px;}}
 
 /* --- レベルpill色 --- */
@@ -158,19 +158,19 @@ footer{text-align:center;padding:6px 0 2px;}
 .list-item{display:flex;align-items:center;gap:0;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .15s;}
 .list-item:active{background:rgba(255,255,255,.07);}
 .list-item.learned-item{background:rgba(76,154,106,.08);}
-.list-num{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:10px;color:var(--muted);width:28px;text-align:right;flex-shrink:0;margin-right:8px;}
-.list-th{font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;width:30%;flex-shrink:0;}
-.list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted2);width:28%;flex-shrink:0;line-height:1.4;}
-.list-jp{font-size:12px;color:var(--fg);text-align:left;line-height:1.5;flex:1;}
+.list-num{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);width:28px;text-align:right;flex-shrink:0;margin-right:8px;}
+.list-th{font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;width:30%;flex-shrink:0;}
+.list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted2);width:28%;flex-shrink:0;line-height:1.4;}
+.list-jp{font-size:14px;color:var(--fg);text-align:left;line-height:1.5;flex:1;}
 .conv-list-item{display:flex;flex-direction:column;gap:3px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .15s;}
 .conv-list-item.learned-item{background:rgba(76,154,106,.08);}
 .conv-list-row1{display:flex;align-items:baseline;gap:8px;}
-.conv-list-th{font-family:'Sarabun',sans-serif;font-size:16px;color:#fff;flex:1;line-height:1.4;}
-.conv-list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted2);padding-left:36px;line-height:1.4;}
-.conv-list-jp{font-size:12px;color:var(--fg);padding-left:36px;line-height:1.5;}
-.list-badge{font-size:9px;background:#2d6a4f;color:#b7e4c7;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;}
+.conv-list-th{font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;flex:1;line-height:1.4;}
+.conv-list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted2);padding-left:36px;line-height:1.4;}
+.conv-list-jp{font-size:14px;color:var(--fg);padding-left:36px;line-height:1.5;}
+.list-badge{font-size:10px;background:#2d6a4f;color:#b7e4c7;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;}
 /* --- 戻るボタン --- */
-.back-btn{display:none;background:var(--yellow);color:#2b2118;border:none;border-radius:20px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.back-btn{display:none;background:var(--yellow);color:#2b2118;border:none;border-radius:20px;padding:8px 14px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;}
 .mode-tab[data-mode="wordlist"].active{background:#a78bfa;color:#1a0050;border-color:#a78bfa;}
 
 
@@ -179,7 +179,7 @@ footer{text-align:center;padding:6px 0 2px;}
   background-size: cover;
   background-position: center;
   font-weight: 800;
-  font-size: 11px;
+  font-size:13px;
   text-shadow: 0 0 4px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.7);
   border: 1.5px solid rgba(255,255,255,.25);
   color: #fff;
@@ -196,7 +196,7 @@ footer{text-align:center;padding:6px 0 2px;}
 }
 
 /* --- TOPボタン --- */
-.top-btn{display:none;position:fixed;bottom:80px;left:16px;background:rgba(60,55,70,.92);color:#fff;border:1px solid #55505f;border-radius:20px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.4);}
+.top-btn{display:none;position:fixed;bottom:80px;left:16px;background:rgba(60,55,70,.92);color:#fff;border:1px solid #55505f;border-radius:20px;padding:8px 14px;font-size:15px;font-weight:700;cursor:pointer;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.4);}
 /* --- 固定品詞タブ（リスト表示中・スクロール後のみ） --- */
 #stickySubRow{display:none;position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;background:#1a1820;padding:5px 18px 3px;border-bottom:1px solid rgba(255,255,255,.08);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;}
 #stickySubRow .chip{display:inline-flex;margin-right:6px;}
@@ -206,15 +206,15 @@ footer{text-align:center;padding:6px 0 2px;}
 #pgOverlay.open{display:block;}
 #pgModal{position:fixed;inset:0;width:100%;height:100%;background:#fdfbf6;border-radius:0;box-shadow:none;display:flex;flex-direction:column;overflow:hidden;z-index:201;}
 #pgWordBar{flex-shrink:0;background:#efe6cf;padding:10px 16px;border-bottom:1px solid #d9cba0;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
-#pgWordBar .pg-th{font-family:'Sarabun',sans-serif;font-size:17px;color:#3c3746;font-weight:700;}
-#pgWordBar .pg-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;}
-#pgWordBar .pg-jp{font-size:12px;color:#5a5142;flex-basis:100%;}
+#pgWordBar .pg-th{font-family:'Sarabun',sans-serif;font-size:20px;color:#3c3746;font-weight:700;}
+#pgWordBar .pg-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;}
+#pgWordBar .pg-jp{font-size:14px;color:#5a5142;flex-basis:100%;}
 #pgWordBar.empty{display:none;}
 #pgHeader{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top,0px)) 16px 14px;background:#3c3746;color:#fff;flex-shrink:0;}
-#pgHeader h3{margin:0;font-size:15px;}
-#pgCloseBtn{background:#55505f;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer;}
+#pgHeader h3{margin:0;font-size:17px;}
+#pgCloseBtn{background:#55505f;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-size:15px;font-weight:700;cursor:pointer;}
 #pgBody{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 12px calc(24px + env(safe-area-inset-bottom,0px));flex:1;}
-.pg-section-label{font-size:12px;font-weight:700;color:#8a7d5f;margin:10px 4px 6px;letter-spacing:.05em;}
+.pg-section-label{font-size:14px;font-weight:700;color:#8a7d5f;margin:10px 4px 6px;letter-spacing:.05em;}
 .pg-card{scroll-margin-top:8px;margin-bottom:14px;border-radius:12px;overflow:hidden;border:1px solid #eadfc4;background:#fff;}
 .pg-card img{display:block;width:100%;height:auto;}
 .pg-card.pg-highlight{outline:3px solid #e0a72e;}
@@ -249,11 +249,11 @@ footer{text-align:center;padding:6px 0 2px;}
       <button class="nav-btn" id="nextBtn">&#8250;</button>
     </div>
     <div class="nav-row" id="toListRow" style="display:none;margin-top:8px;">
-      <button class="back-btn" id="toListBtn" style="display:block;font-size:14px;padding:10px 20px;background:rgba(242,183,5,.15);color:var(--yellow);border:1.5px solid var(--yellow);">📋 リストで見る</button>
+      <button class="back-btn" id="toListBtn" style="display:block;font-size:16px;padding:10px 20px;background:rgba(242,183,5,.15);color:var(--yellow);border:1.5px solid var(--yellow);">📋 リストで見る</button>
     </div>
     <div class="nav-row" id="backRow" style="display:none;gap:8px;">
-      <button class="back-btn" id="backBtn" style="display:block;font-size:14px;padding:10px 20px;">← リストへ戻る</button>
-      <button class="back-btn" id="stayBtn" style="display:block;font-size:14px;padding:10px 20px;background:rgba(242,183,5,.15);color:var(--yellow);border:1.5px solid var(--yellow);">ここに残る</button>
+      <button class="back-btn" id="backBtn" style="display:block;font-size:16px;padding:10px 20px;">← リストへ戻る</button>
+      <button class="back-btn" id="stayBtn" style="display:block;font-size:16px;padding:10px 20px;background:rgba(242,183,5,.15);color:var(--yellow);border:1.5px solid var(--yellow);">ここに残る</button>
     </div>
   </div>
 
@@ -1668,13 +1668,13 @@ function buildExampleStatic(item, pos) {
 }
 
 function buildExBox(ex) {
-  const noteHtml = ex.note ? `<div style="margin-top:8px;padding:7px 10px;background:rgba(242,183,5,.15);border-left:3px solid #f2b705;border-radius:4px;font-size:13px;color:#5a4500;line-height:1.6;">${ex.note}</div>` : '';
-  const roHtml = st.showRo ? `<div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;margin-top:3px;line-height:1.4;">${ex.ro}</div>` : '';
+  const noteHtml = ex.note ? `<div style="margin-top:8px;padding:7px 10px;background:rgba(242,183,5,.15);border-left:3px solid #f2b705;border-radius:4px;font-size:15px;color:#5a4500;line-height:1.6;">${ex.note}</div>` : '';
+  const roHtml = st.showRo ? `<div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;margin-top:3px;line-height:1.4;">${ex.ro}</div>` : '';
   return `<div style="background:rgba(0,0,0,.06);border-radius:10px;padding:10px 14px;margin-top:8px;">
-    <div style="font-size:11px;color:#9c8d68;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin-bottom:4px;">例文</div>
-    <div style="font-family:'Sarabun',sans-serif;font-size:20px;font-weight:500;color:#2b2118;line-height:1.3;">${ex.th}</div>
+    <div style="font-size:13px;color:#9c8d68;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin-bottom:4px;">例文</div>
+    <div style="font-family:'Sarabun',sans-serif;font-size:23px;font-weight:500;color:#2b2118;line-height:1.3;">${ex.th}</div>
     ${roHtml}
-    <div style="font-size:14px;color:#2b2118;margin-top:3px;">${ex.jp}</div>
+    <div style="font-size:16px;color:#2b2118;margin-top:3px;">${ex.jp}</div>
     ${noteHtml}
   </div>`;
 }
@@ -1825,8 +1825,8 @@ function renderWordList(){
     </div>`;
     let items=st.wordlistScene==='ALL'?CONV:CONV.filter(i=>i.scene===st.wordlistScene);
     html+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 4px;">
-      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);">${items.length}件</span>
-      <span style="font-size:13px;color:var(--muted);">👆 タップするとカードで確認できます</span>
+      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${items.length}件</span>
+      <span style="font-size:15px;color:var(--muted);">👆 タップするとカードで確認できます</span>
     </div>`;
     items.forEach((item,idx)=>{
       const learned=st.learned.conversation.has(item.id);
@@ -1893,8 +1893,8 @@ function renderWordList(){
   }
   const filtered=beg?items.filter(i=>i.level==='5'):items;
   html+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 4px;">
-    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);">${filtered.length}語</span>
-    <span style="font-size:13px;color:var(--muted);">👆 単語をタップするとカードで確認できます</span>
+    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${filtered.length}語</span>
+    <span style="font-size:15px;color:var(--muted);">👆 単語をタップするとカードで確認できます</span>
   </div>`;
   filtered.forEach((item,idx)=>{
     const learned=Object.values(st.learned).some(s=>s.has(item.id));
@@ -2202,7 +2202,7 @@ function renderVowelSection(){
     if(!items.length) return;
     const col = items[0].color;
 
-    h += '<div style="margin:12px 0 8px;padding:5px 10px;background:'+col+';color:#fff;border-radius:8px;font-size:13px;font-weight:700;letter-spacing:.3px;">'+groupLabel[grp]+'</div>';
+    h += '<div style="margin:12px 0 8px;padding:5px 10px;background:'+col+';color:#fff;border-radius:8px;font-size:15px;font-weight:700;letter-spacing:.3px;">'+groupLabel[grp]+'</div>';
     h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px;">';
 
     items.forEach(function(v){
@@ -2215,26 +2215,26 @@ function renderVowelSection(){
 
       // ── 上段：母音大表示 ＋ Paiboon/カナ ＋ 母音🔊 ────────────
       h += '<div style="display:flex;align-items:center;padding:10px 10px 7px;gap:6px;">';
-      h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:36px;font-weight:500;line-height:1.25;min-width:50px;text-align:center;">'+colorizeDisplay(v.display)+'</div>';
+      h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:41px;font-weight:500;line-height:1.25;min-width:50px;text-align:center;">'+colorizeDisplay(v.display)+'</div>';
       h += '<div style="flex:1;min-width:0;">';
       h += '<div style="display:flex;align-items:baseline;gap:4px;flex-wrap:wrap;">';
-      h += '<span class="vowel-symbol-ro" data-th="'+v.display+'" data-jp="'+v.name_jp+'" data-pgkey="'+pgKeyForVowelRo(v.ro)+'" style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:15px;font-weight:700;color:'+col+';text-decoration:underline dotted #a9986b 1.5px;text-underline-offset:3px;cursor:pointer;">'+v.ro+'</span>';
-      h += '<span style="font-size:12px;color:#6b5c3e;">'+v.kana+'</span>';
+      h += '<span class="vowel-symbol-ro" data-th="'+v.display+'" data-jp="'+v.name_jp+'" data-pgkey="'+pgKeyForVowelRo(v.ro)+'" style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:17px;font-weight:700;color:'+col+';text-decoration:underline dotted #a9986b 1.5px;text-underline-offset:3px;cursor:pointer;">'+v.ro+'</span>';
+      h += '<span style="font-size:14px;color:#6b5c3e;">'+v.kana+'</span>';
       h += '</div>';
       h += '</div>';
-      h += '<button onclick="event.stopPropagation();speak(\''+v.spk+'\')" style="width:34px;height:34px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:14px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>';
+      h += '<button onclick="event.stopPropagation();speak(\''+v.spk+'\')" style="width:34px;height:34px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>';
       h += '</div>';
 
       // ── 中段：母音名 ──────────────────────────────────────────
       if(!isRare){
         h += '<div style="padding:3px 10px 5px;border-top:1px solid rgba(0,0,0,.06);">';
-        h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:13px;color:#2b2118;font-weight:500;">'+v.name_th+'</div>';
-        h += '<div style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:9.5px;color:#8a7a55;margin-top:1px;">'+v.name_ro+'&nbsp;&nbsp;<span style="color:#5a4d3a;">'+v.name_jp+'</span></div>';
+        h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:15px;color:#2b2118;font-weight:500;">'+v.name_th+'</div>';
+        h += '<div style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:11px;color:#8a7a55;margin-top:1px;">'+v.name_ro+'&nbsp;&nbsp;<span style="color:#5a4d3a;">'+v.name_jp+'</span></div>';
         h += '</div>';
       } else {
         h += '<div style="padding:3px 10px 5px;border-top:1px solid rgba(0,0,0,.06);">';
-        h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:13px;color:#aaa;font-weight:500;">'+v.name_th+'</div>';
-        h += '<div style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:9.5px;color:#aaa;margin-top:1px;">'+v.name_ro+'</div>';
+        h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:15px;color:#aaa;font-weight:500;">'+v.name_th+'</div>';
+        h += '<div style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:11px;color:#aaa;margin-top:1px;">'+v.name_ro+'</div>';
         h += '</div>';
       }
 
@@ -2242,19 +2242,19 @@ function renderVowelSection(){
       h += '<div style="background:'+exBg+';padding:7px 10px;display:flex;align-items:center;gap:6px;">';
       if(isRare){
         h += '<div style="flex:1;min-width:0;">';
-        h += '<div style="font-size:9px;color:#8a7a55;font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;margin-bottom:2px;">例単語</div>';
-        h += '<div style="font-size:10.5px;color:#8a7a55;font-style:italic;">'+v.ex_jp+'</div>';
+        h += '<div style="font-size:10px;color:#8a7a55;font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;margin-bottom:2px;">例単語</div>';
+        h += '<div style="font-size:12px;color:#8a7a55;font-style:italic;">'+v.ex_jp+'</div>';
         h += '</div>';
       } else {
         h += '<div style="flex:1;min-width:0;">';
-        h += '<div style="font-size:9px;color:#8a7a55;font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;margin-bottom:1px;">例単語</div>';
+        h += '<div style="font-size:10px;color:#8a7a55;font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;margin-bottom:1px;">例単語</div>';
         h += '<div style="display:flex;align-items:baseline;gap:4px;flex-wrap:wrap;">';
-        h += '<span style="font-family:\'Sarabun\',sans-serif;font-size:20px;color:#2b2118;font-weight:500;">'+v.ex+'</span>';
-        h += '<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:9.5px;color:#6b5c3e;">'+v.ex_ro+'</span>';
+        h += '<span style="font-family:\'Sarabun\',sans-serif;font-size:23px;color:#2b2118;font-weight:500;">'+v.ex+'</span>';
+        h += '<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:11px;color:#6b5c3e;">'+v.ex_ro+'</span>';
         h += '</div>';
-        h += '<div style="font-size:10.5px;color:#4a3d2a;margin-top:1px;">'+v.ex_jp+'</div>';
+        h += '<div style="font-size:12px;color:#4a3d2a;margin-top:1px;">'+v.ex_jp+'</div>';
         h += '</div>';
-        h += '<button onclick="event.stopPropagation();speak(\''+v.ex+'\')" style="width:34px;height:34px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:14px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>';
+        h += '<button onclick="event.stopPropagation();speak(\''+v.ex+'\')" style="width:34px;height:34px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>';
       }
       h += '</div>';
 
@@ -2265,19 +2265,19 @@ function renderVowelSection(){
   });
 
   // ── マイムアン20単語 ─────────────────────────────────────────
-  h += '<div style="margin:12px 0 8px;padding:5px 10px;background:#c0392b;color:#fff;border-radius:8px;font-size:13px;font-weight:700;">⚠️ ใ（マイムアン）を使う単語 — 暗記必須！</div>';
+  h += '<div style="margin:12px 0 8px;padding:5px 10px;background:#c0392b;color:#fff;border-radius:8px;font-size:15px;font-weight:700;">⚠️ ใ（マイムアン）を使う単語 — 暗記必須！</div>';
   h += '<div style="background:#fff5f5;border:1px solid #f5c6cb;border-radius:10px;padding:10px;margin-bottom:8px;">';
-  h += '<div style="font-size:11px;color:#c0392b;margin-bottom:8px;">ไ と ใ は同じ「ai」音。ใ を使う単語は20単語のみ。丸ごと覚える！</div>';
+  h += '<div style="font-size:13px;color:#c0392b;margin-bottom:8px;">ไ と ใ は同じ「ai」音。ใ を使う単語は20単語のみ。丸ごと覚える！</div>';
   h += '<div style="display:flex;flex-wrap:wrap;gap:5px;">';
   MAI_MUAN.forEach(function(w){
     var isAncient = !w.spk;
     var bord = isAncient ? '1px dashed #e0b0b0' : '1px solid #f5c6cb';
     var bg   = isAncient ? '#faf0f0' : '#fff';
     h += '<div style="border:'+bord+';border-radius:6px;padding:4px 8px;background:'+bg+';display:flex;align-items:center;gap:5px;">';
-    h += '<span style="font-family:\'Sarabun\',sans-serif;font-size:20px;color:'+(isAncient?'#bbb':'#2b2118')+';">'+w.th+'</span>';
-    h += '<span style="font-size:10px;color:'+(isAncient?'#bbb':'#888')+';">'+w.jp+'</span>';
+    h += '<span style="font-family:\'Sarabun\',sans-serif;font-size:23px;color:'+(isAncient?'#bbb':'#2b2118')+';">'+w.th+'</span>';
+    h += '<span style="font-size:12px;color:'+(isAncient?'#bbb':'#888')+';">'+w.jp+'</span>';
     if(w.spk){
-      h += '<button onclick="event.stopPropagation();speak(\''+w.th+'\')" style="width:26px;height:26px;border-radius:50%;background:#c0392b;border:none;color:#fff;font-size:11px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>';
+      h += '<button onclick="event.stopPropagation();speak(\''+w.th+'\')" style="width:26px;height:26px;border-radius:50%;background:#c0392b;border:none;color:#fff;font-size:13px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>';
     }
     h += '</div>';
   });
@@ -2285,8 +2285,8 @@ function renderVowelSection(){
 
   // ── 口の形イラスト（母音記号の位置に対応） ──────────────────
   h += '<div style="margin-top:16px;">';
-  h += '<div style="margin:12px 0 8px;padding:5px 10px;background:#6b5c3e;color:#fff;border-radius:8px;font-size:13px;font-weight:700;">👄 口の形イラストで確認</div>';
-  h += '<div style="margin-bottom:10px;padding:8px 10px;background:rgba(107,92,62,.1);border-radius:8px;font-size:11px;color:#6b5c3e;line-height:1.5;">💡 短母音・長母音は口の形が同じです。短母音(อะ等)は短く、長母音(อา等)は伸ばして発音してください。</div>';
+  h += '<div style="margin:12px 0 8px;padding:5px 10px;background:#6b5c3e;color:#fff;border-radius:8px;font-size:15px;font-weight:700;">👄 口の形イラストで確認</div>';
+  h += '<div style="margin-bottom:10px;padding:8px 10px;background:#f3ead8;border-radius:8px;font-size:13px;color:#4a3f28;line-height:1.5;">💡 短母音・長母音は口の形が同じです。短母音(อะ等)は短く、長母音(อา等)は伸ばして発音してください。</div>';
   const vowelIllustrations = [
     ['vowel_a', 'a', 'อะ / อา'],
     ['vowel_i', 'i', 'อิ / อี'],
@@ -2301,14 +2301,14 @@ function renderVowelSection(){
   vowelIllustrations.forEach(function(v){
     h += '<div style="margin-bottom:12px;border-radius:12px;overflow:hidden;border:1px solid #e6d9bf;">';
     h += '<img src="'+(PG_IMAGES[v[0]]||'')+'" style="display:block;width:100%;height:auto;">';
-    h += '<div style="padding:6px 10px;background:#f3ead8;font-size:11px;color:#6b5c3e;">'+v[1]+' が使われる母音：'+v[2]+'</div>';
+    h += '<div style="padding:6px 10px;background:#f3ead8;font-size:13px;color:#6b5c3e;">'+v[1]+' が使われる母音：'+v[2]+'</div>';
     h += '</div>';
   });
   h += '</div>';
 
   // ── 複合母音・特殊母音イラスト ──────────────────
   h += '<div style="margin-top:16px;">';
-  h += '<div style="margin:12px 0 8px;padding:5px 10px;background:#8e44ad;color:#fff;border-radius:8px;font-size:13px;font-weight:700;">🔀 複合母音・特殊母音イラストで確認</div>';
+  h += '<div style="margin:12px 0 8px;padding:5px 10px;background:#8e44ad;color:#fff;border-radius:8px;font-size:15px;font-weight:700;">🔀 複合母音・特殊母音イラストで確認</div>';
   const complexVowelIllustrations = [
     ['vowel_ia',  'ia',  'เอียะ / เอีย'],
     ['vowel_uea', 'ɯa',  'เอือะ / เอือ'],
@@ -2320,10 +2320,10 @@ function renderVowelSection(){
   complexVowelIllustrations.forEach(function(v){
     h += '<div style="margin-bottom:12px;border-radius:12px;overflow:hidden;border:1px solid #e0cfe8;">';
     h += '<img src="'+(PG_IMAGES[v[0]]||'')+'" style="display:block;width:100%;height:auto;">';
-    h += '<div style="padding:6px 10px;background:#f3e8f7;font-size:11px;color:#6b5c3e;">'+v[1]+' が使われる母音：'+v[2]+'</div>';
+    h += '<div style="padding:6px 10px;background:#f3e8f7;font-size:13px;color:#6b5c3e;">'+v[1]+' が使われる母音：'+v[2]+'</div>';
     h += '</div>';
   });
-  h += '<div style="padding:8px 10px;background:rgba(107,92,62,.1);border-radius:8px;font-size:11px;color:#6b5c3e;line-height:1.5;">💡 ฤ・ฤๅ・ฦ・ฦๅ は実際には รึ・รือ・ลึ・ลือ と同じ発音になるため、口の形は上の「ɯ(อึ/อือ)」イラストと同じです。</div>';
+  h += '<div style="padding:8px 10px;background:#f3ead8;border-radius:8px;font-size:13px;color:#4a3f28;line-height:1.5;">💡 ฤ・ฤๅ・ฦ・ฦๅ は実際には รึ・รือ・ลึ・ลือ と同じ発音になるため、口の形は上の「ɯ(อึ/อือ)」イラストと同じです。</div>';
   h += '</div>';
 
   h += '</div>';
@@ -2362,9 +2362,9 @@ function renderFont(){
     ['\u0e2d','-','\u0254\u0254 \xe0a\u014b','\u0e2d\u0e2d\u0e2d\u0e48\u0e32\u0e07','\u4e2d'],
   ];
   const badge=c=>({
-    '\u4e2d':'<span style="background:#c0392b;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;">\u4e2d</span>',
-    '\u9ad8':'<span style="background:#4c9a6a;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;">\u9ad8</span>',
-    '\u4f4e':'<span style="background:#4a7cc4;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;">\u4f4e</span>',
+    '\u4e2d':'<span style="background:#c0392b;color:#fff;border-radius:4px;padding:1px 5px;font-size:12px;">\u4e2d</span>',
+    '\u9ad8':'<span style="background:#4c9a6a;color:#fff;border-radius:4px;padding:1px 5px;font-size:12px;">\u9ad8</span>',
+    '\u4f4e':'<span style="background:#4a7cc4;color:#fff;border-radius:4px;padding:1px 5px;font-size:12px;">\u4f4e</span>',
   })[c]||'';
 
   return `
@@ -2372,16 +2372,16 @@ function renderFont(){
   <div class="sec-title">📖 フォント比較</div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;">
     <div style="background:rgba(243,234,216,.1);border-radius:10px;padding:8px;text-align:center;">
-      <div style="font-family:'Sarabun',sans-serif;font-size:36px;color:var(--tag);">กขคง</div>
-      <div style="font-size:10px;color:var(--muted);margin-top:4px;">Sarabun<br>ループあり</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:41px;color:var(--tag);">กขคง</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;">Sarabun<br>ループあり</div>
     </div>
     <div style="background:rgba(243,234,216,.1);border-radius:10px;padding:8px;text-align:center;">
-      <div style="font-family:Noto Sans Thai,sans-serif;font-size:36px;font-weight:700;color:var(--tag);">กขคง</div>
-      <div style="font-size:10px;color:var(--muted);margin-top:4px;">Noto Sans Thai<br>ループなし</div>
+      <div style="font-family:Noto Sans Thai,sans-serif;font-size:41px;font-weight:700;color:var(--tag);">กขคง</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;">Noto Sans Thai<br>ループなし</div>
     </div>
     <div style="background:rgba(243,234,216,.1);border-radius:10px;padding:8px;text-align:center;">
-      <div style="font-family:'Sriracha',cursive;font-size:36px;color:var(--tag);">กขคง</div>
-      <div style="font-size:10px;color:var(--muted);margin-top:4px;">Sriracha<br>手書き体</div>
+      <div style="font-family:'Sriracha',cursive;font-size:41px;color:var(--tag);">กขคง</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;">Sriracha<br>手書き体</div>
     </div>
   </div>
 </div>
@@ -2396,15 +2396,15 @@ ${rows.map(([ch,ro,name,tname,cls],i)=>`
 <tr style="${i%2===0?'':'background:rgba(255,255,255,.025)'}">
   <td style="padding:6px 6px;">
     <div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;">
-      <span style="font-family:'Sarabun',sans-serif;font-size:12px;color:#ccc;">${tname}</span>
+      <span style="font-family:'Sarabun',sans-serif;font-size:14px;color:#ccc;">${tname}</span>
       ${badge(cls)}
-      <button onclick="(function(){const u=new SpeechSynthesisUtterance('${ch}');u.lang='th-TH';speechSynthesis.speak(u);})()" style="background:none;border:none;cursor:pointer;font-size:14px;padding:0 2px;line-height:1;">🔊</button>
+      <button onclick="(function(){const u=new SpeechSynthesisUtterance('${ch}');u.lang='th-TH';speechSynthesis.speak(u);})()" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0 2px;line-height:1;">🔊</button>
     </div>
-    <span style="font-family:monospace;font-size:11px;color:#9c8d68;">${name}</span>
+    <span style="font-family:monospace;font-size:13px;color:#9c8d68;">${name}</span>
   </td>
-  <td style="text-align:center;padding:6px 4px;"><span style="font-family:'Sarabun',sans-serif;font-size:34px;background:#f3ead8;border-radius:8px;width:52px;height:52px;display:inline-flex;align-items:center;justify-content:center;color:#2b2118;">${ch}</span></td>
-  <td style="text-align:center;padding:6px 4px;"><span style="font-family:Noto Sans Thai,sans-serif;font-weight:700;font-size:34px;background:#f3ead8;border-radius:8px;width:52px;height:52px;display:inline-flex;align-items:center;justify-content:center;color:#2b2118;">${ch}</span></td>
-  <td style="text-align:center;padding:6px 4px;"><span style="font-family:'Sriracha',cursive;font-size:34px;background:#f3ead8;border-radius:8px;width:52px;height:52px;display:inline-flex;align-items:center;justify-content:center;color:#2b2118;">${ch}</span></td>
+  <td style="text-align:center;padding:6px 4px;"><span style="font-family:'Sarabun',sans-serif;font-size:39px;background:#f3ead8;border-radius:8px;width:52px;height:52px;display:inline-flex;align-items:center;justify-content:center;color:#2b2118;">${ch}</span></td>
+  <td style="text-align:center;padding:6px 4px;"><span style="font-family:Noto Sans Thai,sans-serif;font-weight:700;font-size:39px;background:#f3ead8;border-radius:8px;width:52px;height:52px;display:inline-flex;align-items:center;justify-content:center;color:#2b2118;">${ch}</span></td>
+  <td style="text-align:center;padding:6px 4px;"><span style="font-family:'Sriracha',cursive;font-size:39px;background:#f3ead8;border-radius:8px;width:52px;height:52px;display:inline-flex;align-items:center;justify-content:center;color:#2b2118;">${ch}</span></td>
 </tr>`).join('')}
 </table>`;
 }
@@ -2464,22 +2464,22 @@ function renderConsonants(cls){
     low:{data:[...LOW_P,...LOW_S],color:'#4a7cc4',bg:'rgba(74,124,196,.15)',label:'低子音　24文字（廃字1含む）',split:LOW_P.length},
   }[cls];
   const rows=cfg.data;
-  let html=`<div style="text-align:center;font-size:18px;font-weight:700;color:${cfg.color};margin:8px 0 10px;">${cfg.label}</div>
+  let html=`<div style="text-align:center;font-size:21px;font-weight:700;color:${cfg.color};margin:8px 0 10px;">${cfg.label}</div>
 <div style="background:${cfg.bg};border-radius:14px;overflow:hidden;">
 <table style="width:100%;border-collapse:collapse;">
 <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
-  <th style="padding:8px 10px;font-size:11px;color:rgba(255,255,255,.4);text-align:left;font-family:monospace;">子音</th>
-  <th style="padding:8px 10px;font-size:11px;color:rgba(255,255,255,.4);text-align:left;font-family:monospace;">アルファ</th>
-  <th style="padding:8px 10px;font-size:11px;color:rgba(255,255,255,.4);text-align:left;font-family:monospace;">子音名 (Paiboon+)</th>
+  <th style="padding:8px 10px;font-size:13px;color:rgba(255,255,255,.4);text-align:left;font-family:monospace;">子音</th>
+  <th style="padding:8px 10px;font-size:13px;color:rgba(255,255,255,.4);text-align:left;font-family:monospace;">アルファ</th>
+  <th style="padding:8px 10px;font-size:13px;color:rgba(255,255,255,.4);text-align:left;font-family:monospace;">子音名 (Paiboon+)</th>
   <th></th>
 </tr>`;
   rows.forEach(([ch,letter,name,kw,thaiName],i)=>{
-    const sep=(cls==='low'&&i===cfg.split)?`<tr><td colspan="4" style="padding:5px 10px;background:rgba(0,0,0,.25);font-size:10px;color:rgba(255,255,255,.35);font-family:monospace;">▼ 単独字（対応高子音なし）</td></tr>`:'';
+    const sep=(cls==='low'&&i===cfg.split)?`<tr><td colspan="4" style="padding:5px 10px;background:rgba(0,0,0,.25);font-size:12px;color:rgba(255,255,255,.35);font-family:monospace;">▼ 単独字（対応高子音なし）</td></tr>`:'';
     html+=sep+`<tr style="border-bottom:1px solid rgba(255,255,255,.06)">
-  <td style="padding:10px 10px;"><span style="font-family:'Sarabun',sans-serif;font-size:34px;color:${cfg.color};font-weight:600;line-height:1;">${ch}</span></td>
-  <td style="padding:10px 6px;font-family:monospace;font-size:18px;color:#fff;font-weight:700;">${letter}</td>
-  <td style="padding:10px 4px;font-family:monospace;font-size:12px;color:rgba(255,255,255,.85);">${name}<br><span style="font-family:'Sarabun',sans-serif;font-size:13px;color:rgba(255,255,255,.45);">${ch==='\u0e0b'?kw:thaiName}</span></td>
-  <td style="padding:10px 8px;text-align:right;"><button onclick="event.stopPropagation();(function(){if('${ch}'==='\u0e0b'){const a=new Audio('so_chain.m4a');a.play();}else{speak('${thaiName}');}})();" style="background:rgba(255,255,255,.1);border:none;border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer;color:rgba(255,255,255,.7);">&#128266;</button></td>
+  <td style="padding:10px 10px;"><span style="font-family:'Sarabun',sans-serif;font-size:39px;color:${cfg.color};font-weight:600;line-height:1;">${ch}</span></td>
+  <td style="padding:10px 6px;font-family:monospace;font-size:21px;color:#fff;font-weight:700;">${letter}</td>
+  <td style="padding:10px 4px;font-family:monospace;font-size:14px;color:rgba(255,255,255,.85);">${name}<br><span style="font-family:'Sarabun',sans-serif;font-size:15px;color:rgba(255,255,255,.45);">${ch==='\u0e0b'?kw:thaiName}</span></td>
+  <td style="padding:10px 8px;text-align:right;"><button onclick="event.stopPropagation();(function(){if('${ch}'==='\u0e0b'){const a=new Audio('so_chain.m4a');a.play();}else{speak('${thaiName}');}})();" style="background:rgba(255,255,255,.1);border:none;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer;color:rgba(255,255,255,.7);">&#128266;</button></td>
 </tr>`;
   });
   html+=`</table></div>`;
@@ -2489,7 +2489,7 @@ function renderConsonants(cls){
 function renderToneSection(){
   return `
 <div class="sec-title" style="margin-top:4px;">🎼 声調規則（子音クラス × 声調符号）</div>
-<p style="font-size:11px;color:var(--muted);margin:0 0 8px;">
+<p style="font-size:13px;color:var(--muted);margin:0 0 8px;">
 📌 <b style="color:var(--muted2);">平音節</b>＝長母音で終わる音節、またはm・n・ng・y・wで終わる音節<br>
 　　（例：มา・กิน・นาง）<br>
 📌 <b style="color:var(--muted2);">促音節</b>＝p・t・kで終わる音節（短く詰まる音）<br>
@@ -2498,94 +2498,94 @@ function renderToneSection(){
 
 <!-- 中子音 -->
 <div style="margin-bottom:10px;">
-  <div style="background:#c0392b;color:#fff;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:6px;">中子音　ก จ ด ต บ ป อ ฎ ฏ</div>
-  <table style="width:100%;border-collapse:collapse;font-size:12px;">
+  <div style="background:#c0392b;color:#fff;border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;display:inline-block;margin-bottom:6px;">中子音　ก จ ด ต บ ป อ ฎ ฏ</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;">
   <tr style="background:#2a2730;">
-    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>平音節</th>
-    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>促音節</th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ก่</div><div style="font-size:9px;color:var(--muted);">エーク</div></th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ก้</div><div style="font-size:9px;color:var(--muted);">トー</div></th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ก๊</div><div style="font-size:9px;color:var(--muted);">トリー</div></th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ก๋</div><div style="font-size:9px;color:var(--muted);">ジャッタ</div></th>
+    <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>平音節</th>
+    <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>促音節</th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก่</div><div style="font-size:10px;color:var(--muted);">エーク</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก้</div><div style="font-size:10px;color:var(--muted);">トー</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก๊</div><div style="font-size:10px;color:var(--muted);">トリー</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก๋</div><div style="font-size:10px;color:var(--muted);">ジャッタ</div></th>
   </tr>
   <tr style="background:rgba(192,57,43,.1);">
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">─</div><div style="font-size:10px;color:var(--muted);">サーマン</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">─</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↗↘</div><div style="font-size:10px;color:var(--muted);">トー</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↑</div><div style="font-size:10px;color:var(--muted);">トリー</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↗</div><div style="font-size:10px;color:var(--muted);">ジャッタ</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">─</div><div style="font-size:12px;color:var(--muted);">サーマン</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">─</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↑</div><div style="font-size:12px;color:var(--muted);">トリー</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタ</div></td>
   </tr>
   </table>
 </div>
 
 <!-- 高子音 -->
 <div style="margin-bottom:10px;">
-  <div style="background:#4c9a6a;color:#fff;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:6px;">高子音　ข ฃ ฉ ถ ผ ฝ ศ ษ ส ห</div>
-  <table style="width:100%;border-collapse:collapse;font-size:12px;">
+  <div style="background:#4c9a6a;color:#fff;border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;display:inline-block;margin-bottom:6px;">高子音　ข ฃ ฉ ถ ผ ฝ ศ ษ ส ห</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;">
   <tr style="background:#2a2730;">
-    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>平音節</th>
-    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>促音節</th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ข่</div><div style="font-size:9px;color:var(--muted);">エーク</div></th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ข้</div><div style="font-size:9px;color:var(--muted);">トー</div></th>
-    <th colspan="2" style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">トリー・ジャッタ<br>使用なし</th>
+    <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>平音節</th>
+    <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>促音節</th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ข่</div><div style="font-size:10px;color:var(--muted);">エーク</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ข้</div><div style="font-size:10px;color:var(--muted);">トー</div></th>
+    <th colspan="2" style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">トリー・ジャッタ<br>使用なし</th>
   </tr>
   <tr style="background:rgba(76,154,106,.1);">
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">↗</div><div style="font-size:10px;color:var(--muted);">ジャッタ</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↗↘</div><div style="font-size:10px;color:var(--muted);">トー</div></td>
-    <td colspan="2" style="text-align:center;padding:8px 4px;color:var(--muted);font-size:11px;">—</td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタ</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
+    <td colspan="2" style="text-align:center;padding:8px 4px;color:var(--muted);font-size:13px;">—</td>
   </tr>
   </table>
 </div>
 
 <!-- 低子音 -->
 <div style="margin-bottom:10px;">
-  <div style="background:#4a7cc4;color:#fff;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:6px;">低子音　ค ง ช ซ ท น พ ฟ ม ย ร ล ว ฬ ฮ 他</div>
-  <table style="width:100%;border-collapse:collapse;font-size:12px;">
+  <div style="background:#4a7cc4;color:#fff;border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;display:inline-block;margin-bottom:6px;">低子音　ค ง ช ซ ท น พ ฟ ม ย ร ล ว ฬ ฮ 他</div>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;">
   <tr style="background:#2a2730;">
-    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>平音節</th>
-    <th style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">符号なし<br>促音節</th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ค่</div><div style="font-size:9px;color:var(--muted);">エーク</div></th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;">ค้</div><div style="font-size:9px;color:var(--muted);">トー</div></th>
-    <th colspan="2" style="padding:5px 4px;text-align:center;font-size:10px;color:var(--muted2);">トリー・ジャッタ<br>使用なし</th>
+    <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>平音節</th>
+    <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>促音節</th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ค่</div><div style="font-size:10px;color:var(--muted);">エーク</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ค้</div><div style="font-size:10px;color:var(--muted);">トー</div></th>
+    <th colspan="2" style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">トリー・ジャッタ<br>使用なし</th>
   </tr>
   <tr style="background:rgba(74,124,196,.1);">
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">─</div><div style="font-size:10px;color:var(--muted);">サーマン</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#fff;">↘高</div><div style="font-size:10px;color:var(--muted);">トー</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:15px;color:#f2b705;">↗↘</div><div style="font-size:10px;color:var(--muted);">トー</div></td>
-    <td colspan="2" style="text-align:center;padding:8px 4px;color:var(--muted);font-size:11px;">—</td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">─</div><div style="font-size:12px;color:var(--muted);">サーマン</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↘高</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
+    <td colspan="2" style="text-align:center;padding:8px 4px;color:var(--muted);font-size:13px;">—</td>
   </tr>
   </table>
 </div>
 
 <!-- 5声調まとめ -->
 <div style="margin-top:4px;margin-bottom:8px;">
-  <div style="font-size:11px;color:var(--muted2);margin-bottom:6px;font-weight:600;">5声調</div>
+  <div style="font-size:13px;color:var(--muted2);margin-bottom:6px;font-weight:600;">5声調</div>
   <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">
     <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
-      <div style="font-size:13px;color:#f2b705;">─</div><div style="font-size:10px;color:var(--muted);">サーマン<br>（普通）</div>
+      <div style="font-size:15px;color:#f2b705;">─</div><div style="font-size:12px;color:var(--muted);">サーマン<br>（普通）</div>
     </div>
     <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
-      <div style="font-size:13px;color:#f2b705;">↘低</div><div style="font-size:10px;color:var(--muted);">エーク<br>（低下降）</div>
+      <div style="font-size:15px;color:#f2b705;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク<br>（低下降）</div>
     </div>
     <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
-      <div style="font-size:13px;color:#f2b705;">↗↘</div><div style="font-size:10px;color:var(--muted);">トー<br>（下降）</div>
+      <div style="font-size:15px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー<br>（下降）</div>
     </div>
     <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
-      <div style="font-size:13px;color:#f2b705;">↑</div><div style="font-size:10px;color:var(--muted);">トリー<br>（高上昇）</div>
+      <div style="font-size:15px;color:#f2b705;">↑</div><div style="font-size:12px;color:var(--muted);">トリー<br>（高上昇）</div>
     </div>
     <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
-      <div style="font-size:13px;color:#f2b705;">↗</div><div style="font-size:10px;color:var(--muted);">ジャッタ<br>（上昇）</div>
+      <div style="font-size:15px;color:#f2b705;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタ<br>（上昇）</div>
     </div>
   </div>
 </div>
 
 <!-- 声調イラスト -->
 <div style="margin-top:14px;margin-bottom:8px;">
-  <div style="margin:12px 0 8px;padding:5px 10px;background:#6b5c3e;color:#fff;border-radius:8px;font-size:13px;font-weight:700;">😊 表情イラストで確認</div>
+  <div style="margin:12px 0 8px;padding:5px 10px;background:#6b5c3e;color:#fff;border-radius:8px;font-size:15px;font-weight:700;">😊 表情イラストで確認</div>
   ${[
     ['tone_mid_flat',        '平声（無印）', 'サーマン'],
     ['tone_low_a_grave',     '低声（à）',    'エーク'],
@@ -2595,7 +2595,7 @@ function renderToneSection(){
   ].map(function(t){
     return '<div style="margin-bottom:12px;border-radius:12px;overflow:hidden;border:1px solid #e6d9bf;">'
       + '<img src="'+(PG_IMAGES[t[0]]||'')+'" style="display:block;width:100%;height:auto;">'
-      + '<div style="padding:6px 10px;background:#f3ead8;font-size:11px;color:#6b5c3e;">'+t[1]+'（タイ語名：'+t[2]+'）</div>'
+      + '<div style="padding:6px 10px;background:#f3ead8;font-size:13px;color:#6b5c3e;">'+t[1]+'（タイ語名：'+t[2]+'）</div>'
       + '</div>';
   }).join('')}
 </div>`;
@@ -2618,131 +2618,131 @@ function renderNumbers(){
   const numCard=(n,highlight)=>`
 <div onclick="speak('${n.th_word}')" style="background:var(--bg2);border:1px solid ${highlight?'#f2b705':'#38353f'};border-radius:12px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;overflow:hidden;">
   <div style="display:flex;align-items:baseline;gap:6px;">
-    <span style="font-family:'Sarabun',sans-serif;font-size:28px;color:#fff;line-height:1;flex-shrink:0;">${n.th_num}</span>
-    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--yellow);">${n.arabic}</span>
+    <span style="font-family:'Sarabun',sans-serif;font-size:32px;color:#fff;line-height:1;flex-shrink:0;">${n.th_num}</span>
+    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:var(--yellow);">${n.arabic}</span>
   </div>
-  <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);">${n.ro}</div>
-  <div style="font-family:'Sarabun',sans-serif;font-size:14px;color:var(--muted2);">${n.th_word}</div>
-  <div style="font-size:11px;color:#55505f;text-align:right;">🔊</div>
+  <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${n.ro}</div>
+  <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:var(--muted2);">${n.th_word}</div>
+  <div style="font-size:13px;color:#55505f;text-align:right;">🔊</div>
 </div>`;
 
   const exCard=(n)=>`
 <div onclick="speak('${n.th_word}')" style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;">
   <div style="display:flex;align-items:baseline;gap:6px;">
-    <span style="font-family:'Sarabun',sans-serif;font-size:28px;color:#fff;line-height:1;">${n.th_num}</span>
-    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--yellow);">${n.arabic}</span>
+    <span style="font-family:'Sarabun',sans-serif;font-size:32px;color:#fff;line-height:1;">${n.th_num}</span>
+    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:var(--yellow);">${n.arabic}</span>
   </div>
-  <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);">${n.ro}</div>
-  <div style="font-family:'Sarabun',sans-serif;font-size:14px;color:var(--muted2);">${n.th_word}</div>
-  <div style="font-size:10px;color:#f2b705;margin-top:2px;">${n.note}</div>
-  <div style="font-size:11px;color:#55505f;text-align:right;">🔊</div>
+  <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${n.ro}</div>
+  <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:var(--muted2);">${n.th_word}</div>
+  <div style="font-size:12px;color:#f2b705;margin-top:2px;">${n.note}</div>
+  <div style="font-size:13px;color:#55505f;text-align:right;">🔊</div>
 </div>`;
 
   return `
 <div class="sec-title">🔢 タイ数字</div>
 
 <!-- 基本数字 0〜9 -->
-<div style="font-size:11px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:8px 0 6px;">基本数字</div>
+<div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:8px 0 6px;">基本数字</div>
 <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:16px;">
 ${NUMS.filter(n=>['0','1','2','3','4','5','6','7','8','9'].includes(n.arabic)).map(n=>numCard(n,false)).join('')}
 </div>
 
 <!-- 位の単位 -->
-<div style="font-size:11px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 6px;">位の単位</div>
+<div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 6px;">位の単位</div>
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:20px;">
 ${units.map(n=>`
 <div onclick="speak('${n.th_word}')" style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:10px 6px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;overflow:hidden;">
-  <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--yellow);word-break:break-all;">${n.arabic}</div>
-  <div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;line-height:1.2;">${n.th_word}</div>
-  <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:10px;color:var(--muted);">${n.ro}</div>
-  <div style="font-size:11px;color:#55505f;text-align:right;">🔊</div>
+  <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--yellow);word-break:break-all;">${n.arabic}</div>
+  <div style="font-family:'Sarabun',sans-serif;font-size:23px;color:#fff;line-height:1.2;">${n.th_word}</div>
+  <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">${n.ro}</div>
+  <div style="font-size:13px;color:#55505f;text-align:right;">🔊</div>
 </div>`).join('')}
 </div>
 
 <!-- ルール解説 -->
-<div style="font-size:11px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">📌 特別ルール（2桁以上の場合）</div>
+<div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">📌 特別ルール（2桁以上の場合）</div>
 
 <!-- ルール① -->
 <div style="background:rgba(242,183,5,.08);border:1px solid rgba(242,183,5,.3);border-radius:12px;padding:14px;margin-bottom:10px;">
-  <div style="font-size:14px;font-weight:700;color:#f2b705;margin-bottom:8px;">ルール① 一の位が「1」のとき</div>
-  <div style="font-size:13px;color:var(--fg);line-height:1.9;">
+  <div style="font-size:16px;font-weight:700;color:#f2b705;margin-bottom:8px;">ルール① 一の位が「1」のとき</div>
+  <div style="font-size:15px;color:var(--fg);line-height:1.9;">
     <b>2桁以上</b>で一の位が <span style="color:#f2b705;font-weight:700;">1</span> の場合（11・21・31…）<br>
-    <span style="font-family:'Sarabun',sans-serif;font-size:16px;">หนึ่ง</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">nɯɯng</span>（ヌン）ではなく
-    <span style="font-family:'Sarabun',sans-serif;font-size:16px;color:#f2b705;">เอ็ด</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">èt</span>（エット）を使う<br>
-    <span style="font-size:12px;color:var(--muted);">※ 1単体はヌン（หนึ่ง）のまま。2桁以上の末尾のみ変わる</span>
+    <span style="font-family:'Sarabun',sans-serif;font-size:18px;">หนึ่ง</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);">nɯɯng</span>（ヌン）ではなく
+    <span style="font-family:'Sarabun',sans-serif;font-size:18px;color:#f2b705;">เอ็ด</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);">èt</span>（エット）を使う<br>
+    <span style="font-size:14px;color:var(--muted);">※ 1単体はヌン（หนึ่ง）のまま。2桁以上の末尾のみ変わる</span>
   </div>
   <div style="display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap;">
     <div style="text-align:center;">
-      <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">✗ 言わない</div>
-      <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#888;text-decoration:line-through;">สิบหนึ่ง</div>
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:#666;">sìp nɯɯng</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:2px;">✗ 言わない</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#888;text-decoration:line-through;">สิบหนึ่ง</div>
+      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#666;">sìp nɯɯng</div>
     </div>
-    <div style="font-size:20px;color:var(--muted);">→</div>
+    <div style="font-size:23px;color:var(--muted);">→</div>
     <div onclick="speak('สิบเอ็ด')" style="text-align:center;cursor:pointer;">
-      <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">✓ 正しい 🔊</div>
-      <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#f2b705;">สิบเอ็ด</div>
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);">sìp èt</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:2px;">✓ 正しい 🔊</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#f2b705;">สิบเอ็ด</div>
+      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">sìp èt</div>
     </div>
   </div>
 </div>
 
 <!-- ルール② -->
 <div style="background:rgba(74,124,196,.08);border:1px solid rgba(74,124,196,.3);border-radius:12px;padding:14px;margin-bottom:10px;">
-  <div style="font-size:14px;font-weight:700;color:#4a7cc4;margin-bottom:8px;">ルール② 十の位が「2」のとき</div>
-  <div style="font-size:13px;color:var(--fg);line-height:1.9;">
+  <div style="font-size:16px;font-weight:700;color:#4a7cc4;margin-bottom:8px;">ルール② 十の位が「2」のとき</div>
+  <div style="font-size:15px;color:var(--fg);line-height:1.9;">
     20〜29 の場合、十の位の <span style="color:#4a7cc4;font-weight:700;">2</span> は<br>
-    <span style="font-family:'Sarabun',sans-serif;font-size:16px;">สอง</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">sɔɔng</span>（ソーン）ではなく
-    <span style="font-family:'Sarabun',sans-serif;font-size:16px;color:#4a7cc4;">ยี่</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">yîi</span>（イー）を使う<br>
-    <span style="font-size:12px;color:var(--muted);">※ 慣習的なもので理由はない。まるごと覚えるしかない！</span>
+    <span style="font-family:'Sarabun',sans-serif;font-size:18px;">สอง</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);">sɔɔng</span>（ソーン）ではなく
+    <span style="font-family:'Sarabun',sans-serif;font-size:18px;color:#4a7cc4;">ยี่</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);">yîi</span>（イー）を使う<br>
+    <span style="font-size:14px;color:var(--muted);">※ 慣習的なもので理由はない。まるごと覚えるしかない！</span>
   </div>
   <div style="display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap;">
     <div style="text-align:center;">
-      <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">✗ 言わない</div>
-      <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#888;text-decoration:line-through;">สองสิบ</div>
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:#666;">sɔɔng sìp</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:2px;">✗ 言わない</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#888;text-decoration:line-through;">สองสิบ</div>
+      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#666;">sɔɔng sìp</div>
     </div>
-    <div style="font-size:20px;color:var(--muted);">→</div>
+    <div style="font-size:23px;color:var(--muted);">→</div>
     <div onclick="speak('ยี่สิบ')" style="text-align:center;cursor:pointer;">
-      <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">✓ 正しい 🔊</div>
-      <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#4a7cc4;">ยี่สิบ</div>
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);">yîi sìp</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:2px;">✓ 正しい 🔊</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#4a7cc4;">ยี่สิบ</div>
+      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">yîi sìp</div>
     </div>
   </div>
 </div>
 
 <!-- ルール③ -->
 <div style="background:rgba(76,154,106,.08);border:1px solid rgba(76,154,106,.3);border-radius:12px;padding:14px;margin-bottom:16px;">
-  <div style="font-size:14px;font-weight:700;color:#4c9a6a;margin-bottom:8px;">ルール③ 組み合わせ（21）</div>
-  <div style="font-size:13px;color:var(--fg);line-height:1.9;">
+  <div style="font-size:16px;font-weight:700;color:#4c9a6a;margin-bottom:8px;">ルール③ 組み合わせ（21）</div>
+  <div style="font-size:15px;color:var(--fg);line-height:1.9;">
     ルール①②が重なる <span style="color:#4c9a6a;font-weight:700;">21</span> は両方適用される
   </div>
   <div style="margin-top:12px;">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
       <div style="background:rgba(74,124,196,.15);border-radius:8px;padding:8px 12px;text-align:center;flex:1;">
-        <div style="font-size:11px;color:var(--muted);">十の位（ルール②）</div>
-        <div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#4a7cc4;">ยี่สิบ</div>
-        <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:10px;color:var(--muted);">yîi sìp</div>
+        <div style="font-size:13px;color:var(--muted);">十の位（ルール②）</div>
+        <div style="font-family:'Sarabun',sans-serif;font-size:23px;color:#4a7cc4;">ยี่สิบ</div>
+        <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">yîi sìp</div>
       </div>
-      <div style="font-size:18px;color:var(--muted);">+</div>
+      <div style="font-size:21px;color:var(--muted);">+</div>
       <div style="background:rgba(242,183,5,.15);border-radius:8px;padding:8px 12px;text-align:center;flex:1;">
-        <div style="font-size:11px;color:var(--muted);">一の位（ルール①）</div>
-        <div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#f2b705;">เอ็ด</div>
-        <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:10px;color:var(--muted);">èt</div>
+        <div style="font-size:13px;color:var(--muted);">一の位（ルール①）</div>
+        <div style="font-family:'Sarabun',sans-serif;font-size:23px;color:#f2b705;">เอ็ด</div>
+        <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">èt</div>
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
-      <div style="font-size:18px;color:var(--muted);padding-left:4px;">=</div>
+      <div style="font-size:21px;color:var(--muted);padding-left:4px;">=</div>
       <div onclick="speak('ยี่สิบเอ็ด')" style="background:rgba(76,154,106,.2);border:1px solid #4c9a6a;border-radius:8px;padding:8px 12px;text-align:center;cursor:pointer;flex:1;">
-        <div style="font-size:11px;color:var(--muted);">21　🔊</div>
-        <div style="font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;">ยี่สิบเอ็ด</div>
-        <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);">yîi sìp èt</div>
+        <div style="font-size:13px;color:var(--muted);">21　🔊</div>
+        <div style="font-family:'Sarabun',sans-serif;font-size:23px;color:#fff;">ยี่สิบเอ็ด</div>
+        <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">yîi sìp èt</div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- 練習 -->
-<div style="font-size:11px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">🔊 タップして確認</div>
+<div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">🔊 タップして確認</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
 ${examples.map(n=>exCard(n)).join('')}
 </div>
@@ -3017,13 +3017,13 @@ function exportData(){
 function promptCopy(json){
   const ta = document.createElement('textarea');
   ta.value = json;
-  ta.style.cssText='position:fixed;top:0;left:0;width:100%;height:40%;z-index:9999;font-size:12px;padding:8px;';
+  ta.style.cssText='position:fixed;top:0;left:0;width:100%;height:40%;z-index:9999;font-size:14px;padding:8px;';
   document.body.appendChild(ta);
   ta.select();
   ta.setSelectionRange(0,99999);
   const msg = document.createElement('div');
-  msg.style.cssText='position:fixed;top:40%;left:0;width:100%;background:#333;color:#fff;text-align:center;padding:12px;z-index:9999;font-size:13px;';
-  msg.innerHTML='上のテキストを全選択してコピーしてください<br><button onclick="document.querySelectorAll(\'textarea,div[style*=fixed]\').forEach(e=>e.remove())" style="margin-top:8px;padding:6px 20px;border-radius:20px;border:none;background:#4a7cc4;color:#fff;font-size:13px;">閉じる</button>';
+  msg.style.cssText='position:fixed;top:40%;left:0;width:100%;background:#333;color:#fff;text-align:center;padding:12px;z-index:9999;font-size:15px;';
+  msg.innerHTML='上のテキストを全選択してコピーしてください<br><button onclick="document.querySelectorAll(\'textarea,div[style*=fixed]\').forEach(e=>e.remove())" style="margin-top:8px;padding:6px 20px;border-radius:20px;border:none;background:#4a7cc4;color:#fff;font-size:15px;">閉じる</button>';
   document.body.appendChild(msg);
 }
 function importData(){
@@ -3132,6 +3132,9 @@ window.addEventListener('scroll',function(){
   if(st.mode==='wordlist'){
     if(tb) tb.style.display=window.scrollY>300?'block':'none';
     if(sr) sr.style.display=window.scrollY>170?'block':'none';
+  } else if(st.mode==='font' || st.mode==='grammar'){
+    if(tb) tb.style.display=window.scrollY>300?'block':'none';
+    if(sr) sr.style.display='none';
   } else {
     if(tb) tb.style.display='none';
     if(sr) sr.style.display='none';
