@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="ป้ายไทย">
@@ -1785,23 +1785,27 @@ function updateStickyTab(){
   if(st.wordlistMode==='conversation'){
     sr.innerHTML=modeTabs+SCENES.map(s=>
       `<button class="chip ${s===st.wordlistScene?'active-conv':''}" data-sc="${s}">${s}</button>`).join('');
+    requestAnimationFrame(()=>{
+      const activeChip=sr.querySelector('.chip[data-sc].active-conv');
+      if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
+    });
     sr.querySelectorAll('[data-sc]').forEach(c=>c.addEventListener('click',()=>{
-      const saved=sr.scrollLeft;
       st.wordlistScene=c.dataset.sc;
       window.scrollTo(0,0);
       render();
-      requestAnimationFrame(()=>{const el=document.getElementById('stickySubRow');if(el)el.scrollLeft=saved;});
     }));
   } else {
     const allChip=`<button class="chip ${'all'===st.wordlistPos?'active-vocab':''}" data-pos="all">ALL</button>`;
     sr.innerHTML=modeTabs+allChip+Object.entries(getPosLabels()).map(([k,v])=>
       `<button class="chip ${k===st.wordlistPos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
+    requestAnimationFrame(()=>{
+      const activeChip=sr.querySelector('.chip[data-pos].active-vocab');
+      if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
+    });
     sr.querySelectorAll('[data-pos]').forEach(c=>c.addEventListener('click',()=>{
-      const saved=sr.scrollLeft;
       st.wordlistPos=c.dataset.pos;
       window.scrollTo(0,0);
       render();
-      requestAnimationFrame(()=>{const el=document.getElementById('stickySubRow');if(el)el.scrollLeft=saved;});
     }));
   }
   const smv=document.getElementById('wlModeVocabSticky'); if(smv) smv.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
@@ -1842,6 +1846,10 @@ function renderWordList(){
     });
     lp.innerHTML=html;
     updateStickyTab();
+    requestAnimationFrame(()=>{
+      const activeChip=lp.querySelector('.chip[data-sc].active-conv');
+      if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
+    });
     lp.querySelectorAll('.conv-list-item').forEach(el=>{
       el.addEventListener('click',()=>{
         const id=el.dataset.id;
@@ -1921,6 +1929,10 @@ function renderWordList(){
   });
   lp.innerHTML=html;
   updateStickyTab();
+  requestAnimationFrame(()=>{
+    const activeChip=lp.querySelector('.chip[data-pos].active-vocab');
+    if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
+  });
   lp.querySelectorAll('.list-item').forEach(el=>{
     el.addEventListener('click',()=>{
       const id=el.dataset.id;
