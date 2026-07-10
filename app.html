@@ -1824,7 +1824,7 @@ function renderWordList(){
 
   if(st.wordlistMode==='conversation'){
     // ── 会話リスト ──
-    html+=`<div style="display:flex;gap:6px;overflow-x:auto;padding:0 12px 10px;-webkit-overflow-scrolling:touch;">
+    html+=`<div id="wlTabRow" style="display:flex;gap:6px;overflow-x:auto;padding:0 12px 10px;-webkit-overflow-scrolling:touch;">
       ${SCENES.map(s=>`<button class="chip ${s===st.wordlistScene?'active-conv':''}" data-sc="${s}" style="flex-shrink:0;">${s}</button>`).join('')}
     </div>`;
     let items=st.wordlistScene==='ALL'?CONV:CONV.filter(i=>i.scene===st.wordlistScene);
@@ -1887,7 +1887,7 @@ function renderWordList(){
 
   // ── 単語リスト（従来） ──
   const pos=st.wordlistPos;
-  html+=`<div style="display:flex;gap:6px;overflow-x:auto;padding:0 12px 10px;-webkit-overflow-scrolling:touch;">
+  html+=`<div id="wlTabRow" style="display:flex;gap:6px;overflow-x:auto;padding:0 12px 10px;-webkit-overflow-scrolling:touch;">
     <button class="chip ${'all'===pos?'active-vocab':''}" data-pos="all" style="flex-shrink:0;">ALL</button>
     ${Object.entries(getPosLabels()).map(([k,v])=>`<button class="chip ${k===pos?'active-vocab':''}" data-pos="${k}" style="flex-shrink:0;">${v}</button>`).join('')}
   </div>`;
@@ -3156,11 +3156,27 @@ window.addEventListener('scroll',function(){
   if(st.mode==='wordlist'){
     if(tb) tb.style.display=window.scrollY>300?'block':'none';
     if(sr){
-      const shouldShow=window.scrollY>170;
-      sr.style.display=shouldShow?'block':'none';
+      const originalRow=document.getElementById('wlTabRow');
+      // 元のタブ行の上端が画面上端に触れたら固定タブに切り替える
+      const shouldShow=originalRow ? originalRow.getBoundingClientRect().top <= 0 : window.scrollY>170;
       if(shouldShow && !stickyWasShown){
-        const activeChip=sr.querySelector('.chip.active-vocab,.chip.active-conv');
-        if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
+        sr.style.display='block';
+        requestAnimationFrame(()=>{
+          requestAnimationFrame(()=>{
+            const activeInOriginal=originalRow?originalRow.querySelector('.chip.active-vocab,.chip.active-conv'):null;
+            if(activeInOriginal){
+              const visualOffset=activeInOriginal.offsetLeft-originalRow.scrollLeft;
+              const key=activeInOriginal.dataset.pos||activeInOriginal.dataset.sc;
+              const attr=activeInOriginal.dataset.pos?'data-pos':'data-sc';
+              const activeInSticky=sr.querySelector(`.chip[${attr}="${key}"]`);
+              if(activeInSticky){
+                sr.scrollLeft=activeInSticky.offsetLeft-visualOffset;
+              }
+            }
+          });
+        });
+      } else if(!shouldShow){
+        sr.style.display='none';
       }
       stickyWasShown=shouldShow;
     }
