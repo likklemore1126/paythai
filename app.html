@@ -3133,6 +3133,17 @@ document.getElementById('toListBtn').addEventListener('click',function(){
 });
 
 // TOPボタン
+// 単語カード上のピンチズームをブロック(Safariはtouch-actionだけでは防げないため)
+(function(){
+  const flipWrap = document.getElementById('flipWrap');
+  if(!flipWrap) return;
+  flipWrap.addEventListener('gesturestart', function(e){ e.preventDefault(); });
+  flipWrap.addEventListener('gesturechange', function(e){ e.preventDefault(); });
+  flipWrap.addEventListener('touchmove', function(e){
+    if(e.touches.length > 1) e.preventDefault();
+  }, {passive:false});
+})();
+
 document.getElementById('topBtn').addEventListener('click',function(){
   window.scrollTo({top:0,behavior:'smooth'});
 });
