@@ -59,7 +59,7 @@ header{padding-bottom:10px;}
 .progress-text{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
 /* ─── CARD ─── */
 .stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0 14px;}
-.flip-wrap{width:100%;max-width:340px;height:390px;perspective:1400px;position:relative;}
+.flip-wrap{width:100%;max-width:340px;height:390px;perspective:1400px;position:relative;touch-action:pan-y;}
 .card-inner{position:relative;width:100%;height:100%;
   transition:transform .45s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d;}
 .card-inner.flipped{transform:rotateY(180deg);}
@@ -3137,19 +3137,30 @@ document.getElementById('topBtn').addEventListener('click',function(){
   window.scrollTo({top:0,behavior:'smooth'});
 });
 
-// スクロール検知：300px以上でTOPボタン表示
+// スクロール検知:300px以上でTOPボタン表示
+let stickyWasShown=false;
 window.addEventListener('scroll',function(){
   const tb=document.getElementById('topBtn');
   const sr=document.getElementById('stickySubRow');
   if(st.mode==='wordlist'){
     if(tb) tb.style.display=window.scrollY>300?'block':'none';
-    if(sr) sr.style.display=window.scrollY>170?'block':'none';
+    if(sr){
+      const shouldShow=window.scrollY>170;
+      sr.style.display=shouldShow?'block':'none';
+      if(shouldShow && !stickyWasShown){
+        const activeChip=sr.querySelector('.chip.active-vocab,.chip.active-conv');
+        if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
+      }
+      stickyWasShown=shouldShow;
+    }
   } else if(st.mode==='font' || st.mode==='grammar'){
     if(tb) tb.style.display=window.scrollY>300?'block':'none';
     if(sr) sr.style.display='none';
+    stickyWasShown=false;
   } else {
     if(tb) tb.style.display='none';
     if(sr) sr.style.display='none';
+    stickyWasShown=false;
   }
 });
 
