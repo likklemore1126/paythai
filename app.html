@@ -31,6 +31,9 @@ header{padding-bottom:10px;}
 .title-th{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-weight:600;font-size:23px;color:#fff;}
 .title-sub{font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
 .mode-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:10px;}
+.scroll-fade-r{mask-image:linear-gradient(to right,black calc(100% - 30px),transparent 100%);-webkit-mask-image:linear-gradient(to right,black calc(100% - 30px),transparent 100%);}
+.scroll-fade-l{mask-image:linear-gradient(to left,black calc(100% - 30px),transparent 100%);-webkit-mask-image:linear-gradient(to left,black calc(100% - 30px),transparent 100%);}
+.scroll-fade-lr{mask-image:linear-gradient(to right,transparent 0,black 30px,black calc(100% - 30px),transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0,black 30px,black calc(100% - 30px),transparent 100%);}
 .mode-tabs::-webkit-scrollbar{display:none;}
 .mode-tab{flex:0 0 auto;padding:7px 13px;border-radius:14px;font-size:14px;font-weight:700;
   border:1.5px solid transparent;background:var(--bg2);color:var(--muted2);cursor:pointer;
@@ -1747,6 +1750,7 @@ function renderModeTabs(){
     if(st.mode!=='vocab') st.fromList=false;
     st.idx=0;st.flipped=false;render();
   }));
+  requestAnimationFrame(()=>applyScrollFade(mt));
 }
 
 function renderSub(){
@@ -1757,11 +1761,13 @@ function renderSub(){
     sr.innerHTML=allChip+Object.entries(getPosLabels()).map(([k,v])=>
       `<button class="chip ${k===st.pos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.pos=c.dataset.pos;st.idx=0;st.flipped=false;st.fromList=false;render();}));
+    requestAnimationFrame(()=>applyScrollFade(sr));
   } else if(st.mode==='conversation'){
     sr.style.display='flex';
     sr.innerHTML=SCENES.map(s=>
       `<button class="chip ${s===st.scene?'active-conv':''}" data-sc="${s}">${s}</button>`).join('');
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.scene=c.dataset.sc;st.idx=0;st.flipped=false;render();}));
+    requestAnimationFrame(()=>applyScrollFade(sr));
   } else if(st.mode==='font'){
     sr.style.display='flex';
     const tabs=[['compare','フォント'],['mid','中子音'],['high','高子音'],['low','低子音'],['vowel','母音'],['tone','声調']];
@@ -1770,6 +1776,7 @@ function renderSub(){
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
       st.fontTab=c.dataset.ft;render();
     }));
+    requestAnimationFrame(()=>applyScrollFade(sr));
   } else if(st.mode==='wordlist'){
     sr.style.display='none'; sr.innerHTML='';
   } else { sr.style.display='none'; sr.innerHTML=''; }
@@ -1779,7 +1786,7 @@ function updateStickyTab(){
   const sr=document.getElementById('stickySubRow');
   if(!sr) return;
   if(st.mode!=='wordlist'){sr.style.display='none';return;}
-  // スクロール量で表示切替（初期は非表示）
+  // スクロール量で表示切替(初期は非表示)
   sr.style.display=window.scrollY>170?'block':'none';
   const modeTabs=`<button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocabSticky" style="margin-left:0;">単語</button><button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConvSticky">会話</button>`;
   if(st.wordlistMode==='conversation'){
@@ -1788,6 +1795,7 @@ function updateStickyTab(){
     requestAnimationFrame(()=>{
       const activeChip=sr.querySelector('.chip[data-sc].active-conv');
       if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
+      applyScrollFade(sr);
     });
     sr.querySelectorAll('[data-sc]').forEach(c=>c.addEventListener('click',()=>{
       st.wordlistScene=c.dataset.sc;
@@ -1801,6 +1809,7 @@ function updateStickyTab(){
     requestAnimationFrame(()=>{
       const activeChip=sr.querySelector('.chip[data-pos].active-vocab');
       if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
+      applyScrollFade(sr);
     });
     sr.querySelectorAll('[data-pos]').forEach(c=>c.addEventListener('click',()=>{
       st.wordlistPos=c.dataset.pos;
@@ -1849,6 +1858,7 @@ function renderWordList(){
     requestAnimationFrame(()=>{
       const activeChip=lp.querySelector('.chip[data-sc].active-conv');
       if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
+      applyScrollFade(document.getElementById('wlTabRow'));
     });
     lp.querySelectorAll('.conv-list-item').forEach(el=>{
       el.addEventListener('click',()=>{
@@ -1932,6 +1942,7 @@ function renderWordList(){
   requestAnimationFrame(()=>{
     const activeChip=lp.querySelector('.chip[data-pos].active-vocab');
     if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
+    applyScrollFade(document.getElementById('wlTabRow'));
   });
   lp.querySelectorAll('.list-item').forEach(el=>{
     el.addEventListener('click',()=>{
@@ -2501,12 +2512,48 @@ function renderConsonants(cls){
 function renderToneSection(){
   return `
 <div class="sec-title" style="margin-top:4px;">🎼 声調規則（子音クラス × 声調符号）</div>
-<p style="font-size:13px;color:var(--muted);margin:0 0 8px;">
-📌 <b style="color:var(--muted2);">平音節</b>＝長母音で終わる音節、またはm・n・ng・y・wで終わる音節<br>
-　　（例：มา・กิน・นาง）<br>
-📌 <b style="color:var(--muted2);">促音節</b>＝p・t・kで終わる音節（短く詰まる音）<br>
-　　（例：กับ・มาก・นัด）
-</p>
+
+<!-- 末子音・音節タイプの解説 -->
+<div style="background:#241f2c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+  <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:9px;">📖 まず「末子音」って何?</div>
+  <p style="font-size:15px;color:#d8d3de;line-height:1.7;margin:0 0 11px;">
+  タイ語の音節は、最後にどんな音で終わるか(末子音)によって「平音節」と「促音節」の2種類に分かれます。この2種類の違いが、声調記号が無い時の「基本の声調」を決める材料の1つになります。
+  </p>
+
+  <div style="display:grid;grid-template-columns:1fr;gap:9px;">
+    <div style="background:rgba(74,124,196,.22);border:1px solid rgba(143,180,232,.35);border-radius:10px;padding:11px 13px;">
+      <div style="font-size:15px;font-weight:700;color:#bcd6f7;margin-bottom:5px;">平音節(伸ばせる終わり方)</div>
+      <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0 0 7px;">
+      次のどちらかで終わる音節です。<br>
+      ①長母音で終わる(例:มา・ดู)<br>
+      ②m・n・ng・y・wの音で終わる(例:กิน・นาง・สาย)
+      </p>
+      <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0;">
+      これらは「音を伸ばして終われる」終わり方です。試しに「กิน(食べる)」の「น」の部分を、口を止めずにそのまま伸ばしてみてください。「んんん…」と続けられるはずです。
+      </p>
+    </div>
+
+    <div style="background:rgba(192,57,43,.22);border:1px solid rgba(232,150,143,.35);border-radius:10px;padding:11px 13px;">
+      <div style="font-size:15px;font-weight:700;color:#f4c2bd;margin-bottom:5px;">促音節(伸ばせない終わり方)</div>
+      <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0 0 7px;">
+      次のどちらかで終わる音節です。<br>
+      ①短母音で終わる、かつ末子音が無い(例:กะ・ดุ)<br>
+      ②k・t・pの音で終わる(例:มาก・นัด・กับ)
+      </p>
+      <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0;">
+      これらは「音が途中でせき止められる」終わり方です。「มาก(多い)」の「ก」は、日本語の小さい「っ」のように、音がぷつっと止まります。伸ばそうとしても伸ばせません。
+      </p>
+    </div>
+  </div>
+
+  <div style="margin-top:11px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
+  💡 綴り字の上の子音字(ก・ด・บなど)は何種類もありますが、実際に発音する末子音の音は少数に整理されます。たとえば ด・ต・ถ・ท・ธ・จ・ช・ซ・ศ・ษ・ส はどれも語末では同じ「t」の音になります。文字は違っても、発音される音の種類(平音節か促音節か)で考えるのがポイントです。
+  </div>
+
+  <div style="margin-top:9px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
+  📌 なぜこの分類が大事かというと<span style="color:#f2b705;font-weight:700;white-space:nowrap;">声調記号(่ ้ ๊ ๋)</span>が付いていない単語でも、<b style="color:#fff;">子音クラス(中子音/高子音/低子音)</b>と<b style="color:#fff;">この音節タイプ</b>の組み合わせで、基本の声調が自動的に決まるからです。下の表はその組み合わせをまとめたものです。
+  </div>
+</div>
 
 <!-- 中子音 -->
 <div style="margin-bottom:10px;">
@@ -2515,10 +2562,10 @@ function renderToneSection(){
   <tr style="background:#2a2730;">
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>平音節</th>
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>促音節</th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก่</div><div style="font-size:10px;color:var(--muted);">エーク</div></th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก้</div><div style="font-size:10px;color:var(--muted);">トー</div></th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก๊</div><div style="font-size:10px;color:var(--muted);">トリー</div></th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก๋</div><div style="font-size:10px;color:var(--muted);">ジャッタ</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก่</div><div style="font-size:10px;color:var(--muted);">マイエーク</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก้</div><div style="font-size:10px;color:var(--muted);">マイトー</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก๊</div><div style="font-size:10px;color:var(--muted);">マイトリー</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก๋</div><div style="font-size:10px;color:var(--muted);">マイジャッタワー</div></th>
   </tr>
   <tr style="background:rgba(192,57,43,.1);">
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">─</div><div style="font-size:12px;color:var(--muted);">サーマン</div></td>
@@ -2538,8 +2585,8 @@ function renderToneSection(){
   <tr style="background:#2a2730;">
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>平音節</th>
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>促音節</th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ข่</div><div style="font-size:10px;color:var(--muted);">エーク</div></th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ข้</div><div style="font-size:10px;color:var(--muted);">トー</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ข่</div><div style="font-size:10px;color:var(--muted);">マイエーク</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ข้</div><div style="font-size:10px;color:var(--muted);">マイトー</div></th>
     <th colspan="2" style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">トリー・ジャッタ<br>使用なし</th>
   </tr>
   <tr style="background:rgba(76,154,106,.1);">
@@ -2559,8 +2606,8 @@ function renderToneSection(){
   <tr style="background:#2a2730;">
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>平音節</th>
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>促音節</th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ค่</div><div style="font-size:10px;color:var(--muted);">エーク</div></th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ค้</div><div style="font-size:10px;color:var(--muted);">トー</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ค่</div><div style="font-size:10px;color:var(--muted);">マイエーク</div></th>
+    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ค้</div><div style="font-size:10px;color:var(--muted);">マイトー</div></th>
     <th colspan="2" style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">トリー・ジャッタ<br>使用なし</th>
   </tr>
   <tr style="background:rgba(74,124,196,.1);">
@@ -2600,14 +2647,14 @@ function renderToneSection(){
   <div style="margin:12px 0 8px;padding:5px 10px;background:#6b5c3e;color:#fff;border-radius:8px;font-size:15px;font-weight:700;">😊 表情イラストで確認</div>
   ${[
     ['tone_mid_flat',        '平声（無印）', 'サーマン'],
-    ['tone_low_a_grave',     '低声（à）',    'エーク'],
-    ['tone_falling_a_circ',  '下声（â）',    'トー'],
-    ['tone_high_a_acute',    '高声（á）',    'トリー'],
-    ['tone_rising_a_caron',  '上声（ǎ）',    'ジャッタ'],
+    ['tone_low_a_grave',     '低声（à）',    'マイエーク'],
+    ['tone_falling_a_circ',  '下声（â）',    'マイトー'],
+    ['tone_high_a_acute',    '高声（á）',    'マイトリー'],
+    ['tone_rising_a_caron',  '上声（ǎ）',    'マイジャッタワー'],
   ].map(function(t){
     return '<div style="margin-bottom:12px;border-radius:12px;overflow:hidden;border:1px solid #e6d9bf;">'
+      + '<div style="padding:8px 10px;background:#f3ead8;font-size:15px;font-weight:700;color:#4a3f28;">'+t[1]+'（タイ語名：'+t[2]+'）</div>'
       + '<img src="'+(PG_IMAGES[t[0]]||'')+'" style="display:block;width:100%;height:auto;">'
-      + '<div style="padding:6px 10px;background:#f3ead8;font-size:13px;color:#6b5c3e;">'+t[1]+'（タイ語名：'+t[2]+'）</div>'
       + '</div>';
   }).join('')}
 </div>`;
@@ -3267,6 +3314,29 @@ document.querySelectorAll('#pgBody img[data-key]').forEach(el=>{
   const k = el.getAttribute('data-key');
   if(PG_IMAGES[k]) el.src = PG_IMAGES[k];
 });
+
+// 横スクロールタブ:実際にスクロール余地がある時だけ端をフェードさせる
+function applyScrollFade(el){
+  if(!el) return;
+  const update=()=>{
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    if(maxScroll <= 2){
+      el.classList.remove('scroll-fade-r','scroll-fade-l','scroll-fade-lr');
+      return;
+    }
+    const atStart = el.scrollLeft <= 2;
+    const atEnd = el.scrollLeft >= maxScroll - 2;
+    el.classList.remove('scroll-fade-r','scroll-fade-l','scroll-fade-lr');
+    if(atStart) el.classList.add('scroll-fade-r');
+    else if(atEnd) el.classList.add('scroll-fade-l');
+    else el.classList.add('scroll-fade-lr');
+  };
+  update();
+  if(!el.dataset.fadeBound){
+    el.addEventListener('scroll', update, {passive:true});
+    el.dataset.fadeBound = '1';
+  }
+}
 
 function detectPGKeys(text){
   // 文章中に実際に出てくる順番で記号を検出する
