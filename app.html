@@ -3269,22 +3269,29 @@ document.querySelectorAll('#pgBody img[data-key]').forEach(el=>{
 });
 
 function detectPGKeys(text){
-  const keys = new Set();
-  if(!text) return keys;
-  if(text.includes('ɛ')) keys.add('vowel_epsilon');
-  if(text.includes('ɔ')) keys.add('vowel_open_o');
-  if(text.includes('ɤ')) keys.add('vowel_ram_horn');
-  if(text.includes('ŋ')) keys.add('vowel_eng');
-  if(text.includes('ɯ')) keys.add('vowel_turned_m');
+  // 文章中に実際に出てくる順番で記号を検出する
+  if(!text) return [];
   const norm = text.normalize('NFD');
-  const toneKeys = [];
-  if(norm.includes('\u0300')) toneKeys.push('tone_low_a_grave');
-  if(norm.includes('\u0301')) toneKeys.push('tone_high_a_acute');
-  if(norm.includes('\u0302')) toneKeys.push('tone_falling_a_circ');
-  if(norm.includes('\u030C')) toneKeys.push('tone_rising_a_caron');
-  if(toneKeys.length===0) toneKeys.push('tone_mid_flat');
-  toneKeys.forEach(k=>keys.add(k));
-  return keys;
+  const vowelMap = {'ɛ':'vowel_epsilon','ɔ':'vowel_open_o','ɤ':'vowel_ram_horn','ŋ':'vowel_eng','ɯ':'vowel_turned_m'};
+  const toneMap = {'\u0300':'tone_low_a_grave','\u0301':'tone_high_a_acute','\u0302':'tone_falling_a_circ','\u030C':'tone_rising_a_caron'};
+  const found = [];
+  const seen = new Set();
+  let hasToneMark = false;
+  for(let i=0;i<norm.length;i++){
+    const ch = norm[i];
+    if(vowelMap[ch] && !seen.has(vowelMap[ch])){
+      found.push({index:i, key:vowelMap[ch]});
+      seen.add(vowelMap[ch]);
+    } else if(toneMap[ch] && !seen.has(toneMap[ch])){
+      found.push({index:i, key:toneMap[ch]});
+      seen.add(toneMap[ch]);
+      hasToneMark = true;
+    }
+  }
+  found.sort((a,b)=>a.index-b.index);
+  const orderedKeys = found.map(f=>f.key);
+  if(!hasToneMark) orderedKeys.push('tone_mid_flat'); // 声調記号が無ければ平声として末尾に追加
+  return orderedKeys;
 }
 
 let pgBodyScrollLockY = 0;
@@ -3306,7 +3313,7 @@ function openPronunciationGuide(info){
   }
 
   document.querySelectorAll('.pg-card').forEach(c=>c.classList.remove('pg-highlight'));
-  const keys = info.forceKey ? new Set([info.forceKey]) : detectPGKeys(info.ro || '');
+  const keys = info.forceKey ? [info.forceKey] : detectPGKeys(info.ro || '');
   let firstEl = null;
   keys.forEach(k=>{
     const el = document.getElementById('pg-'+k);
