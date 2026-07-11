@@ -149,6 +149,12 @@ footer{text-align:center;padding:6px 0 2px;}
 .reset-btn{font-size:13px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;}
 .audio-note{font-size:13px;color:#fff;margin-top:6px;line-height:1.6;}
 @media(max-height:700px){.flip-wrap{height:355px;}}
+@media(min-width:768px){
+  .wrap{max-width:640px;}
+  .flip-wrap{max-width:460px;height:430px;}
+  .stage{max-width:none;}
+}
+@media(min-width:768px) and (max-height:800px){.flip-wrap{height:390px;}}
 
 /* --- レベルpill色 --- */
 .pill-level[data-level="beginner"]{background:#2d6a4f;color:#b7e4c7;border-color:#40916c;}
