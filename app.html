@@ -281,20 +281,20 @@ footer{text-align:center;padding:6px 0 2px;}
   <div style="padding:16px 18px 8px;">
     <h3 style="margin:0 0 8px;font-size:16px;color:#fff;">🔄 アプリが更新されました</h3>
     <p style="margin:0 0 10px;font-size:13px;color:#e4e1e8;line-height:1.6;">
-    今回の更新で不具合修正や機能追加が行われました。まれに学習データの引き継ぎに影響が出る場合があるため、念のため<b style="color:#fff;">学習データのバックアップ(エクスポート)</b>をおすすめします。
+    今回の更新で不具合修正や機能追加が行われました。<b style="color:#fff;">この端末に学習データを自動でバックアップ済み</b>なので、特別な操作は不要です。
     </p>
     <div style="background:#2d2836;border-radius:10px;padding:10px 12px;margin-bottom:6px;">
-      <div style="font-size:13px;font-weight:700;color:#f2b705;margin-bottom:5px;">やり方</div>
       <p style="margin:0;font-size:12px;color:#c9c4d0;line-height:1.7;">
-      ① 下の「今すぐエクスポート」を押すと、学習データがコピーされます<br>
-      ② メモ帳などに一旦貼り付けて保存しておくと安心です<br>
-      ③ もし更新後に学習記録が消えていたら、フッターの「📥 インポート」から、保存しておいたデータを貼り付けて復元できます
+      もし更新後に学習記録の件数がおかしいと感じたら、下の「バックアップから復元」をタップすれば、自動保存されたデータにワンタップで戻せます。
       </p>
     </div>
+    <p style="margin:8px 0 0;font-size:11px;color:var(--muted);line-height:1.6;">
+    ※ 別の端末にもデータを移したい場合は、フッターの「📤 エクスポート」からコピーして使ってください。
+    </p>
   </div>
   <div style="padding:12px 18px 16px;display:flex;gap:8px;border-top:1px solid rgba(255,255,255,.08);">
     <button id="updateSkipBtn" style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:none;color:var(--muted2);font-size:14px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;">閉じる</button>
-    <button id="updateExportBtn" style="flex:1;padding:10px;border-radius:10px;border:none;background:#4a7cc4;color:#fff;font-size:14px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;">今すぐエクスポート</button>
+    <button id="updateRestoreBtn" style="flex:1;padding:10px;border-radius:10px;border:none;background:#4a7cc4;color:#fff;font-size:14px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;">バックアップから復元</button>
   </div>
 </div>
 
@@ -355,6 +355,41 @@ async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }ca
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
 const APP_VERSION = '2026-07-11';
 
+function snapshotCurrentData(){
+  const data = { exChecked: [...exChecked], learned: {}, level: st.level, gender: st.gender };
+  for(const k of Object.keys(st.learned)) data.learned[k] = [...st.learned[k]];
+  return data;
+}
+
+async function autoBackupData(){
+  try{
+    const data = snapshotCurrentData();
+    await sto_set('s:autoBackup', { savedAt: Date.now(), data });
+  }catch(e){}
+}
+
+async function restoreAutoBackup(){
+  const backup = await sto_get('s:autoBackup');
+  if(!backup || !backup.data){
+    alert('この端末に自動バックアップが見つかりませんでした。');
+    return;
+  }
+  if(!confirm('自動保存されたバックアップ(この端末に保存されたもの)から復元します。現在の学習記録は上書きされます。よろしいですか?')) return;
+  const data = backup.data;
+  if(data.level) st.level = data.level;
+  if(data.gender) st.gender = data.gender;
+  if(data.exChecked){ exChecked.clear(); data.exChecked.forEach(id=>exChecked.add(id)); sto_set('s:exChecked',[...exChecked]); }
+  if(data.learned){
+    for(const k of Object.keys(data.learned)){
+      st.learned[k] = new Set(data.learned[k]);
+      sto_set('l:'+k, data.learned[k]);
+    }
+  }
+  alert('復元しました。');
+  closeUpdateModal();
+  render();
+}
+
 async function checkAppUpdate(){
   const forceTest = new URLSearchParams(location.search).has('testupdate');
   const stored = await sto_get('s:appVersion');
@@ -364,6 +399,7 @@ async function checkAppUpdate(){
     return;
   }
   if(stored !== APP_VERSION || forceTest){
+    await autoBackupData(); // 表示前に自動でこの端末にバックアップを保存
     const ov=document.getElementById('updateOverlay');
     const md=document.getElementById('updateModal');
     if(ov) ov.style.display='block';
@@ -378,10 +414,7 @@ function closeUpdateModal(){
 }
 
 document.getElementById('updateSkipBtn').addEventListener('click', closeUpdateModal);
-document.getElementById('updateExportBtn').addEventListener('click', ()=>{
-  exportData();
-  closeUpdateModal();
-});
+document.getElementById('updateRestoreBtn').addEventListener('click', restoreAutoBackup);
 
 async function loadAll(){
   const lv=await sto_get('s:level'); if(lv) st.level=lv;
