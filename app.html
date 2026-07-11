@@ -266,13 +266,27 @@ footer{text-align:center;padding:6px 0 2px;}
   <button class="top-btn" id="topBtn">↑ TOP</button>
 
   <footer>
-    <button class="reset-btn" id="resetBtn">この分類の学習記録をリセット</button>
-    <div style="margin-top:8px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap;">
-      <button class="reset-btn" id="exportBtn" style="color:#4a7cc4;">📤 データをエクスポート</button>
-      <button class="reset-btn" id="importBtn" style="color:#4c9a6a;">📥 データをインポート</button>
+    <div style="display:flex;gap:8px;justify-content:center;">
+      <button class="reset-btn" id="exportBtn" style="text-decoration:none;font-size:14px;font-weight:700;padding:9px 0;width:150px;text-align:center;background:rgba(74,124,196,.15);color:#7bb0ee;border:1.5px solid #4a7cc4;border-radius:10px;">📤 エクスポート</button>
+      <button class="reset-btn" id="importBtn" style="text-decoration:none;font-size:14px;font-weight:700;padding:9px 0;width:150px;text-align:center;background:rgba(76,154,106,.15);color:#7dcb9a;border:1.5px solid #4c9a6a;border-radius:10px;">📥 インポート</button>
     </div>
+    <button class="reset-btn" id="resetBtn" style="text-decoration:none;margin-top:18px;font-size:14px;font-weight:700;padding:8px 16px;background:rgba(192,57,43,.12);color:#e8968f;border:1px solid rgba(192,57,43,.45);border-radius:10px;">⚠️ 学習記録をリセット</button>
     <div class="audio-note">🔊 音声が出ない場合は 設定 › アクセシビリティ › 読み上げコンテンツ › 音声 → タイ語を追加</div>
   </footer>
+</div>
+
+<!-- 学習記録リセット モーダル -->
+<div id="resetOverlay" style="display:none;position:fixed;inset:0;background:rgba(20,18,15,.6);z-index:300;"></div>
+<div id="resetModal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,380px);max-height:80vh;background:#241f2c;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:301;flex-direction:column;overflow:hidden;">
+  <div style="padding:16px 18px 8px;">
+    <h3 style="margin:0 0 4px;font-size:16px;color:#fff;">学習記録をリセット</h3>
+    <p style="margin:0;font-size:12px;color:var(--muted);line-height:1.5;">リセットしたい分類にチェックを入れてください。チェックした分類の「覚えた」記録が消えます(元に戻せません)。</p>
+  </div>
+  <div id="resetCheckList" style="padding:8px 18px;overflow-y:auto;flex:1;"></div>
+  <div style="padding:12px 18px 16px;display:flex;gap:8px;border-top:1px solid rgba(255,255,255,.08);">
+    <button id="resetCancelBtn" style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:none;color:var(--muted2);font-size:14px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;">キャンセル</button>
+    <button id="resetConfirmBtn" style="flex:1;padding:10px;border-radius:10px;border:none;background:#c0392b;color:#fff;font-size:14px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;">リセット実行</button>
+  </div>
 </div>
 
 <script>
@@ -3041,8 +3055,46 @@ document.getElementById('flipWrap').addEventListener('click',()=>{st.flipped=!st
 document.getElementById('nextBtn').addEventListener('click',e=>{e.stopPropagation();const l=list();st.idx=(st.idx+1)%l.length;st.flipped=false;render();});
 document.getElementById('prevBtn').addEventListener('click',e=>{e.stopPropagation();const l=list();st.idx=(st.idx-1+l.length)%l.length;st.flipped=false;render();});
 // mode-tabクリックはrenderModeTabs()内で管理
-document.getElementById('resetBtn').addEventListener('click',()=>{
-  const k=lkKey(); st.learned[k]=new Set(); sto_set('l:'+k,[]); render();
+const RESET_CATEGORIES = [
+  ['noun','名詞'],['verb','動詞'],['adj','形容詞'],['adv','副詞'],
+  ['classifier','類別詞'],['question','疑問詞'],['greeting','挨拶'],
+  ['conversation','会話'],['grammar','文法'],
+];
+
+function openResetModal(){
+  const list=document.getElementById('resetCheckList');
+  list.innerHTML = `<label style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:14px;color:#fff;font-weight:700;">
+    <input type="checkbox" id="resetAllCheck" style="width:18px;height:18px;"> すべて選択
+  </label>` + RESET_CATEGORIES.map(([k,v])=>{
+    const count = st.learned[k] ? st.learned[k].size : 0;
+    return `<label style="display:flex;align-items:center;gap:8px;padding:7px 0;font-size:14px;color:var(--muted2);">
+      <input type="checkbox" class="reset-cat-check" data-key="${k}" style="width:18px;height:18px;">
+      ${v} <span style="color:var(--muted);font-size:12px;">(学習済み${count}件)</span>
+    </label>`;
+  }).join('');
+
+  document.getElementById('resetAllCheck').addEventListener('change', (e)=>{
+    document.querySelectorAll('.reset-cat-check').forEach(c=>c.checked = e.target.checked);
+  });
+
+  document.getElementById('resetOverlay').style.display='block';
+  document.getElementById('resetModal').style.display='flex';
+}
+
+function closeResetModal(){
+  document.getElementById('resetOverlay').style.display='none';
+  document.getElementById('resetModal').style.display='none';
+}
+
+document.getElementById('resetBtn').addEventListener('click', openResetModal);
+document.getElementById('resetCancelBtn').addEventListener('click', closeResetModal);
+document.getElementById('resetConfirmBtn').addEventListener('click', ()=>{
+  const checked = [...document.querySelectorAll('.reset-cat-check:checked')].map(c=>c.dataset.key);
+  if(checked.length===0){ alert('リセットする分類を選んでください。'); return; }
+  if(!confirm(checked.length+'件の分類の学習記録をリセットします。\n元に戻すことはできません。よろしいですか?')) return;
+  checked.forEach(k=>{ st.learned[k]=new Set(); sto_set('l:'+k,[]); });
+  closeResetModal();
+  render();
 });
 
 let tx=null;
