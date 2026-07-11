@@ -147,7 +147,7 @@ footer{text-align:center;padding:6px 0 2px;}
 #undoToast.hide{opacity:0;pointer-events:none;}
 #undoBtn{background:#f2b705;color:#2b2118;border:none;border-radius:14px;padding:10px 20px;font-size:17px;font-weight:700;cursor:pointer;white-space:nowrap;}
 .reset-btn{font-size:13px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;}
-.audio-note{font-size:12px;color:#5e5968;margin-top:6px;line-height:1.6;}
+.audio-note{font-size:13px;color:#fff;margin-top:6px;line-height:1.6;}
 @media(max-height:700px){.flip-wrap{height:355px;}}
 
 /* --- レベルpill色 --- */
@@ -271,7 +271,7 @@ footer{text-align:center;padding:6px 0 2px;}
       <button class="reset-btn" id="importBtn" style="text-decoration:none;font-size:14px;font-weight:700;padding:9px 0;width:150px;text-align:center;background:rgba(76,154,106,.15);color:#7dcb9a;border:1.5px solid #4c9a6a;border-radius:10px;">📥 インポート</button>
     </div>
     <button class="reset-btn" id="resetBtn" style="text-decoration:none;margin-top:18px;font-size:14px;font-weight:700;padding:8px 16px;background:rgba(192,57,43,.12);color:#e8968f;border:1px solid rgba(192,57,43,.45);border-radius:10px;">⚠️ 学習記録をリセット</button>
-    <div class="audio-note">🔊 音声が出ない場合は 設定 › アクセシビリティ › 読み上げコンテンツ › 音声 → タイ語を追加</div>
+    <div class="audio-note" id="audioNote">🔊 音声が出ない場合は 設定 › アクセシビリティ › 読み上げコンテンツ › 音声 → タイ語を追加</div>
   </footer>
 </div>
 
@@ -3055,6 +3055,20 @@ document.getElementById('flipWrap').addEventListener('click',()=>{st.flipped=!st
 document.getElementById('nextBtn').addEventListener('click',e=>{e.stopPropagation();const l=list();st.idx=(st.idx+1)%l.length;st.flipped=false;render();});
 document.getElementById('prevBtn').addEventListener('click',e=>{e.stopPropagation();const l=list();st.idx=(st.idx-1+l.length)%l.length;st.flipped=false;render();});
 // mode-tabクリックはrenderModeTabs()内で管理
+// OS判定して音声案内文を出し分ける
+(function(){
+  const el = document.getElementById('audioNote');
+  if(!el) return;
+  const ua = navigator.userAgent || '';
+  if(/iPhone|iPad|iPod/i.test(ua)){
+    el.innerHTML = '🔊 音声が出ない場合は<br>設定 › アクセシビリティ › 読み上げコンテンツ<br>› 音声 → タイ語を追加';
+  } else if(/Android/i.test(ua)){
+    el.innerHTML = '🔊 音声が出ない場合は<br>設定 › ユーザー補助(ユーザー支援)<br>› テキスト読み上げの出力<br>でタイ語の音声データを確認・ダウンロードしてください';
+  } else {
+    el.innerHTML = '🔊 音声が出ない場合は、端末の読み上げ<br>(テキスト読み上げ)設定でタイ語の<br>音声データを追加してください';
+  }
+})();
+
 const RESET_CATEGORIES = [
   ['noun','名詞'],['verb','動詞'],['adj','形容詞'],['adv','副詞'],
   ['classifier','類別詞'],['question','疑問詞'],['greeting','挨拶'],
