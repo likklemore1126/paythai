@@ -362,7 +362,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-11';
+const APP_VERSION = '2026-07-12';
 
 function snapshotCurrentData(){
   const data = { exChecked: [...exChecked], learned: {}, level: st.level, gender: st.gender };
@@ -1804,6 +1804,14 @@ function speak(text){
   }catch(e){}
 }
 
+function playVowelAudio(id, spk){
+  try{
+    const a = new Audio('vowel_'+id+'.m4a');
+    a.onerror = function(){ speak(spk); };
+    a.play().catch(function(){ speak(spk); });
+  }catch(e){ speak(spk); }
+}
+
 function shuffleArr(arr){
   const a=[...arr];
   for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
@@ -2355,7 +2363,7 @@ function renderVowelSection(){
       h += '<span style="font-size:14px;color:#6b5c3e;">'+v.kana+'</span>';
       h += '</div>';
       h += '</div>';
-      h += '<button onclick="event.stopPropagation();speak(\''+v.spk+'\')" style="width:34px;height:34px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>';
+      h += '<button onclick="event.stopPropagation();playVowelAudio(\''+v.id+'\',\''+v.spk+'\')" style="width:34px;height:34px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>';
       h += '</div>';
 
       // ── 中段：母音名 ──────────────────────────────────────────

@@ -1,7 +1,7 @@
 // Thai Pocket Cards Service Worker
 // NOTE: Bump SW_VERSION whenever app.html's APP_VERSION changes,
 // so returning users get the fresh file instead of a stale cached one.
-const SW_VERSION = '2026-07-11';
+const SW_VERSION = '2026-07-12';
 const CACHE_NAME = `taka-thaipocket-${SW_VERSION}`;
 
 const APP_SHELL = [
@@ -10,7 +10,15 @@ const APP_SHELL = [
   './icon-192.png',
   './icon-512.png',
   './icon-192-maskable.png',
-  './icon-512-maskable.png'
+  './icon-512-maskable.png',
+  './so_chain.m4a',
+  './vowel_s1.m4a', './vowel_s3.m4a', './vowel_s5.m4a', './vowel_s7.m4a',
+  './vowel_s9.m4a', './vowel_s11.m4a', './vowel_s13.m4a', './vowel_s15.m4a', './vowel_s17.m4a',
+  './vowel_l1.m4a', './vowel_l3.m4a', './vowel_l5.m4a', './vowel_l7.m4a',
+  './vowel_l9.m4a', './vowel_l11.m4a', './vowel_l13.m4a', './vowel_l15.m4a', './vowel_l17.m4a',
+  './vowel_d1.m4a', './vowel_d2.m4a', './vowel_d3.m4a', './vowel_d4.m4a', './vowel_d5.m4a', './vowel_d6.m4a',
+  './vowel_sp1.m4a', './vowel_sp2.m4a', './vowel_sp3.m4a', './vowel_sp4.m4a',
+  './vowel_sp5.m4a', './vowel_sp6.m4a', './vowel_sp7.m4a', './vowel_sp8.m4a'
 ];
 
 self.addEventListener('install', (event) => {
