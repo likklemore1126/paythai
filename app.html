@@ -379,7 +379,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-12g';
+const APP_VERSION = '2026-07-12h';
 
 function snapshotCurrentData(){
   const data = { exChecked: [...exChecked], learned: {}, level: st.level, gender: st.gender };
@@ -776,6 +776,8 @@ const FIXED_EX = {
   'n569': {th:'ธุรกิจของผมไปได้ดีครับ',ro:'thurákìt khɔ̌ɔng phǒm pai dâai dii khráp',jp:'私のビジネスは順調です'},
   'n571': {th:'รายได้เดือนนี้ดีมากครับ',ro:'raai dâai dɯan níi dii mâak khráp',jp:'今月の収入はとても良かったです'},
   'n573': {th:'มีหนี้อยู่ครับ',ro:'mii nîi yùu khráp',jp:'借金があります'},
+  'n622': {th:'วันนี้อากาศดีมากครับ',ro:'wan níi aakàat dii mâak khráp',jp:'今日は天気がとても良いです'},
+  'n623': {th:'พรุ่งนี้ผมมีธุระครับ',ro:'phrûng níi phǒm mii thúrá khráp',jp:'明日は用事があります'},
   'n574': {th:'ดอกเบี้ยสูงมากครับ',ro:'dɔɔk bîa sǔung mâak khráp',jp:'利子がとても高いです'},
   'n576': {th:'ขอใบเสร็จด้วยครับ',ro:'khɔ̌ɔ bai sèt dûai khráp',jp:'レシートをください'},
   'n578': {th:'งบประมาณไม่พอครับ',ro:'ngóp pràmaan mâi phɔɔ khráp',jp:'予算が足りません'},
@@ -1696,8 +1698,11 @@ function buildExampleStatic(item, pos) {
       return {th:`มี${w}ไหม${ptTh}`,ro:`mii ${r} mǎi ${ptRo}`,jp:`${jp}はありますか`};
 
     // 8. 時間・時期 → 「〜は何時ですか」「〜は楽しかった」
-    if(/วัน|เดือน|ปี|ชั่วโมง|นาที|วินาที|เช้า|เย็น|กลาง|คืน|ตอน|อาทิตย์/.test(t))
+    if(/วัน|เดือน|ปี|ชั่วโมง|นาที|วินาที|เช้า|เย็น|กลาง|คืน|ตอน|อาทิตย์/.test(t)){
+      if(w.endsWith('นี้'))
+        return {th:`${w}อากาศดีมาก${ptTh}`,ro:`${r} aakàat dii mâak ${ptRo}`,jp:`${jp}は天気がとても良いです`};
       return {th:`${w}นี้อากาศดีมาก${ptTh}`,ro:`${r} níi aakàat dii mâak ${ptRo}`,jp:`この${jp}は天気がとても良いです`};
+    }
 
     // 9. お金・価格 → 「〜はいくらですか」
     if(/ราคา|เงิน|บาท|ค่า|ตั๋ว/.test(t))
