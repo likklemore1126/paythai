@@ -7,6 +7,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="ป้ายไทย">
 <meta name="theme-color" content="#1c1b1f">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>ป้ายไทย — タイ語学習</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;700&family=Sriracha&family=Zen+Maru+Gothic:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -3602,6 +3605,14 @@ document.addEventListener('click', function(e){
     openPronunciationGuide(getPGWordInfo(el));
   }
 }, true);
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(err){
+      console.warn('SW registration failed:', err);
+    });
+  });
+}
 </script>
 
 </body>
