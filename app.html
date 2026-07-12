@@ -361,7 +361,7 @@ const PT = {male:{th:'ครับ',ro:'khrap',ps:'ผม',psr:'phǒm'},female:{
 
 let st = {
   mode:'vocab',pos:'noun',scene:'ALL',dir:'th-jp',
-  level:'beginner',gender:'male',filterUn:false,wordlistPos:'noun',wordlistMode:'vocab',wordlistScene:'ALL',fromList:false,fromListPos:'noun',fromListItemId:null,fromListMode:'vocab',filterUnEx:false,showRo:true,
+  level:'beginner',gender:'male',filterUn:false,wordlistPos:'noun',wordlistMode:'vocab',wordlistScene:'ALL',wordlistSearch:'',fromList:false,fromListPos:'noun',fromListItemId:null,fromListMode:'vocab',filterUnEx:false,showRo:true,
   shuffle:false,shuffled:{},
   idx:0,flipped:false,fontTab:'compare',
   learned:{noun:new Set(),verb:new Set(),adj:new Set(),adv:new Set(),
@@ -378,7 +378,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-12d';
+const APP_VERSION = '2026-07-12e';
 
 function snapshotCurrentData(){
   const data = { exChecked: [...exChecked], learned: {}, level: st.level, gender: st.gender };
@@ -1885,6 +1885,23 @@ function appAlert(message, title){ return _genModalShow({type:'alert', message, 
 function appConfirm(message, title){ return _genModalShow({type:'confirm', message, title}); }
 function appPrompt(message, title){ return _genModalShow({type:'prompt', message, title}); }
 
+// 検索用：声調記号などの発音区別符号を除去して緩くマッチさせる
+function _searchNormalize(s){
+  return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+}
+function matchesSearch(item, qRaw){
+  const q = qRaw.trim();
+  if(!q) return true;
+  if(item.th && item.th.includes(q)) return true;
+  if(item.jp && item.jp.includes(q)) return true;
+  const qn = _searchNormalize(q);
+  if(item.ro && _searchNormalize(item.ro).includes(qn)) return true;
+  return false;
+}
+function escAttr(s){
+  return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
 function shuffleArr(arr){
   const a=[...arr];
   for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
@@ -2092,42 +2109,12 @@ function renderWordList(){
     <button class="chip ${'all'===pos?'active-vocab':''}" data-pos="all" style="flex-shrink:0;">ALL</button>
     ${Object.entries(getPosLabels()).map(([k,v])=>`<button class="chip ${k===pos?'active-vocab':''}" data-pos="${k}" style="flex-shrink:0;">${v}</button>`).join('')}
   </div>`;
-  let items;
-  if(pos==='all'){
-    items=Object.entries(DATA)
-      .filter(([,v])=>Array.isArray(v))
-      .flatMap(([k,v])=>v.map(i=>({...i,_pos:k})));
-  } else {
-    items=(DATA[pos]||[]).map(i=>({...i,_pos:pos}));
-  }
-  const filtered=beg?items.filter(i=>i.level==='5'):items;
-  html+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 4px;">
-    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${filtered.length}語</span>
-    <span style="font-size:15px;color:var(--muted);">👆 単語をタップするとカードで確認できます</span>
+  html+=`<div style="padding:0 12px 8px;position:relative;">
+    <input type="text" id="wlSearchInput" value="${escAttr(st.wordlistSearch)}" placeholder="🔍 タイ語・意味・読みで検索" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+      style="width:100%;box-sizing:border-box;padding:10px 36px 10px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.15);background:#1a1620;color:#fff;font-size:16px;font-family:'Zen Maru Gothic',sans-serif;">
+    <button id="wlSearchClear" style="display:${st.wordlistSearch?'flex':'none'};position:absolute;right:20px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:14px;align-items:center;justify-content:center;cursor:pointer;">✕</button>
   </div>`;
-  filtered.forEach((item,idx)=>{
-    const learned=Object.values(st.learned).some(s=>s.has(item.id));
-    html+=`<div class="list-item${learned?' learned-item':''}" data-id="${item.id}" data-pos="${item._pos}">
-      <span class="list-num">${idx+1}</span>
-      <span class="list-th">${item.th}</span>
-      <span class="list-ro">${item.ro}</span>
-      <span class="list-jp">${(()=>{
-        const jp=item.jp;
-        // カッコ内を保護してから分割
-        const parts=[];
-        let buf='',depth=0;
-        for(const c of jp){
-          if(c==='(')depth++;
-          if(c===')')depth--;
-          if((c==='/'||c==='、')&&depth===0){parts.push(buf.trim());buf='';}
-          else buf+=c;
-        }
-        if(buf.trim())parts.push(buf.trim());
-        return parts.filter(s=>s).map(s=>'･'+s).join('<br>');
-      })()}</span>
-      ${learned?'<span class="list-badge">済</span>':''}
-    </div>`;
-  });
+  html+=`<div id="wlItemsWrap"></div>`;
   lp.innerHTML=html;
   updateStickyTab();
   requestAnimationFrame(()=>{
@@ -2135,27 +2122,93 @@ function renderWordList(){
     if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
     applyScrollFade(document.getElementById('wlTabRow'));
   });
-  lp.querySelectorAll('.list-item').forEach(el=>{
-    el.addEventListener('click',()=>{
-      const id=el.dataset.id;
-      const pos2=el.dataset.pos;
-      const beg2=st.level==='beginner';
-      const arr=(beg2?(DATA[pos2]||[]).filter(i=>i.level==='5'):(DATA[pos2]||[]));
-      const idx2=arr.findIndex(i=>i.id===id);
-      if(idx2<0) return;
-      st.fromList=true;
-      st.fromListPos=pos2;
-      st.fromListItemId=id;
-      st.fromListMode='vocab';
-      st.mode='vocab';
-      st.pos=pos2;
-      st.idx=idx2;
-      st.flipped=false;
-      st.filterUn=false;
-      st.shuffle=false;
-      render();
+
+  function refreshWordListItems(){
+    const wrap=document.getElementById('wlItemsWrap');
+    if(!wrap) return;
+    let items2;
+    if(pos==='all'){
+      items2=Object.entries(DATA)
+        .filter(([,v])=>Array.isArray(v))
+        .flatMap(([k,v])=>v.map(i=>({...i,_pos:k})));
+    } else {
+      items2=(DATA[pos]||[]).map(i=>({...i,_pos:pos}));
+    }
+    const beg2=st.level==='beginner';
+    let filtered=beg2?items2.filter(i=>i.level==='5'):items2;
+    const q=st.wordlistSearch||'';
+    if(q.trim()) filtered=filtered.filter(i=>matchesSearch(i,q));
+    let ih=`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 4px;">
+      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${filtered.length}語</span>
+      <span style="font-size:15px;color:var(--muted);">${q.trim()?'':'👆 単語をタップするとカードで確認できます'}</span>
+    </div>`;
+    if(filtered.length===0){
+      ih+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;">該当する単語が見つかりませんでした</div>`;
+    }
+    filtered.forEach((item,idx)=>{
+      const learned=Object.values(st.learned).some(s=>s.has(item.id));
+      ih+=`<div class="list-item${learned?' learned-item':''}" data-id="${item.id}" data-pos="${item._pos}">
+        <span class="list-num">${idx+1}</span>
+        <span class="list-th">${item.th}</span>
+        <span class="list-ro">${item.ro}</span>
+        <span class="list-jp">${(()=>{
+          const jp=item.jp;
+          const parts=[];
+          let buf='',depth=0;
+          for(const c of jp){
+            if(c==='(')depth++;
+            if(c===')')depth--;
+            if((c==='/'||c==='、')&&depth===0){parts.push(buf.trim());buf='';}
+            else buf+=c;
+          }
+          if(buf.trim())parts.push(buf.trim());
+          return parts.filter(s=>s).map(s=>'･'+s).join('<br>');
+        })()}</span>
+        ${learned?'<span class="list-badge">済</span>':''}
+      </div>`;
     });
-  });
+    wrap.innerHTML=ih;
+    wrap.querySelectorAll('.list-item').forEach(el=>{
+      el.addEventListener('click',()=>{
+        const id=el.dataset.id;
+        const pos2=el.dataset.pos;
+        const beg3=st.level==='beginner';
+        const arr=(beg3?(DATA[pos2]||[]).filter(i=>i.level==='5'):(DATA[pos2]||[]));
+        const idx2=arr.findIndex(i=>i.id===id);
+        if(idx2<0) return;
+        st.fromList=true;
+        st.fromListPos=pos2;
+        st.fromListItemId=id;
+        st.fromListMode='vocab';
+        st.mode='vocab';
+        st.pos=pos2;
+        st.idx=idx2;
+        st.flipped=false;
+        st.filterUn=false;
+        st.shuffle=false;
+        render();
+      });
+    });
+  }
+  refreshWordListItems();
+
+  const wlSearchEl=document.getElementById('wlSearchInput');
+  const wlClearEl=document.getElementById('wlSearchClear');
+  if(wlSearchEl){
+    wlSearchEl.addEventListener('input',()=>{
+      st.wordlistSearch=wlSearchEl.value;
+      if(wlClearEl) wlClearEl.style.display=st.wordlistSearch?'flex':'none';
+      refreshWordListItems();
+    });
+  }
+  if(wlClearEl){
+    wlClearEl.addEventListener('click',()=>{
+      st.wordlistSearch='';
+      if(wlSearchEl){ wlSearchEl.value=''; wlSearchEl.focus(); }
+      wlClearEl.style.display='none';
+      refreshWordListItems();
+    });
+  }
 
   // モード切替タブのイベント
   const wmv=document.getElementById('wlModeVocab'); if(wmv) wmv.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
