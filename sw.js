@@ -1,7 +1,7 @@
 // Thai Pocket Cards Service Worker
 // NOTE: Bump SW_VERSION whenever app.html's APP_VERSION changes,
 // so returning users get the fresh file instead of a stale cached one.
-const SW_VERSION = '2026-07-13e';
+const SW_VERSION = '2026-07-13f';
 const CACHE_NAME = `taka-thaipocket-${SW_VERSION}`;
 
 const APP_SHELL = [
@@ -20,7 +20,7 @@ const APP_SHELL = [
   './vowel_sp1.m4a', './vowel_sp2.m4a', './vowel_sp3.m4a', './vowel_sp4.m4a',
   './vowel_sp5.m4a', './vowel_sp6.m4a', './vowel_sp7.m4a', './vowel_sp8.m4a',
   './help_tts_ios_1.jpg', './help_tts_ios_2.jpg', './help_tts_ios_3.jpg', './help_tts_ios_4.jpg',
-  './help_pg_1.jpg'
+  './help_pg_1.jpeg'
 ];
 
 self.addEventListener('install', (event) => {
