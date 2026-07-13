@@ -286,6 +286,7 @@ footer{text-align:center;padding:6px 0 2px;}
       <button class="reset-btn" id="exportBtn" style="text-decoration:none;font-size:14px;font-weight:700;padding:9px 0;width:150px;text-align:center;background:rgba(74,124,196,.15);color:#7bb0ee;border:1.5px solid #4a7cc4;border-radius:10px;">📤 エクスポート</button>
       <button class="reset-btn" id="importBtn" style="text-decoration:none;font-size:14px;font-weight:700;padding:9px 0;width:150px;text-align:center;background:rgba(76,154,106,.15);color:#7dcb9a;border:1.5px solid #4c9a6a;border-radius:10px;">📥 インポート</button>
     </div>
+    <div id="resetTipWrap"></div>
     <button class="reset-btn" id="resetBtn" style="text-decoration:none;margin-top:18px;font-size:14px;font-weight:700;padding:8px 16px;background:rgba(192,57,43,.12);color:#e8968f;border:1px solid rgba(192,57,43,.45);border-radius:10px;">⚠️ 学習記録をリセット</button>
     <div class="audio-note" id="audioNote">🔊 音声が出ない場合は 設定 › アクセシビリティ › 読み上げコンテンツ › 音声 → タイ語を追加</div>
   </footer>
@@ -384,7 +385,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-12w';
+const APP_VERSION = '2026-07-12z3';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
@@ -1920,9 +1921,10 @@ function escAttr(s){
 const TIPS = {
   wlSearch: '🔍 タイ語・日本語訳・読み(ローマ字)のどれでも検索できます。読み方が多少違っててもだいたい拾えます。',
   pgTap: '📖 発音記号(ローマ字表記)の部分をタップすると、詳しい発音ガイドが開きます。',
-  numbersTab: '👉 このタブ行をさらに右にスクロールすると「数字」タブが出てきます。基本数字やเอ็ด/ยี่などの読み方の例外もここで確認できます。\nまた、下のフォント関連のタブ行(中子音・高子音…)も右にスクロールすると「声調」タブが隠れています。',
-  convScenes: '👉 このシーンのタブ行、右にスクロールするとまだ見えていないシーン(ホテル・病院など)が続いています。',
-  exportImport: '💾 機種変更やアプリの再インストール時は、エクスポートで学習データをコピーし、新しい端末でインポートすれば引き継げます。'
+  numbersTab: '⬆️ 上のタブを右にスクロールすると、タイ文字タブの右に「数字」タブもあります。\n⬇️ 下のタブを右にスクロールすると、母音タブの右に「声調」タブがあります。',
+  convScenes: '⬆️ 上のタブを右にスクロールすると、ホテルや病院などのシーンタブがあります。',
+  exportImport: '💾 機種変更やアプリの再インストール時は、エクスポートで学習データをコピーし、新しい端末でインポートすれば引き継げます。',
+  resetInfo: '⚠️ タップしてもすぐには消えません。リセットしたい分類(名詞・動詞など)を選んでから確認画面が出るので、押し間違いで全部消える心配はないです。'
 };
 function renderCoachMark(id){
   if(seenTips.has(id)) return '';
@@ -3166,6 +3168,8 @@ function render(){
   if(subTipWrap) subTipWrap.innerHTML=(st.mode==='conversation')?renderCoachMark('convScenes'):'';
   const exportTipWrap=document.getElementById('exportTipWrap');
   if(exportTipWrap) exportTipWrap.innerHTML=renderCoachMark('exportImport');
+  const resetTipWrap=document.getElementById('resetTipWrap');
+  if(resetTipWrap) resetTipWrap.innerHTML=renderCoachMark('resetInfo');
   const sp=document.getElementById('staticPage');
   const lp=document.getElementById('listPage');
   const bb=document.getElementById('backBtn');
