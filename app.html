@@ -379,7 +379,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-12h';
+const APP_VERSION = '2026-07-12m';
 
 function snapshotCurrentData(){
   const data = { exChecked: [...exChecked], learned: {}, level: st.level, gender: st.gender };
@@ -1964,8 +1964,13 @@ function renderModeTabs(){
   mt.innerHTML=Object.entries(labels).map(([k,v])=>
     `<div class="mode-tab${k===st.mode?' active':''}" data-mode="${k}">${v}</div>`).join('');
   mt.querySelectorAll('.mode-tab').forEach(t=>t.addEventListener('click',()=>{
+    const prevMode=st.mode;
     st.mode=t.dataset.mode;
     if(st.mode!=='vocab') st.fromList=false;
+    if(st.mode==='wordlist' && prevMode==='vocab'){
+      st.wordlistMode='vocab';
+      st.wordlistPos=st.pos;
+    }
     st.idx=0;st.flipped=false;render();
   }));
   requestAnimationFrame(()=>applyScrollFade(mt));
@@ -2148,10 +2153,14 @@ function renderWordList(){
     let filtered=beg2?items2.filter(i=>i.level==='5'):items2;
     const q=st.wordlistSearch||'';
     if(q.trim()) filtered=filtered.filter(i=>matchesSearch(i,q));
-    let ih=`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px 4px;">
-      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${filtered.length}語</span>
-      <span style="font-size:15px;color:var(--muted);">${q.trim()?'':'👆 単語をタップするとカードで確認できます'}</span>
-    </div>`;
+    let ih;
+    if(q.trim()){
+      ih=`<div style="padding:6px 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${filtered.length}件ヒット</div>`;
+    } else {
+      ih=`<div style="margin:6px 12px 8px;font-size:12.5px;color:var(--yellow);background:rgba(242,183,5,.12);border:1px solid rgba(242,183,5,.3);border-radius:8px;padding:8px 10px;">
+        💡 全${filtered.length}語・タップすると単語カードで確認できます
+      </div>`;
+    }
     if(filtered.length===0){
       ih+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;">該当する単語が見つかりませんでした</div>`;
     }
