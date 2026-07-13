@@ -379,7 +379,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-12r';
+const APP_VERSION = '2026-07-12s';
 
 function snapshotCurrentData(){
   const data = { exChecked: [...exChecked], learned: {}, level: st.level, gender: st.gender };
@@ -3773,7 +3773,16 @@ document.addEventListener('click', function(e){
 
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
-    navigator.serviceWorker.register('sw.js').catch(function(err){
+    navigator.serviceWorker.register('sw.js').then(function(reg){
+      // ブラウザの自動チェックを待たず、毎回起動時に明示的に更新確認する
+      reg.update().catch(function(){});
+      // アプリがバックグラウンドから復帰した時も再チェック
+      document.addEventListener('visibilitychange', function(){
+        if(document.visibilityState === 'visible'){
+          reg.update().catch(function(){});
+        }
+      });
+    }).catch(function(err){
       console.warn('SW registration failed:', err);
     });
   });
