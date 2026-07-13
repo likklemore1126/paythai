@@ -247,6 +247,7 @@ footer{text-align:center;padding:6px 0 2px;}
     <div class="mode-tabs" id="modeTabs"></div>
     <div id="modeTipWrap"></div>
     <div class="sub-row" id="subRow"></div>
+    <div id="subTipWrap"></div>
     <div class="settings-row" id="settingsRow"></div>
     <div class="progress-line"><span class="progress-text" id="progressText"></span></div>
   </header>
@@ -280,6 +281,7 @@ footer{text-align:center;padding:6px 0 2px;}
   <button class="top-btn" id="topBtn">↑ TOP</button>
 
   <footer>
+    <div id="exportTipWrap"></div>
     <div style="display:flex;gap:8px;justify-content:center;">
       <button class="reset-btn" id="exportBtn" style="text-decoration:none;font-size:14px;font-weight:700;padding:9px 0;width:150px;text-align:center;background:rgba(74,124,196,.15);color:#7bb0ee;border:1.5px solid #4a7cc4;border-radius:10px;">📤 エクスポート</button>
       <button class="reset-btn" id="importBtn" style="text-decoration:none;font-size:14px;font-weight:700;padding:9px 0;width:150px;text-align:center;background:rgba(76,154,106,.15);color:#7dcb9a;border:1.5px solid #4c9a6a;border-radius:10px;">📥 インポート</button>
@@ -382,7 +384,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-12u';
+const APP_VERSION = '2026-07-12w';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
@@ -1918,13 +1920,15 @@ function escAttr(s){
 const TIPS = {
   wlSearch: '🔍 タイ語・日本語訳・読み(ローマ字)のどれでも検索できます。読み方が多少違っててもだいたい拾えます。',
   pgTap: '📖 発音記号(ローマ字表記)の部分をタップすると、詳しい発音ガイドが開きます。',
-  numbersTab: '👉 このタブ行をさらに右にスクロールすると「数字」タブが出てきます。基本数字やเอ็ด/ยี่などの読み方の例外もここで確認できます。'
+  numbersTab: '👉 このタブ行をさらに右にスクロールすると「数字」タブが出てきます。基本数字やเอ็ด/ยี่などの読み方の例外もここで確認できます。\nまた、下のフォント関連のタブ行(中子音・高子音…)も右にスクロールすると「声調」タブが隠れています。',
+  convScenes: '👉 このシーンのタブ行、右にスクロールするとまだ見えていないシーン(ホテル・病院など)が続いています。',
+  exportImport: '💾 機種変更やアプリの再インストール時は、エクスポートで学習データをコピーし、新しい端末でインポートすれば引き継げます。'
 };
 function renderCoachMark(id){
   if(seenTips.has(id)) return '';
   const msg = TIPS[id];
   if(!msg) return '';
-  return `<div class="coach-mark" data-tip-id="${id}" style="margin:8px 12px;padding:10px 34px 10px 12px;position:relative;background:rgba(74,124,196,.15);border:1px solid rgba(74,124,196,.4);border-radius:10px;font-size:13px;color:#cfe0f5;line-height:1.5;">
+  return `<div class="coach-mark" data-tip-id="${id}" style="margin:8px 12px;padding:10px 34px 10px 12px;position:relative;background:rgba(74,124,196,.15);border:1px solid rgba(74,124,196,.4);border-radius:10px;font-size:13px;color:#cfe0f5;line-height:1.5;white-space:pre-line;">
     ${msg}
     <button class="tip-dismiss" data-tip-id="${id}" style="position:absolute;top:6px;right:8px;background:none;border:none;color:#9fc3e8;font-size:16px;cursor:pointer;padding:2px 6px;">✕</button>
   </div>`;
@@ -1937,6 +1941,7 @@ function currentTipId(){
   if(st.mode==='wordlist' && st.wordlistMode==='vocab') return 'wlSearch';
   if(st.mode==='vocab') return 'pgTap';
   if(st.mode==='font') return 'numbersTab';
+  if(st.mode==='conversation') return 'convScenes';
   return null;
 }
 function updateHelpBtn(){
@@ -3157,6 +3162,10 @@ function render(){
   if(pgTipWrap) pgTipWrap.innerHTML=(st.mode==='vocab')?renderCoachMark('pgTap'):'';
   const modeTipWrap=document.getElementById('modeTipWrap');
   if(modeTipWrap) modeTipWrap.innerHTML=(st.mode==='font')?renderCoachMark('numbersTab'):'';
+  const subTipWrap=document.getElementById('subTipWrap');
+  if(subTipWrap) subTipWrap.innerHTML=(st.mode==='conversation')?renderCoachMark('convScenes'):'';
+  const exportTipWrap=document.getElementById('exportTipWrap');
+  if(exportTipWrap) exportTipWrap.innerHTML=renderCoachMark('exportImport');
   const sp=document.getElementById('staticPage');
   const lp=document.getElementById('listPage');
   const bb=document.getElementById('backBtn');
