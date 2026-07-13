@@ -396,7 +396,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-13c';
+const APP_VERSION = '2026-07-13d';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
@@ -1976,7 +1976,8 @@ const HELP_TOPICS = [
 これで単語カードの🔊ボタンからタイ語の発音が聞けるようになります。`},
   { icon:'📖', title:'発音ガイドの見方', body:`カードや単語リストに出てくる、ローマ字表記(例:aahǎan)の部分を<b>タップ</b>すると、その単語の発音を詳しく分解したガイドが開きます。
 
-声調記号(ˇ ˆ ´ など)の意味や、一つ一つの音の出し方を確認したい時に使ってください。` },
+声調記号(ˇ ˆ ´ など)の意味や、一つ一つの音の出し方を確認したい時に使ってください。
+<img src="help_pg_1.jpg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">` },
   { icon:'🔍', title:'検索の使い方(リストタブ)', body:`リストタブの検索窓では、次のどれで入力しても該当する単語が見つかります。
 
 ・タイ語(例:วันนี้)
