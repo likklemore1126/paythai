@@ -396,7 +396,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-13d';
+const APP_VERSION = '2026-07-13e';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
@@ -1934,7 +1934,7 @@ const TIPS = {
   pgTap: '📖 発音記号(ローマ字表記)の部分をタップすると、詳しい発音ガイドが開きます。',
   numbersTab: '⬆️ 上のタブを右にスクロールすると、タイ文字タブの右に「数字」タブもあります。\n⬇️ 下のタブを右にスクロールすると、母音タブの右に「声調」タブがあります。',
   convScenes: '⬆️ 上のタブを右にスクロールすると、ホテルや病院などのシーンタブがあります。',
-  exportImport: '💾 機種変更やアプリの再インストール時は、エクスポートで学習データをコピーし、新しい端末でインポートすれば引き継げます。',
+  exportImport: '💾 機種変更やアプリの再インストール時は、エクスポートでメールなどに送っておけば、新しい端末でインポートして引き継げます。',
   resetInfo: '⚠️ 学習リセットボタンを押しただけではリセットされません。学習記録をリセットしたい分類(名詞・動詞など)を選び、「リセット実行」ボタンを押すと学習記録がリセットされます。'
 };
 function renderCoachMark(id, margin){
@@ -1993,12 +1993,16 @@ const HELP_TOPICS = [
   { icon:'💾', title:'データの引き継ぎ方(機種変更など)', body:`学習の記録は端末の中だけに保存されているので、機種変更やアプリの再インストールをすると、そのままでは記録が引き継がれません。
 
 <b>① 今の端末で「エクスポート」をタップ</b>
-学習データがクリップボードにコピーされます。
+共有シートが開くので、メールやLINE、メモなど好きな方法で<b>自分自身</b>に学習データを送ってください。
+(共有シートが出ない端末では、代わりにクリップボードにコピーされます)
 
-<b>② 新しい端末でアプリを開き「インポート」をタップ</b>
+<b>② 新しい端末で、送った学習データを開いてコピー</b>
+メールやLINEなどで受け取った内容(長い記号の羅列)を選択してコピーします。
+
+<b>③ 新しい端末でアプリを開き「インポート」をタップ</b>
 コピーしたデータを貼り付けると、学習記録が復元されます。
 
-事前に①だけ済ませておけば、後でいつでも②で戻せます。` },
+事前に①だけ済ませておけば、後でいつでも②③で戻せます。` },
   { icon:'⚠️', title:'学習記録のリセットについて', body:`「学習記録をリセット」ボタンは、押しただけではリセットされません。
 
 ① リセットしたい分類(名詞・動詞など)にチェックを入れる
@@ -3557,12 +3561,30 @@ async function exportData(){
     data.learned[k] = [...st.learned[k]];
   }
   const json = JSON.stringify(data);
-  // クリップボードにコピー
+
+  // 保険として、対応してればクリップボードにもコピーしておく
   if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(json).then(async ()=>{
-      await appAlert('📤 データをクリップボードにコピーしました！\n新しいチャットのアプリで「データをインポート」を押して貼り付けてください。');
-    }).catch(()=>{ promptCopy(json); });
-  } else { promptCopy(json); }
+    navigator.clipboard.writeText(json).catch(()=>{});
+  }
+
+  // 共有シートが使えるなら優先する（メール・LINE・メモなどに直接送れて、機種変更時も確実）
+  if(navigator.share){
+    try{
+      await navigator.share({
+        title: 'Thai Pocket Cards 学習データ',
+        text: json
+      });
+      return;
+    }catch(e){
+      // ユーザーが共有をキャンセルした場合は、クリップボードコピー済みの案内へフォールスルー
+    }
+  }
+
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    await appAlert('📤 データをクリップボードにコピーしました！\n同じ端末でインポートする場合はそのまま貼り付けできます。\n\n機種変更などで別の端末に移す場合は、一度メモアプリなどに貼り付けてから、メールやLINEなど好きな方法で新しい端末に送ってください。');
+  } else {
+    promptCopy(json);
+  }
 }
 function promptCopy(json){
   const ta = document.createElement('textarea');
