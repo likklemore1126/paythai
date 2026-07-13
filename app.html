@@ -240,13 +240,16 @@ footer{text-align:center;padding:6px 0 2px;}
   <header>
     <div class="title-row">
       <div><div class="title-th">Thai Pocket Cards</div></div>
+      <button id="helpBtn" style="display:none;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#e4e1e8;font-size:15px;font-weight:700;cursor:pointer;flex-shrink:0;">?</button>
     </div>
     <div class="mode-tabs" id="modeTabs"></div>
+    <div id="modeTipWrap"></div>
     <div class="sub-row" id="subRow"></div>
     <div class="settings-row" id="settingsRow"></div>
     <div class="progress-line"><span class="progress-text" id="progressText"></span></div>
   </header>
 
+  <div id="pgTipWrap"></div>
   <div class="stage" id="cardStage">
     <div class="flip-wrap" id="flipWrap">
       <div class="card-inner" id="cardInner">
@@ -369,9 +372,7 @@ let st = {
     classifier:new Set(),question:new Set(),greeting:new Set(),
     conversation:new Set(),grammar:new Set(),thaienglish:new Set()}
 };
-// 例文確認済みセット（LocalStorageで永続化）
-const exChecked = new Set();
-function saveExChecked(){ sto_set('s:exChecked',[...exChecked]); }
+const seenTips = new Set();
 
 const fTH = s => s ? s.replace(/\{PT}/g, PT[st.gender].th).replace(/\{PS}/g, PT[st.gender].ps) : s;
 const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT[st.gender].psr) : s;
@@ -379,10 +380,10 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-12s';
+const APP_VERSION = '2026-07-12t';
 
 function snapshotCurrentData(){
-  const data = { exChecked: [...exChecked], learned: {}, level: st.level, gender: st.gender };
+  const data = { learned: {}, level: st.level, gender: st.gender };
   for(const k of Object.keys(st.learned)) data.learned[k] = [...st.learned[k]];
   return data;
 }
@@ -405,7 +406,6 @@ async function restoreAutoBackup(){
   const data = backup.data;
   if(data.level) st.level = data.level;
   if(data.gender) st.gender = data.gender;
-  if(data.exChecked){ exChecked.clear(); data.exChecked.forEach(id=>exChecked.add(id)); sto_set('s:exChecked',[...exChecked]); }
   if(data.learned){
     for(const k of Object.keys(data.learned)){
       st.learned[k] = new Set(data.learned[k]);
@@ -450,7 +450,7 @@ async function loadAll(){
   for(const k of Object.keys(st.learned)){
     const d=await sto_get('l:'+k); if(d) st.learned[k]=new Set(d);
   }
-  const ex=await sto_get('s:exChecked'); if(ex) ex.forEach(id=>exChecked.add(id));
+  const tips=await sto_get('s:seenTips'); if(Array.isArray(tips)) tips.forEach(id=>seenTips.add(id));
 }
 
 // ── 例文データ（ルールベース静的生成） ────────────────────────────
@@ -1912,6 +1912,52 @@ function escAttr(s){
   return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+// ─── コーチマーク（初回だけ出るミニ案内） ──────────────────────────
+const TIPS = {
+  wlSearch: '🔍 タイ語・日本語訳・読み(ローマ字)のどれでも検索できます。読み方が多少違っててもだいたい拾えます。',
+  pgTap: '📖 発音記号(ローマ字表記)の部分をタップすると、詳しい発音ガイドが開きます。',
+  numbersTab: '👉 このタブ行をさらに右にスクロールすると「数字」タブが出てきます。基本数字やเอ็ด/ยี่などの読み方の例外もここで確認できます。'
+};
+function renderCoachMark(id){
+  if(seenTips.has(id)) return '';
+  const msg = TIPS[id];
+  if(!msg) return '';
+  return `<div class="coach-mark" data-tip-id="${id}" style="margin:8px 12px;padding:10px 34px 10px 12px;position:relative;background:rgba(74,124,196,.15);border:1px solid rgba(74,124,196,.4);border-radius:10px;font-size:13px;color:#cfe0f5;line-height:1.5;">
+    ${msg}
+    <button class="tip-dismiss" data-tip-id="${id}" style="position:absolute;top:6px;right:8px;background:none;border:none;color:#9fc3e8;font-size:16px;cursor:pointer;padding:2px 6px;">✕</button>
+  </div>`;
+}
+function dismissTip(id){
+  seenTips.add(id);
+  sto_set('s:seenTips', [...seenTips]);
+}
+function currentTipId(){
+  if(st.mode==='wordlist' && st.wordlistMode==='vocab') return 'wlSearch';
+  if(st.mode==='vocab') return 'pgTap';
+  if(st.mode==='font') return 'numbersTab';
+  return null;
+}
+function updateHelpBtn(){
+  const btn=document.getElementById('helpBtn');
+  if(!btn) return;
+  btn.style.display = currentTipId() ? 'block' : 'none';
+}
+document.getElementById('helpBtn').addEventListener('click', function(){
+  const id=currentTipId();
+  if(!id) return;
+  seenTips.delete(id);
+  render();
+});
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('.tip-dismiss');
+  if(btn){
+    dismissTip(btn.dataset.tipId);
+    const mark = btn.closest('.coach-mark');
+    if(mark) mark.remove();
+    updateHelpBtn();
+  }
+});
+
 function shuffleArr(arr){
   const a=[...arr];
   for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
@@ -2130,6 +2176,7 @@ function renderWordList(){
       style="width:100%;box-sizing:border-box;padding:10px 36px 10px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.15);background:#1a1620;color:#fff;font-size:16px;font-family:'Zen Maru Gothic',sans-serif;">
     <button id="wlSearchClear" style="display:${st.wordlistSearch?'flex':'none'};position:absolute;right:20px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:14px;align-items:center;justify-content:center;cursor:pointer;">✕</button>
   </div>`;
+  html+=renderCoachMark('wlSearch');
   html+=`<div id="wlItemsWrap"></div>`;
   lp.innerHTML=html;
   updateStickyTab();
@@ -3096,6 +3143,7 @@ function render(){
   renderModeTabs();
   renderSub();
   renderSettings();
+  updateHelpBtn();
 
   const isStatic=['font','numbers'].includes(st.mode);
   const isWordlist=(st.mode==='wordlist');
@@ -3103,6 +3151,10 @@ function render(){
   document.getElementById('resetBtn').style.display=(isStatic||isWordlist)?'none':'inline';
   const progLine=document.querySelector('.progress-line');
   if(progLine) progLine.style.display=(isStatic||isWordlist)?'none':'block';
+  const pgTipWrap=document.getElementById('pgTipWrap');
+  if(pgTipWrap) pgTipWrap.innerHTML=(st.mode==='vocab')?renderCoachMark('pgTap'):'';
+  const modeTipWrap=document.getElementById('modeTipWrap');
+  if(modeTipWrap) modeTipWrap.innerHTML=(st.mode==='font')?renderCoachMark('numbersTab'):'';
   const sp=document.getElementById('staticPage');
   const lp=document.getElementById('listPage');
   const bb=document.getElementById('backBtn');
@@ -3283,12 +3335,6 @@ function render(){
       };
     }
   };
-  // 例文OKボタン
-  const exOk=document.getElementById('exOkB'); if(exOk) exOk.onclick=e=>{
-    e.stopPropagation();
-    if(exChecked.has(item.id)) exChecked.delete(item.id); else exChecked.add(item.id);
-    saveExChecked(); render();
-  };
   // vocab裏面が表示されたとき例文を表示
   if(st.mode==='vocab' && st.flipped && item){
     const exDiv = document.getElementById('exampleBox');
@@ -3384,7 +3430,6 @@ document.getElementById('flipWrap').addEventListener('touchend',e=>{
 // ─── エクスポート/インポート ────────────────────────────────────
 async function exportData(){
   const data = {
-    exChecked: [...exChecked],
     learned: {},
     level: st.level,
     gender: st.gender,
@@ -3417,11 +3462,6 @@ async function importData(){
   if(!input) return;
   try{
     const data = JSON.parse(input.trim());
-    // exChecked
-    if(Array.isArray(data.exChecked)){
-      data.exChecked.forEach(id=>exChecked.add(id));
-      saveExChecked();
-    }
     // learned
     if(data.learned){
       for(const k of Object.keys(st.learned)){
@@ -3434,7 +3474,8 @@ async function importData(){
     // settings
     if(data.level){ st.level=data.level; sto_set('s:level',st.level); }
     if(data.gender){ st.gender=data.gender; sto_set('s:gender',st.gender); }
-    await appAlert('✅ インポート完了！\n例文OK: '+exChecked.size+'件');
+    const totalLearned=Object.values(st.learned).reduce((s,x)=>s+x.size,0);
+    await appAlert('✅ インポート完了！\n学習済み: '+totalLearned+'件');
     render();
   } catch(e){
     await appAlert('❌ データの形式が正しくありません。\nエクスポートしたテキストをそのまま貼り付けてください。');
