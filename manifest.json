@@ -1,6 +1,6 @@
 {
   "name": "Thai Pocket Cards",
-  "short_name": "ป้ายไทย",
+  "short_name": "Thai Poca",
   "description": "タイ語学習用の単語・フレーズカードアプリ",
   "start_url": "./app.html",
   "scope": "./",
