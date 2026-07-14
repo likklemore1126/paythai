@@ -396,7 +396,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-14d';
+const APP_VERSION = '2026-07-14e';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
@@ -2886,8 +2886,8 @@ function renderConsonants(cls){
   ];
   const HIGH=[
     ['\u0e02','KH','kh\u0254\u030c\u0254 kh\xe0y','\u0e44\u0e02\u0e48','\u0e02\u0e2d\u0e44\u0e02\u0e48'],
-    ['\u0e03','KH','kh\u0254\u030c\u0254 kh\xf9at','\u0e02\u0e27\u0e14 (\u5ec3\u5b57)','\u0e03\u0e2d\u0e02\u0e27\u0e14'],
     ['\u0e09','CH','ch\u0254\u030c\u0254 ch\xec\u014b','\u0e09\u0e34\u0e48\u0e07','\u0e09\u0e2d\u0e09\u0e34\u0e48\u0e07'],
+    ['\u0e10','TH','th\u0254\u030c\u0254 th\u01cean','\u0e10\u0e32\u0e19','\u0e10\u0e2d\u0e10\u0e32\u0e19'],
     ['\u0e16','TH','th\u0254\u030c\u0254 th\u01d0\u014b','\u0e16\u0e38\u0e07','\u0e16\u0e2d\u0e16\u0e38\u0e07'],
     ['\u0e1c','PH','ph\u0254\u030c\u0254 ph\u0258\u0302\u014b','\u0e1c\u0e36\u0e49\u0e07','\u0e1c\u0e2d\u0e1c\u0e36\u0e49\u0e07'],
     ['\u0e1d','F','f\u0254\u030c\u0254 f\u01cfa','\u0e1d\u0e32','\u0e1d\u0e2d\u0e1d\u0e32'],
@@ -2898,11 +2898,12 @@ function renderConsonants(cls){
   ];
   const LOW_P=[
     ['\u0e04','KH','kh\u0254\u0254 khwaay','\u0e04\u0e27\u0e32\u0e22','\u0e04\u0e2d\u0e04\u0e27\u0e32\u0e22'],
-    ['\u0e05','KH','kh\u0254\u0254 khon','\u0e04\u0e19 (\u5ec3\u5b57)','\u0e05\u0e2d\u0e04\u0e19'],
     ['\u0e06','KH','kh\u0254\u0254 ra-kh\xe2a\u014b','\u0e23\u0e30\u0e06\u0e31\u0e07','\u0e06\u0e2d\u0e23\u0e30\u0e06\u0e31\u0e07'],
     ['\u0e0a','CH','ch\u0254\u0254 ch\xe1a\u014b','\u0e0a\u0e49\u0e32\u0e07','\u0e0a\u0e2d\u0e0a\u0e49\u0e32\u0e07'],
     ['\u0e0b','S','s\u0254\u0254 s\xf4o','\u0e0b \u0e42\u0e0b\u0e48','\u0e0b\u0e37\u0e49\u0e2d'],
     ['\u0e0c','CH','ch\u0254\u0254 ch\u0259\u0302\u025b','\u0e40\u0e0c\u0e2d','\u0e0c\u0e2d\u0e40\u0e0c\u0e2d'],
+    ['\u0e11','TH','th\u0254\u0254 monthoo','\u0e21\u0e13\u0e42\u0e11','\u0e11\u0e2d\u0e21\u0e13\u0e42\u0e11'],
+    ['\u0e12','TH','ph\u00fbu th\u00e2o','\u0e1c\u0e39\u0e49\u0e40\u0e12\u0e48\u0e32','\u0e12\u0e2d\u0e1c\u0e39\u0e49\u0e40\u0e12\u0e48\u0e32'],
     ['\u0e17','TH','th\u0254\u0254 tha-h\u01cfa\u0101n','\u0e17\u0e2b\u0e32\u0e23','\u0e17\u0e2d\u0e17\u0e2b\u0e32\u0e23'],
     ['\u0e18','TH','th\u0254\u0254 tho\u014b','\u0e18\u0e07','\u0e18\u0e2d\u0e18\u0e07'],
     ['\u0e1e','PH','ph\u0254\u0254 phaan','\u0e1e\u0e32\u0e19','\u0e1e\u0e2d\u0e1e\u0e32\u0e19'],
@@ -2924,8 +2925,8 @@ function renderConsonants(cls){
   ];
   const cfg={
     mid:{data:MID,color:'#c0392b',bg:'rgba(192,57,43,.15)',label:'中子音　9文字',split:-1},
-    high:{data:HIGH,color:'#4c9a6a',bg:'rgba(76,154,106,.15)',label:'高子音　10文字（廃字1含む）',split:-1},
-    low:{data:[...LOW_P,...LOW_S],color:'#4a7cc4',bg:'rgba(74,124,196,.15)',label:'低子音　24文字（廃字1含む）',split:LOW_P.length},
+    high:{data:HIGH,color:'#4c9a6a',bg:'rgba(76,154,106,.15)',label:'高子音　10文字',split:-1},
+    low:{data:[...LOW_P,...LOW_S],color:'#4a7cc4',bg:'rgba(74,124,196,.15)',label:'低子音　24文字',split:LOW_P.length},
   }[cls];
   const rows=cfg.data;
   let html=`<div style="text-align:center;font-size:21px;font-weight:700;color:${cfg.color};margin:8px 0 10px;">${cfg.label}</div>
@@ -3021,7 +3022,7 @@ function renderToneSection(){
 
 <!-- 高子音 -->
 <div style="margin-bottom:10px;">
-  <div style="background:#4c9a6a;color:#fff;border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;display:inline-block;margin-bottom:6px;">高子音　ข ฃ ฉ ถ ผ ฝ ศ ษ ส ห</div>
+  <div style="background:#4c9a6a;color:#fff;border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;display:inline-block;margin-bottom:6px;">高子音　ข ฉ ถ ผ ฝ ศ ษ ส ห</div>
   <table style="width:100%;border-collapse:collapse;font-size:14px;">
   <tr style="background:#2a2730;">
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>平音節</th>
@@ -3042,7 +3043,7 @@ function renderToneSection(){
 
 <!-- 低子音 -->
 <div style="margin-bottom:10px;">
-  <div style="background:#4a7cc4;color:#fff;border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;display:inline-block;margin-bottom:6px;">低子音　ค ง ช ซ ท น พ ฟ ม ย ร ล ว ฬ ฮ 他</div>
+  <div style="background:#4a7cc4;color:#fff;border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;display:inline-block;margin-bottom:6px;">低子音　ค ง ช ซ ฑ ฒ ท น พ ฟ ม ย ร ล ว ฬ ฮ 他</div>
   <table style="width:100%;border-collapse:collapse;font-size:14px;">
   <tr style="background:#2a2730;">
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>平音節</th>
