@@ -396,7 +396,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-13i';
+const APP_VERSION = '2026-07-14b';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
@@ -2992,7 +2992,7 @@ function renderToneSection(){
   </div>
 
   <div style="margin-top:9px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
-  📌 なぜこの分類が大事かというと<span style="color:#f2b705;font-weight:700;white-space:nowrap;">声調記号(่ ้ ๊ ๋)</span>が付いていない単語でも、<b style="color:#fff;">子音クラス(中子音/高子音/低子音)</b>と<b style="color:#fff;">この音節タイプ</b>の組み合わせで、基本の声調が自動的に決まるからです。下の表はその組み合わせをまとめたものです。
+  📌 なぜこの分類が大事かというと<span style="color:#f2b705;font-weight:700;white-space:nowrap;font-size:1.15em;">声調記号(ก่ ก้ ก๊ ก๋)</span>が付いていない単語でも、<b style="color:#fff;">子音クラス(中子音/高子音/低子音)</b>と<b style="color:#fff;">この音節タイプ</b>の組み合わせで、基本の声調が自動的に決まるからです。下の表はその組み合わせをまとめたものです。
   </div>
 </div>
 
