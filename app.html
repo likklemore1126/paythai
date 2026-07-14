@@ -396,7 +396,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-13h';
+const APP_VERSION = '2026-07-13i';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
@@ -1957,14 +1957,14 @@ const HELP_TOPICS = [
 
 <b>📱 iPhoneの場合</b>
 ① 「設定」を開き「アクセシビリティ」をタップ
-<img src="help_tts_ios_1.jpg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_ios_1.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
 ② 「リーダーと読み上げ」をタップ
 　(古いiOSでは「読み上げコンテンツ」)
-<img src="help_tts_ios_2.jpg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_ios_2.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
 ③ 「声」をタップ
-<img src="help_tts_ios_3.jpg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_ios_3.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
 ④ 言語の一覧から「タイ語」を探してタップし、声をダウンロード
-<img src="help_tts_ios_4.jpg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_ios_4.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
 
 <b>🤖 Androidの場合</b>
 ① 「設定」を開き「ユーザー補助」をタップ
