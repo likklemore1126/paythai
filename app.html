@@ -396,7 +396,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-14e';
+const APP_VERSION = '2026-07-14f';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
@@ -2991,6 +2991,14 @@ function renderToneSection(){
   <div style="margin-top:11px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
   💡 綴り字の上の子音字(ก・ด・บなど)は何種類もありますが、実際に発音する末子音の音は少数に整理されます。たとえば ด・ต・ถ・ท・ธ・จ・ช・ซ・ศ・ษ・ส はどれも語末では同じ「t」の音になります。文字は違っても、発音される音の種類(平音節か促音節か)で考えるのがポイントです。
   </div>
+
+  <div style="margin-top:9px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
+  🔔 平音節の中でも <b style="color:#fff;">ng(ŋ)</b> と <b style="color:#fff;">n</b> は日本人が混同しやすい音です。日本語の「ン」は後ろに続く音によって自然に変化していて、実は無意識に両方使い分けています。<br><br>
+  <b style="color:#f2b705;">ng(ŋ)</b>=舌をどこにも付けず、鼻に息を抜く音。「<b>バンコク</b>」の「ン」がこれです。<br>
+  <b style="color:#f2b705;">n</b>=舌先を上の歯茎にしっかり付けて止める音。「<b>スワンナプーム</b>(空港名)」の最初の「ン」がこれです。<br><br>
+  この2つを意識して区別できると、グッと通じやすいタイ語になります。
+  </div>
+
 
   <div style="margin-top:9px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
   📌 なぜこの分類が大事かというと<span style="color:#f2b705;font-weight:700;white-space:nowrap;font-size:1.15em;">声調記号(ก่ ก้ ก๊ ก๋)</span>が付いていない単語でも、<b style="color:#fff;">子音クラス(中子音/高子音/低子音)</b>と<b style="color:#fff;">この音節タイプ</b>の組み合わせで、基本の声調が自動的に決まるからです。下の表はその組み合わせをまとめたものです。
