@@ -231,7 +231,8 @@ footer{text-align:center;padding:6px 0 2px;}
 .pg-card img{display:block;width:100%;height:auto;}
 .pg-card.pg-highlight{outline:3px solid #e0a72e;}
 
-.ro-front,.back-ro,.list-ro,.conv-list-ro{cursor:pointer;text-decoration:underline dotted #a9986b 1.5px;text-underline-offset:4px;}
+.ro-front,.back-ro,.list-ro-text,.conv-list-ro{cursor:pointer;text-decoration:underline dotted #a9986b 1.5px;text-underline-offset:4px;}
+.list-ro-text{display:inline-block;}
 .ro-front{display:inline-block;align-self:center;}
 .back-ro,.conv-list-ro{display:inline-block;align-self:flex-start;}
 
@@ -396,7 +397,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-14f';
+const APP_VERSION = '2026-07-14g';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
@@ -2344,7 +2345,7 @@ function renderWordList(){
       ih+=`<div class="list-item${learned?' learned-item':''}" data-id="${item.id}" data-pos="${item._pos}">
         <span class="list-num">${idx+1}</span>
         <span class="list-th">${item.th}</span>
-        <span class="list-ro">${item.ro}</span>
+        <span class="list-ro"><span class="list-ro-text">${item.ro}</span></span>
         <span class="list-jp">${(()=>{
           const jp=item.jp;
           const parts=[];
@@ -3959,7 +3960,7 @@ function getPGWordInfo(el){
 
 // 発音記号(ro表記)をタップしたらガイドを開く(背景タップでは閉じない)
 document.addEventListener('click', function(e){
-  const el = e.target.closest('.ro-front,.back-ro,.list-ro,.conv-list-ro,.vowel-symbol-ro');
+  const el = e.target.closest('.ro-front,.back-ro,.list-ro-text,.conv-list-ro,.vowel-symbol-ro');
   if(el){
     e.stopPropagation();
     e.preventDefault();
