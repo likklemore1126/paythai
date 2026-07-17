@@ -293,9 +293,9 @@ footer{text-align:center;padding:6px 0 2px;}
 
   <footer>
     <div id="exportTipWrap"></div>
-    <div style="display:flex;gap:8px;justify-content:center;">
-      <button class="reset-btn" id="exportBtn" style="text-decoration:none;font-size:12.5px;font-weight:700;padding:9px 4px;width:150px;text-align:center;background:rgba(74,124,196,.15);color:#7bb0ee;border:1.5px solid #4a7cc4;border-radius:10px;">📤 学習記録をエクスポート</button>
-      <button class="reset-btn" id="importBtn" style="text-decoration:none;font-size:12.5px;font-weight:700;padding:9px 4px;width:150px;text-align:center;background:rgba(76,154,106,.15);color:#7dcb9a;border:1.5px solid #4c9a6a;border-radius:10px;">📥 学習記録をインポート</button>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+      <button class="reset-btn" id="exportBtn" style="text-decoration:none;font-size:13px;font-weight:700;padding:9px 12px;white-space:nowrap;text-align:center;background:rgba(74,124,196,.15);color:#7bb0ee;border:1.5px solid #4a7cc4;border-radius:10px;">📤 学習記録をエクスポート</button>
+      <button class="reset-btn" id="importBtn" style="text-decoration:none;font-size:13px;font-weight:700;padding:9px 12px;white-space:nowrap;text-align:center;background:rgba(76,154,106,.15);color:#7dcb9a;border:1.5px solid #4c9a6a;border-radius:10px;">📥 学習記録をインポート</button>
     </div>
     <div id="resetTipWrap"></div>
     <button class="reset-btn" id="resetBtn" style="text-decoration:none;margin-top:6px;font-size:14px;font-weight:700;padding:8px 16px;background:rgba(192,57,43,.12);color:#e8968f;border:1px solid rgba(192,57,43,.45);border-radius:10px;">⚠️ 学習記録をリセット</button>
@@ -664,7 +664,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-14q';
+const APP_VERSION = '2026-07-14r';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
@@ -2330,12 +2330,14 @@ function currentTipId(){
 function updateHelpBtn(){
   const btn=document.getElementById('helpBtn');
   if(!btn) return;
-  btn.style.display = currentTipId() ? 'block' : 'none';
+  btn.style.display = 'block';
 }
 document.getElementById('helpBtn').addEventListener('click', function(){
   const id=currentTipId();
-  if(!id) return;
-  seenTips.delete(id);
+  if(id) seenTips.delete(id);
+  seenTips.delete('exportImport');
+  seenTips.delete('resetInfo');
+  sto_set('s:seenTips', [...seenTips]);
   render();
 });
 document.addEventListener('click', function(e){
