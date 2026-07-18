@@ -80,7 +80,7 @@ header{padding-bottom:10px;}
   border:3px solid var(--tag-edge);position:absolute;top:14px;left:14px;}
 .lv{position:absolute;bottom:14px;right:14px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#9c8d68;}
 .face-front{justify-content:center;align-items:center;text-align:center;}
-.th-big{font-family:'Sarabun',sans-serif;font-weight:500;font-size:44px;line-height:1.4;margin-top:16px;}
+.th-big{font-family:'Sarabun',sans-serif;font-weight:500;font-size:44px;line-height:1.4;margin-top:16px;letter-spacing:1px;}
 .th-big.sm{font-size:25px;}
 .jp-big{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:25px;line-height:1.45;margin-top:16px;}
 .ro-front{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:#6b5c3e;margin-top:8px;}
@@ -100,7 +100,7 @@ header{padding-bottom:10px;}
 .cb-row{display:grid;grid-template-columns:minmax(64px,auto) 1fr;column-gap:10px;align-items:baseline;
   padding:7px 0;border-top:1px solid rgba(43,33,24,.1);}
 .cb-row:first-of-type{border-top:none;}
-.cb-th{font-family:'Sarabun',sans-serif;font-weight:700;font-size:20px;color:#000;word-break:break-word;}
+.cb-th{font-family:'Sarabun',sans-serif;font-weight:700;font-size:20px;color:#000;word-break:break-word;letter-spacing:.4px;}
 .cb-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;font-weight:600;color:#5c4a30;word-break:break-word;}
 .cb-jp{font-size:15px;font-weight:500;color:#2b2118;grid-column:1/-1;margin-top:2px;}
 .gram-title{font-family:'Sarabun',sans-serif;font-weight:600;font-size:21px;margin-top:26px;color:var(--ink);}
@@ -111,7 +111,7 @@ header{padding-bottom:10px;}
 .hole-checked{background:#4caf50 !important;}
 .gram-explain{font-size:16px;line-height:1.7;margin-top:8px;}
 .ex-box{margin-top:12px;background:rgba(0,0,0,.06);border-radius:10px;padding:10px 12px;}
-.ex-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:21px;}
+.ex-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:21px;letter-spacing:.4px;}
 .ex-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;margin-top:3px;}
 .ex-jp{font-size:15px;margin-top:3px;}
 .back-actions{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:6px;min-height:62px;}
@@ -664,7 +664,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-14r';
+const APP_VERSION = '2026-07-14s';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
