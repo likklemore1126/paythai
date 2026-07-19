@@ -664,7 +664,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-14v';
+const APP_VERSION = '2026-07-14w';
 
 function snapshotCurrentData(){
   const data = { learned: {}, level: st.level, gender: st.gender };
@@ -2540,6 +2540,7 @@ function renderWordList(){
         st.filterUn=false;
         st.shuffle=false;
         render();
+        window.scrollTo(0,0);
       });
     });
     const wmv0=document.getElementById('wlModeVocab'); if(wmv0) wmv0.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
@@ -2651,6 +2652,7 @@ function renderWordList(){
         st.filterUn=false;
         st.shuffle=false;
         render();
+        window.scrollTo(0,0);
       });
     });
   }
@@ -3942,7 +3944,7 @@ document.getElementById('backBtn').addEventListener('click',function(){
   if(scrollToId){
     requestAnimationFrame(()=>{
       const el=document.querySelector(`.list-item[data-id="${scrollToId}"], .conv-list-item[data-id="${scrollToId}"]`);
-      if(el) el.scrollIntoView({block:'center',behavior:'smooth'});
+      if(el) el.scrollIntoView({block:'center',behavior:'instant'});
     });
   }
 });
@@ -3971,7 +3973,7 @@ document.getElementById('toListBtn').addEventListener('click',function(){
     render();
     requestAnimationFrame(()=>{
       const el=document.querySelector(`.list-item[data-id="${scrollToId}"]`);
-      if(el) el.scrollIntoView({block:'center',behavior:'smooth'});
+      if(el) el.scrollIntoView({block:'center',behavior:'instant'});
     });
   } else if(st.mode==='conversation'){
     const l=list();
@@ -3985,7 +3987,7 @@ document.getElementById('toListBtn').addEventListener('click',function(){
     render();
     requestAnimationFrame(()=>{
       const el=document.querySelector(`.conv-list-item[data-id="${scrollToId}"]`);
-      if(el) el.scrollIntoView({block:'center',behavior:'smooth'});
+      if(el) el.scrollIntoView({block:'center',behavior:'instant'});
     });
   }
 });
