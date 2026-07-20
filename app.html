@@ -675,7 +675,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-15a';
+const APP_VERSION = '2026-07-15c';
 
 function snapshotCurrentData(){
   const data = { learned: {}, favorites: {}, level: st.level, gender: st.gender };
@@ -2487,7 +2487,7 @@ function updateStickyTab(){
   if(st.mode!=='wordlist'){sr.style.display='none';return;}
   // スクロール量で表示切替(初期は非表示)
   sr.style.display=window.scrollY>170?'block':'none';
-  const modeTabs=`<button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocabSticky" style="margin-left:0;">単語</button><button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConvSticky">会話</button><button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFavSticky">★リスト</button>`;
+  const modeTabs=`<button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocabSticky" style="margin-left:0;">単語</button><button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConvSticky">会話</button><button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFavSticky">お気に入り</button>`;
   if(st.wordlistMode==='favorites'){
     sr.innerHTML=modeTabs;
   } else if(st.wordlistMode==='conversation'){
@@ -2531,7 +2531,7 @@ function renderWordList(){
   let html=`<div style="display:flex;gap:8px;padding:4px 12px 10px;">
     <button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocab">単語</button>
     <button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConv">会話</button>
-    <button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFav">★リスト</button>
+    <button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFav">お気に入り</button>
   </div>`;
 
   if(st.wordlistMode==='favorites'){
@@ -2682,6 +2682,7 @@ function renderWordList(){
     bindFavButtons(lp);
     const wmv0=document.getElementById('wlModeVocab'); if(wmv0) wmv0.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
     const wmc0=document.getElementById('wlModeConv'); if(wmc0) wmc0.onclick=()=>{st.wordlistMode='conversation';window.scrollTo(0,0);render();};
+    const wmf0=document.getElementById('wlModeFav'); if(wmf0) wmf0.onclick=()=>{st.wordlistMode='favorites';window.scrollTo(0,0);render();};
     lp.querySelectorAll('[data-sc]').forEach(c=>c.addEventListener('click',()=>{
       const row=c.closest('div'); const saved=row?row.scrollLeft:0;
       st.wordlistScene=c.dataset.sc;
@@ -2819,6 +2820,7 @@ function renderWordList(){
   // モード切替タブのイベント
   const wmv=document.getElementById('wlModeVocab'); if(wmv) wmv.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
   const wmc=document.getElementById('wlModeConv'); if(wmc) wmc.onclick=()=>{st.wordlistMode='conversation';window.scrollTo(0,0);render();};
+  const wmf=document.getElementById('wlModeFav'); if(wmf) wmf.onclick=()=>{st.wordlistMode='favorites';window.scrollTo(0,0);render();};
   lp.querySelectorAll('.chip[data-pos]').forEach(c=>c.addEventListener('click',()=>{
     const row=c.closest('div'); const saved=row?row.scrollLeft:0;
     st.wordlistPos=c.dataset.pos;
