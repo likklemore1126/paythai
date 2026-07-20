@@ -119,6 +119,14 @@ header{padding-bottom:10px;}
   border-radius:999px;padding:12px 24px;font-size:17px;font-weight:700;
   font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;}
 .learn-btn.done{background:var(--ink);color:var(--tag);}
+.fav-btn{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--ink);background:transparent;
+  color:var(--ink);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;line-height:1;padding:0;}
+.fav-btn.on{background:var(--yellow);border-color:var(--yellow);}
+.list-fav-btn{width:26px;height:26px;border-radius:50%;border:none;background:transparent;
+  color:rgba(255,255,255,.35);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;line-height:1;padding:0;}
+.list-fav-btn.on{color:var(--yellow);}
 /* ─── NAV ─── */
 .nav-row{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:14px;}
 .nav-btn{width:46px;height:46px;border-radius:50%;background:var(--bg2);
@@ -654,6 +662,9 @@ let st = {
   idx:0,flipped:false,fontTab:'compare',
   learned:{noun:new Set(),verb:new Set(),adj:new Set(),adv:new Set(),
     classifier:new Set(),question:new Set(),greeting:new Set(),
+    conversation:new Set(),grammar:new Set(),thaienglish:new Set()},
+  favorites:{noun:new Set(),verb:new Set(),adj:new Set(),adv:new Set(),
+    classifier:new Set(),question:new Set(),greeting:new Set(),
     conversation:new Set(),grammar:new Set(),thaienglish:new Set()}
 };
 const seenTips = new Set();
@@ -664,11 +675,12 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-14y';
+const APP_VERSION = '2026-07-15a';
 
 function snapshotCurrentData(){
-  const data = { learned: {}, level: st.level, gender: st.gender };
+  const data = { learned: {}, favorites: {}, level: st.level, gender: st.gender };
   for(const k of Object.keys(st.learned)) data.learned[k] = [...st.learned[k]];
+  for(const k of Object.keys(st.favorites)) data.favorites[k] = [...st.favorites[k]];
   return data;
 }
 
@@ -694,6 +706,12 @@ async function restoreAutoBackup(){
     for(const k of Object.keys(data.learned)){
       st.learned[k] = new Set(data.learned[k]);
       sto_set('l:'+k, data.learned[k]);
+    }
+  }
+  if(data.favorites){
+    for(const k of Object.keys(data.favorites)){
+      st.favorites[k] = new Set(data.favorites[k]);
+      sto_set('f:'+k, data.favorites[k]);
     }
   }
   await appAlert('復元しました。');
@@ -733,6 +751,9 @@ async function loadAll(){
   const ro=await sto_get('s:showRo'); if(ro!==null && ro!==undefined) st.showRo=ro;
   for(const k of Object.keys(st.learned)){
     const d=await sto_get('l:'+k); if(d) st.learned[k]=new Set(d);
+  }
+  for(const k of Object.keys(st.favorites)){
+    const d=await sto_get('f:'+k); if(d) st.favorites[k]=new Set(d);
   }
   const tips=await sto_get('s:seenTips'); if(Array.isArray(tips)) tips.forEach(id=>seenTips.add(id));
 }
@@ -2387,6 +2408,23 @@ function list(){
   if(st.mode==='grammar') return GRAM;
   return [];
 }
+
+// リスト画面の★ボタンにクリック処理を付与する共通ヘルパー
+function bindFavButtons(root){
+  root.querySelectorAll('.list-fav-btn').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      e.stopPropagation();
+      const id=btn.dataset.favId;
+      const cat=btn.dataset.favCat;
+      const s=st.favorites[cat];
+      if(!s) return;
+      if(s.has(id)) s.delete(id); else s.add(id);
+      sto_set('f:'+cat, [...s]);
+      render();
+    });
+  });
+}
+
 function lkKey(){
   if(st.mode==='vocab') return st.pos;
   if(st.mode==='conversation') return 'conversation';
@@ -2449,8 +2487,10 @@ function updateStickyTab(){
   if(st.mode!=='wordlist'){sr.style.display='none';return;}
   // スクロール量で表示切替(初期は非表示)
   sr.style.display=window.scrollY>170?'block':'none';
-  const modeTabs=`<button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocabSticky" style="margin-left:0;">単語</button><button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConvSticky">会話</button>`;
-  if(st.wordlistMode==='conversation'){
+  const modeTabs=`<button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocabSticky" style="margin-left:0;">単語</button><button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConvSticky">会話</button><button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFavSticky">★リスト</button>`;
+  if(st.wordlistMode==='favorites'){
+    sr.innerHTML=modeTabs;
+  } else if(st.wordlistMode==='conversation'){
     sr.innerHTML=modeTabs+SCENES.map(s=>
       `<button class="chip ${s===st.wordlistScene?'active-conv':''}" data-sc="${s}">${s}</button>`).join('');
     requestAnimationFrame(()=>{
@@ -2480,17 +2520,111 @@ function updateStickyTab(){
   }
   const smv=document.getElementById('wlModeVocabSticky'); if(smv) smv.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
   const smc=document.getElementById('wlModeConvSticky'); if(smc) smc.onclick=()=>{st.wordlistMode='conversation';window.scrollTo(0,0);render();};
+  const smf=document.getElementById('wlModeFavSticky'); if(smf) smf.onclick=()=>{st.wordlistMode='favorites';window.scrollTo(0,0);render();};
 }
 
 function renderWordList(){
   const lp=document.getElementById('listPage');
   const beg=st.level==='beginner';
 
-  // モード切替タブ（単語 / 会話）
+  // モード切替タブ（単語 / 会話 / ★リスト）
   let html=`<div style="display:flex;gap:8px;padding:4px 12px 10px;">
     <button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocab">単語</button>
     <button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConv">会話</button>
+    <button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFav">★リスト</button>
   </div>`;
+
+  if(st.wordlistMode==='favorites'){
+    // ── お気に入りリスト（単語＋会話まとめ） ──
+    const favVocabItems=Object.entries(DATA)
+      .filter(([k,v])=>Array.isArray(v) && st.favorites[k])
+      .flatMap(([k,v])=>v.filter(i=>st.favorites[k].has(i.id)).map(i=>({...i,_pos:k,_type:'vocab'})));
+    const favConvItems=CONV.filter(i=>st.favorites.conversation.has(i.id)).map(i=>({...i,_type:'conv'}));
+    const totalFav=favVocabItems.length+favConvItems.length;
+    html+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(242,183,5,.12);border:1px solid rgba(242,183,5,.3);border-radius:8px;padding:8px 10px;">
+      ⭐ カード裏面やリストの☆をタップして追加した、後で見返したい単語・会話文の一覧です
+    </div>`;
+    html+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${totalFav}件</div>`;
+    if(totalFav===0){
+      html+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;">まだ★リストに追加された項目がありません<br>単語カードや会話カードの☆ボタン、リストの☆アイコンから追加できます</div>`;
+    }
+    if(favVocabItems.length){
+      html+=`<div style="padding:10px 12px 4px;font-size:13px;font-weight:700;color:var(--muted);">単語(${favVocabItems.length})</div>`;
+      favVocabItems.forEach((item,idx)=>{
+        html+=`<div class="list-item fav-list-vocab" data-id="${item.id}" data-pos="${item._pos}">
+          <span class="list-num">${idx+1}</span>
+          <span class="list-th">${item.th}</span>
+          <span class="list-ro"><span class="list-ro-text">${item.ro}</span></span>
+          <span class="list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</span>
+          <button class="list-fav-btn on" data-fav-id="${item.id}" data-fav-cat="${item._pos}">★</button>
+        </div>`;
+      });
+    }
+    if(favConvItems.length){
+      html+=`<div style="padding:10px 12px 4px;font-size:13px;font-weight:700;color:var(--muted);">会話(${favConvItems.length})</div>`;
+      favConvItems.forEach((item,idx)=>{
+        html+=`<div class="conv-list-item fav-list-conv" data-id="${item.id}" data-scene="${item.scene}">
+          <div class="conv-list-row1">
+            <span class="list-num">${idx+1}</span>
+            <span class="conv-list-th">${fTH(item.th)}</span>
+            <button class="list-fav-btn on" data-fav-id="${item.id}" data-fav-cat="conversation" style="margin-left:auto;">★</button>
+          </div>
+          <div class="conv-list-ro">${fRO(item.ro)}</div>
+          <div class="conv-list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
+        </div>`;
+      });
+    }
+    lp.innerHTML=html;
+    updateStickyTab();
+    lp.querySelectorAll('.fav-list-vocab').forEach(el=>{
+      el.addEventListener('click',()=>{
+        const id=el.dataset.id;
+        const pos2=el.dataset.pos;
+        const beg3=st.level==='beginner';
+        const arr=(beg3?(DATA[pos2]||[]).filter(i=>i.level==='5'):(DATA[pos2]||[]));
+        const idx2=arr.findIndex(i=>i.id===id);
+        if(idx2<0) return;
+        st.fromList=true;
+        st.fromListPos=pos2;
+        st.fromListItemId=id;
+        st.fromListMode='vocab';
+        st.mode='vocab';
+        st.pos=pos2;
+        st.idx=idx2;
+        st.flipped=false;
+        st.filterUn=false;
+        st.shuffle=false;
+        render();
+        window.scrollTo(0,0);
+      });
+    });
+    lp.querySelectorAll('.fav-list-conv').forEach(el=>{
+      el.addEventListener('click',()=>{
+        const id=el.dataset.id;
+        const scn=el.dataset.scene;
+        const arr=CONV.filter(i=>i.scene===scn);
+        const idx2=arr.findIndex(i=>i.id===id);
+        if(idx2<0) return;
+        st.fromList=true;
+        st.fromListPos=scn;
+        st.fromListItemId=id;
+        st.fromListMode='conversation';
+        st.mode='conversation';
+        st.scene=scn;
+        st.idx=idx2;
+        st.flipped=false;
+        st.filterUn=false;
+        st.shuffle=false;
+        render();
+        window.scrollTo(0,0);
+      });
+    });
+    bindFavButtons(lp);
+    const wmv1=document.getElementById('wlModeVocab'); if(wmv1) wmv1.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
+    const wmc1=document.getElementById('wlModeConv'); if(wmc1) wmc1.onclick=()=>{st.wordlistMode='conversation';window.scrollTo(0,0);render();};
+    const wmf1=document.getElementById('wlModeFav'); if(wmf1) wmf1.onclick=()=>{st.wordlistMode='favorites';window.scrollTo(0,0);render();};
+    return;
+  }
 
   if(st.wordlistMode==='conversation'){
     // ── 会話リスト ──
@@ -2505,11 +2639,13 @@ function renderWordList(){
     html+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${convLearnedCount} 学習済み / 全${items.length}</div>`;
     items.forEach((item,idx)=>{
       const learned=st.learned.conversation.has(item.id);
+      const fav=st.favorites.conversation.has(item.id);
       html+=`<div class="conv-list-item${learned?' learned-item':''}" data-id="${item.id}" data-scene="${item.scene}">
         <div class="conv-list-row1">
           <span class="list-num">${idx+1}</span>
           <span class="conv-list-th">${fTH(item.th)}</span>
           ${learned?'<span class="list-badge">済</span>':''}
+          <button class="list-fav-btn ${fav?'on':''}" data-fav-id="${item.id}" data-fav-cat="conversation" style="margin-left:auto;">${fav?'★':'☆'}</button>
         </div>
         <div class="conv-list-ro">${fRO(item.ro)}</div>
         <div class="conv-list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
@@ -2543,6 +2679,7 @@ function renderWordList(){
         window.scrollTo(0,0);
       });
     });
+    bindFavButtons(lp);
     const wmv0=document.getElementById('wlModeVocab'); if(wmv0) wmv0.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
     const wmc0=document.getElementById('wlModeConv'); if(wmc0) wmc0.onclick=()=>{st.wordlistMode='conversation';window.scrollTo(0,0);render();};
     lp.querySelectorAll('[data-sc]').forEach(c=>c.addEventListener('click',()=>{
@@ -2612,6 +2749,7 @@ function renderWordList(){
     }
     filtered.forEach((item,idx)=>{
       const learned=Object.values(st.learned).some(s=>s.has(item.id));
+      const fav=Object.values(st.favorites).some(s=>s.has(item.id));
       ih+=`<div class="list-item${learned?' learned-item':''}" data-id="${item.id}" data-pos="${item._pos}">
         <span class="list-num">${idx+1}</span>
         <span class="list-th">${item.th}</span>
@@ -2630,6 +2768,7 @@ function renderWordList(){
           return parts.filter(s=>s).map(s=>'･'+s).join('<br>');
         })()}</span>
         ${learned?'<span class="list-badge">済</span>':''}
+        <button class="list-fav-btn ${fav?'on':''}" data-fav-id="${item.id}" data-fav-cat="${item._pos}">${fav?'★':'☆'}</button>
       </div>`;
     });
     wrap.innerHTML=ih;
@@ -2655,6 +2794,7 @@ function renderWordList(){
         window.scrollTo(0,0);
       });
     });
+    bindFavButtons(wrap);
   }
   refreshWordListItems();
 
@@ -3605,6 +3745,10 @@ function render(){
   const isLearned=st.pos==='all'
     ?Object.values(st.learned).some(s=>s.has(item.id))
     :lset.has(item.id);
+  const fset=st.pos==='all'?null:st.favorites[lk];
+  const isFavorite=st.pos==='all'
+    ?Object.values(st.favorites).some(s=>s.has(item.id))
+    :fset.has(item.id);
   const beg=st.level==='beginner';
   const modeRibbon={vocab:{cls:'vocab',lbl:st.pos==='all'?'ALL':getPosLabels()[st.pos]},
     conversation:{cls:'conv',lbl:'会話'},grammar:{cls:'gram',lbl:'文法'},
@@ -3631,6 +3775,7 @@ function render(){
       </div>
       <div class="back-actions">
         <button class="audio-btn" id="audB">🔊</button>
+        <button class="fav-btn ${isFavorite?'on':''}" id="favB">${isFavorite?'★':'☆'}</button>
         <button class="learn-btn ${isLearned?'done':''}" id="lrnB">${isLearned?'覚えた ✓':'覚えた'}</button>
       </div>`;
   } else if(st.mode==='conversation'){
@@ -3655,6 +3800,7 @@ function render(){
           ${bdHtml}
           <div class="back-actions">
             <button class="audio-btn" id="audB">🔊</button>
+            <button class="fav-btn ${isFavorite?'on':''}" id="favB">${isFavorite?'★':'☆'}</button>
             <button class="learn-btn ${isLearned?'done':''}" id="lrnB">${isLearned?'覚えた ✓':'覚えた'}</button>
           </div>
         </div>`;
@@ -3669,6 +3815,7 @@ function render(){
           ${bdHtml}
           <div class="back-actions">
             <button class="audio-btn" id="audB">🔊</button>
+            <button class="fav-btn ${isFavorite?'on':''}" id="favB">${isFavorite?'★':'☆'}</button>
             <button class="learn-btn ${isLearned?'done':''}" id="lrnB">${isLearned?'覚えた ✓':'覚えた'}</button>
           </div>
         </div>`;
@@ -3688,6 +3835,7 @@ function render(){
         <div id="exampleBox" style="overflow-y:auto;"></div>
         <div class="back-actions">
           <button class="audio-btn" id="audB">🔊</button>
+          <button class="fav-btn ${isFavorite?'on':''}" id="favB">${isFavorite?'★':'☆'}</button>
           <button class="learn-btn ${isLearned?'done':''}" id="lrnB">${isLearned?'覚えた ✓':'覚えた'}</button>
         </div>`;
     } else {
@@ -3699,6 +3847,7 @@ function render(){
         <div id="exampleBox" style="overflow-y:auto;"></div>
         <div class="back-actions">
           <button class="audio-btn" id="audB">🔊</button>
+          <button class="fav-btn ${isFavorite?'on':''}" id="favB">${isFavorite?'★':'☆'}</button>
           <button class="learn-btn ${isLearned?'done':''}" id="lrnB">${isLearned?'覚えた ✓':'覚えた'}</button>
         </div>`;
     }
@@ -3759,6 +3908,21 @@ function render(){
         render();
       };
     }
+  };
+  const fb=document.getElementById('favB'); if(fb) fb.onclick=e=>{
+    e.stopPropagation();
+    if(st.pos==='all'){
+      const itemPos=Object.keys(DATA).find(p=>Array.isArray(DATA[p])&&DATA[p].some(i=>i.id===item.id));
+      if(itemPos){
+        const s=st.favorites[itemPos];
+        if(s.has(item.id)) s.delete(item.id); else s.add(item.id);
+        sto_set('f:'+itemPos,[...s]);
+      }
+    } else {
+      if(fset.has(item.id)) fset.delete(item.id); else fset.add(item.id);
+      sto_set('f:'+lk,[...fset]);
+    }
+    render();
   };
   // vocab裏面が表示されたとき例文を表示
   if(st.mode==='vocab' && st.flipped && item){
@@ -3856,11 +4020,15 @@ document.getElementById('flipWrap').addEventListener('touchend',e=>{
 async function exportData(){
   const data = {
     learned: {},
+    favorites: {},
     level: st.level,
     gender: st.gender,
   };
   for(const k of Object.keys(st.learned)){
     data.learned[k] = [...st.learned[k]];
+  }
+  for(const k of Object.keys(st.favorites)){
+    data.favorites[k] = [...st.favorites[k]];
   }
   const json = JSON.stringify(data);
 
@@ -3911,6 +4079,15 @@ async function importData(){
         if(Array.isArray(data.learned[k])){
           st.learned[k] = new Set(data.learned[k]);
           sto_set('l:'+k,[...st.learned[k]]);
+        }
+      }
+    }
+    // favorites
+    if(data.favorites){
+      for(const k of Object.keys(st.favorites)){
+        if(Array.isArray(data.favorites[k])){
+          st.favorites[k] = new Set(data.favorites[k]);
+          sto_set('f:'+k,[...st.favorites[k]]);
         }
       }
     }
