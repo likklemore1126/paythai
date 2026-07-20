@@ -675,7 +675,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-15c';
+const APP_VERSION = '2026-07-15d';
 
 function snapshotCurrentData(){
   const data = { learned: {}, favorites: {}, level: st.level, gender: st.gender };
@@ -2535,18 +2535,19 @@ function renderWordList(){
   </div>`;
 
   if(st.wordlistMode==='favorites'){
-    // ── お気に入りリスト（単語＋会話まとめ） ──
+    // ── お気に入りリスト（単語＋会話＋文法まとめ） ──
     const favVocabItems=Object.entries(DATA)
       .filter(([k,v])=>Array.isArray(v) && st.favorites[k])
       .flatMap(([k,v])=>v.filter(i=>st.favorites[k].has(i.id)).map(i=>({...i,_pos:k,_type:'vocab'})));
     const favConvItems=CONV.filter(i=>st.favorites.conversation.has(i.id)).map(i=>({...i,_type:'conv'}));
-    const totalFav=favVocabItems.length+favConvItems.length;
+    const favGramItems=GRAM.filter(i=>st.favorites.grammar.has(i.id)).map(i=>({...i,_type:'gram'}));
+    const totalFav=favVocabItems.length+favConvItems.length+favGramItems.length;
     html+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(242,183,5,.12);border:1px solid rgba(242,183,5,.3);border-radius:8px;padding:8px 10px;">
-      ⭐ カード裏面やリストの☆をタップして追加した、後で見返したい単語・会話文の一覧です
+      ⭐ カード裏面やリストの☆をタップして追加した、後で見返したい単語・会話文・文法の一覧です
     </div>`;
     html+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${totalFav}件</div>`;
     if(totalFav===0){
-      html+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;">まだ★リストに追加された項目がありません<br>単語カードや会話カードの☆ボタン、リストの☆アイコンから追加できます</div>`;
+      html+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;">まだお気に入りに追加された項目がありません<br>各カードの☆ボタン、リストの☆アイコンから追加できます</div>`;
     }
     if(favVocabItems.length){
       html+=`<div style="padding:10px 12px 4px;font-size:13px;font-weight:700;color:var(--muted);">単語(${favVocabItems.length})</div>`;
@@ -2571,6 +2572,17 @@ function renderWordList(){
           </div>
           <div class="conv-list-ro">${fRO(item.ro)}</div>
           <div class="conv-list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
+        </div>`;
+      });
+    }
+    if(favGramItems.length){
+      html+=`<div style="padding:10px 12px 4px;font-size:13px;font-weight:700;color:var(--muted);">文法(${favGramItems.length})</div>`;
+      favGramItems.forEach((item,idx)=>{
+        html+=`<div class="list-item fav-list-gram" data-id="${item.id}">
+          <span class="list-num">${idx+1}</span>
+          <span class="list-th" style="font-size:16px;">${item.title}</span>
+          <span class="list-jp">${item.ex_jp||''}</span>
+          <button class="list-fav-btn on" data-fav-id="${item.id}" data-fav-cat="grammar">★</button>
         </div>`;
       });
     }
@@ -2611,6 +2623,21 @@ function renderWordList(){
         st.fromListMode='conversation';
         st.mode='conversation';
         st.scene=scn;
+        st.idx=idx2;
+        st.flipped=false;
+        st.filterUn=false;
+        st.shuffle=false;
+        render();
+        window.scrollTo(0,0);
+      });
+    });
+    lp.querySelectorAll('.fav-list-gram').forEach(el=>{
+      el.addEventListener('click',()=>{
+        const id=el.dataset.id;
+        const idx2=GRAM.findIndex(i=>i.id===id);
+        if(idx2<0) return;
+        st.fromList=false;
+        st.mode='grammar';
         st.idx=idx2;
         st.flipped=false;
         st.filterUn=false;
