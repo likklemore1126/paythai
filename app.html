@@ -680,7 +680,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-15n';
+const APP_VERSION = '2026-07-15p';
 
 function snapshotCurrentData(){
   const data = { learned: {}, favorites: {}, level: st.level, gender: st.gender };
@@ -2882,26 +2882,20 @@ function renderWordList(){
 function renderSettings(){
   const sr=document.getElementById('settingsRow');
   if(st.mode==='wordlist'){
-    if(st.wordlistMode==='conversation'){
-      sr.style.display='flex';
-      sr.innerHTML=`<button class="pill pill-gender" id="gdPill" data-gender="${st.gender}">${st.gender==='male'?'♂ 男性語尾':'♀ 女性語尾'}</button>`;
-      const gp=document.getElementById('gdPill'); if(gp) gp.onclick=()=>{st.gender=st.gender==='male'?'female':'male';sto_set('s:gender',st.gender);render();};
-    } else {
-      sr.style.display='none';
-      sr.innerHTML='';
-    }
+    sr.style.display='flex';
+    sr.innerHTML=`<button class="pill pill-gender" id="gdPill" data-gender="${st.gender}">${st.gender==='male'?'♂ 男性語尾':'♀ 女性語尾'}</button>`;
+    const gp=document.getElementById('gdPill'); if(gp) gp.onclick=()=>{st.gender=st.gender==='male'?'female':'male';sto_set('s:gender',st.gender);render();};
     return;
   }
   sr.style.display='flex';
   const noCtrl=['font','numbers'].includes(st.mode);
   if(noCtrl){ sr.style.display='none'; sr.innerHTML=''; return; }
-  const noDir=['grammar'].includes(st.mode);
   let h='';
-  if(!noDir) h+=`<button class="pill" id="dirPill" data-dir="${st.dir}">${st.dir==='th-jp'?'TH→JP':'JP→TH'}</button>`;
-  h+=`<button class="pill pill-level" id="lvPill" data-level="${st.level}">${st.level==='beginner'?'初心者':'中級者+'}</button>`;
-  if(st.mode==='conversation'||st.mode==='vocab') h+=`<button class="pill pill-gender" id="gdPill" data-gender="${st.gender}">${st.gender==='male'?'♂ 男性語尾':'♀ 女性語尾'}</button>`;
-  if(st.mode==='conversation'||st.mode==='vocab') h+=`<button class="pill ${st.showRo?'on':''}" id="roPill">${st.showRo?'📖 発音表記あり':'📖 発音表記なし'}</button>`;
-  if(st.mode!=='grammar') h+=`<button class="pill ${st.filterUn?'on':''}" id="unPill">未学習だけ</button>`;
+  if(st.mode!=='grammar') h+=`<button class="pill" id="dirPill" data-dir="${st.dir}">${st.dir==='th-jp'?'TH→JP':'JP→TH'}</button>`;
+  if(st.mode==='vocab') h+=`<button class="pill pill-level" id="lvPill" data-level="${st.level}">${st.level==='beginner'?'初心者':'中級者+'}</button>`;
+  if(st.mode!=='grammar') h+=`<button class="pill pill-gender" id="gdPill" data-gender="${st.gender}">${st.gender==='male'?'♂ 男性語尾':'♀ 女性語尾'}</button>`;
+  h+=`<button class="pill ${st.showRo?'on':''}" id="roPill">${st.showRo?'📖 発音表記あり':'📖 発音表記なし'}</button>`;
+  h+=`<button class="pill ${st.filterUn?'on':''}" id="unPill">未学習だけ</button>`;
   if(st.mode!=='grammar') h+=`<button class="pill ${st.shuffle?'on':''}" id="shfPill">🔀 シャッフル</button>`;
   sr.innerHTML=h;
   const dp=document.getElementById('dirPill'); if(dp) dp.onclick=()=>{st.dir=st.dir==='th-jp'?'jp-th':'th-jp';st.flipped=false;render();};
@@ -3909,7 +3903,7 @@ function render(){
   document.getElementById('faceBack').innerHTML=back;
   document.getElementById('cardInner').classList.toggle('flipped',st.flipped);
   document.getElementById('dotCount').textContent=(st.idx+1)+' / '+l.length;
-  const learnedCount=st.pos==='all'
+  const learnedCount=(st.mode==='vocab' && st.pos==='all')
     ?Object.values(st.learned).reduce((s,x)=>s+x.size,0)
     :(lset?lset.size:0);
   document.getElementById('progressText').textContent=learnedCount+' 学習済み / 全'+l.length;
