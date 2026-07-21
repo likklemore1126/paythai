@@ -680,7 +680,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-15p';
+const APP_VERSION = '2026-07-15q';
 
 function snapshotCurrentData(){
   const data = { learned: {}, favorites: {}, level: st.level, gender: st.gender };
@@ -2410,7 +2410,11 @@ function list(){
     }
     return l;
   }
-  if(st.mode==='grammar') return GRAM;
+  if(st.mode==='grammar'){
+    let l=GRAM;
+    if(st.filterUn){ const f=l.filter(i=>!st.learned.grammar.has(i.id)); if(f.length) l=f; }
+    return l;
+  }
   return [];
 }
 
