@@ -131,7 +131,7 @@ header{padding-bottom:10px;}
 .fav-btn.on{background:var(--yellow);border-color:var(--yellow);}
 .list-fav-btn{width:26px;height:26px;border-radius:50%;border:none;background:transparent;
   color:rgba(255,255,255,.35);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;line-height:1;padding:0;}
+  flex-shrink:0;line-height:1;padding:0;margin-left:8px;align-self:center;}
 .list-fav-btn.on{color:var(--yellow);}
 /* ─── NAV ─── */
 .nav-row{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:14px;}
@@ -202,14 +202,13 @@ footer{text-align:center;padding:6px 0 2px;}
 .gram-list-row .glr-body{flex:1;min-width:0;}
 .gram-list-row .glr-title{font-family:'Sarabun',sans-serif;font-size:16px;font-weight:700;color:#fff;line-height:1.5;word-break:break-word;}
 .gram-list-row .glr-jp{font-size:13px;color:var(--fg);line-height:1.5;margin-top:3px;}
-.gram-list-row .list-fav-btn{margin-left:8px;flex-shrink:0;align-self:flex-start;margin-top:2px;}
 .conv-list-item{display:flex;flex-direction:column;gap:3px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .15s;}
 .conv-list-item.learned-item{background:rgba(76,154,106,.08);}
 .conv-list-row1{display:flex;align-items:baseline;gap:8px;}
 .conv-list-th{font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;flex:1;line-height:1.4;}
 .conv-list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted2);padding-left:36px;line-height:1.4;}
 .conv-list-jp{font-size:14px;color:var(--fg);padding-left:36px;line-height:1.5;}
-.list-badge{font-size:10px;background:#2d6a4f;color:#b7e4c7;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;}
+.list-badge{font-size:10px;background:#2d6a4f;color:#b7e4c7;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;align-self:center;flex-shrink:0;}
 /* --- 戻るボタン --- */
 .back-btn{display:none;background:var(--yellow);color:#2b2118;border:none;border-radius:20px;padding:8px 14px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;}
 .mode-tab[data-mode="wordlist"].active{background:#a78bfa;color:#1a0050;border-color:#a78bfa;}
@@ -686,7 +685,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-16g';
+const APP_VERSION = '2026-07-16h';
 
 function snapshotCurrentData(){
   const data = { learned: {}, favorites: {}, level: st.level, gender: st.gender };
