@@ -191,13 +191,15 @@ footer{text-align:center;padding:6px 0 2px;}
 .pill-gender[data-gender="female"]{background:#5c1a3a;color:#f48fb1;border-color:#bb2963;}
 /* --- リストタブ --- */
 #listPage{padding:4px 0;}
-.list-item{display:flex;align-items:center;gap:0;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .15s;}
+.list-item{display:flex;align-items:flex-start;gap:0;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .15s;}
 .list-item:active{background:rgba(255,255,255,.07);}
 .list-item.learned-item{background:rgba(76,154,106,.08);}
-.list-num{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);width:28px;text-align:right;flex-shrink:0;margin-right:8px;}
-.list-th{font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;width:30%;flex-shrink:0;}
-.list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted2);width:28%;flex-shrink:0;line-height:1.4;}
-.list-jp{font-size:14px;color:var(--fg);text-align:left;line-height:1.5;flex:1;}
+.list-num{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);width:24px;text-align:right;flex-shrink:0;margin-right:8px;margin-top:3px;}
+.list-body{flex:1;min-width:0;}
+.list-row1{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
+.list-th{font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;}
+.list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted2);line-height:1.4;}
+.list-jp{font-size:14px;color:var(--fg);text-align:left;line-height:1.5;margin-top:2px;}
 .gram-list-row{align-items:flex-start!important;}
 .gram-list-row .glr-body{flex:1;min-width:0;}
 .gram-list-row .glr-title{font-family:'Sarabun',sans-serif;font-size:16px;font-weight:700;color:#fff;line-height:1.5;word-break:break-word;}
@@ -685,7 +687,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-16h';
+const APP_VERSION = '2026-07-16i';
 
 function snapshotCurrentData(){
   const data = { learned: {}, favorites: {}, level: st.level, gender: st.gender };
@@ -2676,9 +2678,10 @@ function renderWordList(){
         const fav=st.favorites[item._pos]?.has(item.id);
         html+=`<div class="list-item learned-list-vocab learned-item" data-id="${item.id}" data-pos="${item._pos}">
           <span class="list-num">${idx+1}</span>
-          <span class="list-th">${item.th}</span>
-          <span class="list-ro"><span class="list-ro-text">${item.ro}</span></span>
-          <span class="list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</span>
+          <div class="list-body">
+            <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${item.ro}</span></span></div>
+            <div class="list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
+          </div>
           <span class="list-badge">済</span>
           <button class="list-fav-btn ${fav?'on':''}" data-fav-id="${item.id}" data-fav-cat="${item._pos}">${fav?'★':'☆'}</button>
         </div>`;
@@ -2806,9 +2809,10 @@ function renderWordList(){
       favVocabItems.forEach((item,idx)=>{
         html+=`<div class="list-item fav-list-vocab" data-id="${item.id}" data-pos="${item._pos}">
           <span class="list-num">${idx+1}</span>
-          <span class="list-th">${item.th}</span>
-          <span class="list-ro"><span class="list-ro-text">${item.ro}</span></span>
-          <span class="list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</span>
+          <div class="list-body">
+            <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${item.ro}</span></span></div>
+            <div class="list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
+          </div>
           <button class="list-fav-btn on" data-fav-id="${item.id}" data-fav-cat="${item._pos}">★</button>
         </div>`;
       });
@@ -3040,9 +3044,9 @@ function renderWordList(){
       const fav=Object.values(st.favorites).some(s=>s.has(item.id));
       ih+=`<div class="list-item${learned?' learned-item':''}" data-id="${item.id}" data-pos="${item._pos}">
         <span class="list-num">${idx+1}</span>
-        <span class="list-th">${item.th}</span>
-        <span class="list-ro"><span class="list-ro-text">${item.ro}</span></span>
-        <span class="list-jp">${(()=>{
+        <div class="list-body">
+          <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${item.ro}</span></span></div>
+          <div class="list-jp">${(()=>{
           const jp=item.jp;
           const parts=[];
           let buf='',depth=0;
@@ -3054,7 +3058,8 @@ function renderWordList(){
           }
           if(buf.trim())parts.push(buf.trim());
           return parts.filter(s=>s).map(s=>'･'+s).join('<br>');
-        })()}</span>
+        })()}</div>
+        </div>
         ${learned?'<span class="list-badge">済</span>':''}
         <button class="list-fav-btn ${fav?'on':''}" data-fav-id="${item.id}" data-fav-cat="${item._pos}">${fav?'★':'☆'}</button>
       </div>`;
