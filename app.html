@@ -687,7 +687,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-16k';
+const APP_VERSION = '2026-07-16l';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3583,7 +3583,6 @@ ${rows.map(([ch,ro,name,tname,cls],i)=>`
     <div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;">
       <span style="font-family:'Sarabun',sans-serif;font-size:14px;color:#ccc;">${tname}</span>
       ${badge(cls)}
-      <button onclick="(function(){const u=new SpeechSynthesisUtterance('${ch}');u.lang='th-TH';speechSynthesis.speak(u);})()" style="background:none;border:none;cursor:pointer;font-size:16px;padding:0 2px;line-height:1;">🔊</button>
     </div>
     <span style="font-family:monospace;font-size:13px;color:#9c8d68;">${name}</span>
   </td>
