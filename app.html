@@ -687,7 +687,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-16o';
+const APP_VERSION = '2026-07-16p';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -2755,6 +2755,7 @@ function renderWordList(){
         const idx2=arr.findIndex(i=>i.id===id);
         if(idx2<0) return;
         st.fromList=true;
+        st.fromListTab='learned';
         st.fromListPos=pos2;
         st.fromListItemId=id;
         st.fromListMode='vocab';
@@ -2776,6 +2777,7 @@ function renderWordList(){
         const idx2=arr.findIndex(i=>i.id===id);
         if(idx2<0) return;
         st.fromList=true;
+        st.fromListTab='learned';
         st.fromListPos=scn;
         st.fromListItemId=id;
         st.fromListMode='conversation';
@@ -2795,6 +2797,7 @@ function renderWordList(){
         const idx2=GRAM.findIndex(i=>i.id===id);
         if(idx2<0) return;
         st.fromList=true;
+        st.fromListTab='learned';
         st.fromListMode='grammar';
         st.fromListItemId=id;
         st.mode='grammar';
@@ -2881,6 +2884,7 @@ function renderWordList(){
         const idx2=arr.findIndex(i=>i.id===id);
         if(idx2<0) return;
         st.fromList=true;
+        st.fromListTab='favorites';
         st.fromListPos=pos2;
         st.fromListItemId=id;
         st.fromListMode='vocab';
@@ -2902,6 +2906,7 @@ function renderWordList(){
         const idx2=arr.findIndex(i=>i.id===id);
         if(idx2<0) return;
         st.fromList=true;
+        st.fromListTab='favorites';
         st.fromListPos=scn;
         st.fromListItemId=id;
         st.fromListMode='conversation';
@@ -2921,6 +2926,7 @@ function renderWordList(){
         const idx2=GRAM.findIndex(i=>i.id===id);
         if(idx2<0) return;
         st.fromList=true;
+        st.fromListTab='favorites';
         st.fromListMode='grammar';
         st.fromListItemId=id;
         st.mode='grammar';
@@ -4427,9 +4433,15 @@ document.getElementById('importBtn').addEventListener('click', importData);
 
 document.getElementById('backBtn').addEventListener('click',function(){
   const scrollToId=st.fromListItemId;
+  const fromTab=st.fromListTab;
   st.fromList=false;
+  st.fromListTab=null;
   st.mode='wordlist';
-  if(st.fromListMode==='conversation'){
+  if(fromTab==='favorites'){
+    st.wordlistMode='favorites';
+  } else if(fromTab==='learned'){
+    st.wordlistMode='learned';
+  } else if(st.fromListMode==='conversation'){
     st.wordlistMode='conversation';
     st.wordlistScene=st.fromListPos;
   } else if(st.fromListMode==='grammar'){
