@@ -687,7 +687,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-16n';
+const APP_VERSION = '2026-07-16o';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4178,7 +4178,9 @@ function render(){
   const learnedCount=(st.mode==='vocab' && st.pos==='all')
     ?Object.values(st.learned).reduce((s,x)=>s+x.size,0)
     :(lset?lset.size:0);
-  document.getElementById('progressText').textContent=learnedCount+' 学習済み / 全'+l.length;
+  document.getElementById('progressText').textContent=st.filterUn
+    ?('未学習 '+l.length+'件を表示中(学習済み'+learnedCount+'件は除外)')
+    :(learnedCount+' 学習済み / 全'+l.length);
 
   // vocab裏面の音声は例文ボックス内の🔊で対応
   const af=document.getElementById('audF'); if(af) af.onclick=e=>{e.stopPropagation();speak(spk);};
