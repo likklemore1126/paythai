@@ -687,7 +687,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-16m';
+const APP_VERSION = '2026-07-16n';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -765,6 +765,8 @@ async function loadAll(){
   const lv=await sto_get('s:level'); if(lv) st.level=lv;
   const gd=await sto_get('s:gender'); if(gd) st.gender=gd;
   const ro=await sto_get('s:showRo'); if(ro!==null && ro!==undefined) st.showRo=ro;
+  const fu=await sto_get('s:filterUn'); if(fu!==null && fu!==undefined) st.filterUn=fu;
+  const sh=await sto_get('s:shuffle'); if(sh!==null && sh!==undefined) st.shuffle=sh;
   for(const k of Object.keys(st.learned)){
     const d=await sto_get('l:'+k); if(d) st.learned[k]=new Set(d);
   }
@@ -3174,8 +3176,8 @@ function renderSettings(){
   const lp=document.getElementById('lvPill'); if(lp) lp.onclick=()=>{st.level=st.level==='beginner'?'intermediate':'beginner';sto_set('s:level',st.level);render();};
   const gp=document.getElementById('gdPill'); if(gp) gp.onclick=()=>{st.gender=st.gender==='male'?'female':'male';sto_set('s:gender',st.gender);render();};
   const rp=document.getElementById('roPill'); if(rp) rp.onclick=()=>{st.showRo=!st.showRo;sto_set('s:showRo',st.showRo);render();};
-  const up=document.getElementById('unPill'); if(up) up.onclick=()=>{st.filterUn=!st.filterUn;st.idx=0;st.flipped=false;render();};
-  const shp=document.getElementById('shfPill'); if(shp) shp.onclick=()=>{st.shuffle=!st.shuffle;if(st.shuffle) st.shuffled={};st.idx=0;st.flipped=false;render();};
+  const up=document.getElementById('unPill'); if(up) up.onclick=()=>{st.filterUn=!st.filterUn;sto_set('s:filterUn',st.filterUn);st.idx=0;st.flipped=false;render();};
+  const shp=document.getElementById('shfPill'); if(shp) shp.onclick=()=>{st.shuffle=!st.shuffle;sto_set('s:shuffle',st.shuffle);if(st.shuffle) st.shuffled={};st.idx=0;st.flipped=false;render();};
 }
 
 const VOWEL_DATA = [
