@@ -704,7 +704,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-25v';
+const APP_VERSION = '2026-07-25w';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4690,6 +4690,26 @@ document.getElementById('flipWrap').addEventListener('touchend',e=>{
   const dx=e.changedTouches[0].clientX-tx;
   if(Math.abs(dx)>50){const l=list();st.idx=dx<0?(st.idx+1)%l.length:(st.idx-1+l.length)%l.length;st.flipped=false;render();}
   tx=null;
+},{passive:true});
+
+let lx=null,ly=null;
+const WL_MODE_ORDER=['vocab','conversation','grammar','learned','favorites'];
+const listPageEl=document.getElementById('listPage');
+listPageEl.addEventListener('touchstart',e=>{lx=e.touches[0].clientX;ly=e.touches[0].clientY;},{passive:true});
+listPageEl.addEventListener('touchend',e=>{
+  if(lx===null) return;
+  const dx=e.changedTouches[0].clientX-lx;
+  const dy=e.changedTouches[0].clientY-ly;
+  if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5){
+    const idx=WL_MODE_ORDER.indexOf(st.wordlistMode);
+    if(idx!==-1){
+      const nextIdx=dx<0?(idx+1)%WL_MODE_ORDER.length:(idx-1+WL_MODE_ORDER.length)%WL_MODE_ORDER.length;
+      st.wordlistMode=WL_MODE_ORDER[nextIdx];
+      window.scrollTo(0,0);
+      render();
+    }
+  }
+  lx=null;ly=null;
 },{passive:true});
 
 // ─── エクスポート/インポート ────────────────────────────────────
