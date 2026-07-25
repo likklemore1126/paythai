@@ -38,6 +38,8 @@ header{padding-bottom:10px;}
 .scroll-fade-l{mask-image:linear-gradient(to left,black calc(100% - 30px),transparent 100%);-webkit-mask-image:linear-gradient(to left,black calc(100% - 30px),transparent 100%);}
 .scroll-fade-lr{mask-image:linear-gradient(to right,transparent 0,black 30px,black calc(100% - 30px),transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0,black 30px,black calc(100% - 30px),transparent 100%);}
 .mode-tabs::-webkit-scrollbar{display:none;}
+#wlTabRow::-webkit-scrollbar{display:none;}
+#wlModeRow::-webkit-scrollbar{display:none;}
 .mode-tab{flex:0 0 auto;padding:7px 13px;border-radius:14px;font-size:14px;font-weight:700;
   border:1.5px solid transparent;background:var(--bg2);color:var(--muted2);cursor:pointer;
   transition:transform .12s,background .18s;}
@@ -240,7 +242,8 @@ footer{text-align:center;padding:6px 0 2px;}
 /* --- TOPボタン --- */
 .top-btn{display:none;position:fixed;bottom:80px;left:16px;background:rgba(60,55,70,.92);color:#fff;border:1px solid #55505f;border-radius:20px;padding:8px 14px;font-size:15px;font-weight:700;cursor:pointer;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.4);}
 /* --- 固定品詞タブ（リスト表示中・スクロール後のみ） --- */
-#stickySubRow{display:none;position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;background:#1a1820;padding:5px 18px 3px;border-bottom:1px solid rgba(255,255,255,.08);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;}
+#stickySubRow{display:none;position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;background:#1a1820;padding:5px 18px 3px;border-bottom:1px solid rgba(255,255,255,.08);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+#stickySubRow::-webkit-scrollbar{display:none;}
 #stickySubRow .chip{display:inline-flex;margin-right:6px;}
 
 /* --- 発音記号ガイド モーダル --- */
@@ -687,7 +690,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-24i';
+const APP_VERSION = '2026-07-24j';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -2674,7 +2677,7 @@ function renderWordList(){
   const beg=st.level==='beginner';
 
   // モード切替タブ（単語 / 会話 / 文法 / 学習済み / お気に入り）
-  let html=`<div style="display:flex;gap:8px;padding:4px 12px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+  let html=`<div id="wlModeRow" style="display:flex;gap:8px;padding:4px 12px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
     <button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocab">単語</button>
     <button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConv">会話</button>
     <button class="chip ${st.wordlistMode==='grammar'?'active-vocab':''}" id="wlModeGram">文法</button>
@@ -2991,7 +2994,7 @@ function renderWordList(){
 
   if(st.wordlistMode==='conversation'){
     // ── 会話リスト ──
-    html+=`<div id="wlTabRow" style="display:flex;gap:6px;overflow-x:auto;padding:0 12px 10px;-webkit-overflow-scrolling:touch;">
+    html+=`<div id="wlTabRow" style="display:flex;gap:6px;overflow-x:auto;padding:0 12px 10px;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
       ${SCENES.map(s=>`<button class="chip ${s===st.wordlistScene?'active-conv':''}" data-sc="${s}" style="flex-shrink:0;">${s}</button>`).join('')}
     </div>`;
     let items=st.wordlistScene==='ALL'?CONV:CONV.filter(i=>i.scene===st.wordlistScene);
@@ -3063,7 +3066,7 @@ function renderWordList(){
 
   // ── 単語リスト（従来） ──
   const pos=st.wordlistPos;
-  html+=`<div id="wlTabRow" style="display:flex;gap:6px;overflow-x:auto;padding:0 12px 10px;-webkit-overflow-scrolling:touch;">
+  html+=`<div id="wlTabRow" style="display:flex;gap:6px;overflow-x:auto;padding:0 12px 10px;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
     <button class="chip ${'all'===pos?'active-vocab':''}" data-pos="all" style="flex-shrink:0;">ALL</button>
     ${Object.entries(getPosLabels()).map(([k,v])=>`<button class="chip ${k===pos?'active-vocab':''}" data-pos="${k}" style="flex-shrink:0;">${v}</button>`).join('')}
   </div>`;
