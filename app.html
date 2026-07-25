@@ -687,7 +687,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-24f';
+const APP_VERSION = '2026-07-24g';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -2022,6 +2022,41 @@ const FIXED_EX = {
   'v340': {th:'รายงานผลการดำเนินงานให้หัวหน้าครับ',ro:'raai ngaan phon kaan dam nɯɯn ngaan hâi hǔa nâa khráp',jp:'上司に業務の進捗を報告します'},
   'v341': {th:'เซ็นชื่อในสัญญาก่อนส่งครับ',ro:'sen chɯ̂ɯ nai sǎnyaa kɔ̀ɔn sòng khráp',jp:'送る前に契約書に署名します'},
   'v342': {th:'พิมพ์ดีดรายงานเสร็จแล้วครับ',ro:'phim diit raai ngaan sèt lɛ́ɛo khráp',jp:'レポートのタイピングが終わりました'},
+  // 日付・時刻の単語（自動生成の不自然な例文を防ぐための個別例文）
+  'n626': {th:'เดือนหน้าผมจะไปญี่ปุ่นครับ',ro:'dɯan nâa phǒm cà pai yîipùn khráp',jp:'来月、私は日本に行きます'},
+  'n627': {th:'ปีนี้ผมอายุสามสิบครับ',ro:'pii níi phǒm aayu sǎam sìp khráp',jp:'今年、私は30歳です'},
+  'n628': {th:'ปีที่แล้วผมไปเที่ยวเชียงใหม่ครับ',ro:'pii thîi lɛ́ɛo phǒm pai thîao chiang mài khráp',jp:'去年、私はチェンマイへ旅行しました'},
+  'n630': {th:'เดือนพฤษภาคมอากาศร้อนมากครับ',ro:'dɯan phrɯ́tsàphaakhom aakàat rɔ́ɔn mâak khráp',jp:'5月はとても暑いです'},
+  'n631': {th:'เดือนมิถุนายนฝนตกบ่อยครับ',ro:'dɯan míthùnaayon fǒn tòk bɔ̀i khráp',jp:'6月はよく雨が降ります'},
+  'n632': {th:'เดือนพฤศจิกายนอากาศเย็นสบายครับ',ro:'dɯan phrɯ́tsàcìkaayon aakàat yen sàbaai khráp',jp:'11月は涼しくて過ごしやすいです'},
+  'n633': {th:'วันอังคารผมเรียนภาษาไทยครับ',ro:'wan angkhaan phǒm riian phaasǎa thai khráp',jp:'火曜日、私はタイ語を勉強します'},
+  'n634': {th:'เที่ยงคืนแล้ว ผมง่วงมากครับ',ro:'thîang khɯɯn lɛ́ɛo phǒm ngûang mâak khráp',jp:'もう真夜中です、私はとても眠いです'},
+  'n635': {th:'ผมทำงานถึงตีหนึ่งครับ',ro:'phǒm tham ngaan thɯ̌ng tii nɯ̀ng khráp',jp:'私は午前1時まで仕事をします'},
+  'n636': {th:'เครื่องบินออกตีสองครับ',ro:'khrɯ̂ɯang bin ɔ̀ɔk tii sɔ̌ɔng khráp',jp:'飛行機は午前2時に出発します'},
+  'n637': {th:'ลูกร้องไห้ตอนตีสามครับ',ro:'lûuk rɔ́ɔng hâi tɔɔn tii sǎam khráp',jp:'子供が午前3時に泣きました'},
+  'n638': {th:'ผมตื่นนอนหกโมงเช้าทุกวันครับ',ro:'phǒm tɯ̀ɯn nɔɔn hòk moong cháao thúk wan khráp',jp:'私は毎日午前6時に起きます'},
+  'n639': {th:'รถบัสออกเจ็ดโมงเช้าครับ',ro:'rot bàt ɔ̀ɔk cèt moong cháao khráp',jp:'バスは午前7時に出発します'},
+  'n640': {th:'ร้านเปิดแปดโมงเช้าครับ',ro:'ráan pɯɯt pɛ̀ɛt moong cháao khráp',jp:'お店は午前8時に開きます'},
+  'n641': {th:'ประชุมเก้าโมงเช้าครับ',ro:'pràchum kâao moong cháao khráp',jp:'会議は午前9時です'},
+  'n642': {th:'ผมมีนัดสิบโมงเช้าครับ',ro:'phǒm mii nát sìp moong cháao khráp',jp:'私は午前10時に約束があります'},
+  'n643': {th:'เช็คอินได้ตั้งแต่สิบเอ็ดโมงเช้าครับ',ro:'chék in dâai tângtɛ̀ɛ sìp èt moong cháao khráp',jp:'午前11時からチェックインできます'},
+  'n644': {th:'เรานัดกินข้าวเที่ยงวันครับ',ro:'rao nát kin khâao thîang wan khráp',jp:'私たちは正午に食事の約束をしています'},
+  'n645': {th:'ร้านปิดพักบ่ายโมงครับ',ro:'ráan pìt phák bàai moong khráp',jp:'お店は午後1時に休憩に入ります'},
+  'n646': {th:'ผมมีนัดบ่ายสองโมงครับ',ro:'phǒm mii nát bàai sɔ̌ɔng moong khráp',jp:'私は午後2時に約束があります'},
+  'n647': {th:'โรงเรียนเลิกบ่ายสามโมงครับ',ro:'roong riian lɯ̂ɯk bàai sǎam moong khráp',jp:'学校は午後3時に終わります'},
+  'n648': {th:'ผมเลิกงานสี่โมงเย็นครับ',ro:'phǒm lɯ̂ɯk ngaan sìi moong yen khráp',jp:'私は午後4時に仕事が終わります'},
+  'n649': {th:'ร้านเปิดถึงห้าโมงเย็นครับ',ro:'ráan pɯɯt thɯ̌ng hâa moong yen khráp',jp:'お店は午後5時まで営業しています'},
+  'n650': {th:'เราเจอกันหกโมงเย็นนะครับ',ro:'rao cɯɯ kan hòk moong yen ná khráp',jp:'私たちは午後6時に会いましょう'},
+  'n651': {th:'ร้านอาหารเปิดถึงหนึ่งทุ่มครับ',ro:'ráan aahǎan pɯɯt thɯ̌ng nɯ̀ng thûm khráp',jp:'レストランは午後7時まで営業しています'},
+  'n652': {th:'ผมดูหนังสองทุ่มครับ',ro:'phǒm duu nǎng sɔ̌ɔng thûm khráp',jp:'私は午後8時に映画を見ます'},
+  'n653': {th:'ผมกลับถึงบ้านสามทุ่มครับ',ro:'phǒm klàp thɯ̌ng bâan sǎam thûm khráp',jp:'私は午後9時に家に帰ります'},
+  'n654': {th:'ผมเข้านอนสี่ทุ่มครับ',ro:'phǒm khâo nɔɔn sìi thûm khráp',jp:'私は午後10時に寝ます'},
+  'n655': {th:'งานเลี้ยงเลิกห้าทุ่มครับ',ro:'ngaan líang lɯ̂ɯk hâa thûm khráp',jp:'パーティーは午後11時に終わります'},
+  'n624': {th:'สถานีต่อไปคือสถานีไหนครับ',ro:'sàthǎanii tɔ̀ɔ pai khɯɯ sàthǎanii nǎi khráp',jp:'次の駅はどこですか'},
+  'n625': {th:'เมื่อวานซืนผมไปเที่ยวทะเลครับ',ro:'mɯ̂a waan sɯɯn phǒm pai thîao thálee khráp',jp:'一昨日、私は海に遊びに行きました'},
+  'n629': {th:'ที่นี่มีการแลกเปลี่ยนเงินครับ',ro:'thîi nîi mii kaan lɛ̂ɛk plìan ngɯn khráp',jp:'ここにはお金の交換サービスがあります'},
+  'n690': {th:'ขอส้อมด้วยครับ',ro:'khɔ̌ɔ sɔ̂m dûai khráp',jp:'フォークをください'},
+  'n691': {th:'สายตาของผมไม่ค่อยดีครับ',ro:'sǎai taa khɔ̌ɔng phǒm mâi khɔ̂i dii khráp',jp:'私は視力があまり良くありません'},
 };
 
 // ── 例文生成ロジック v4 ────────────────────────────────────────────
