@@ -704,7 +704,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-25w';
+const APP_VERSION = '2026-07-25x';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4695,7 +4695,10 @@ document.getElementById('flipWrap').addEventListener('touchend',e=>{
 let lx=null,ly=null;
 const WL_MODE_ORDER=['vocab','conversation','grammar','learned','favorites'];
 const listPageEl=document.getElementById('listPage');
-listPageEl.addEventListener('touchstart',e=>{lx=e.touches[0].clientX;ly=e.touches[0].clientY;},{passive:true});
+listPageEl.addEventListener('touchstart',e=>{
+  if(e.target.closest('#wlModeRow, #wlTabRow')){ lx=null; ly=null; return; }
+  lx=e.touches[0].clientX;ly=e.touches[0].clientY;
+},{passive:true});
 listPageEl.addEventListener('touchend',e=>{
   if(lx===null) return;
   const dx=e.changedTouches[0].clientX-lx;
