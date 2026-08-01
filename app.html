@@ -922,7 +922,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-26k';
+const APP_VERSION = '2026-07-27a';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -1359,7 +1359,7 @@ const FIXED_EX = {
   'n513': {th:'ใส่กระเทียมลงในอาหารครับ',ro:'sài kràthiam long nai aahǎan khráp',jp:'料理にニンニクを入れます'},
   'n514': {th:'ใส่ขิงลงในอาหารครับ',ro:'sài khǐng long nai aahǎan khráp',jp:'料理に生姜を入れます'},
   'n515': {th:'ผัดไทยใส่ตะไคร้ครับ',ro:'phàtthai sài tàkhráai khráp',jp:'パッタイにレモングラスを入れます'},
-  'n516': {th:'ผัดกะเพราไก่ราดข้าวเป็นเมนูยอดฮิตครับ',ro:'phàt kàphrau kài râat khâao pen meenuu yɔ̂ɔt hít khráp',jp:'ガパオライスはタイで大人気メニューです'},
+  'n516': {th:'ร้านนี้ใส่ใบกะเพราเยอะมากครับ',ro:'ráan níi sài bai kàphrau yɤ́ɤ mâak khráp',jp:'このお店はガパオの葉をたくさん入れます'},
   'n526': {th:'กล้วยทอดขายตามตลาดนัดครับ',ro:'klûai thɔ̀ɔt khǎai taam tàlàat nát khráp',jp:'バナナの揚げ物はナイトマーケットで売っています'},
   'n527': {th:'ขอมะพร้าวหนึ่งลูกครับ',ro:'khɔ̌ɔ máphráao nɯɯng lûuk khráp',jp:'ココナッツを1個ください'},
   'n528': {th:'ลำไยเชียงใหม่หวานที่สุดครับ',ro:'lamyai chiang mài wǎan thîi sùt khráp',jp:'チェンマイのロンガンが一番甘いです'},
