@@ -272,6 +272,7 @@ footer{text-align:center;padding:6px 0 2px;}
 </style>
 </head>
 <body>
+<div id="installBanner" style="display:none;padding:10px 14px;text-align:center;font-size:12.5px;line-height:1.5;cursor:pointer;"></div>
 <div class="wrap">
   <header>
     <div class="title-row">
@@ -922,7 +923,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-27c';
+const APP_VERSION = '2026-07-27e';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -2964,7 +2965,22 @@ const HELP_TOPICS = [
 ① リセットしたい分類(名詞・動詞など)にチェックを入れる
 ② 「リセット実行」ボタンを押す
 
-の2ステップが必要なので、間違って全部消えてしまう心配はないです。` }
+の2ステップが必要なので、間違って全部消えてしまう心配はないです。` },
+  { icon:'📲', title:'ホーム画面に追加する方法(必須級)', body:`このアプリはブラウザのタブのままだと、画面サイズ等により本来の使いやすさを実感できません。<b>ホーム画面に追加</b>して普通のアプリと同じようにアイコンから起動して利用することで、違和感なく使うことができます。この操作は<b>最初に一度だけ</b>行えばOKです。
+
+<b>📱 iPhoneの場合(Safari)</b>
+① 画面下(または上部)の共有ボタン<b>□↑</b>をタップ
+② メニューを下にスクロールして「ホーム画面に追加」をタップ
+③ 右上の「追加」をタップ
+
+<b>🤖 Androidの場合(Chrome)</b>
+① 右上の縦三点マーク<b>⋮</b>をタップ
+② 「アプリをインストール」または「ホーム画面に追加」をタップ
+③ 確認画面で「インストール」をタップ
+
+※ 「ホーム画面に追加」ではなく「ショートカットを作成」しか出ない場合は、一度Chromeでこのページを再読み込みしてから、あらためて⋮メニューを開いてみてください。
+
+追加が終わったら、<b>ホーム画面のアイコンから開き直して</b>ください。ブラウザのタブから開いたままだと、この案内は消えません。` }
 ];
 let helpOpenIdx = null;
 function renderHelpBody(){
@@ -3002,6 +3018,42 @@ function closeHelp(){
 document.getElementById('helpOverlay').addEventListener('click', closeHelp);
 document.getElementById('helpCloseBtn').addEventListener('click', closeHelp);
 document.getElementById('openHelpBtn').addEventListener('click', openHelp);
+
+// ─── ホーム画面追加バナー（未インストール時は常時表示） ─────────────
+function isStandalonePWA(){
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+function detectPlatform(){
+  const ua = navigator.userAgent || '';
+  if(/iPhone|iPad|iPod/.test(ua)) return 'ios';
+  if(/Android/.test(ua)) return 'android';
+  return 'other';
+}
+function updateInstallBanner(){
+  const el = document.getElementById('installBanner');
+  if(!el) return;
+  if(isStandalonePWA()){ el.style.display='none'; return; }
+  const platform = detectPlatform();
+  if(platform!=='ios' && platform!=='android'){ el.style.display='none'; return; }
+  const label = platform==='ios' ? '📲 共有ボタンから「ホーム画面に追加」してください(タップで詳細)' : '📲 メニューから「アプリをインストール」してください(タップで詳細)';
+  el.style.background = 'rgba(242,183,5,.15)';
+  el.style.color = '#f2b705';
+  el.style.borderBottom = '1.5px solid rgba(242,183,5,.4)';
+  el.textContent = label;
+  el.style.display = 'block';
+  el.onclick = ()=>{
+    helpOpenIdx = HELP_TOPICS.length - 1; // ホーム画面追加トピックは配列の最後
+    renderHelpBody();
+    document.getElementById('helpOverlay').style.display = 'block';
+    document.getElementById('helpModal').style.display = 'flex';
+    setTimeout(()=>{
+      const openTopic = document.querySelector('.help-topic-btn[data-idx="'+(HELP_TOPICS.length-1)+'"]');
+      if(openTopic) openTopic.scrollIntoView({block:'start'});
+    }, 50);
+  };
+}
+updateInstallBanner();
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) updateInstallBanner(); });
 
 function currentTipId(){
   if(st.mode==='wordlist' && st.wordlistMode==='vocab') return 'wlSearch';
