@@ -923,7 +923,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-27e';
+const APP_VERSION = '2026-07-27f';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4003,25 +4003,31 @@ function renderVowelSection(){
 
   function colorizeDisplay(display){
     // ั ำ ิ ี ึ ื ุ ู は前の文字と離すと幅0になって消えてしまうため、
-    // 土台の文字とセットのまま1つのspanに入れる(タイ文字の結合記号対策)
+    // 土台の文字とセットのまま隣接させる(タイ文字の結合記号対策)。
+    // ただし色は土台とマークで別々に判定する(プレースホルダーのอだけを薄色にし、
+    // それに付く実際の母音記号ิ/ี/ั等は常に濃色で表示するため)。
     var ATTACH = /[\u0E31\u0E33\u0E34\u0E35\u0E36\u0E37\u0E38\u0E39]/;
     var clusters = [];
     for(var i=0; i<display.length; i++){
-      var cluster = display[i];
+      var base = display[i];
+      var marks = '';
       while(i+1 < display.length && ATTACH.test(display[i+1])){
-        cluster += display[i+1];
+        marks += display[i+1];
         i++;
       }
-      clusters.push(cluster);
+      clusters.push({base:base, marks:marks});
     }
     var placeholderDone = false;
     var result = '';
-    clusters.forEach(function(cluster){
-      if(cluster.charAt(0) === 'อ' && !placeholderDone){
+    clusters.forEach(function(c){
+      var baseColor = '#2b2118';
+      if(c.base === 'อ' && !placeholderDone){
         placeholderDone = true;
-        result += '<span style="color:#c8c0b4;">' + cluster + '</span>';
-      } else {
-        result += '<span style="color:#2b2118;">' + cluster + '</span>';
+        baseColor = '#c8c0b4';
+      }
+      result += '<span style="color:'+baseColor+';">' + c.base + '</span>';
+      if(c.marks){
+        result += '<span style="color:#2b2118;">' + c.marks + '</span>';
       }
     });
     return result;
