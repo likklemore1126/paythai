@@ -923,7 +923,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-27g';
+const APP_VERSION = '2026-07-27h';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4544,9 +4544,9 @@ ${units.map(n=>`
 <!-- ルール解説 -->
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">📌 特別ルール（2桁以上の場合）</div>
 
-<img src="num_rule1.jpg" alt="ルール①一の位が1のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;">
-<img src="num_rule2.jpg" alt="ルール②十の位が2のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;">
-<img src="num_rule3.jpg" alt="ルール③組み合わせ21" style="width:100%;border-radius:12px;margin-bottom:16px;display:block;">
+<img src="num_rule1.jpeg" alt="ルール①一の位が1のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;">
+<img src="num_rule2.jpeg" alt="ルール②十の位が2のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;">
+<img src="num_rule3.jpeg" alt="ルール③組み合わせ21" style="width:100%;border-radius:12px;margin-bottom:16px;display:block;">
 
 <!-- 練習 -->
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">🔊 タップして確認</div>
