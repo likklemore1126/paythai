@@ -923,7 +923,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-27f';
+const APP_VERSION = '2026-07-27g';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4544,84 +4544,9 @@ ${units.map(n=>`
 <!-- ルール解説 -->
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">📌 特別ルール（2桁以上の場合）</div>
 
-<!-- ルール① -->
-<div style="background:rgba(242,183,5,.08);border:1px solid rgba(242,183,5,.3);border-radius:12px;padding:14px;margin-bottom:10px;">
-  <div style="font-size:16px;font-weight:700;color:#f2b705;margin-bottom:8px;">ルール① 一の位が「1」のとき</div>
-  <div style="font-size:15px;color:var(--fg);line-height:1.9;">
-    <b>2桁以上</b>で一の位が <span style="color:#f2b705;font-weight:700;">1</span> の場合（11・21・31…）<br>
-    <span style="font-family:'Sarabun',sans-serif;font-size:18px;">หนึ่ง</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);">nɯɯng</span>（ヌン）ではなく
-    <span style="font-family:'Sarabun',sans-serif;font-size:18px;color:#f2b705;">เอ็ด</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);">èt</span>（エット）を使う<br>
-    <span style="font-size:14px;color:var(--muted);">※ 1単体はヌン（หนึ่ง）のまま。2桁以上の末尾のみ変わる</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap;">
-    <div style="text-align:center;">
-      <div style="font-size:14px;color:var(--muted);margin-bottom:2px;">✗ 言わない</div>
-      <div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#888;text-decoration:line-through;">สิบหนึ่ง</div>
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#666;">sìp nɯɯng</div>
-    </div>
-    <div style="font-size:23px;color:var(--muted);">→</div>
-    <div onclick="speak('สิบเอ็ด')" style="text-align:center;cursor:pointer;">
-      <div style="font-size:14px;color:var(--muted);margin-bottom:2px;">✓ 正しい 🔊</div>
-      <div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#f2b705;">สิบเอ็ด</div>
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">sìp èt</div>
-    </div>
-  </div>
-</div>
-
-<!-- ルール② -->
-<div style="background:rgba(74,124,196,.08);border:1px solid rgba(74,124,196,.3);border-radius:12px;padding:14px;margin-bottom:10px;">
-  <div style="font-size:16px;font-weight:700;color:#4a7cc4;margin-bottom:8px;">ルール② 十の位が「2」のとき</div>
-  <div style="font-size:15px;color:var(--fg);line-height:1.9;">
-    20〜29 の場合、十の位の <span style="color:#4a7cc4;font-weight:700;">2</span> は<br>
-    <span style="font-family:'Sarabun',sans-serif;font-size:18px;">สอง</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);">sɔɔng</span>（ソーン）ではなく
-    <span style="font-family:'Sarabun',sans-serif;font-size:18px;color:#4a7cc4;">ยี่</span> <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);">yîi</span>（イー）を使う<br>
-    <span style="font-size:14px;color:var(--muted);">※ 慣習的なもので理由はない。まるごと覚えるしかない！</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap;">
-    <div style="text-align:center;">
-      <div style="font-size:14px;color:var(--muted);margin-bottom:2px;">✗ 言わない</div>
-      <div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#888;text-decoration:line-through;">สองสิบ</div>
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#666;">sɔɔng sìp</div>
-    </div>
-    <div style="font-size:23px;color:var(--muted);">→</div>
-    <div onclick="speak('ยี่สิบ')" style="text-align:center;cursor:pointer;">
-      <div style="font-size:14px;color:var(--muted);margin-bottom:2px;">✓ 正しい 🔊</div>
-      <div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#4a7cc4;">ยี่สิบ</div>
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">yîi sìp</div>
-    </div>
-  </div>
-</div>
-
-<!-- ルール③ -->
-<div style="background:rgba(76,154,106,.08);border:1px solid rgba(76,154,106,.3);border-radius:12px;padding:14px;margin-bottom:16px;">
-  <div style="font-size:16px;font-weight:700;color:#4c9a6a;margin-bottom:8px;">ルール③ 組み合わせ（21）</div>
-  <div style="font-size:15px;color:var(--fg);line-height:1.9;">
-    ルール①②が重なる <span style="color:#4c9a6a;font-weight:700;">21</span> は両方適用される
-  </div>
-  <div style="margin-top:12px;">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-      <div style="background:rgba(74,124,196,.15);border-radius:8px;padding:8px 12px;text-align:center;flex:1;">
-        <div style="font-size:13px;color:var(--muted);">十の位（ルール②）</div>
-        <div style="font-family:'Sarabun',sans-serif;font-size:23px;color:#4a7cc4;">ยี่สิบ</div>
-        <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">yîi sìp</div>
-      </div>
-      <div style="font-size:21px;color:var(--muted);">+</div>
-      <div style="background:rgba(242,183,5,.15);border-radius:8px;padding:8px 12px;text-align:center;flex:1;">
-        <div style="font-size:13px;color:var(--muted);">一の位（ルール①）</div>
-        <div style="font-family:'Sarabun',sans-serif;font-size:23px;color:#f2b705;">เอ็ด</div>
-        <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">èt</div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div style="font-size:21px;color:var(--muted);padding-left:4px;">=</div>
-      <div onclick="speak('ยี่สิบเอ็ด')" style="background:rgba(76,154,106,.2);border:1px solid #4c9a6a;border-radius:8px;padding:8px 12px;text-align:center;cursor:pointer;flex:1;">
-        <div style="font-size:13px;color:var(--muted);">21　🔊</div>
-        <div style="font-family:'Sarabun',sans-serif;font-size:23px;color:#fff;">ยี่สิบเอ็ด</div>
-        <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">yîi sìp èt</div>
-      </div>
-    </div>
-  </div>
-</div>
+<img src="num_rule1.jpg" alt="ルール①一の位が1のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;">
+<img src="num_rule2.jpg" alt="ルール②十の位が2のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;">
+<img src="num_rule3.jpg" alt="ルール③組み合わせ21" style="width:100%;border-radius:12px;margin-bottom:16px;display:block;">
 
 <!-- 練習 -->
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">🔊 タップして確認</div>
