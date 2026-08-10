@@ -25,7 +25,8 @@ html,body{height:100%;margin:0;}
 body{background:radial-gradient(circle at 20% 0%,#2a2730 0%,var(--bg) 55%);
   color:var(--muted2);font-family:'Zen Maru Gothic',sans-serif;
   overscroll-behavior:none;touch-action:manipulation;
-  -webkit-user-select:none;user-select:none;display:flex;flex-direction:column;min-height:100vh;}
+  display:flex;flex-direction:column;min-height:100vh;}
+button,.chip,.mode-tab{-webkit-user-select:none;user-select:none;}
 .wrap{max-width:480px;margin:0 auto;width:100%;
   padding:max(env(safe-area-inset-top),18px) 18px max(env(safe-area-inset-bottom),10px);
   flex:1;display:flex;flex-direction:column;}
@@ -273,6 +274,10 @@ footer{text-align:center;padding:6px 0 2px;}
 </head>
 <body>
 <div id="installBanner" style="display:none;padding:10px 14px;text-align:center;font-size:12.5px;line-height:1.5;cursor:pointer;"></div>
+<div id="imgLightbox" onclick="closeImgLightbox()" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.92);align-items:center;justify-content:center;padding:20px;">
+  <img id="imgLightboxImg" src="" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;">
+  <div style="position:absolute;top:max(env(safe-area-inset-top),14px);right:18px;color:#fff;font-size:28px;line-height:1;">✕</div>
+</div>
 <div class="wrap">
   <header>
     <div class="title-row">
@@ -923,7 +928,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-27h';
+const APP_VERSION = '2026-07-27i';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -2909,24 +2914,24 @@ const HELP_TOPICS = [
 
 <b>📱 iPhoneの場合</b>
 ① 「設定」を開き「アクセシビリティ」をタップ
-<img src="help_tts_ios_1.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_ios_1.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;cursor:zoom-in;" onclick="openImgLightbox('help_tts_ios_1.jpeg')">
 ② 「リーダーと読み上げ」をタップ
 　(古いiOSでは「読み上げコンテンツ」)
-<img src="help_tts_ios_2.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_ios_2.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;cursor:zoom-in;" onclick="openImgLightbox('help_tts_ios_2.jpeg')">
 ③ 「声」をタップ
-<img src="help_tts_ios_3.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_ios_3.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;cursor:zoom-in;" onclick="openImgLightbox('help_tts_ios_3.jpeg')">
 ④ 言語の一覧から「タイ語」を探してタップし、声をダウンロード
-<img src="help_tts_ios_4.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_ios_4.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;cursor:zoom-in;" onclick="openImgLightbox('help_tts_ios_4.jpeg')">
 
 <b>🤖 Androidの場合</b>
 ① 「設定」を開き「ユーザー補助」をタップ
-<img src="help_tts_android_1.png" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_android_1.png" style="width:100%;border-radius:10px;margin:8px 0;display:block;cursor:zoom-in;" onclick="openImgLightbox('help_tts_android_1.png')">
 ② 「テキスト読み上げの設定」をタップ
-<img src="help_tts_android_2.png" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_android_2.png" style="width:100%;border-radius:10px;margin:8px 0;display:block;cursor:zoom-in;" onclick="openImgLightbox('help_tts_android_2.png')">
 ③ 「言語」をタップ
-<img src="help_tts_android_3.png" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_android_3.png" style="width:100%;border-radius:10px;margin:8px 0;display:block;cursor:zoom-in;" onclick="openImgLightbox('help_tts_android_3.png')">
 ④ 一覧から「タイ語(タイ)」を探してタップ
-<img src="help_tts_android_4.png" style="width:100%;border-radius:10px;margin:8px 0;display:block;">
+<img src="help_tts_android_4.png" style="width:100%;border-radius:10px;margin:8px 0;display:block;cursor:zoom-in;" onclick="openImgLightbox('help_tts_android_4.png')">
 
 ※ 機種によってメニュー名や場所が多少異なる場合があります。
 
@@ -2934,7 +2939,7 @@ const HELP_TOPICS = [
   { icon:'📖', title:'発音ガイドの見方', body:`カードや単語リストに出てくる、ローマ字表記(例:aahǎan)の部分を<b>タップ</b>すると、その単語の発音を詳しく分解したガイドが開きます。
 
 声調記号(ˇ ˆ ´ など)の意味や、一つ一つの音の出し方を確認したい時に使ってください。
-<img src="help_pg_1.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;">` },
+<img src="help_pg_1.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;cursor:zoom-in;" onclick="openImgLightbox('help_pg_1.jpeg')">` },
   { icon:'🔍', title:'検索の使い方(リストタブ)', body:`リストタブの検索窓では、次のどれで入力しても該当する単語が見つかります。
 
 ・タイ語(例:วันนี้)
@@ -3005,6 +3010,16 @@ function renderHelpBody(){
     });
   });
 }
+function openImgLightbox(src){
+  if(!src) return;
+  document.getElementById('imgLightboxImg').src = src;
+  const lb = document.getElementById('imgLightbox');
+  lb.style.display = 'flex';
+}
+function closeImgLightbox(){
+  document.getElementById('imgLightbox').style.display = 'none';
+}
+
 function openHelp(){
   helpOpenIdx = null;
   renderHelpBody();
@@ -4138,7 +4153,7 @@ function renderVowelSection(){
   ];
   vowelIllustrations.forEach(function(v){
     h += '<div style="margin-bottom:12px;border-radius:12px;overflow:hidden;border:1px solid #e6d9bf;">';
-    h += '<img src="'+(PG_IMAGES[v[0]]||'')+'" style="display:block;width:100%;height:auto;">';
+    h += '<img src="'+(PG_IMAGES[v[0]]||'')+'" style="display:block;width:100%;height:auto;cursor:zoom-in;" onclick="openImgLightbox(this.src)">';
     h += '<div style="padding:6px 10px;background:#f3ead8;font-size:13px;color:#6b5c3e;">'+v[1]+' が使われる母音：'+v[2]+'</div>';
     h += '</div>';
   });
@@ -4157,7 +4172,7 @@ function renderVowelSection(){
   ];
   complexVowelIllustrations.forEach(function(v){
     h += '<div style="margin-bottom:12px;border-radius:12px;overflow:hidden;border:1px solid #e0cfe8;">';
-    h += '<img src="'+(PG_IMAGES[v[0]]||'')+'" style="display:block;width:100%;height:auto;">';
+    h += '<img src="'+(PG_IMAGES[v[0]]||'')+'" style="display:block;width:100%;height:auto;cursor:zoom-in;" onclick="openImgLightbox(this.src)">';
     h += '<div style="padding:6px 10px;background:#f3e8f7;font-size:13px;color:#6b5c3e;">'+v[1]+' が使われる母音：'+v[2]+'</div>';
     h += '</div>';
   });
@@ -4477,7 +4492,7 @@ function renderToneSection(){
   ].map(function(t){
     return '<div style="margin-bottom:12px;border-radius:12px;overflow:hidden;border:1px solid #e6d9bf;">'
       + '<div style="padding:8px 10px;background:#f3ead8;font-size:15px;font-weight:700;color:#4a3f28;">'+t[1]+'（タイ語名：'+t[2]+'）</div>'
-      + '<img src="'+(PG_IMAGES[t[0]]||'')+'" style="display:block;width:100%;height:auto;">'
+      + '<img src="'+(PG_IMAGES[t[0]]||'')+'" style="display:block;width:100%;height:auto;cursor:zoom-in;" onclick="openImgLightbox(this.src)">'
       + '</div>';
   }).join('')}
 </div>`;
@@ -4544,9 +4559,9 @@ ${units.map(n=>`
 <!-- ルール解説 -->
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">📌 特別ルール（2桁以上の場合）</div>
 
-<img src="num_rule1.jpeg" alt="ルール①一の位が1のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;">
-<img src="num_rule2.jpeg" alt="ルール②十の位が2のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;">
-<img src="num_rule3.jpeg" alt="ルール③組み合わせ21" style="width:100%;border-radius:12px;margin-bottom:16px;display:block;">
+<img src="num_rule1.jpeg" alt="ルール①一の位が1のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;cursor:zoom-in;" onclick="openImgLightbox('num_rule1.jpeg')">
+<img src="num_rule2.jpeg" alt="ルール②十の位が2のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;cursor:zoom-in;" onclick="openImgLightbox('num_rule2.jpeg')">
+<img src="num_rule3.jpeg" alt="ルール③組み合わせ21" style="width:100%;border-radius:12px;margin-bottom:16px;display:block;cursor:zoom-in;" onclick="openImgLightbox('num_rule3.jpeg')">
 
 <!-- 練習 -->
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">🔊 タップして確認</div>
@@ -5220,7 +5235,11 @@ const PG_IMAGES = {
 // 画像をimgタグへ流し込み
 document.querySelectorAll('#pgBody img[data-key]').forEach(el=>{
   const k = el.getAttribute('data-key');
-  if(PG_IMAGES[k]) el.src = PG_IMAGES[k];
+  if(PG_IMAGES[k]){
+    el.src = PG_IMAGES[k];
+    el.style.cursor = 'zoom-in';
+    el.onclick = ()=>openImgLightbox(el.src);
+  }
 });
 
 // 横スクロールタブ:実際にスクロール余地がある時だけ端をフェードさせる
