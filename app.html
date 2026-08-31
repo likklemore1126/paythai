@@ -328,7 +328,7 @@ footer{text-align:center;padding:6px 0 2px;}
     </div>
     <div id="resetTipWrap"></div>
     <button class="reset-btn" id="resetBtn" style="text-decoration:none;margin:6px auto 0;max-width:320px;width:100%;display:block;font-size:14px;font-weight:700;padding:8px 16px;background:rgba(192,57,43,.12);color:#e8968f;border:1px solid rgba(192,57,43,.45);border-radius:10px;">⚠️ 学習記録をリセット</button>
-    <button id="openHelpBtn" style="margin-top:10px;background:none;border:none;color:#8a9bc4;font-size:13px;text-decoration:underline;cursor:pointer;padding:6px;">📖 ヘルプを見る</button>
+    <button id="openHelpBtn" style="display:block;width:100%;max-width:320px;margin:10px auto 0;background:none;border:none;color:#8a9bc4;font-size:13px;text-decoration:underline;cursor:pointer;padding:6px;">📖 ヘルプを見る</button>
   </footer>
 </div>
 
@@ -927,7 +927,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-07-27q';
+const APP_VERSION = '2026-07-27r';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
