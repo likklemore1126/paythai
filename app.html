@@ -2816,6 +2816,9 @@ function speak(text){
     const v=(syn.getVoices()||[]).find(v=>v.lang&&v.lang.toLowerCase().startsWith('th'));
     if(v) u.voice=v;
     syn.speak(u);
+    if(typeof gtag === 'function'){
+      gtag('event', 'audio_play', { audio_type: 'tts', item_name: text });
+    }
   }catch(e){}
 }
 
@@ -2824,6 +2827,9 @@ function playVowelAudio(id, spk){
     const a = new Audio('vowel_'+id+'.m4a');
     a.onerror = function(){ speak(spk); };
     a.play().catch(function(){ speak(spk); });
+    if(typeof gtag === 'function'){
+      gtag('event', 'audio_play', { audio_type: 'vowel', item_name: id });
+    }
   }catch(e){ speak(spk); }
 }
 
@@ -3044,6 +3050,9 @@ function openHelp(){
   renderHelpBody();
   document.getElementById('helpOverlay').style.display = 'block';
   document.getElementById('helpModal').style.display = 'flex';
+  if(typeof gtag === 'function'){
+    gtag('event', 'help_view', {});
+  }
 }
 function closeHelp(){
   document.getElementById('helpOverlay').style.display = 'none';
@@ -3214,6 +3223,9 @@ function renderModeTabs(){
       st.wordlistPos=st.pos;
     }
     st.idx=0;st.flipped=false;render();
+    if(typeof gtag === 'function'){
+      gtag('event', 'mode_view', { mode: MODE_LABELS_JP[st.mode]||st.mode });
+    }
   }));
   requestAnimationFrame(()=>applyScrollFade(mt));
 }
@@ -3225,13 +3237,23 @@ function renderSub(){
     const allChip=`<button class="chip ${'all'===st.pos?'active-vocab':''}" data-pos="all">ALL</button>`;
     sr.innerHTML=allChip+Object.entries(getPosLabels()).map(([k,v])=>
       `<button class="chip ${k===st.pos?'active-vocab':''}" data-pos="${k}">${v}</button>`).join('');
-    sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.pos=c.dataset.pos;st.idx=0;st.flipped=false;st.fromList=false;render();}));
+    sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+      st.pos=c.dataset.pos;st.idx=0;st.flipped=false;st.fromList=false;render();
+      if(typeof gtag === 'function'){
+        gtag('event', 'category_view', { mode: '単語', category: st.pos==='all'?'ALL':(getPosLabels()[st.pos]||st.pos) });
+      }
+    }));
     requestAnimationFrame(()=>applyScrollFade(sr));
   } else if(st.mode==='conversation'){
     sr.style.display='flex';
     sr.innerHTML=SCENES.map(s=>
       `<button class="chip ${s===st.scene?'active-conv':''}" data-sc="${s}">${s}</button>`).join('');
-    sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.scene=c.dataset.sc;st.idx=0;st.flipped=false;render();}));
+    sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+      st.scene=c.dataset.sc;st.idx=0;st.flipped=false;render();
+      if(typeof gtag === 'function'){
+        gtag('event', 'category_view', { mode: '会話', category: st.scene });
+      }
+    }));
     requestAnimationFrame(()=>applyScrollFade(sr));
   } else if(st.mode==='font'){
     sr.style.display='flex';
@@ -3794,6 +3816,15 @@ function renderWordList(){
       st.wordlistSearch=wlSearchEl.value;
       if(wlClearEl) wlClearEl.style.display=st.wordlistSearch?'flex':'none';
       refreshWordListItems();
+      clearTimeout(window._searchGtagTimer);
+      const q=st.wordlistSearch;
+      if(q.trim()){
+        window._searchGtagTimer=setTimeout(()=>{
+          if(typeof gtag === 'function'){
+            gtag('event', 'search', { search_term: q });
+          }
+        }, 800);
+      }
     });
   }
   if(wlClearEl){
@@ -4811,6 +4842,18 @@ function render(){
       if(wasLearned){ lset.delete(item.id); } else { lset.add(item.id); undoInfo={pos:lk,id:item.id}; }
       sto_set('l:'+lk,[...lset]);
     }
+    if(undoInfo && typeof gtag === 'function'){
+      const modeLabel=MODE_LABELS_JP[st.mode]||st.mode;
+      const catLabel=st.mode==='vocab' ? (st.pos==='all'?(getPosLabels()[undoInfo.pos]||undoInfo.pos):(getPosLabels()[st.pos]||st.pos))
+        : st.mode==='conversation' ? st.scene
+        : '';
+      gtag('event', 'mark_learned', {
+        mode: modeLabel,
+        category: catLabel,
+        item_name: item.th || '',
+        item_jp: item.jp || ''
+      });
+    }
     if(st.filterUn) st.flipped=false;
     render();
     // 覚えた時だけトーストを表示
@@ -4832,16 +4875,29 @@ function render(){
   };
   const fb=document.getElementById('favB'); if(fb) fb.onclick=e=>{
     e.stopPropagation();
+    let added=false;
     if(st.pos==='all'){
       const itemPos=Object.keys(DATA).find(p=>Array.isArray(DATA[p])&&DATA[p].some(i=>i.id===item.id));
       if(itemPos){
         const s=st.favorites[itemPos];
-        if(s.has(item.id)) s.delete(item.id); else s.add(item.id);
+        if(s.has(item.id)){ s.delete(item.id); } else { s.add(item.id); added=true; }
         sto_set('f:'+itemPos,[...s]);
       }
     } else {
-      if(fset.has(item.id)) fset.delete(item.id); else fset.add(item.id);
+      if(fset.has(item.id)){ fset.delete(item.id); } else { fset.add(item.id); added=true; }
       sto_set('f:'+lk,[...fset]);
+    }
+    if(added && typeof gtag === 'function'){
+      const modeLabel=MODE_LABELS_JP[st.mode]||st.mode;
+      const catLabel=st.mode==='vocab' ? (st.pos==='all'?'ALL':(getPosLabels()[st.pos]||st.pos))
+        : st.mode==='conversation' ? st.scene
+        : '';
+      gtag('event', 'favorite_add', {
+        mode: modeLabel,
+        category: catLabel,
+        item_name: item.th || '',
+        item_jp: item.jp || ''
+      });
     }
     render();
   };
@@ -4867,7 +4923,26 @@ function render(){
   });
 }
 
-document.getElementById('flipWrap').addEventListener('click',()=>{st.flipped=!st.flipped;render();});
+document.getElementById('flipWrap').addEventListener('click',()=>{
+  st.flipped=!st.flipped;
+  if(st.flipped && typeof gtag === 'function'){
+    const l=list();
+    const item=l[st.idx]||l[0];
+    if(item){
+      const modeLabel=MODE_LABELS_JP[st.mode]||st.mode;
+      const catLabel=st.mode==='vocab' ? (st.pos==='all'?'ALL':(getPosLabels()[st.pos]||st.pos))
+        : st.mode==='conversation' ? st.scene
+        : '';
+      gtag('event', 'card_flip', {
+        mode: modeLabel,
+        category: catLabel,
+        item_name: item.th || '',
+        item_jp: item.jp || ''
+      });
+    }
+  }
+  render();
+});
 document.getElementById('nextBtn').addEventListener('click',e=>{e.stopPropagation();const l=list();st.idx=(st.idx+1)%l.length;st.flipped=false;render();});
 document.getElementById('prevBtn').addEventListener('click',e=>{e.stopPropagation();const l=list();st.idx=(st.idx-1+l.length)%l.length;st.flipped=false;render();});
 // mode-tabクリックはrenderModeTabs()内で管理
@@ -5300,6 +5375,9 @@ function detectPGKeys(text){
 let pgBodyScrollLockY = 0;
 function openPronunciationGuide(info){
   info = info || {th:'',ro:'',jp:''};
+  if(typeof gtag === 'function'){
+    gtag('event', 'pronunciation_guide_view', { item_name: info.th || '', item_jp: info.jp || '' });
+  }
   const overlay = document.getElementById('pgOverlay');
   const modal = document.getElementById('pgModal');
   overlay.classList.add('open');
