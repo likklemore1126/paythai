@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thai Poca(タイポカ) ― 覚えて、話せるようになる。タイ語学習アプリ</title>
+<meta name="description" content="タイ旅行を重ねるうちに、自分の言葉でタイ語を話せるようになりたい人のための学習アプリ。単語1,600語以上・会話フレーズ184文・文法61項目・タイ文字学習まで、これ一つで。">
+<link rel="icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f3ead8;
+  --cream-bg:#faf5ea;
+  --dark:#2b2118;
+  --dark2:#1c1610;
+  --gold:#f2b705;
+  --gold-deep:#c99404;
+  --muted:#9c8d68;
+  --muted-dark:#6b5c3e;
+  --line:#e6d9bf;
+  --line-dark:#3a3223;
+  --green:#4c9a6a;
+  --blue:#4a7cc4;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Zen Maru Gothic',sans-serif;
+  background:var(--cream-bg);
+  color:var(--dark);
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+.th{font-family:'Sarabun',sans-serif;}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px;}
+.section{padding:56px 0;}
+.section.dark{background:var(--dark);color:var(--cream);}
+.section.dark .muted{color:var(--muted);}
+.eyebrow{font-size:13px;color:var(--muted-dark);font-weight:700;letter-spacing:.02em;margin-bottom:10px;}
+.dark .eyebrow{color:var(--gold);}
+h1,h2,h3{font-weight:900;letter-spacing:-.01em;}
+h2{font-size:24px;margin-bottom:18px;color:var(--dark);}
+.dark h2{color:var(--cream);}
+.accent{color:var(--gold-deep);}
+.dark .accent{color:var(--gold);}
+p{color:var(--muted-dark);}
+.dark p{color:var(--cream);opacity:.9;}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:var(--cream-bg);border-bottom:1px solid var(--line);}
+.header-inner{max-width:680px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+.logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:900;}
+.logo img{width:34px;height:34px;border-radius:9px;}
+.nav-actions{display:flex;align-items:center;gap:8px;}
+.btn-nav{background:var(--dark);color:var(--cream);border:none;border-radius:20px;padding:9px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;}
+
+/* hero */
+.hero{padding:48px 0 40px;}
+.hero h1{font-size:30px;line-height:1.4;margin:0 0 18px;}
+.hero h1 .hl{color:var(--gold-deep);}
+.hero p.lead{font-size:15px;color:var(--muted-dark);margin-bottom:22px;}
+.trial-badge{display:inline-block;background:var(--gold);color:var(--dark);font-size:12px;font-weight:700;padding:7px 14px;border-radius:20px;margin-bottom:20px;}
+.cta-row{display:flex;flex-direction:column;gap:10px;margin-bottom:10px;}
+.btn-primary{display:block;text-align:center;background:var(--dark);color:var(--cream);border:none;border-radius:14px;padding:16px 20px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;text-decoration:none;}
+.btn-secondary{display:block;text-align:center;background:none;color:var(--dark);border:2px solid var(--dark);border-radius:14px;padding:14px 20px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;text-decoration:none;}
+.hero-note{font-size:12px;color:var(--muted);margin-top:4px;}
+.stat-row{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap;}
+.stat-card{flex:1;min-width:100px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 12px;text-align:center;}
+.stat-num{font-size:22px;font-weight:900;color:var(--gold-deep);}
+.stat-label{font-size:11px;color:var(--muted-dark);margin-top:2px;}
+
+/* problem list */
+.problem-list{list-style:none;margin:20px 0;}
+.problem-list li{display:flex;gap:10px;padding:14px 0;border-bottom:1px solid var(--line-dark);font-size:14px;}
+.problem-list li:last-child{border-bottom:none;}
+.problem-list .mark{color:var(--gold);flex-shrink:0;}
+.solution-box{background:rgba(242,183,5,.12);border:1px solid var(--gold);border-radius:16px;padding:20px;margin-top:24px;}
+.solution-box p{color:var(--cream);margin:0;font-weight:500;}
+.solution-box .accent{font-weight:900;}
+
+/* compare vs yubisashi */
+.vs-grid{display:flex;flex-direction:column;gap:14px;}
+.vs-card{border:1px solid var(--line);border-radius:16px;padding:20px;background:#fff;}
+.vs-card.highlight{border:2px solid var(--gold-deep);background:linear-gradient(180deg,#fffdf5,#fff);}
+.vs-card .vs-tag{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;}
+.vs-card.highlight .vs-tag{color:var(--gold-deep);}
+.vs-card h3{font-size:17px;margin-bottom:6px;}
+.vs-card p{font-size:13px;margin:0;}
+.vs-connector{text-align:center;font-size:12px;color:var(--muted);padding:4px 0;}
+
+/* steps */
+.steps{margin:20px 0;}
+.step{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);}
+.step:last-child{border-bottom:none;}
+.step-num{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--dark);font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center;}
+.step-body h3{font-size:15px;margin-bottom:3px;}
+.step-body p{font-size:13px;margin:0;}
+
+/* accordion */
+.acc{border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;background:#fff;}
+.acc-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;cursor:pointer;user-select:none;}
+.acc-head .ttl{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14.5px;}
+.acc-head .num{font-size:20px;}
+.acc-head .chev{transition:transform .25s;color:var(--muted);flex-shrink:0;}
+.acc.open .acc-head .chev{transform:rotate(180deg);}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.acc.open .acc-body{max-height:400px;}
+.acc-body-inner{padding:0 18px 18px 46px;font-size:13px;color:var(--muted-dark);}
+
+/* pricing table */
+.compare-table{width:100%;border-collapse:collapse;font-size:12.5px;margin:20px 0;background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--line);}
+.compare-table th,.compare-table td{padding:11px 8px;text-align:center;border-bottom:1px solid var(--line);}
+.compare-table th{background:var(--dark);color:var(--cream);font-size:12px;font-weight:700;}
+.compare-table td:first-child{text-align:left;font-weight:700;color:var(--dark);}
+.compare-table tr:last-child td{border-bottom:none;}
+.ok{color:var(--green);font-weight:900;}
+.no{color:var(--muted);}
+
+/* price cards */
+.price-grid{display:flex;flex-direction:column;gap:14px;margin-top:22px;}
+.price-card{border:1px solid var(--line-dark);border-radius:18px;padding:22px;background:var(--dark2);position:relative;}
+.price-card.best{border:2px solid var(--gold);background:linear-gradient(180deg,#241b10,#1c1610);}
+.price-card .badge{position:absolute;top:-11px;right:18px;background:var(--gold);color:var(--dark);font-size:11px;font-weight:900;padding:4px 12px;border-radius:20px;}
+.price-card .plan-name{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:6px;}
+.price-card .plan-price{font-size:28px;font-weight:900;color:var(--cream);}
+.price-card .plan-price .unit{font-size:13px;font-weight:500;color:var(--muted);}
+.price-card .plan-note{font-size:12px;color:var(--muted);margin-top:6px;}
+.price-cta{display:block;text-align:center;margin-top:16px;background:var(--muted-dark);color:var(--cream);opacity:.5;border-radius:12px;padding:13px;font-size:14px;font-weight:700;pointer-events:none;}
+.price-card.best .price-cta{background:var(--gold);color:var(--dark);}
+
+/* faq */
+.faq-item{border-bottom:1px solid var(--line);padding:16px 0;}
+.faq-q{font-weight:700;font-size:14px;display:flex;gap:8px;}
+.faq-q .q-mark{color:var(--gold-deep);flex-shrink:0;}
+.faq-a{font-size:13px;color:var(--muted-dark);margin-top:8px;padding-left:22px;}
+
+/* dev intro */
+.dev-card{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;}
+.dev-avatar{width:56px;height:56px;border-radius:50%;background:var(--dark);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.dev-card h3{font-size:15px;margin-bottom:6px;}
+.dev-card p{font-size:13px;margin:0;}
+
+/* home add guide */
+.tab-row{display:flex;gap:8px;margin-bottom:16px;}
+.tab-btn{flex:1;padding:10px;border-radius:12px;border:1px solid var(--line);background:#fff;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;color:var(--muted-dark);}
+.tab-btn.active{background:var(--dark);color:var(--cream);border-color:var(--dark);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* footer */
+footer{background:var(--dark2);color:var(--muted);padding:36px 0;font-size:12px;}
+footer .flinks{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px;}
+footer .flinks a{text-decoration:underline;}
+footer .copyright{color:var(--muted-dark);}
+
+@media(min-width:768px){
+  .wrap{max-width:760px;}
+  .hero h1{font-size:38px;}
+  .cta-row{flex-direction:row;}
+  .cta-row .btn-primary,.cta-row .btn-secondary{flex:1;}
+  .vs-grid{flex-direction:row;}
+  .vs-grid .vs-card{flex:1;}
+  .price-grid{flex-direction:row;}
+  .price-grid .price-card{flex:1;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo"><img src="icon-192.png" alt="Thai Poca"> Thai Poca</div>
+    <div class="nav-actions">
+      <button class="btn-nav" onclick="document.getElementById('price').scrollIntoView({behavior:'smooth'})">価格を見る</button>
+    </div>
+  </div>
+</header>
+
+<!-- 1. HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">タイ旅行のたびに、少しずつ話せるようになる</div>
+    <h1>指さすだけじゃ、<br>もう物足りない。<br><span class="hl">自分の言葉で、</span><br><span class="hl">タイ語を話したい人へ。</span></h1>
+    <p class="lead">単語1,600語以上・会話フレーズ184文・文法61項目・タイ文字学習まで。旅先で使える生きたタイ語を、自分のペースでコツコツ身につけるための学習アプリです。</p>
+    <div class="trial-badge">🎉 リリース記念：今なら全機能を無料でお試しいただけます</div>
+    <div class="cta-row">
+      <a class="btn-primary" href="app.html">今すぐ無料で始める</a>
+      <a class="btn-secondary" href="#feature">機能を見てみる</a>
+    </div>
+    <div class="hero-note">※アプリのインストールは不要。ブラウザから開いて、ホーム画面に追加するだけですぐ使えます。</div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-num">1,600+</div><div class="stat-label">単語</div></div>
+      <div class="stat-card"><div class="stat-num">184</div><div class="stat-label">会話フレーズ</div></div>
+      <div class="stat-card"><div class="stat-num">61</div><div class="stat-label">文法項目</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. PROBLEM -->
+<section class="section dark">
+  <div class="wrap">
+    <div class="eyebrow">こんなこと、ありませんか</div>
+    <h2>タイ語、<br>何から始めたらいいか<br>分からない。</h2>
+    <ul class="problem-list">
+      <li><span class="mark">・</span>指さし会話帳は便利だけど、結局いつも人任せで自分では話せるようにならない</li>
+      <li><span class="mark">・</span>語学学校に通うほどの時間もお金も、正直ない</li>
+      <li><span class="mark">・</span>単語帳アプリを入れてみたけど、無味乾燥で続かなかった</li>
+      <li><span class="mark">・</span>ネットの独学情報は、実際に現地で使えるかどうか分からない</li>
+    </ul>
+    <div class="solution-box">
+      <p>Thai Pocaは、<span class="accent">タイで生活する開発者自身が実際に使う言い回し</span>をベースに、日常で本当に使えるタイ語を、自分のペースでコツコツ身につけるために作ったアプリです。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. VS YUBISASHI -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">姉妹アプリ「指さしタイ」との違い</div>
+    <h2>「見せるだけ」から、<br>「話せる」へ。</h2>
+    <div class="vs-grid">
+      <div class="vs-card">
+        <div class="vs-tag">今すぐ使いたい人へ</div>
+        <h3>📱 指さしタイ</h3>
+        <p>タイ語が話せなくても、画面を見せるだけで伝わる会話帳アプリ。旅行中とにかく困らないための「お守り」。</p>
+      </div>
+      <div class="vs-card highlight">
+        <div class="vs-tag">長く付き合いたい人へ</div>
+        <h3>🐘 Thai Poca</h3>
+        <p>単語・会話・文法・タイ文字までコツコツ学んで、自分の言葉で話せるようになるための学習アプリ。</p>
+      </div>
+    </div>
+    <p style="font-size:12.5px;margin-top:14px;text-align:center;">🔗 旅行中の「今すぐ」は指さしタイ、学びたい気持ちが芽生えたらThai Poca。併用もおすすめです。</p>
+  </div>
+</section>
+
+<!-- 4. STEPS -->
+<section class="section" style="background:#fff;">
+  <div class="wrap">
+    <div class="eyebrow">使い方はシンプル</div>
+    <h2>覚え方は3ステップ</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body"><h3>覚えたい単語・フレーズを選ぶ</h3><p>レベル別・シーン別に整理された中から、今の自分に必要なものを選ぶだけ。</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body"><h3>発音を聞いて、声に出す</h3><p>タイ語ネイティブ発音とローマ字表記(Paiboon+方式)で、正しい発音を確認しながら練習できます。</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body"><h3>お気に入り・学習履歴で復習</h3><p>覚えた単語や気になったフレーズはワンタップで保存。学習の進み具合もひと目で分かります。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. FEATURES ACCORDION -->
+<section class="section dark" id="feature">
+  <div class="wrap">
+    <div class="eyebrow">機能紹介</div>
+    <h2>これ一つで、<br>タイ語学習に必要なものすべて。</h2>
+    <div id="accList"></div>
+  </div>
+</section>
+
+<!-- 6. COMPARE TABLE -->
+<section class="section" style="background:#fff;">
+  <div class="wrap">
+    <div class="eyebrow">無料版・有料版のちがい</div>
+    <h2>まずは無料で、<br>じっくり試せます。</h2>
+    <table class="compare-table">
+      <tr><th>機能</th><th>無料版</th><th>有料版</th></tr>
+      <tr><td>単語</td><td>初心者タブのみ</td><td class="ok">全レベル解放</td></tr>
+      <tr><td>会話フレーズ</td><td>日常会話・レストラン</td><td class="ok">全シーン解放</td></tr>
+      <tr><td>文法</td><td class="no">─</td><td class="ok">全項目解放</td></tr>
+      <tr><td>タイ文字学習</td><td class="no">─</td><td class="ok">解放</td></tr>
+      <tr><td>数字の読み方</td><td class="no">─</td><td class="ok">解放</td></tr>
+      <tr><td>お気に入り機能</td><td class="no">─</td><td class="ok">解放</td></tr>
+      <tr><td>学習リスト機能</td><td class="no">─</td><td class="ok">全対象で解放</td></tr>
+    </table>
+    <p style="font-size:12px;text-align:center;">※現在はリリース記念期間中につき、無料版の方も一時的に全機能をお試しいただけます。</p>
+  </div>
+</section>
+
+<!-- 7. PRICE -->
+<section class="section dark" id="price">
+  <div class="wrap">
+    <div class="eyebrow">料金プラン</div>
+    <h2>ライフスタイルに合わせて<br>選べる3プラン。</h2>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="plan-name">月額プラン</div>
+        <div class="plan-price">¥300<span class="unit">/月</span></div>
+        <div class="plan-note">まずは気軽に試したい方に</div>
+        <div class="price-cta">準備中</div>
+      </div>
+      <div class="price-card best">
+        <div class="badge">お得</div>
+        <div class="plan-name">年間プラン</div>
+        <div class="plan-price">¥3,500<span class="unit">/年</span></div>
+        <div class="plan-note">月換算 約292円。じっくり続けたい方に</div>
+        <div class="price-cta">準備中</div>
+      </div>
+      <div class="price-card">
+        <div class="plan-name">買い切りプラン</div>
+        <div class="plan-price">¥4,280<span class="unit">(税込・一括)</span></div>
+        <div class="plan-note">一度払えば、ずっと使える</div>
+        <div class="price-cta">準備中</div>
+      </div>
+    </div>
+    <p style="font-size:12px;text-align:center;margin-top:18px;">🔧 決済機能は現在準備中です。公開までしばらくお待ちください（公開時にはこのページ上でお知らせします）。</p>
+  </div>
+</section>
+
+<!-- 8. HOME ADD GUIDE -->
+<section class="section" style="background:#fff;">
+  <div class="wrap">
+    <div class="eyebrow">はじめかた</div>
+    <h2>ホーム画面に追加して使う</h2>
+    <p style="font-size:13px;margin-bottom:16px;">アプリのインストールは不要です。ブラウザからホーム画面に追加するだけで、普通のアプリと同じように使えます。</p>
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="showTab('ios')">iPhone</button>
+      <button class="tab-btn" onclick="showTab('android')">Android</button>
+    </div>
+    <div class="tab-panel active" id="tab-ios">
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><p>SafariでThai Pocaを開く</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><p>共有ボタン(□に↑)をタップ</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><p>「ホーム画面に追加」を選択</p></div></div>
+      </div>
+    </div>
+    <div class="tab-panel" id="tab-android">
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><p>ChromeでThai Pocaを開く</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><p>右上のメニュー(︙)をタップ</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><p>「ホーム画面に追加」を選択</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. DEV INTRO -->
+<section class="section dark">
+  <div class="wrap">
+    <div class="eyebrow">開発者について</div>
+    <h2>作っているのは、<br>タイ在住の一人の日本人です。</h2>
+    <div class="dev-card">
+      <div class="dev-avatar">🐘</div>
+      <div>
+        <h3>TAKA(TakaTobi)</h3>
+        <p>バンコク在住。タイ国政府観光庁認定「タイランド・スペシャリスト」。タイ旅行ブログ「勝手に観光大使w」運営。自分自身がタイで生活しながら実際に使う言い回しをもとに、Thai Pocaと姉妹アプリ「指さしタイ」を開発しています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. FAQ -->
+<section class="section" style="background:#fff;">
+  <div class="wrap">
+    <div class="eyebrow">よくある質問</div>
+    <h2>FAQ</h2>
+    <div id="faqList"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="flinks">
+      <a href="https://takatobi.jp">TakaTobi公式サイト</a>
+      <a href="https://yubisashi.takatobi.jp/lp.html">指さしタイ</a>
+    </div>
+    <div class="copyright">© TakaTobi. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+const FEATURES = [
+  {icon:'📚',title:'単語 1,600語以上',body:'日常会話から旅行・食事・専門的な話題まで、幅広いジャンルの単語を収録。目標2,500語に向けて今も追加中です。レベル別に整理されているので、自分のペースで無理なく進められます。'},
+  {icon:'💬',title:'会話フレーズ 184文',body:'日常会話・レストラン・観光・ホテル・交通・緊急の6シーンをカバー。男性語尾/女性語尾を切り替えられるので、自分の話し方に合わせて使えます。'},
+  {icon:'📖',title:'文法 61項目',body:'タイ語特有の文法パターンを、実際の例文つきで解説。タイ文字にはすべてローマ字(Paiboon+方式)を併記しているので、タイ文字が読めなくても学べます。'},
+  {icon:'🔤',title:'タイ文字学習',body:'子音・母音・声調・数字まで、タイ文字の基礎を体系的に学習。複合母音や特殊な組み合わせもカバーしています。'},
+  {icon:'🔊',title:'発音ガイド',body:'タップするだけで発音記号の意味や読み方を確認できる、タイ語ならではの学習サポート機能です。'},
+  {icon:'⭐',title:'お気に入り・学習履歴',body:'覚えた単語やよく使うフレーズをワンタップで保存。学習の進み具合が記録されるので、モチベーションを保ちながら続けられます。'},
+  {icon:'📡',title:'オフライン対応',body:'PWA(Progressive Web App)技術により、電波が届かない場所でも一度開いたページはそのまま使い続けられます。'},
+];
+
+const FAQS = [
+  {q:'アプリのインストールは必要ですか？',a:'いいえ、不要です。ブラウザからページを開いて「ホーム画面に追加」するだけで、通常のアプリと同じように使えます。'},
+  {q:'無料版と有料版、何が違いますか？',a:'無料版は単語の初心者タブと、日常会話・レストランの会話シーンのみ利用できます。有料版では単語・会話フレーズ・文法・タイ文字学習など、すべての機能が解放されます。'},
+  {q:'今はどこまで無料で使えますか？',a:'リリース記念期間中につき、現在は無料版の方も含めて全機能を無料でお試しいただけます。'},
+  {q:'iPhoneとAndroid、両方で使えますか？',a:'はい、どちらの端末でも同じように利用できます。'},
+  {q:'指さしタイとどちらを使えばいいですか？',a:'旅行中にすぐ言葉を伝えたい場合は指さしタイ、タイ語そのものを覚えて話せるようになりたい場合はThai Pocaがおすすめです。併用もできます。'},
+  {q:'タイ文字が読めなくても大丈夫ですか？',a:'はい。すべてのタイ語表記にローマ字(Paiboon+方式)が併記されているので、タイ文字が読めない状態からでも学習を始められます。'},
+];
+
+function renderAcc(){
+  const el = document.getElementById('accList');
+  el.innerHTML = FEATURES.map((f,i)=>`
+    <div class="acc" id="acc-${i}">
+      <div class="acc-head" onclick="toggleAcc(${i})">
+        <div class="ttl"><span class="num">${f.icon}</span> ${f.title}</div>
+        <span class="chev">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-body-inner">${f.body}</div></div>
+    </div>
+  `).join('');
+}
+function toggleAcc(i){
+  document.getElementById('acc-'+i).classList.toggle('open');
+}
+function renderFaq(){
+  const el = document.getElementById('faqList');
+  el.innerHTML = FAQS.map(f=>`
+    <div class="faq-item">
+      <div class="faq-q"><span class="q-mark">Q.</span>${f.q}</div>
+      <div class="faq-a">${f.a}</div>
+    </div>
+  `).join('');
+}
+function showTab(which){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-'+which).classList.add('active');
+}
+renderAcc();
+renderFaq();
+// open first feature by default
+document.getElementById('acc-0').classList.add('open');
+</script>
+</body>
+</html>
