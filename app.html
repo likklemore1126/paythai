@@ -159,12 +159,12 @@ header{padding-bottom:10px;}
 .jump-nav a{flex-shrink:0;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#e4e1e8;font-size:13px;font-weight:700;text-decoration:none;}
 .jump-nav a:active{background:var(--yellow);color:#2b2118;}
 /* 開閉セクション(タイ文字:母音/声調タブ) */
-.fold-sec{border:1px solid rgba(255,255,255,.12);border-radius:14px;margin-bottom:10px;overflow:hidden;background:rgba(255,255,255,.03);}
-.fold-sec>summary{list-style:none;padding:12px 14px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.fold-sec{border:1px solid rgba(255,255,255,.12);border-radius:14px;margin-bottom:12px;overflow:hidden;background:rgba(255,255,255,.03);}
+.fold-sec>summary{list-style:none;padding:20px 18px;font-size:18px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .fold-sec>summary::-webkit-details-marker{display:none;}
-.fold-sec>summary .fold-chev{color:var(--muted);font-size:13px;transition:transform .15s;flex-shrink:0;}
+.fold-sec>summary .fold-chev{color:var(--muted);font-size:15px;transition:transform .15s;flex-shrink:0;}
 .fold-sec[open]>summary .fold-chev{transform:rotate(180deg);}
-.fold-sec>summary .fold-count{font-size:12px;font-weight:600;color:var(--muted);margin-left:auto;margin-right:2px;}
+.fold-sec>summary .fold-count{font-size:13px;font-weight:600;color:var(--muted);margin-left:auto;margin-right:2px;}
 .fold-body{padding:2px 12px 12px;}
 /* イラストグリッド(3列) */
 .illust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
@@ -1119,7 +1119,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-09-30j';
+const APP_VERSION = '2026-09-30k';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3035,12 +3035,12 @@ function buildExampleStatic(item, pos) {
 
 function buildExBox(ex) {
   const noteHtml = ex.note ? `<div style="margin-top:8px;padding:7px 10px;background:rgba(242,183,5,.15);border-left:3px solid #f2b705;border-radius:4px;font-size:15px;color:#5a4500;line-height:1.6;">${ex.note}</div>` : '';
-  const roHtml = st.showRo ? `<div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;margin-top:3px;line-height:1.4;">${ex.ro}</div>` : '';
-  return `<div style="background:rgba(0,0,0,.06);border-radius:10px;padding:10px 14px;margin-top:8px;">
+  const roHtml = st.showRo ? `<div class="ex-ro" style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;margin-top:3px;line-height:1.4;cursor:pointer;text-decoration:underline dotted #a9986b 1.5px;text-underline-offset:4px;">${renderRoSegments(ex.ro)}</div>` : '';
+  return `<div class="ex-box" style="background:rgba(0,0,0,.06);border-radius:10px;padding:10px 14px;margin-top:8px;">
     <div style="font-size:13px;color:#9c8d68;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin-bottom:4px;">例文</div>
-    <div style="font-family:'Sarabun',sans-serif;font-size:23px;font-weight:500;color:#2b2118;line-height:1.3;">${ex.th}</div>
+    <div class="ex-th" style="font-family:'Sarabun',sans-serif;font-size:23px;font-weight:500;color:#2b2118;line-height:1.3;">${ex.th}</div>
     ${roHtml}
-    <div style="font-size:16px;color:#2b2118;margin-top:3px;">${ex.jp}</div>
+    <div class="ex-jp" style="font-size:16px;color:#2b2118;margin-top:3px;">${ex.jp}</div>
     ${noteHtml}
   </div>`;
 }
@@ -3445,7 +3445,7 @@ function formatGramTitle(title){
     while(cut > 0 && out[cut-1] === ' ') cut--;
     out = out.slice(0, cut) + '<br>' + out.slice(cut).replace(/^ +/, '');
   }
-  out = out.replace(/([\u0E00-\u0E7F]+\([^)]*\))/g, (m)=>`<span class="rb">${m}</span>`);
+  out = out.replace(/([\u0E00-\u0E7F]+)\(([^)]*)\)/g, (m,th,ro)=>`<span class="rb">${th}(${renderRoSegments(ro)})</span>`);
   return out;
 }
 
@@ -3737,7 +3737,7 @@ function renderWordList(){
         html+=`<div class="list-item learned-list-vocab learned-item" data-id="${item.id}" data-pos="${item._pos}">
           <span class="list-num">${idx+1}</span>
           <div class="list-body">
-            <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${item.ro}</span></span></div>
+            <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${renderRoSegments(item.ro)}</span></span></div>
             <div class="list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
           </div>
           <span class="list-badge">済</span>
@@ -3756,7 +3756,7 @@ function renderWordList(){
             <span class="list-badge">済</span>
             <button class="list-fav-btn ${fav?'on':''}" data-fav-id="${item.id}" data-fav-cat="conversation" style="margin-left:auto;">${fav?'★':'☆'}</button>
           </div>
-          <div class="conv-list-ro">${fRO(item.ro)}</div>
+          <div class="conv-list-ro">${renderRoSegments(fRO(item.ro))}</div>
           <div class="conv-list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
         </div>`;
       });
@@ -3871,7 +3871,7 @@ function renderWordList(){
         html+=`<div class="list-item fav-list-vocab" data-id="${item.id}" data-pos="${item._pos}">
           <span class="list-num">${idx+1}</span>
           <div class="list-body">
-            <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${item.ro}</span></span></div>
+            <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${renderRoSegments(item.ro)}</span></span></div>
             <div class="list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
           </div>
           <button class="list-fav-btn on" data-fav-id="${item.id}" data-fav-cat="${item._pos}">★</button>
@@ -3887,7 +3887,7 @@ function renderWordList(){
             <span class="conv-list-th">${fTH(item.th)}</span>
             <button class="list-fav-btn on" data-fav-id="${item.id}" data-fav-cat="conversation" style="margin-left:auto;">★</button>
           </div>
-          <div class="conv-list-ro">${fRO(item.ro)}</div>
+          <div class="conv-list-ro">${renderRoSegments(fRO(item.ro))}</div>
           <div class="conv-list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
         </div>`;
       });
@@ -4000,7 +4000,7 @@ function renderWordList(){
           ${learned?'<span class="list-badge">済</span>':''}
           <button class="list-fav-btn ${fav?'on':''}" data-fav-id="${item.id}" data-fav-cat="conversation" style="margin-left:auto;">${fav?'★':'☆'}</button>
         </div>
-        <div class="conv-list-ro">${fRO(item.ro)}</div>
+        <div class="conv-list-ro">${renderRoSegments(fRO(item.ro))}</div>
         <div class="conv-list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
       </div>`;
     });
@@ -4109,7 +4109,7 @@ function renderWordList(){
       ih+=`<div class="list-item${learned?' learned-item':''}" data-id="${item.id}" data-pos="${item._pos}">
         <span class="list-num">${idx+1}</span>
         <div class="list-body">
-          <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${item.ro}</span></span></div>
+          <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${renderRoSegments(item.ro)}</span></span></div>
           <div class="list-jp">${(()=>{
           const jp=item.jp;
           const parts=[];
@@ -4463,7 +4463,7 @@ function renderVowelSection(){
     if(!items.length) return;
     const col = items[0].color;
 
-    h += '<details class="fold-sec" id="'+groupAnchor[grp]+'" open>';
+    h += '<details class="fold-sec" id="'+groupAnchor[grp]+'">';
     h += '<summary style="background:'+col+';color:#fff;">'+groupLabel[grp]+'<span class="fold-chev" style="color:#fff;">▾</span></summary>';
     h += '<div class="fold-body" style="padding:8px 0 2px;">';
     h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px;">';
@@ -4530,8 +4530,8 @@ function renderVowelSection(){
   });
 
   // ── マイムアン20単語 ─────────────────────────────────────────
-  h += '<details class="fold-sec" id="v-maimuan" open>';
-  h += '<summary style="background:#c0392b;color:#fff;">⚠️ ใ（マイムアン）を使う単語 — 暗記必須！<span class="fold-chev" style="color:#fff;">▾</span></summary>';
+  h += '<details class="fold-sec" id="v-maimuan">';
+  h += '<summary style="background:#c0392b;color:#fff;">ใ（マイムアン）を使う単語 — 暗記必須！<span class="fold-chev" style="color:#fff;">▾</span></summary>';
   h += '<div class="fold-body" style="padding:8px 0;">';
   h += '<div style="background:#fff5f5;border:1px solid #f5c6cb;border-radius:10px;padding:10px;margin-bottom:8px;">';
   h += '<div style="font-size:13px;color:#c0392b;margin-bottom:8px;">ไ と ใ は同じ「ai」音。ใ を使う単語は20単語のみ。丸ごと覚える！</div>';
@@ -4554,7 +4554,7 @@ function renderVowelSection(){
 
   // ── 口の形イラスト（母音記号の位置に対応） ──────────────────
   h += '<details class="fold-sec" id="v-illust1">';
-  h += '<summary style="background:#6b5c3e;color:#fff;">👄 口の形イラストで確認<span class="fold-chev" style="color:#fff;">▾</span></summary>';
+  h += '<summary style="background:#6b5c3e;color:#fff;">口の形イラストで確認<span class="fold-chev" style="color:#fff;">▾</span></summary>';
   h += '<div class="fold-body" style="padding:8px 0 4px;">';
   h += '<div style="margin-bottom:10px;padding:8px 10px;background:#f3ead8;border-radius:8px;font-size:13px;color:#4a3f28;line-height:1.5;">💡 短母音・長母音は口の形が同じです。短母音(อะ等)は短く、長母音(อา等)は伸ばして発音してください。</div>';
   const vowelIllustrations = [
@@ -4578,7 +4578,7 @@ function renderVowelSection(){
 
   // ── 複合母音・特殊母音イラスト ──────────────────
   h += '<details class="fold-sec" id="v-illust2">';
-  h += '<summary style="background:#8e44ad;color:#fff;">🔀 複合母音・特殊母音イラストで確認<span class="fold-chev" style="color:#fff;">▾</span></summary>';
+  h += '<summary style="background:#8e44ad;color:#fff;">複合母音・特殊母音イラストで確認<span class="fold-chev" style="color:#fff;">▾</span></summary>';
   h += '<div class="fold-body" style="padding:8px 0 4px;">';
   const complexVowelIllustrations = [
     ['vowel_ia',  'ia',  'เอียะ/เอีย'],
@@ -4767,7 +4767,7 @@ function renderToneSection(){
 
 <!-- 末子音・音節タイプの解説 -->
 <details class="fold-sec" id="t-explain">
-<summary>📖 まず「末子音」って何?<span class="fold-chev">▾</span></summary>
+<summary>まず「末子音」って何?<span class="fold-chev">▾</span></summary>
 <div class="fold-body">
 <div style="background:#241f2c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
   <p style="font-size:15px;color:#d8d3de;line-height:1.7;margin:0 0 11px;">
@@ -4820,7 +4820,7 @@ function renderToneSection(){
 </details>
 
 <!-- 中子音 -->
-<details class="fold-sec" id="t-mid" open>
+<details class="fold-sec" id="t-mid">
 <summary style="background:#c0392b;color:#fff;">中子音　ก จ ด ต บ ป อ ฎ ฏ<span class="fold-chev" style="color:#fff;">▾</span></summary>
 <div class="fold-body" style="padding-top:8px;">
 <div style="margin-bottom:10px;">
@@ -4847,7 +4847,7 @@ function renderToneSection(){
 </details>
 
 <!-- 高子音 -->
-<details class="fold-sec" id="t-high" open>
+<details class="fold-sec" id="t-high">
 <summary style="background:#4c9a6a;color:#fff;">高子音　ข ฉ ถ ผ ฝ ศ ษ ส ห<span class="fold-chev" style="color:#fff;">▾</span></summary>
 <div class="fold-body" style="padding-top:8px;">
 <div style="margin-bottom:10px;">
@@ -4872,7 +4872,7 @@ function renderToneSection(){
 </details>
 
 <!-- 低子音 -->
-<details class="fold-sec" id="t-low" open>
+<details class="fold-sec" id="t-low">
 <summary style="background:#4a7cc4;color:#fff;">低子音　ค ง ช ซ ฑ ฒ ท น พ ฟ ม ย ร ล ว ฬ ฮ 他<span class="fold-chev" style="color:#fff;">▾</span></summary>
 <div class="fold-body" style="padding-top:8px;">
 <div style="margin-bottom:10px;">
@@ -4920,7 +4920,7 @@ function renderToneSection(){
 
 <!-- 声調イラスト -->
 <details class="fold-sec" id="t-illust" style="margin-top:14px;">
-<summary style="background:#6b5c3e;color:#fff;">😊 表情イラストで確認<span class="fold-chev" style="color:#fff;">▾</span></summary>
+<summary style="background:#6b5c3e;color:#fff;">表情イラストで確認<span class="fold-chev" style="color:#fff;">▾</span></summary>
 <div class="fold-body" style="padding:8px 0 4px;">
 <div class="illust-grid">
   ${[
@@ -4951,19 +4951,23 @@ function renderNumbers(){
     {arabic:'99',th_num:'๙๙',th_word:'เก้าสิบเก้า',ro:'kâao sìp kâao',note:'9+10+9'},
   ];
 
+  // 🔊は枠内タップではなく、タイ文字(母音表)と同じ34pxの独立したボタンにする
+  // (枠のどこを押しても音が出る方式だと、読んでいるだけで誤って再生されてしまうため)
+  const numAudioBtn=(th)=>`<button onclick="event.stopPropagation();speak('${th}')" style="width:34px;height:34px;border-radius:50%;background:var(--yellow);border:none;color:#2b2118;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>`;
+
   const numCard=(n,highlight)=>`
-<div onclick="speak('${n.th_word}')" style="background:var(--bg2);border:1px solid ${highlight?'#f2b705':'#38353f'};border-radius:12px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;overflow:hidden;">
+<div style="background:var(--bg2);border:1px solid ${highlight?'#f2b705':'#38353f'};border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:2px;min-width:0;overflow:hidden;">
   <div style="display:flex;align-items:baseline;gap:6px;">
     <span style="font-family:'Sarabun',sans-serif;font-size:32px;color:#fff;line-height:1;flex-shrink:0;">${n.th_num}</span>
     <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:var(--yellow);">${n.arabic}</span>
   </div>
   <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${n.ro}</div>
   <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:var(--muted2);">${n.th_word}</div>
-  <div style="font-size:13px;color:#55505f;text-align:right;">🔊</div>
+  <div style="display:flex;justify-content:flex-end;margin-top:2px;">${numAudioBtn(n.th_word)}</div>
 </div>`;
 
   const exCard=(n)=>`
-<div onclick="speak('${n.th_word}')" style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;">
+<div style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:2px;min-width:0;">
   <div style="display:flex;align-items:baseline;gap:6px;">
     <span style="font-family:'Sarabun',sans-serif;font-size:32px;color:#fff;line-height:1;">${n.th_num}</span>
     <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:var(--yellow);">${n.arabic}</span>
@@ -4971,7 +4975,7 @@ function renderNumbers(){
   <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${n.ro}</div>
   <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:var(--muted2);">${n.th_word}</div>
   <div style="font-size:12px;color:#f2b705;margin-top:2px;">${n.note}</div>
-  <div style="font-size:13px;color:#55505f;text-align:right;">🔊</div>
+  <div style="display:flex;justify-content:flex-end;margin-top:2px;">${numAudioBtn(n.th_word)}</div>
 </div>`;
 
   return `
@@ -4987,11 +4991,11 @@ ${NUMS.filter(n=>['0','1','2','3','4','5','6','7','8','9'].includes(n.arabic)).m
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 6px;">位の単位</div>
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:20px;">
 ${units.map(n=>`
-<div onclick="speak('${n.th_word}')" style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:10px 6px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0;overflow:hidden;">
+<div style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:10px 6px;display:flex;flex-direction:column;gap:2px;min-width:0;overflow:hidden;">
   <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--yellow);word-break:break-all;">${n.arabic}</div>
   <div style="font-family:'Sarabun',sans-serif;font-size:23px;color:#fff;line-height:1.2;">${n.th_word}</div>
   <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">${n.ro}</div>
-  <div style="font-size:13px;color:#55505f;text-align:right;">🔊</div>
+  <div style="display:flex;justify-content:flex-end;margin-top:2px;">${numAudioBtn(n.th_word)}</div>
 </div>`).join('')}
 </div>
 
@@ -5112,7 +5116,7 @@ function render(){
       <div class="gram-explain">${explainSentences.map(s=>`<p>${s}。</p>`).join('')}</div>
       <div class="ex-box">
         <div class="ex-th">${fTH(item.ex_th)}</div>
-        ${st.showRo?`<div class="ex-ro">${fRO(item.ex_ro)}</div>`:''}
+        ${st.showRo?`<div class="ex-ro">${renderRoSegments(fRO(item.ex_ro))}</div>`:''}
         <div class="ex-jp">${item.ex_jp}</div>
       </div>
       <div class="back-actions">
@@ -5131,13 +5135,13 @@ function render(){
       </div>`:'';
     if(st.dir==='th-jp'){
       front=`${ribHtml}${hole}${sc}<div class="th-big sm">${thT}</div>
-        ${st.showRo?`<div class="ro-front">${roT}</div>`:''}
+        ${st.showRo?`<div class="ro-front">${renderRoSegments(roT)}</div>`:''}
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップして意味を見る</div>`;
       back=`${ribHtml}${hole}
         <div class="conv-back-wrap">
           <div class="th-big sm" style="margin-top:10px;">${thT}</div>
-          ${st.showRo?`<div class="back-ro">${roT}</div>`:''}
+          ${st.showRo?`<div class="back-ro">${renderRoSegments(roT)}</div>`:''}
           <div class="back-jp" style="margin-top:8px;">${item.jp}</div>
           ${bdHtml}
           <div class="back-actions">
@@ -5153,7 +5157,7 @@ function render(){
       back=`${ribHtml}${hole}
         <div class="conv-back-wrap">
           <div class="th-big sm" style="margin-top:24px;">${thT}</div>
-          ${st.showRo?`<div class="back-ro">${roT}</div>`:''}
+          ${st.showRo?`<div class="back-ro">${renderRoSegments(roT)}</div>`:''}
           ${bdHtml}
           <div class="back-actions">
             <button class="audio-btn" id="audB">🔊</button>
