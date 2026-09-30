@@ -1111,7 +1111,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-09-30g';
+const APP_VERSION = '2026-09-30h';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3449,6 +3449,33 @@ function lkKey(){
 
 function getPosLabels(){ return POS_LABELS; }
 
+// 横スクロールタブ:実際にスクロール余地がある時だけ端をフェードさせる
+// (元は下部の別<script>ブロックで定義されていたが、requestAnimationFrame経由の
+// 初回呼び出しがそのブロックの実行前に発火するレースコンディションで
+// 「applyScrollFade is not defined」エラーが発生することがあったため、
+// 呼び出し箇所より確実に前で定義されるようこの位置に移動した)
+function applyScrollFade(el){
+  if(!el) return;
+  const update=()=>{
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    if(maxScroll <= 2){
+      el.classList.remove('scroll-fade-r','scroll-fade-l','scroll-fade-lr');
+      return;
+    }
+    const atStart = el.scrollLeft <= 2;
+    const atEnd = el.scrollLeft >= maxScroll - 2;
+    el.classList.remove('scroll-fade-r','scroll-fade-l','scroll-fade-lr');
+    if(atStart) el.classList.add('scroll-fade-r');
+    else if(atEnd) el.classList.add('scroll-fade-l');
+    else el.classList.add('scroll-fade-lr');
+  };
+  update();
+  if(!el.dataset.fadeBound){
+    el.addEventListener('scroll', update, {passive:true});
+    el.dataset.fadeBound = '1';
+  }
+}
+
 function renderModeTabs(){
   const mt=document.getElementById('modeTabs');
   if(!mt) return;
@@ -5609,29 +5636,6 @@ document.querySelectorAll('#pgBody img[data-key]').forEach(el=>{
     el.onclick = ()=>openImgLightbox(el.src);
   }
 });
-
-// 横スクロールタブ:実際にスクロール余地がある時だけ端をフェードさせる
-function applyScrollFade(el){
-  if(!el) return;
-  const update=()=>{
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    if(maxScroll <= 2){
-      el.classList.remove('scroll-fade-r','scroll-fade-l','scroll-fade-lr');
-      return;
-    }
-    const atStart = el.scrollLeft <= 2;
-    const atEnd = el.scrollLeft >= maxScroll - 2;
-    el.classList.remove('scroll-fade-r','scroll-fade-l','scroll-fade-lr');
-    if(atStart) el.classList.add('scroll-fade-r');
-    else if(atEnd) el.classList.add('scroll-fade-l');
-    else el.classList.add('scroll-fade-lr');
-  };
-  update();
-  if(!el.dataset.fadeBound){
-    el.addEventListener('scroll', update, {passive:true});
-    el.dataset.fadeBound = '1';
-  }
-}
 
 function detectPGKeys(text){
   // 文章中に実際に出てくる順番で記号を検出する
