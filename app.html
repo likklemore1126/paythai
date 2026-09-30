@@ -1119,7 +1119,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01c';
+const APP_VERSION = '2026-10-01d';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3045,33 +3045,6 @@ function buildExBox(ex) {
   </div>`;
 }
 
-// アプリを開き直した直後や、TTS(単語カード等のスピーカーアイコン)を使った直後は、
-// iOS側のAudio要素用の音声出力ルートが「温まって」いないため、次にm4a(母音テーブル
-// などのplayVowelAudio)を鳴らす時に最初の1回だけ音量が小さく再生される現象がある。
-// これを避けるため、ごく小さい音量で音声を裏で一瞬だけ再生→即停止し、実際の発音を
-// 鳴らす前に音声エンジンを先に有効化しておく。cbを渡すと、温め終わった直後に続けて
-// 本来の再生を行う。
-// ※ speak()/playVowelAudio() より前に定義しておくこと(スクリプト実行順の都合で、
-//    後方で定義すると初回呼び出し時に未定義になるケースがあるため)。
-let _audioWarmedUp = false;
-function warmUpAudioEngine(cb){
-  try{
-    const a = new Audio('vowel_s1.m4a');
-    a.volume = 0.05;
-    const p = a.play();
-    if(p && p.catch) p.catch(function(){});
-    setTimeout(function(){
-      try{ a.pause(); a.currentTime = 0; }catch(e){}
-      _audioWarmedUp = true;
-      if(cb) cb();
-    }, 80);
-  }catch(e){ _audioWarmedUp = true; if(cb) cb(); }
-}
-function _firstTouchWarmUp(){ if(!_audioWarmedUp) warmUpAudioEngine(); }
-document.addEventListener('pointerdown', _firstTouchWarmUp, {once:true, passive:true});
-document.addEventListener('touchstart', _firstTouchWarmUp, {once:true, passive:true});
-document.addEventListener('click', _firstTouchWarmUp, {once:true, passive:true});
-
 function speak(text){
   try{
     const syn=window.speechSynthesis; if(!syn||!text) return;
@@ -3081,32 +3054,89 @@ function speak(text){
     const v=(syn.getVoices()||[]).find(v=>v.lang&&v.lang.toLowerCase().startsWith('th'));
     if(v) u.voice=v;
     syn.speak(u);
-    // ブラウザのTTS(speechSynthesis)を使うと、iOS側でAudio要素(<audio>/new Audio)用の
-    // 音声出力ルートが一旦「冷めて」しまい、次にm4a(playVowelAudio)を鳴らす時に
-    // また最初の1回だけ音量が小さくなる現象がある。次回のm4a再生時に再ウォームアップ
-    // が必要なことを示すため、フラグを倒しておく。
-    _audioWarmedUp = false;
     if(typeof gtag === 'function'){
       gtag('event', 'audio_play', { audio_type: 'tts', item_name: text });
     }
   }catch(e){}
 }
 
+// ── 母音記号の発音音声(vowel_*.m4a)はWeb Audio APIで再生する ──────
+// 以前は new Audio(...).play() (<audio>要素方式) で鳴らしていたが、
+// iOS Safariでは<audio>要素の音声出力を有効化する際にOS側が自動で
+// フェードインをかける挙動があり、「1回目は小さく、数回タップすると
+// 徐々に本来の音量に上がっていく」という症状の原因になっていた。
+// Web Audio API(AudioContext)はブラウザの音声出力グラフに直接データを
+// 流し込む方式のため、このOS側フェードインの影響を受けず、初回から
+// 一定の音量で再生できる。
+// ※ speak()/playVowelAudio() より前に定義しておくこと(スクリプト実行順の都合で、
+//    後方で定義すると初回呼び出し時に未定義になるケースがあるため)。
+let _vowelAudioCtx = null;
+const _vowelBufferCache = {};   // id -> 読み込み済みAudioBuffer(2回目以降は再取得・再デコード不要)
+const _vowelBufferLoading = {}; // id -> 読み込み中Promise(同じ音を連打した時の多重リクエスト防止)
+
+function _getVowelAudioCtx(){
+  try{
+    if(!_vowelAudioCtx){
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if(!Ctx) return null;
+      _vowelAudioCtx = new Ctx();
+    }
+    if(_vowelAudioCtx.state === 'suspended'){ _vowelAudioCtx.resume().catch(function(){}); }
+    return _vowelAudioCtx;
+  }catch(e){ return null; }
+}
+// iOSはユーザー操作なしにAudioContextを有効化できないため、画面に最初に
+// 触れたタイミングで先に生成/再開しておく(実際の発音タップ時には既に
+// 有効化済みの状態にしておくことで、初回再生の遅延を減らす)。
+document.addEventListener('pointerdown', function(){ _getVowelAudioCtx(); }, {once:true, passive:true});
+document.addEventListener('touchstart', function(){ _getVowelAudioCtx(); }, {once:true, passive:true});
+document.addEventListener('click', function(){ _getVowelAudioCtx(); }, {once:true, passive:true});
+
+function _loadVowelBuffer(ctx, id){
+  if(_vowelBufferCache[id]) return Promise.resolve(_vowelBufferCache[id]);
+  if(_vowelBufferLoading[id]) return _vowelBufferLoading[id];
+  const p = fetch('vowel_'+id+'.m4a')
+    .then(function(res){
+      if(!res.ok) throw new Error('vowel audio fetch failed: '+id);
+      return res.arrayBuffer();
+    })
+    .then(function(ab){
+      return new Promise(function(resolve, reject){
+        // decodeAudioDataはコールバック指定時も内部的にPromiseを返す実装があり、
+        // それを放置すると「未処理のPromise拒否」として無関係なエラーが出ることが
+        // あるため、明示的に握りつぶしておく(実際のエラー処理はreject側で行う)。
+        const maybe = ctx.decodeAudioData(ab, resolve, reject);
+        if(maybe && maybe.catch) maybe.catch(function(){});
+      });
+    })
+    .then(function(buf){
+      _vowelBufferCache[id] = buf;
+      delete _vowelBufferLoading[id];
+      return buf;
+    })
+    .catch(function(err){ delete _vowelBufferLoading[id]; throw err; });
+  _vowelBufferLoading[id] = p;
+  return p;
+}
+
 function playVowelAudio(id, spk){
-  function doPlay(){
-    try{
-      const a = new Audio('vowel_'+id+'.m4a');
-      a.onerror = function(){ speak(spk); };
-      a.play().catch(function(){ speak(spk); });
-      if(typeof gtag === 'function'){
-        gtag('event', 'audio_play', { audio_type: 'vowel', item_name: id });
-      }
-    }catch(e){ speak(spk); }
-  }
-  // 直前にTTSを使っていた（＝音声ルートが冷めている）場合は、実際の発音を鳴らす前に
-  // 一瞬だけウォームアップしてから再生する。既にウォームアップ済みなら即再生。
-  if(!_audioWarmedUp){ warmUpAudioEngine(doPlay); }
-  else { doPlay(); }
+  try{
+    const ctx = _getVowelAudioCtx();
+    if(!ctx){ speak(spk); return; }
+    _loadVowelBuffer(ctx, id).then(function(buffer){
+      try{
+        const src = ctx.createBufferSource();
+        src.buffer = buffer;
+        const gain = ctx.createGain();
+        gain.gain.value = 1;
+        src.connect(gain).connect(ctx.destination);
+        src.start(0);
+        if(typeof gtag === 'function'){
+          gtag('event', 'audio_play', { audio_type: 'vowel', item_name: id });
+        }
+      }catch(e){ speak(spk); }
+    }).catch(function(){ speak(spk); });
+  }catch(e){ speak(spk); }
 }
 
 // ─── 汎用モーダル（alert / confirm / prompt の置き換え） ──────────
