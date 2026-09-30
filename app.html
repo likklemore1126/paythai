@@ -330,7 +330,7 @@ footer{text-align:center;padding:6px 0 2px;}
 
   <footer>
     <div id="exportTipWrap"></div>
-    <div style="display:flex;gap:10px;max-width:320px;margin:0 auto;">
+    <div id="exportImportWrap" style="display:flex;gap:10px;max-width:320px;margin:0 auto;">
       <button class="reset-btn" id="exportBtn" style="flex:1;aspect-ratio:1/0.4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-decoration:none;font-size:13px;font-weight:700;text-align:center;line-height:1.4;background:rgba(255,255,255,.05);color:#c9c4bb;border:1.5px solid rgba(255,255,255,.18);border-radius:14px;"><span style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:6px;background:rgba(242,183,5,.18);color:#f2b705;">EX</span>学習記録を<br>エクスポート</button>
       <button class="reset-btn" id="importBtn" style="flex:1;aspect-ratio:1/0.4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-decoration:none;font-size:13px;font-weight:700;text-align:center;line-height:1.4;background:rgba(255,255,255,.05);color:#c9c4bb;border:1.5px solid rgba(255,255,255,.18);border-radius:14px;"><span style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:6px;background:rgba(242,183,5,.18);color:#f2b705;">IN</span>学習記録を<br>インポート</button>
     </div>
@@ -1093,7 +1093,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-09-30d';
+const APP_VERSION = '2026-09-30e';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4863,8 +4863,11 @@ function render(){
   if(modeTipWrap) modeTipWrap.innerHTML=(st.mode==='font')?renderCoachMark('numbersTab'):'';
   const subTipWrap=document.getElementById('subTipWrap');
   if(subTipWrap) subTipWrap.innerHTML=(st.mode==='conversation')?renderCoachMark('convScenes'):'';
+  // エクスポート/インポートはカードのあるページ(単語・会話・文法)のみ表示
+  const exportImportWrap=document.getElementById('exportImportWrap');
+  if(exportImportWrap) exportImportWrap.style.display=(isStatic||isWordlist)?'none':'flex';
   const exportTipWrap=document.getElementById('exportTipWrap');
-  if(exportTipWrap) exportTipWrap.innerHTML=renderCoachMark('exportImport');
+  if(exportTipWrap) exportTipWrap.innerHTML=(isStatic||isWordlist)?'':renderCoachMark('exportImport');
   const resetTipWrap=document.getElementById('resetTipWrap');
   if(resetTipWrap) resetTipWrap.innerHTML=renderCoachMark('resetInfo','20px 12px 4px');
   const sp=document.getElementById('staticPage');
