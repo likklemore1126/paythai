@@ -293,8 +293,11 @@ footer{text-align:center;padding:6px 0 2px;}
 @keyframes pgPulse{0%{box-shadow:0 0 0 0 rgba(224,167,46,.85);}70%{box-shadow:0 0 0 16px rgba(224,167,46,0);}100%{box-shadow:0 0 0 0 rgba(224,167,46,0);}}
 .pg-card.pg-pulse{animation:pgPulse .8s ease-out;}
 
-/* 単語カード等のro表記内で、特殊記号を含む音節だけをタップ対象にする色付きリンク */
-.pg-seg{color:#c0392b;font-weight:800;}
+/* 単語カード等のro表記内で、特殊記号を含む音節だけをタップ対象にする色付きリンク。
+   隣り合う音節が両方ともリンクになるケース(例:ráan sàduak sɯ́ɯ)で、文字色だけだと
+   繋がって「1つのリンク」に見えてしまうため、チップ状の背景で個々の音節を
+   はっきり区切る。 */
+.pg-seg{display:inline-block;color:#c0392b;font-weight:800;background:rgba(192,57,43,.13);border:1px solid rgba(192,57,43,.35);border-radius:7px;padding:0 5px;margin:1px 2px;text-decoration:none;}
 
 .ro-front,.back-ro,.list-ro-text,.conv-list-ro,.ex-ro,.rb{cursor:pointer;text-decoration:underline dotted #a9986b 1.5px;text-underline-offset:4px;}
 .list-ro-text{display:inline-block;}
@@ -1116,7 +1119,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-09-30i';
+const APP_VERSION = '2026-09-30j';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
