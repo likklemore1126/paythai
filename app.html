@@ -1119,7 +1119,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01a';
+const APP_VERSION = '2026-10-01b';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3070,6 +3070,27 @@ function playVowelAudio(id, spk){
     }
   }catch(e){ speak(spk); }
 }
+
+// アプリを開き直した直後は、iOS側の音声再生エンジン(オーディオセッション)が
+// まだ「温まって」いないため、最初の1〜数回だけ音量が小さく再生される現象がある。
+// これを避けるため、ユーザーが画面のどこかに最初に触れたタイミングで、
+// ごく小さい音量で音声を裏で一瞬だけ再生→即停止し、実際に発音ボタンを
+// 押す前に音声エンジンを先に有効化しておく。
+let _audioWarmedUp = false;
+function warmUpAudioEngine(){
+  if(_audioWarmedUp) return;
+  _audioWarmedUp = true;
+  try{
+    const a = new Audio('vowel_s1.m4a');
+    a.volume = 0.05;
+    const p = a.play();
+    if(p && p.catch) p.catch(function(){});
+    setTimeout(function(){ try{ a.pause(); a.currentTime = 0; }catch(e){} }, 80);
+  }catch(e){}
+}
+document.addEventListener('pointerdown', warmUpAudioEngine, {once:true, passive:true});
+document.addEventListener('touchstart', warmUpAudioEngine, {once:true, passive:true});
+document.addEventListener('click', warmUpAudioEngine, {once:true, passive:true});
 
 // ─── 汎用モーダル（alert / confirm / prompt の置き換え） ──────────
 function _genModalShow(opts){
