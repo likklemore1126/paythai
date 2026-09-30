@@ -290,6 +290,11 @@ footer{text-align:center;padding:6px 0 2px;}
 .pg-card{scroll-margin-top:8px;margin-bottom:14px;border-radius:12px;overflow:hidden;border:1px solid #eadfc4;background:#fff;}
 .pg-card img{display:block;width:100%;height:auto;}
 .pg-card.pg-highlight{outline:3px solid #e0a72e;}
+@keyframes pgPulse{0%{box-shadow:0 0 0 0 rgba(224,167,46,.85);}70%{box-shadow:0 0 0 16px rgba(224,167,46,0);}100%{box-shadow:0 0 0 0 rgba(224,167,46,0);}}
+.pg-card.pg-pulse{animation:pgPulse .8s ease-out;}
+
+/* 単語カード等のro表記内で、特殊記号を含む音節だけをタップ対象にする色付きリンク */
+.pg-seg{color:#c0392b;font-weight:800;}
 
 .ro-front,.back-ro,.list-ro-text,.conv-list-ro,.ex-ro,.rb{cursor:pointer;text-decoration:underline dotted #a9986b 1.5px;text-underline-offset:4px;}
 .list-ro-text{display:inline-block;}
@@ -1111,7 +1116,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-09-30h';
+const APP_VERSION = '2026-09-30i';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3476,6 +3481,76 @@ function applyScrollFade(el){
   }
 }
 
+// 発音記号ガイド用: テキスト中の特殊母音記号・声調記号を、実際に出てくる順番で検出する。
+// (元は下部の別<script>ブロックで定義されていたが、renderRoSegments()を単語カードの
+// 初回描画(ページ読み込み直後の同期処理)から呼び出すようになったため、
+// applyScrollFadeと同じ理由でこちらも呼び出し箇所より確実に前へ移動した)
+function detectPGKeys(text){
+  // 文章中に実際に出てくる順番で記号を検出する
+  if(!text) return [];
+  const norm = text.normalize('NFD');
+  const vowelMap = {'ɛ':'vowel_epsilon','ɔ':'vowel_open_o','ɤ':'vowel_ram_horn','ŋ':'vowel_eng','ɯ':'vowel_turned_m'};
+  const toneMap = {'̀':'tone_low_a_grave','́':'tone_high_a_acute','̂':'tone_falling_a_circ','̌':'tone_rising_a_caron'};
+  const found = [];
+  const seen = new Set();
+  let hasToneMark = false;
+  for(let i=0;i<norm.length;i++){
+    const ch = norm[i];
+    if(vowelMap[ch] && !seen.has(vowelMap[ch])){
+      found.push({index:i, key:vowelMap[ch]});
+      seen.add(vowelMap[ch]);
+    } else if(toneMap[ch] && !seen.has(toneMap[ch])){
+      found.push({index:i, key:toneMap[ch]});
+      seen.add(toneMap[ch]);
+      hasToneMark = true;
+    }
+  }
+  found.sort((a,b)=>a.index-b.index);
+  const orderedKeys = found.map(f=>f.key);
+  if(!hasToneMark) orderedKeys.push('tone_mid_flat'); // 声調記号が無ければ平声として末尾に追加
+  return orderedKeys;
+}
+
+// 単語カードの音節ごとリンク化用: detectPGKeysと違い「声調記号が無ければ平声を補う」
+// 処理をしない(=本当に特殊記号を含む音節だけを検出する)。これが無いと、記号を
+// 一切含まない普通の音節(例:「din」)まで平声(tone_mid_flat)扱いでリンクになって
+// しまい、「記号がある部分だけ色付きリンクにする」という目的に合わなくなるため。
+function detectPGKeysStrict(text){
+  if(!text) return [];
+  const norm = text.normalize('NFD');
+  const vowelMap = {'ɛ':'vowel_epsilon','ɔ':'vowel_open_o','ɤ':'vowel_ram_horn','ŋ':'vowel_eng','ɯ':'vowel_turned_m'};
+  const toneMap = {'̀':'tone_low_a_grave','́':'tone_high_a_acute','̂':'tone_falling_a_circ','̌':'tone_rising_a_caron'};
+  const found = [];
+  const seen = new Set();
+  for(let i=0;i<norm.length;i++){
+    const ch = norm[i];
+    if(vowelMap[ch] && !seen.has(vowelMap[ch])){
+      found.push({index:i, key:vowelMap[ch]});
+      seen.add(vowelMap[ch]);
+    } else if(toneMap[ch] && !seen.has(toneMap[ch])){
+      found.push({index:i, key:toneMap[ch]});
+      seen.add(toneMap[ch]);
+    }
+  }
+  found.sort((a,b)=>a.index-b.index);
+  return found.map(f=>f.key);
+}
+
+// ro表記(ローマ字)をスペース区切りの音節ごとに分割し、特殊記号を含む音節だけを
+// 色付き・太字のタップ対象(.pg-seg)にする。タップするとその音節の記号だけを
+// 対象に発音ガイドが開く(単語全体の記号を一つずつ探す必要がなくなる)。
+// 記号を含まない音節はそのままの見た目で表示する(全体タップの発音ガイドは
+// これまで通り既存のクリックハンドラでカバーされる)。
+function renderRoSegments(ro){
+  if(!ro) return '';
+  return ro.split(' ').map(function(token){
+    if(!token) return '';
+    const keys = detectPGKeysStrict(token);
+    if(!keys.length) return token;
+    return '<span class="pg-seg" data-pgkeys="'+keys.join(',')+'">'+token+'</span>';
+  }).join(' ');
+}
+
 function renderModeTabs(){
   const mt=document.getElementById('modeTabs');
   if(!mt) return;
@@ -5089,12 +5164,12 @@ function render(){
     const lvB='';
     if(st.dir==='th-jp'){
       front=`${ribHtml}${hole}${lvB}<div class="th-big">${item.th}</div>
-        ${st.showRo?`<div class="ro-front">${item.ro}</div>`:''}
+        ${st.showRo?`<div class="ro-front">${renderRoSegments(item.ro)}</div>`:''}
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップして意味を見る</div>`;
       back=`${ribHtml}${hole}
         <div class="th-big sm" style="margin-top:8px;">${item.th}</div>
-        ${st.showRo?`<div class="back-ro">${item.ro}</div>`:''}
+        ${st.showRo?`<div class="back-ro">${renderRoSegments(item.ro)}</div>`:''}
         <div class="back-jp" style="margin-top:10px;">${item.jp}</div>
         <div id="exampleBox" style="overflow-y:auto;overflow-x:hidden;"></div>
         <div class="back-actions">
@@ -5107,7 +5182,7 @@ function render(){
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップしてタイ語を見る</div>`;
       back=`${ribHtml}${hole}<div class="th-big sm" style="margin-top:24px;">${item.th}</div>
-        ${st.showRo?`<div class="back-ro">${item.ro}</div>`:''}
+        ${st.showRo?`<div class="back-ro">${renderRoSegments(item.ro)}</div>`:''}
         <div id="exampleBox" style="overflow-y:auto;overflow-x:hidden;"></div>
         <div class="back-actions">
           <button class="audio-btn" id="audB">🔊</button>
@@ -5637,32 +5712,6 @@ document.querySelectorAll('#pgBody img[data-key]').forEach(el=>{
   }
 });
 
-function detectPGKeys(text){
-  // 文章中に実際に出てくる順番で記号を検出する
-  if(!text) return [];
-  const norm = text.normalize('NFD');
-  const vowelMap = {'ɛ':'vowel_epsilon','ɔ':'vowel_open_o','ɤ':'vowel_ram_horn','ŋ':'vowel_eng','ɯ':'vowel_turned_m'};
-  const toneMap = {'\u0300':'tone_low_a_grave','\u0301':'tone_high_a_acute','\u0302':'tone_falling_a_circ','\u030C':'tone_rising_a_caron'};
-  const found = [];
-  const seen = new Set();
-  let hasToneMark = false;
-  for(let i=0;i<norm.length;i++){
-    const ch = norm[i];
-    if(vowelMap[ch] && !seen.has(vowelMap[ch])){
-      found.push({index:i, key:vowelMap[ch]});
-      seen.add(vowelMap[ch]);
-    } else if(toneMap[ch] && !seen.has(toneMap[ch])){
-      found.push({index:i, key:toneMap[ch]});
-      seen.add(toneMap[ch]);
-      hasToneMark = true;
-    }
-  }
-  found.sort((a,b)=>a.index-b.index);
-  const orderedKeys = found.map(f=>f.key);
-  if(!hasToneMark) orderedKeys.push('tone_mid_flat'); // 声調記号が無ければ平声として末尾に追加
-  return orderedKeys;
-}
-
 let pgBodyScrollLockY = 0;
 function openPronunciationGuide(info){
   info = info || {th:'',ro:'',jp:''};
@@ -5684,12 +5733,15 @@ function openPronunciationGuide(info){
     bar.classList.add('empty');
   }
 
-  document.querySelectorAll('.pg-card').forEach(c=>c.classList.remove('pg-highlight'));
-  const keys = info.forceKey ? [info.forceKey] : detectPGKeys(info.ro || '');
+  document.querySelectorAll('.pg-card').forEach(c=>{c.classList.remove('pg-highlight'); c.classList.remove('pg-pulse');});
+  // forceKeys(複数): 音節リンク(.pg-seg)からのタップ用。forceKey(単数): 母音表からのタップ用(従来通り)。
+  // どちらも無ければ、単語全体の文字列から自動検出(従来通り)。
+  const keys = info.forceKeys ? info.forceKeys : (info.forceKey ? [info.forceKey] : detectPGKeys(info.ro || ''));
   let firstEl = null;
+  const pulseEls = [];
   keys.forEach(k=>{
     const el = document.getElementById('pg-'+k);
-    if(el){ el.classList.add('pg-highlight'); if(!firstEl) firstEl = el; }
+    if(el){ el.classList.add('pg-highlight'); if(!firstEl) firstEl = el; pulseEls.push(el); }
   });
   // 背景スクロールロック
   pgBodyScrollLockY = window.scrollY;
@@ -5699,6 +5751,9 @@ function openPronunciationGuide(info){
   setTimeout(()=>{
     if(firstEl){ firstEl.scrollIntoView({block:'start'}); }
     else { document.getElementById('pgBody').scrollTop = 0; }
+    // 「今この記号を見てますよ」を一瞬強調するパルス演出
+    pulseEls.forEach(el=>el.classList.add('pg-pulse'));
+    setTimeout(()=>{ pulseEls.forEach(el=>el.classList.remove('pg-pulse')); }, 1600);
   }, 30);
 }
 
@@ -5749,6 +5804,17 @@ function getPGWordInfo(el){
 
 // 発音記号(ro表記)をタップしたらガイドを開く(背景タップでは閉じない)
 document.addEventListener('click', function(e){
+  // 音節ごとの色付きリンク(.pg-seg)がタップされた場合は、その音節の記号だけを対象にする
+  const seg = e.target.closest('.pg-seg');
+  if(seg){
+    e.stopPropagation();
+    e.preventDefault();
+    const container = seg.closest('.ro-front,.back-ro,.list-ro-text,.conv-list-ro,.vowel-symbol-ro,.ex-ro,.rb') || seg;
+    const info = getPGWordInfo(container);
+    info.forceKeys = (seg.dataset.pgkeys || '').split(',').filter(Boolean);
+    openPronunciationGuide(info);
+    return;
+  }
   const el = e.target.closest('.ro-front,.back-ro,.list-ro-text,.conv-list-ro,.vowel-symbol-ro,.ex-ro,.rb');
   if(el){
     e.stopPropagation();
