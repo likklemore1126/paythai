@@ -1093,7 +1093,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-09-30e';
+const APP_VERSION = '2026-09-30f';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4869,7 +4869,7 @@ function render(){
   const exportTipWrap=document.getElementById('exportTipWrap');
   if(exportTipWrap) exportTipWrap.innerHTML=(isStatic||isWordlist)?'':renderCoachMark('exportImport');
   const resetTipWrap=document.getElementById('resetTipWrap');
-  if(resetTipWrap) resetTipWrap.innerHTML=renderCoachMark('resetInfo','20px 12px 4px');
+  if(resetTipWrap) resetTipWrap.innerHTML=(isStatic||isWordlist)?'':renderCoachMark('resetInfo','20px 12px 4px');
   const sp=document.getElementById('staticPage');
   const lp=document.getElementById('listPage');
   const bb=document.getElementById('backBtn');
