@@ -1119,7 +1119,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01b';
+const APP_VERSION = '2026-10-01c';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3045,6 +3045,33 @@ function buildExBox(ex) {
   </div>`;
 }
 
+// アプリを開き直した直後や、TTS(単語カード等のスピーカーアイコン)を使った直後は、
+// iOS側のAudio要素用の音声出力ルートが「温まって」いないため、次にm4a(母音テーブル
+// などのplayVowelAudio)を鳴らす時に最初の1回だけ音量が小さく再生される現象がある。
+// これを避けるため、ごく小さい音量で音声を裏で一瞬だけ再生→即停止し、実際の発音を
+// 鳴らす前に音声エンジンを先に有効化しておく。cbを渡すと、温め終わった直後に続けて
+// 本来の再生を行う。
+// ※ speak()/playVowelAudio() より前に定義しておくこと(スクリプト実行順の都合で、
+//    後方で定義すると初回呼び出し時に未定義になるケースがあるため)。
+let _audioWarmedUp = false;
+function warmUpAudioEngine(cb){
+  try{
+    const a = new Audio('vowel_s1.m4a');
+    a.volume = 0.05;
+    const p = a.play();
+    if(p && p.catch) p.catch(function(){});
+    setTimeout(function(){
+      try{ a.pause(); a.currentTime = 0; }catch(e){}
+      _audioWarmedUp = true;
+      if(cb) cb();
+    }, 80);
+  }catch(e){ _audioWarmedUp = true; if(cb) cb(); }
+}
+function _firstTouchWarmUp(){ if(!_audioWarmedUp) warmUpAudioEngine(); }
+document.addEventListener('pointerdown', _firstTouchWarmUp, {once:true, passive:true});
+document.addEventListener('touchstart', _firstTouchWarmUp, {once:true, passive:true});
+document.addEventListener('click', _firstTouchWarmUp, {once:true, passive:true});
+
 function speak(text){
   try{
     const syn=window.speechSynthesis; if(!syn||!text) return;
@@ -3054,6 +3081,11 @@ function speak(text){
     const v=(syn.getVoices()||[]).find(v=>v.lang&&v.lang.toLowerCase().startsWith('th'));
     if(v) u.voice=v;
     syn.speak(u);
+    // ブラウザのTTS(speechSynthesis)を使うと、iOS側でAudio要素(<audio>/new Audio)用の
+    // 音声出力ルートが一旦「冷めて」しまい、次にm4a(playVowelAudio)を鳴らす時に
+    // また最初の1回だけ音量が小さくなる現象がある。次回のm4a再生時に再ウォームアップ
+    // が必要なことを示すため、フラグを倒しておく。
+    _audioWarmedUp = false;
     if(typeof gtag === 'function'){
       gtag('event', 'audio_play', { audio_type: 'tts', item_name: text });
     }
@@ -3061,36 +3093,21 @@ function speak(text){
 }
 
 function playVowelAudio(id, spk){
-  try{
-    const a = new Audio('vowel_'+id+'.m4a');
-    a.onerror = function(){ speak(spk); };
-    a.play().catch(function(){ speak(spk); });
-    if(typeof gtag === 'function'){
-      gtag('event', 'audio_play', { audio_type: 'vowel', item_name: id });
-    }
-  }catch(e){ speak(spk); }
+  function doPlay(){
+    try{
+      const a = new Audio('vowel_'+id+'.m4a');
+      a.onerror = function(){ speak(spk); };
+      a.play().catch(function(){ speak(spk); });
+      if(typeof gtag === 'function'){
+        gtag('event', 'audio_play', { audio_type: 'vowel', item_name: id });
+      }
+    }catch(e){ speak(spk); }
+  }
+  // 直前にTTSを使っていた（＝音声ルートが冷めている）場合は、実際の発音を鳴らす前に
+  // 一瞬だけウォームアップしてから再生する。既にウォームアップ済みなら即再生。
+  if(!_audioWarmedUp){ warmUpAudioEngine(doPlay); }
+  else { doPlay(); }
 }
-
-// アプリを開き直した直後は、iOS側の音声再生エンジン(オーディオセッション)が
-// まだ「温まって」いないため、最初の1〜数回だけ音量が小さく再生される現象がある。
-// これを避けるため、ユーザーが画面のどこかに最初に触れたタイミングで、
-// ごく小さい音量で音声を裏で一瞬だけ再生→即停止し、実際に発音ボタンを
-// 押す前に音声エンジンを先に有効化しておく。
-let _audioWarmedUp = false;
-function warmUpAudioEngine(){
-  if(_audioWarmedUp) return;
-  _audioWarmedUp = true;
-  try{
-    const a = new Audio('vowel_s1.m4a');
-    a.volume = 0.05;
-    const p = a.play();
-    if(p && p.catch) p.catch(function(){});
-    setTimeout(function(){ try{ a.pause(); a.currentTime = 0; }catch(e){} }, 80);
-  }catch(e){}
-}
-document.addEventListener('pointerdown', warmUpAudioEngine, {once:true, passive:true});
-document.addEventListener('touchstart', warmUpAudioEngine, {once:true, passive:true});
-document.addEventListener('click', warmUpAudioEngine, {once:true, passive:true});
 
 // ─── 汎用モーダル（alert / confirm / prompt の置き換え） ──────────
 function _genModalShow(opts){
