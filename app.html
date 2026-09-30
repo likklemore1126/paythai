@@ -1119,7 +1119,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01d';
+const APP_VERSION = '2026-10-01e';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3091,6 +3091,55 @@ function _getVowelAudioCtx(){
 document.addEventListener('pointerdown', function(){ _getVowelAudioCtx(); }, {once:true, passive:true});
 document.addEventListener('touchstart', function(){ _getVowelAudioCtx(); }, {once:true, passive:true});
 document.addEventListener('click', function(){ _getVowelAudioCtx(); }, {once:true, passive:true});
+
+// TTSを一切使わず母音を連打しても「1回目小→2回目中→3回目MAX」と段階的に
+// 音量が上がる現象が実機(iOS Safari)で確認された。<audio>要素・Web Audio API
+// どちらでも同じ現象が起きたことから、JS側の再生方式ではなく、iOS側が
+// 「音が何も鳴っていない時間があると、次に音を鳴らす時にハードウェア出力が
+// アイドルから復帰する際に段階的に音量が上がる」というWebKit特有のクセと
+// 考えられる。対策として、母音タブ/声調タブを開いている間だけ、人の耳には
+// ほぼ聞こえないごく小さな音(可聴域より低い20Hz・音量0.0006)を途切れさせず
+// 鳴らし続け、音声エンジンを常に「起きている」状態に保つ。これによりアイドル
+// 復帰時のランプを避け、実際の発音は毎回フル音量で鳴ることを狙う。
+// ※iOSはこの間「音声再生中」と認識するため、コントロールセンター等に再生中
+// 表示が出る可能性がある。そのため母音/声調タブを開いている間だけに限定し、
+// 他のタブに移動したら即座に止める(render()から_syncVowelKeepAlive()で同期)。
+let _vowelKeepAliveOsc = null;
+let _vowelKeepAliveGain = null;
+function _startVowelKeepAlive(){
+  if(_vowelKeepAliveOsc) return; // 既に鳴らしている
+  const ctx = _getVowelAudioCtx();
+  if(!ctx) return;
+  try{
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    g.gain.value = 0.0006;
+    osc.frequency.value = 20;
+    osc.connect(g).connect(ctx.destination);
+    osc.start();
+    _vowelKeepAliveOsc = osc;
+    _vowelKeepAliveGain = g;
+  }catch(e){}
+}
+function _stopVowelKeepAlive(){
+  if(_vowelKeepAliveOsc){
+    try{ _vowelKeepAliveOsc.stop(); _vowelKeepAliveOsc.disconnect(); }catch(e){}
+    _vowelKeepAliveOsc = null;
+  }
+  if(_vowelKeepAliveGain){
+    try{ _vowelKeepAliveGain.disconnect(); }catch(e){}
+    _vowelKeepAliveGain = null;
+  }
+}
+function _syncVowelKeepAlive(){
+  const shouldRun = (st.mode==='font' && (st.fontTab==='vowel' || st.fontTab==='tone'));
+  if(shouldRun){ _startVowelKeepAlive(); } else { _stopVowelKeepAlive(); }
+}
+// タブが非表示になった時(アプリ切り替え等)は止め、復帰時は母音/声調タブを
+// 開いたままなら再開する。
+document.addEventListener('visibilitychange', function(){
+  if(document.hidden){ _stopVowelKeepAlive(); } else { _syncVowelKeepAlive(); }
+});
 
 function _loadVowelBuffer(ctx, id){
   if(_vowelBufferCache[id]) return Promise.resolve(_vowelBufferCache[id]);
@@ -5099,6 +5148,7 @@ function render(){
   renderSub();
   renderSettings();
   updateHelpBtn();
+  _syncVowelKeepAlive();
 
   const isStatic=['font','numbers'].includes(st.mode);
   const isWordlist=(st.mode==='wordlist');
