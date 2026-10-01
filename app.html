@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01l';
+const APP_VERSION = '2026-10-01m';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5356,8 +5356,6 @@ function renderNumbers(){
   // 🔊は枠内タップではなく、タイ文字(母音表)と同じ34pxの独立したボタンにする
   // (枠のどこを押しても音が出る方式だと、読んでいるだけで誤って再生されてしまうため)
   const numAudioBtn=(th)=>`<button onclick="event.stopPropagation();speak('${th}')" style="width:34px;height:34px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>`;
-  // 2桁組み合わせ例(exCard)は背景がまだ暗色のままなので、そちらだけ従来の黄色ボタンを使う
-  const numAudioBtnOnDark=(th)=>`<button onclick="event.stopPropagation();speak('${th}')" style="width:34px;height:34px;border-radius:50%;background:var(--yellow);border:none;color:#2b2118;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>`;
 
   // 基本数字0〜9＋位の単位: 表=数字、裏=実用例文、のフリップカード。
   // 1列・横長カード。表=数字を横並びでコンパクトに、裏=例文を横幅いっぱい使って折り返しを減らす。
@@ -5397,19 +5395,19 @@ function renderNumbers(){
 </div>`;
   };
 
-  // 1列・横長カード(基本数字/位の単位と同じ方針)。表示項目は従来通り(背景色・音声ボタンは暗色のまま)。
+  // 1列・横長カード(基本数字/位の単位と同じクリーム背景に統一)。横長で余白が目立たないよう文字サイズを拡大。
   const exCard=(n)=>`
-<div style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:8px 12px;display:flex;align-items:center;gap:10px;min-width:0;">
-  <div style="display:flex;flex-direction:column;align-items:flex-start;min-width:68px;flex-shrink:0;">
-    <span style="font-family:'Sarabun',sans-serif;font-size:26px;color:#fff;line-height:1.2;">${n.th_num}</span>
-    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--yellow);">${n.arabic}</span>
+<div style="background:var(--tag);border:1px solid var(--tag-edge);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:12px;min-width:0;">
+  <div style="display:flex;flex-direction:column;align-items:flex-start;min-width:72px;flex-shrink:0;">
+    <span style="font-family:'Sarabun',sans-serif;font-size:30px;color:#2b2118;line-height:1.2;">${n.th_num}</span>
+    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#b5860a;">${n.arabic}</span>
   </div>
   <div style="flex:1;min-width:0;">
-    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">${n.ro}</div>
-    <div style="font-family:'Sarabun',sans-serif;font-size:15px;color:var(--muted2);">${n.th_word}</div>
-    <div style="font-size:11px;color:#f2b705;margin-top:1px;">${n.note}</div>
+    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;">${n.ro}</div>
+    <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#4a3d2a;">${n.th_word}</div>
+    <div style="font-size:12px;color:#9a6a1f;margin-top:2px;">${n.note}</div>
   </div>
-  <div style="flex-shrink:0;">${numAudioBtnOnDark(n.th_word)}</div>
+  <div style="flex-shrink:0;">${numAudioBtn(n.th_word)}</div>
 </div>`;
 
   return `
