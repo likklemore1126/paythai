@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01w';
+const APP_VERSION = '2026-10-01x';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5185,15 +5185,15 @@ function renderToneSection(){
   <div style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;margin-bottom:10px;">
     <div style="font-weight:700;color:#fff;margin-bottom:8px;font-size:14px;">🖼️ イラストでイメージをつかもう</div>
     <p style="font-size:13px;color:#e4e1e8;line-height:1.7;margin:0 0 9px;">
-    声の高さの動きを、表情とグラフでイメージにしてみました。画像はタップで拡大できます。下のボタンで同じ音節(กา)の聞き比べもできます。
+    声の高さの動きを、表情とグラフでイメージにしてみました。画像はタップで拡大できます。下のボタンでイラスト内の例の単語を実際に聞けます。
     </p>
     <div style="display:flex;flex-direction:column;gap:10px;">
       ${[
-        ['tone_card_mid.jpg','กา','kaa'],
-        ['tone_card_low.jpg','ก่า','kàa'],
-        ['tone_card_falling.jpg','ก้า','kâa'],
-        ['tone_card_high.jpg','ก๊า','káa'],
-        ['tone_card_rising.jpg','ก๋า','kǎa'],
+        ['tone_card_mid.jpg','มา','maa'],
+        ['tone_card_low.jpg','เด็ก','dèk'],
+        ['tone_card_falling.jpg','ข้าว','khâao'],
+        ['tone_card_high.jpg','รถ','rót'],
+        ['tone_card_rising.jpg','หมา','mǎa'],
       ].map(function(v){
         return '<div style="background:rgba(255,255,255,.05);border-radius:10px;padding:8px;">'
           +'<img src="'+v[0]+'" loading="lazy" style="width:100%;border-radius:8px;display:block;cursor:zoom-in;" onclick="openImgLightbox(this.src)">'
@@ -5327,7 +5327,7 @@ function renderToneSection(){
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↑</div><div style="font-size:12px;color:var(--muted);">トリー</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタ</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタワー</div></td>
   </tr>
   </table>
 </div>
@@ -5345,10 +5345,10 @@ function renderToneSection(){
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>促音節</th>
     <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ข่</div><div style="font-size:10px;color:var(--muted);">マイエーク</div></th>
     <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ข้</div><div style="font-size:10px;color:var(--muted);">マイトー</div></th>
-    <th colspan="2" style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">トリー・ジャッタ<br>使用なし</th>
+    <th colspan="2" style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">トリー・ジャッタワー<br>使用なし</th>
   </tr>
   <tr style="background:rgba(76,154,106,.1);">
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタ</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタワー</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
@@ -5451,11 +5451,11 @@ ${[
 <div class="fold-body" style="padding:8px 0 4px;">
 <div class="illust-grid">
   ${[
-    ['tone_mid_flat',        '平声・サーマン'],
+    ['tone_mid_flat',        '中声・サーマン'],
     ['tone_low_a_grave',     '低声・エーク'],
-    ['tone_falling_a_circ',  '下声・トー'],
+    ['tone_falling_a_circ',  '下降声・トー'],
     ['tone_high_a_acute',    '高声・トリー'],
-    ['tone_rising_a_caron',  '上声・ジャッタ'],
+    ['tone_rising_a_caron',  '上昇声・ジャッタワー'],
   ].map(function(t){
     return '<figure><img src="'+(PG_IMAGES[t[0]]||'')+'" loading="lazy" onclick="openImgLightbox(this.src)"><figcaption>'+t[1]+'</figcaption></figure>';
   }).join('')}
