@@ -1419,7 +1419,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01f';
+const APP_VERSION = '2026-10-01g';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3345,12 +3345,12 @@ function buildExBox(ex) {
   </div>`;
 }
 
-function speak(text){
+function speak(text, rate){
   try{
     const syn=window.speechSynthesis; if(!syn||!text) return;
     syn.cancel();
     const u=new SpeechSynthesisUtterance(text);
-    u.lang='th-TH'; u.rate=0.85;
+    u.lang='th-TH'; u.rate=(typeof rate==='number')?rate:0.85;
     const v=(syn.getVoices()||[]).find(v=>v.lang&&v.lang.toLowerCase().startsWith('th'));
     if(v) u.voice=v;
     syn.speak(u);
@@ -5585,7 +5585,9 @@ function render(){
     e.stopPropagation();
     if(st.mode==='vocab'){
       const ex=buildExampleStatic(item,st.pos);
-      if(ex&&ex.th) speak(ex.th);
+      if(ex&&ex.th) speak(ex.th, 0.7); // 例文は単語・会話より少しゆっくり読み上げる
+    } else if(st.mode==='grammar'){
+      speak(spk, 0.7); // 文法の例文もゆっくり読み上げる
     } else {
       speak(spk);
     }
