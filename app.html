@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01r';
+const APP_VERSION = '2026-10-01s';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5153,7 +5153,34 @@ function renderToneSection(){
 <div class="sec-title" style="margin-top:4px;">🎼 声調規則（子音クラス × 声調符号）</div>
 
 <div class="jump-nav">
-  <a href="#t-explain" onclick="jumpToFold(event,'t-explain')">末子音の解説</a><a href="#t-mid" onclick="jumpToFold(event,'t-mid')">中子音</a><a href="#t-high" onclick="jumpToFold(event,'t-high')">高子音</a><a href="#t-low" onclick="jumpToFold(event,'t-low')">低子音</a><a href="#t-summary" onclick="jumpToFold(event,'t-summary')">5声調まとめ</a><a href="#t-illust" onclick="jumpToFold(event,'t-illust')">表情イラスト</a>
+  <a href="#t-overview" onclick="jumpToFold(event,'t-overview')">声調の全体像</a><a href="#t-explain" onclick="jumpToFold(event,'t-explain')">末子音の解説</a><a href="#t-mid" onclick="jumpToFold(event,'t-mid')">中子音</a><a href="#t-high" onclick="jumpToFold(event,'t-high')">高子音</a><a href="#t-low" onclick="jumpToFold(event,'t-low')">低子音</a><a href="#t-train" onclick="jumpToFold(event,'t-train')">判定トレーニング</a><a href="#t-illust" onclick="jumpToFold(event,'t-illust')">表情イラスト</a>
+</div>
+
+<!-- 声調の全体像(5声調イントロ) -->
+<div id="t-overview" style="background:#241f2c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px;margin-bottom:14px;">
+  <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px;">まず「5つの声調」を知ろう</div>
+  <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0 0 10px;">
+  タイ語には5つの声調(音の高さの変化パターン)があります。綴り・母音が同じでも、声調が違うと別の単語・別の意味になります。🔊ボタンでそれぞれの声調の名前を実際に発音して聞いてみてください(名前自体がその声調で発音されています)。
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:10px;">
+    ${[
+      ['─','สามัญ','サーマン(中声)','เสียงสามัญ'],
+      ['↘低','เอก','エーク(低声)','เสียงเอก'],
+      ['↗↘','โท','トー(下降声)','เสียงโท'],
+      ['↑','ตรี','トリー(高声)','เสียงตรี'],
+      ['↗','จัตวา','ジャッタワー(上昇声)','เสียงจัตวา'],
+    ].map(function(t){
+      return '<div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px 7px;text-align:center;">'
+        +'<div style="font-size:15px;color:#f2b705;">'+t[0]+'</div>'
+        +'<div style="font-family:\'Sarabun\',sans-serif;font-size:13px;color:#fff;margin-top:2px;">'+t[1]+'</div>'
+        +'<div style="font-size:10.5px;color:var(--muted);margin:1px 0 4px;">'+t[2]+'</div>'
+        +'<button onclick="speak(\''+t[3]+'\')" style="width:24px;height:24px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:11px;cursor:pointer;">🔊</button>'
+        +'</div>';
+    }).join('')}
+  </div>
+  <div style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
+  📌 声調は5種類ありますが、声調符号(マーク)は<span style="color:#f2b705;font-weight:700;">่ ้ ๊ ๋ の4種類</span>だけです。マークが無い状態そのものが「สามัญ(中声)」を表すので実質5パターンに対応していますが、<b style="color:#fff;">同じマークでも、頭の子音が中子音/高子音/低子音のどれかによって結果の声調が変わります</b>。これが次の「子音クラス」が重要な理由です。
+  </div>
 </div>
 
 <!-- 末子音・音節タイプの解説 -->
@@ -5202,6 +5229,17 @@ function renderToneSection(){
   この2つを意識して区別できると、グッと通じやすいタイ語になります。
   </div>
 
+  <div style="margin-top:9px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
+  <div style="font-weight:700;color:#fff;margin-bottom:8px;">✍️ 促音節(k・t・p)は「綴りの文字」ではなく「実際の音」で考える</div>
+  <p style="margin:0 0 8px;">促音節を作る末子音は、綴りに使われる文字の種類は多くても、実際に出る音は3つだけに整理されます。</p>
+  <table style="width:100%;border-collapse:collapse;font-size:13px;">
+  <tr style="background:#241f2c;"><th style="padding:5px;text-align:center;color:var(--muted2);width:20%;">実際の音</th><th style="padding:5px;text-align:left;color:var(--muted2);">綴りに使われる文字(代表例)</th></tr>
+  <tr><td style="padding:6px 5px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;color:#f2b705;font-weight:700;">k</td><td style="padding:6px 5px;font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;">ก ข ค ฆ</td></tr>
+  <tr><td style="padding:6px 5px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;color:#f2b705;font-weight:700;">t</td><td style="padding:6px 5px;font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;">จ ช ซ ฌ ฎ ฏ ฐ ฑ ฒ ด ต ถ ท ธ ศ ษ ส</td></tr>
+  <tr><td style="padding:6px 5px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;color:#f2b705;font-weight:700;">p</td><td style="padding:6px 5px;font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;">บ ป พ ภ ฟ</td></tr>
+  </table>
+  <p style="margin:8px 0 0;font-size:13px;color:#b8b2c0;">例えば「มาก(多い)」のก、「นัด(約束する)」のด、「กับ(〜と)」のบは、綴りの文字は違いますが、実際の発音(k/t/p)で見ればどれも「促音節」として同じ扱いです。</p>
+  </div>
 
   <div style="margin-top:9px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
   📌 なぜこの分類が大事かというと<span style="color:#f2b705;font-weight:700;white-space:nowrap;font-size:1.15em;">声調記号(ก่ ก้ ก๊ ก๋)</span>が付いていない単語でも、<b style="color:#fff;">子音クラス(中子音/高子音/低子音)</b>と<b style="color:#fff;">この音節タイプ</b>の組み合わせで、基本の声調が自動的に決まるからです。下の表はその組み合わせをまとめたものです。
@@ -5266,48 +5304,83 @@ function renderToneSection(){
 <details class="fold-sec" id="t-low">
 <summary style="background:#4a7cc4;color:#fff;">低子音　ค ง ช ซ ฑ ฒ ท น พ ฟ ม ย ร ล ว ฬ ฮ 他<span class="fold-chev" style="color:#fff;">▾</span></summary>
 <div class="fold-body" style="padding-top:8px;">
+
+<div style="margin-bottom:12px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
+  <div style="font-weight:700;color:#fff;margin-bottom:6px;">🔗 低子音には「対応する高子音」があるものとないものがある</div>
+  <p style="margin:0 0 8px;">下の7組は、同じ発音の高子音とペアになっている低子音です。「なぜ同じ音なのに文字が複数あるのか」はこのペア関係が理由です。</p>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px;">
+    ${[['ข','ค'],['ฉ','ช'],['ถ','ท'],['ผ','พ'],['ฝ','ฟ'],['ส','ซ'],['ห','ฮ']].map(function(p){
+      return '<div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;font-family:\'Sarabun\',sans-serif;font-size:18px;">'
+        +'<span style="color:#4c9a6a;">'+p[0]+'</span><span style="color:var(--muted);font-size:13px;"> ↔ </span><span style="color:#4a7cc4;">'+p[1]+'</span>'
+        +'</div>';
+    }).join('')}
+  </div>
+  <p style="margin:0;font-size:13px;color:#b8b2c0;">それ以外の低子音(ง ณ น ม ย ร ล ว ฬ など)は、対応する高子音を持たない「単独字」です。</p>
+</div>
+
 <div style="margin-bottom:10px;">
-  <table style="width:100%;border-collapse:collapse;font-size:14px;">
+  <table style="width:100%;border-collapse:collapse;font-size:13px;">
   <tr style="background:#2a2730;">
-    <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>平音節</th>
-    <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>促音節</th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ค่</div><div style="font-size:10px;color:var(--muted);">マイエーク</div></th>
-    <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ค้</div><div style="font-size:10px;color:var(--muted);">マイトー</div></th>
-    <th colspan="2" style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">トリー・ジャッタ<br>使用なし</th>
+    <th style="padding:5px 3px;text-align:center;font-size:11px;color:var(--muted2);">符号なし<br>平音節</th>
+    <th style="padding:5px 3px;text-align:center;font-size:11px;color:var(--muted2);">符号なし<br>促音節・短母音</th>
+    <th style="padding:5px 3px;text-align:center;font-size:11px;color:var(--muted2);">符号なし<br>促音節・長母音</th>
+    <th style="padding:5px 3px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:19px;color:#fff;">ค่</div><div style="font-size:10px;color:var(--muted);">マイエーク</div></th>
+    <th style="padding:5px 3px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:19px;color:#fff;">ค้</div><div style="font-size:10px;color:var(--muted);">マイトー</div></th>
   </tr>
   <tr style="background:rgba(74,124,196,.1);">
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">─</div><div style="font-size:12px;color:var(--muted);">サーマン</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↘高</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
-    <td colspan="2" style="text-align:center;padding:8px 4px;color:var(--muted);font-size:13px;">—</td>
+    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#fff;">─</div><div style="font-size:11px;color:var(--muted);">サーマン</div></td>
+    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#fff;">↑高</div><div style="font-size:11px;color:var(--muted);">トリー</div></td>
+    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#fff;">↘高</div><div style="font-size:11px;color:var(--muted);">トー</div></td>
+    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#f2b705;">↘高</div><div style="font-size:11px;color:var(--muted);">トー</div></td>
+    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#f2b705;">↑高</div><div style="font-size:11px;color:var(--muted);">トリー</div></td>
   </tr>
   </table>
+  <p style="margin:8px 0 0;font-size:12.5px;color:#b8b2c0;line-height:1.6;">📌 低子音はトリー・ジャッタワーの符号を使いません。そのかわり「促音節(短母音)」や「マイトー」からも高声(トリー)に、「促音節(長母音)」や「マイエーク」からも下降声(トー)に、それぞれ2通りの経路でたどり着けるのが低子音の特徴です(例: ม้า=máa「馬」はマイトーで高声)。</p>
 </div>
 </div>
 </details>
 
-<!-- 5声調まとめ -->
-<div id="t-summary" style="margin-top:4px;margin-bottom:8px;">
-  <div style="font-size:13px;color:var(--muted2);margin-bottom:6px;font-weight:600;">5声調</div>
-  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">
-    <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
-      <div style="font-size:15px;color:#f2b705;">─</div><div style="font-size:12px;color:var(--muted);">サーマン<br>（普通）</div>
-    </div>
-    <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
-      <div style="font-size:15px;color:#f2b705;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク<br>（低下降）</div>
-    </div>
-    <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
-      <div style="font-size:15px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー<br>（下降）</div>
-    </div>
-    <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
-      <div style="font-size:15px;color:#f2b705;">↑</div><div style="font-size:12px;color:var(--muted);">トリー<br>（高上昇）</div>
-    </div>
-    <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px;text-align:center;">
-      <div style="font-size:15px;color:#f2b705;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタ<br>（上昇）</div>
-    </div>
-  </div>
+<!-- 声調判定トレーニング -->
+<details class="fold-sec" id="t-train" style="margin-top:14px;">
+<summary style="background:#8a6d1f;color:#fff;">声調判定トレーニング(実例で練習)<span class="fold-chev" style="color:#fff;">▾</span></summary>
+<div class="fold-body" style="padding-top:8px;">
+<div style="background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:13.5px;color:#e4e1e8;line-height:1.9;">
+単語を見たら、この4ステップで声調を判定できます。<br>
+① 最初の子音は中子音/高子音/低子音のどれ？<br>
+② 母音は長母音/短母音？<br>
+③ 末子音は伸ばせる音(平音節)/止まる音(促音節)？<br>
+④ 声調符号(่ ้ ๊ ๋)は付いている？<br>
+→ この4つの組み合わせで声調が決まります。
 </div>
+${[
+  {th:'กิน', ro:'kin', jp:'食べる', cls:'中子音', clsColor:'#c0392b', bg:'rgba(192,57,43,.14)',
+   steps:['ก = <b style="color:#c0392b;">中子音</b>','ิ = <b style="color:#fff;">短母音</b>','น(ん) → <b style="color:#fff;">平音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
+   result:'中子音+平音節+符号なし = <b style="color:#f2b705;">中声(サーマン)</b>'},
+  {th:'มา', ro:'maa', jp:'来る', cls:'低子音', clsColor:'#4a7cc4', bg:'rgba(74,124,196,.14)',
+   steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า = <b style="color:#fff;">長母音</b>','末子音なし → <b style="color:#fff;">平音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
+   result:'低子音+平音節+符号なし = <b style="color:#f2b705;">中声(サーマン)</b>'},
+  {th:'ม้า', ro:'máa', jp:'馬', cls:'低子音', clsColor:'#4a7cc4', bg:'rgba(74,124,196,.14)',
+   steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า = <b style="color:#fff;">長母音</b>','末子音なし → <b style="color:#fff;">平音節</b>','้ → <b style="color:#fff;">マイトー</b>'],
+   result:'低子音+マイトー = <b style="color:#f2b705;">高声(トリー)</b>'},
+  {th:'มาก', ro:'mâak', jp:'多い、とても', cls:'低子音', clsColor:'#4a7cc4', bg:'rgba(74,124,196,.14)',
+   steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า = <b style="color:#fff;">長母音</b>','ก(k) → <b style="color:#fff;">促音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
+   result:'低子音+促音節(長母音)+符号なし = <b style="color:#f2b705;">下降声(トー)</b>'},
+].map(function(ex){
+  return '<div style="background:#241f2c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 15px;margin-bottom:11px;">'
+    +'<div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;">'
+    +'<span style="font-family:\'Sarabun\',sans-serif;font-size:28px;color:#fff;">'+ex.th+'</span>'
+    +'<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#f2b705;">'+ex.ro+'</span>'
+    +'<span style="font-size:12.5px;color:var(--muted);">('+ex.jp+')</span>'
+    +'<button onclick="event.stopPropagation();speak(\''+ex.th+'\')" style="width:28px;height:28px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:13px;cursor:pointer;margin-left:auto;flex-shrink:0;">🔊</button>'
+    +'</div>'
+    +'<div style="font-size:13px;color:#e4e1e8;line-height:2;padding-left:8px;border-left:2px solid '+ex.clsColor+';margin-bottom:9px;">'
+    +ex.steps.map(function(s,i){ return '① ② ③ ④'.split(' ')[i]+' '+s; }).join('<br>')
+    +'</div>'
+    +'<div style="text-align:center;padding:8px;background:'+ex.bg+';border-radius:8px;font-size:13.5px;color:#e4e1e8;">'+ex.result+'</div>'
+    +'</div>';
+}).join('')}
+</div>
+</details>
 
 <!-- 声調イラスト -->
 <details class="fold-sec" id="t-illust" style="margin-top:14px;">
