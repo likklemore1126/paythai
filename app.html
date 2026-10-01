@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01p';
+const APP_VERSION = '2026-10-01q';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5349,6 +5349,16 @@ const NUM_EX = {
   '1,000,000':{th:'ที่ดินแปลงนี้ราคาล้านบาทครับ',         ro:'thîi din plɛɛng níi raakhaa láan bàat khráp', jp:'この土地は100万バーツです'},
 };
 
+// 各数字の例文がどんな場面のものか一言で示すタグ(カード裏面のネタバレにならない範囲で、
+// カードの余白を活かして場面がイメージしやすいように添える)。
+const NUM_TAG = {
+  '0':'📞 電話番号',  '1':'🍺 注文',      '2':'👥 人数',      '3':'🪑 席の予約',
+  '4':'🕓 時間',      '5':'🕓 時間',      '6':'🏢 階数',      '7':'📅 日付',
+  '8':'🕓 時間',      '9':'🕓 時間',
+  '10':'💰 支払い',   '100':'💰 値段',    '1,000':'💵 お釣り', '10,000':'🏠 家賃',
+  '100,000':'🏍️ 値段','1,000,000':'🏞️ 値段',
+};
+
 function renderNumbers(){
   const basic=NUMS.filter(n=>parseInt(n.arabic)<=9||n.arabic==='0');
   const units=NUMS.filter(n=>['10','100','1,000','10,000','100,000','1,000,000'].includes(n.arabic));
@@ -5382,8 +5392,9 @@ function renderNumbers(){
       <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#b5860a;">${n.arabic}</span>
     </div>
     <div style="flex:1;min-width:0;">
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#6b5c3e;">${n.ro}</div>
-      <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:#4a3d2a;">${n.th_word}</div>
+      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;">${n.ro}</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#4a3d2a;">${n.th_word}</div>
+      <div style="font-size:12px;color:#9a6a1f;margin-top:2px;">${NUM_TAG[n.arabic]||''}</div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;">
       ${numAudioBtn(n.th_word)}
