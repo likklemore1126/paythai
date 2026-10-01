@@ -1419,7 +1419,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01g';
+const APP_VERSION = '2026-10-01h';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5579,7 +5579,7 @@ function render(){
     :(learnedCount+' 学習済み / 全'+l.length);
 
   // vocab裏面の音声は例文ボックス内の🔊で対応
-  const af=document.getElementById('audF'); if(af) af.onclick=e=>{e.stopPropagation();speak(spk);};
+  const af=document.getElementById('audF'); if(af) af.onclick=e=>{e.stopPropagation();speak(spk, st.mode==='conversation'?0.7:undefined);};
   // 裏面：vocabは例文読み上げ、conversationは単語読み上げ
   const ab=document.getElementById('audB'); if(ab) ab.onclick=e=>{
     e.stopPropagation();
@@ -5588,6 +5588,8 @@ function render(){
       if(ex&&ex.th) speak(ex.th, 0.7); // 例文は単語・会話より少しゆっくり読み上げる
     } else if(st.mode==='grammar'){
       speak(spk, 0.7); // 文法の例文もゆっくり読み上げる
+    } else if(st.mode==='conversation'){
+      speak(spk, 0.7); // 会話フレーズも例文と同じ速度でゆっくり読み上げる
     } else {
       speak(spk);
     }
