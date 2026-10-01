@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01k';
+const APP_VERSION = '2026-10-01l';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5397,16 +5397,19 @@ function renderNumbers(){
 </div>`;
   };
 
+  // 1列・横長カード(基本数字/位の単位と同じ方針)。表示項目は従来通り(背景色・音声ボタンは暗色のまま)。
   const exCard=(n)=>`
-<div style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:2px;min-width:0;">
-  <div style="display:flex;align-items:baseline;gap:6px;">
-    <span style="font-family:'Sarabun',sans-serif;font-size:32px;color:#fff;line-height:1;">${n.th_num}</span>
-    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:var(--yellow);">${n.arabic}</span>
+<div style="background:var(--bg2);border:1px solid #38353f;border-radius:12px;padding:8px 12px;display:flex;align-items:center;gap:10px;min-width:0;">
+  <div style="display:flex;flex-direction:column;align-items:flex-start;min-width:68px;flex-shrink:0;">
+    <span style="font-family:'Sarabun',sans-serif;font-size:26px;color:#fff;line-height:1.2;">${n.th_num}</span>
+    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--yellow);">${n.arabic}</span>
   </div>
-  <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${n.ro}</div>
-  <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:var(--muted2);">${n.th_word}</div>
-  <div style="font-size:12px;color:#f2b705;margin-top:2px;">${n.note}</div>
-  <div style="display:flex;justify-content:flex-end;margin-top:2px;">${numAudioBtnOnDark(n.th_word)}</div>
+  <div style="flex:1;min-width:0;">
+    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">${n.ro}</div>
+    <div style="font-family:'Sarabun',sans-serif;font-size:15px;color:var(--muted2);">${n.th_word}</div>
+    <div style="font-size:11px;color:#f2b705;margin-top:1px;">${n.note}</div>
+  </div>
+  <div style="flex-shrink:0;">${numAudioBtnOnDark(n.th_word)}</div>
 </div>`;
 
   return `
@@ -5433,7 +5436,7 @@ ${units.map(n=>numFlipCard(n,108)).join('')}
 
 <!-- 練習 -->
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">🔊 タップして確認</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+<div style="display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:8px;">
 ${examples.map(n=>exCard(n)).join('')}
 </div>
 `;
