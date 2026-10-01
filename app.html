@@ -5335,8 +5335,8 @@ const NUM_EX = {
   '100':{th:'ขนมนี้ราคาร้อยบาทครับ',                   ro:'khanǒm níi raakhaa rɔ́ɔi bàat khráp',       jp:'このお菓子は100バーツです'},
   '1,000':{th:'ผมมีแบงก์พันใบเดียว มีเงินทอนไหมครับ',   ro:'phǒm mii bɛ́ɛng phan bai diaw mii ngən thɔɔn mǎi khráp', jp:'1000バーツ札しか持っていないのですが、お釣りはありますか？'},
   '10,000':{th:'ค่าเช่าห้องเดือนละหนึ่งหมื่นบาทครับ',   ro:'khâa châo hɔ̂ŋ dɯan lá nɯ̀ng mɯ̀ɯn bàat khráp', jp:'部屋の家賃は月1万バーツです'},
-  '100,000':{th:'รถยนต์คันนี้ราคาห้าแสนบาทครับ',        ro:'rót yon khan níi raakhaa hâa sɛ̌ɛn bàat khráp', jp:'この車は50万バーツです'},
-  '1,000,000':{th:'คอนโดนี้ราคาสามล้านบาทครับ',         ro:'khɔɔndoo níi raakhaa sǎam láan bàat khráp', jp:'このコンドミニアムは300万バーツです'},
+  '100,000':{th:'มอเตอร์ไซค์มือสองคันนี้ราคาแสนบาทครับ', ro:'mɔɔtɤɤsai mɯɯ sɔ̌ɔng khan níi raakhaa sɛ̌ɛn bàat khráp', jp:'この中古バイクは10万バーツです'},
+  '1,000,000':{th:'ที่ดินแปลงนี้ราคาล้านบาทครับ',         ro:'thîi din plɛɛng níi raakhaa láan bàat khráp', jp:'この土地は100万バーツです'},
 };
 
 function renderNumbers(){
@@ -5362,13 +5362,16 @@ function renderNumbers(){
   // 基本数字0〜9＋位の単位: 表=数字、裏=実用例文、のフリップカード。
   const numFlipCard=(n,height)=>{
     const ex = NUM_EX[n.arabic];
+    const isLong = n.arabic.length > 5; // 100,000 / 1,000,000 は桁が多いので縮小してスタック表示
+    const thNumSize = isLong ? 24 : 30;
+    const arabicSize = isLong ? 13 : 15;
     return `
 <div class="mf-wrap" style="height:${height}px;">
 <div class="mf-inner" onclick="this.classList.toggle('flipped')">
   <div class="mf-face" style="background:var(--tag);border:1px solid var(--tag-edge);padding:10px;gap:2px;">
-    <div style="display:flex;align-items:baseline;gap:6px;">
-      <span style="font-family:'Sarabun',sans-serif;font-size:30px;color:#2b2118;line-height:1;flex-shrink:0;">${n.th_num}</span>
-      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#b5860a;word-break:break-all;">${n.arabic}</span>
+    <div style="display:flex;flex-direction:column;gap:1px;">
+      <span style="font-family:'Sarabun',sans-serif;font-size:${thNumSize}px;color:#2b2118;line-height:1.3;">${n.th_num}</span>
+      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:${arabicSize}px;color:#b5860a;overflow-wrap:break-word;">${n.arabic}</span>
     </div>
     <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#6b5c3e;">${n.ro}</div>
     <div style="font-family:'Sarabun',sans-serif;font-size:15px;color:#4a3d2a;">${n.th_word}</div>
