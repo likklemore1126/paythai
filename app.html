@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01v';
+const APP_VERSION = '2026-10-01w';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5189,14 +5189,14 @@ function renderToneSection(){
     </p>
     <div style="display:flex;flex-direction:column;gap:10px;">
       ${[
-        ['tone_mid_flat','กา','kaa'],
-        ['tone_low_a_grave','ก่า','kàa'],
-        ['tone_falling_a_circ','ก้า','kâa'],
-        ['tone_high_a_acute','ก๊า','káa'],
-        ['tone_rising_a_caron','ก๋า','kǎa'],
+        ['tone_card_mid.jpg','กา','kaa'],
+        ['tone_card_low.jpg','ก่า','kàa'],
+        ['tone_card_falling.jpg','ก้า','kâa'],
+        ['tone_card_high.jpg','ก๊า','káa'],
+        ['tone_card_rising.jpg','ก๋า','kǎa'],
       ].map(function(v){
         return '<div style="background:rgba(255,255,255,.05);border-radius:10px;padding:8px;">'
-          +'<img src="'+(PG_IMAGES[v[0]]||'')+'" loading="lazy" style="width:100%;border-radius:8px;display:block;cursor:zoom-in;" onclick="openImgLightbox(this.src)">'
+          +'<img src="'+v[0]+'" loading="lazy" style="width:100%;border-radius:8px;display:block;cursor:zoom-in;" onclick="openImgLightbox(this.src)">'
           +'<div style="display:flex;align-items:center;gap:10px;margin-top:8px;">'
           +'<span style="font-family:\'Sarabun\',sans-serif;font-size:19px;color:#fff;">'+v[1]+'</span>'
           +'<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#f2b705;font-weight:700;">'+v[2]+'</span>'
