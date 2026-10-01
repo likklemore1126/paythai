@@ -104,13 +104,41 @@ header{position:sticky;top:0;z-index:50;background:var(--cream-bg);border-bottom
 .learn-card h3{font-size:14px;margin-bottom:4px;color:var(--dark);}
 .learn-card p{font-size:12px;margin:0;}
 
-/* CARD体験 */
-.card-demo{margin:28px 0;}
-.card-demo:first-of-type{margin-top:16px;}
-.card-demo h3{font-size:14.5px;margin-bottom:12px;text-align:center;color:var(--cream);}
-.card-demo-row{display:flex;align-items:center;justify-content:center;gap:10px;}
-.card-demo-row img{width:42%;max-width:170px;border-radius:14px;box-shadow:0 8px 20px -8px rgba(0,0,0,.4);}
-.card-demo-arrow{font-size:20px;color:var(--gold);flex-shrink:0;font-weight:900;}
+/* CARD体験(実アプリと同じ見た目・挙動のライブデモ) */
+.live-demo{margin:24px 0 8px;}
+.live-demo-controls{display:flex;justify-content:center;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.live-demo .pill{background:var(--dark2);border:1px solid var(--line-dark);color:var(--cream);border-radius:999px;padding:7px 14px;font-size:13px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;cursor:pointer;}
+.live-demo .pill-gender[data-gender="male"]{background:#1a3a5c;color:#90caf9;border-color:#2979bb;}
+.live-demo .pill-gender[data-gender="female"]{background:#5c1a3a;color:#f48fb1;border-color:#bb2963;}
+.live-demo .pill-dir{font-weight:800;min-width:72px;text-align:center;color:#fff;border:1.5px solid rgba(255,255,255,.25);background-size:cover;background-position:center;text-shadow:0 0 4px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.7);}
+.live-demo .pill-dir[data-dir="th-jp"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 375'%3E%3Crect width='900' height='375' fill='%23A51931'/%3E%3Crect y='75' width='900' height='225' fill='%23F4F5F8'/%3E%3Crect y='150' width='900' height='75' fill='%232D2A4A'/%3E%3C/svg%3E");}
+.live-demo .pill-dir[data-dir="jp-th"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Crect width='900' height='600' fill='%23fff'/%3E%3Ccircle cx='450' cy='300' r='180' fill='%23BC002D'/%3E%3C/svg%3E");}
+.flip-wrap{width:100%;max-width:300px;height:380px;perspective:1400px;position:relative;margin:0 auto;touch-action:pan-y;}
+.card-inner{position:relative;width:100%;height:100%;transition:transform .45s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d;cursor:pointer;}
+.card-inner.flipped{transform:rotateY(180deg);}
+.face{position:absolute;inset:0;background:var(--cream);border-radius:18px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 18px 30px -14px rgba(0,0,0,.45);border:1px solid var(--line);display:flex;flex-direction:column;padding:22px 20px 18px;color:var(--dark);}
+.face-back{transform:rotateY(180deg);overflow-y:auto;}
+.face-front{justify-content:center;align-items:center;text-align:center;}
+.face .ribbon{position:absolute;top:14px;right:-1px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;font-weight:500;color:#2b2118;background:var(--gold);padding:3px 10px 3px 12px;border-radius:6px 0 0 6px;}
+.face .hole{width:16px;height:16px;border-radius:50%;background:var(--dark2);border:3px solid var(--line);position:absolute;top:14px;left:14px;}
+.face .th-big{font-family:'Sarabun',sans-serif;font-weight:500;font-size:40px;line-height:1.4;margin-top:16px;letter-spacing:1px;}
+.face .th-big.sm{font-size:23px;}
+.face .ro-front{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:var(--muted-dark);margin-top:8px;}
+.face .tap-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:12.5px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
+.face .audio-btn{width:50px;height:50px;border-radius:50%;background:var(--dark);color:var(--cream);flex-shrink:0;border:none;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:14px;}
+.face .audio-btn:active{transform:scale(.92);}
+.face .back-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted-dark);margin-top:6px;}
+.face .back-jp{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:19px;margin-top:6px;line-height:1.4;}
+.face .ex-box{margin-top:12px;background:rgba(0,0,0,.06);border-radius:10px;padding:10px 12px;}
+.face .ex-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:19px;letter-spacing:.4px;}
+.face .ex-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted-dark);margin-top:3px;}
+.face .ex-jp{font-size:14px;margin-top:3px;}
+.face .back-actions{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:10px;}
+.face .learn-btn{border:1.5px solid var(--dark);background:transparent;color:var(--dark);border-radius:999px;padding:11px 18px;font-size:14px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;cursor:pointer;}
+.face .learn-btn.done{background:var(--dark);color:var(--cream);}
+.face .fav-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--dark);background:transparent;color:var(--dark);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0;}
+.face .fav-btn.on{background:var(--gold);border-color:var(--gold);}
+.live-demo-hint{text-align:center;font-size:12.5px;color:var(--muted);margin-top:16px;}
 
 /* steps */
 .steps{margin:20px 0;}
@@ -195,7 +223,7 @@ footer .copyright{color:var(--muted-dark);}
   .price-grid{flex-direction:row;}
   .price-grid .price-card{flex:1;}
   .learn-grid{grid-template-columns:repeat(3,1fr);}
-  .card-demo-row img{max-width:150px;}
+  .flip-wrap{max-width:340px;height:420px;}
 }
 </style>
 </head>
@@ -290,41 +318,20 @@ footer .copyright{color:var(--muted-dark);}
   <div class="wrap">
     <div class="eyebrow">CARD体験</div>
     <h2>カードをめくって、<br>自分のペースで。</h2>
+    <p style="font-size:13px;text-align:center;margin-bottom:4px;">実際のアプリと同じカードです。下のボタンや、カード自体を触ってみてください。</p>
 
-    <div class="card-demo">
-      <h3>タップしてめくる</h3>
-      <div class="card-demo-row">
-        <img src="lp_assets/card_hero.png" alt="表面:タイ語とローマ字">
-        <span class="card-demo-arrow">→</span>
-        <img src="lp_assets/card_flip_back.png" alt="裏面:意味・例文・発音">
+    <div class="live-demo">
+      <div class="live-demo-controls">
+        <button class="pill pill-gender" id="demoGenderPill" data-gender="male">♂ 男性語尾</button>
+        <button class="pill pill-dir" id="demoDirPill" data-dir="th-jp">TH→JP</button>
       </div>
-    </div>
-
-    <div class="card-demo">
-      <h3>男性語尾 / 女性語尾を切り替え</h3>
-      <div class="card-demo-row">
-        <img src="lp_assets/card_gender_male.png" alt="男性語尾(ครับ)">
-        <span class="card-demo-arrow">⇄</span>
-        <img src="lp_assets/card_gender_female.png" alt="女性語尾(ค่ะ)">
+      <div class="flip-wrap">
+        <div class="card-inner" id="demoCardInner">
+          <div class="face face-front" id="demoFaceFront"></div>
+          <div class="face face-back" id="demoFaceBack"></div>
+        </div>
       </div>
-    </div>
-
-    <div class="card-demo">
-      <h3>タイ語⇔日本語の方向を切り替え</h3>
-      <div class="card-demo-row">
-        <img src="lp_assets/card_dir_th.png" alt="タイ語→日本語">
-        <span class="card-demo-arrow">⇄</span>
-        <img src="lp_assets/card_dir_jp.png" alt="日本語→タイ語">
-      </div>
-    </div>
-
-    <div class="card-demo">
-      <h3>お気に入り・覚えたをワンタップで</h3>
-      <div class="card-demo-row">
-        <img src="lp_assets/card_fav_off.png" alt="未登録の状態">
-        <span class="card-demo-arrow">→</span>
-        <img src="lp_assets/card_fav_on.png" alt="お気に入り・覚えた登録済み">
-      </div>
+      <p class="live-demo-hint">👆 カードをタップしてめくる・🔊で発音も聞けます</p>
     </div>
   </div>
 </section>
@@ -537,6 +544,96 @@ function showTab(which){
   event.target.classList.add('active');
   document.getElementById('tab-'+which).classList.add('active');
 }
+
+/* --- CARD体験:実アプリと同じ単語・例文・性別切替ロジックで動くライブデモ --- */
+const DEMO_ITEM = {
+  th:'กิน', ro:'kin', jp:'食べる', pos:'動詞',
+  ex_th:'กินข้าวแล้วหรือยังครับ', ex_ro:'kin khâao lɛ́ɛo rɯɯ yang khráp', ex_jp:'もう食べましたか'
+};
+const DEMO_PT = {male:{th:'ครับ',ro:'khrap'}, female:{th:'ค่ะ',ro:'kha'}};
+const demoState = {gender:'male', dir:'th-jp', flipped:false, fav:false, learned:false};
+
+function demoSpeak(text, rate){
+  try{
+    const syn = window.speechSynthesis; if(!syn || !text) return;
+    syn.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'th-TH'; u.rate = (typeof rate === 'number') ? rate : 0.85;
+    const v = (syn.getVoices()||[]).find(v=>v.lang && v.lang.toLowerCase().startsWith('th'));
+    if(v) u.voice = v;
+    syn.speak(u);
+  }catch(e){}
+}
+
+function demoExample(){
+  const pt = DEMO_PT[demoState.gender];
+  return {
+    th: DEMO_ITEM.ex_th.replace(/ครับ$|ค่ะ$/, pt.th),
+    ro: DEMO_ITEM.ex_ro.replace(/khráp$|khâ$/, pt.ro),
+    jp: DEMO_ITEM.ex_jp
+  };
+}
+
+function renderDemo(){
+  const front = document.getElementById('demoFaceFront');
+  const back = document.getElementById('demoFaceBack');
+  if(!front || !back) return; // このページに無いモードではスキップ
+  const ex = demoExample();
+  const ribbon = `<span class="ribbon">${DEMO_ITEM.pos}</span>`;
+  const hole = `<span class="hole"></span>`;
+
+  front.innerHTML = demoState.dir === 'th-jp'
+    ? `${ribbon}${hole}
+       <div class="th-big">${DEMO_ITEM.th}</div>
+       <div class="ro-front">${DEMO_ITEM.ro}</div>
+       <button class="audio-btn" id="demoAudioF">🔊</button>
+       <div class="tap-hint">タップして意味を見る</div>`
+    : `${ribbon}${hole}
+       <div class="jp-big">${DEMO_ITEM.jp}</div>
+       <button class="audio-btn" id="demoAudioF">🔊</button>
+       <div class="tap-hint">タップしてタイ語を見る</div>`;
+
+  back.innerHTML = `${ribbon}${hole}
+    <div class="th-big sm" style="margin-top:8px;">${DEMO_ITEM.th}</div>
+    <div class="back-ro">${DEMO_ITEM.ro}</div>
+    <div class="back-jp">${DEMO_ITEM.jp}</div>
+    <div class="ex-box">
+      <div class="ex-th">${ex.th}</div>
+      <div class="ex-ro">${ex.ro}</div>
+      <div class="ex-jp">${ex.jp}</div>
+    </div>
+    <div class="back-actions">
+      <button class="audio-btn" id="demoAudioB" style="margin-top:0;">🔊</button>
+      <button class="fav-btn ${demoState.fav?'on':''}" id="demoFavBtn">${demoState.fav?'★':'☆'}</button>
+      <button class="learn-btn ${demoState.learned?'done':''}" id="demoLearnBtn">${demoState.learned?'覚えた ✓':'覚えた'}</button>
+    </div>`;
+
+  const af = document.getElementById('demoAudioF');
+  if(af) af.onclick = e=>{ e.stopPropagation(); demoSpeak(demoState.dir==='th-jp'?DEMO_ITEM.th:DEMO_ITEM.jp); };
+  const ab = document.getElementById('demoAudioB');
+  if(ab) ab.onclick = e=>{ e.stopPropagation(); demoSpeak(ex.th, 0.7); };
+  const fb = document.getElementById('demoFavBtn');
+  if(fb) fb.onclick = e=>{ e.stopPropagation(); demoState.fav = !demoState.fav; renderDemo(); };
+  const lb = document.getElementById('demoLearnBtn');
+  if(lb) lb.onclick = e=>{ e.stopPropagation(); demoState.learned = !demoState.learned; renderDemo(); };
+
+  const gp = document.getElementById('demoGenderPill');
+  if(gp){ gp.dataset.gender = demoState.gender; gp.textContent = demoState.gender==='male' ? '♂ 男性語尾' : '♀ 女性語尾'; }
+  const dp = document.getElementById('demoDirPill');
+  if(dp){ dp.dataset.dir = demoState.dir; dp.textContent = demoState.dir==='th-jp' ? 'TH→JP' : 'JP→TH'; }
+
+  const ci = document.getElementById('demoCardInner');
+  if(ci) ci.classList.toggle('flipped', demoState.flipped);
+}
+
+const demoCardInner = document.getElementById('demoCardInner');
+if(demoCardInner) demoCardInner.onclick = () => { demoState.flipped = !demoState.flipped; renderDemo(); };
+const demoGenderPill = document.getElementById('demoGenderPill');
+if(demoGenderPill) demoGenderPill.onclick = () => { demoState.gender = demoState.gender==='male'?'female':'male'; renderDemo(); };
+const demoDirPill = document.getElementById('demoDirPill');
+if(demoDirPill) demoDirPill.onclick = () => { demoState.dir = demoState.dir==='th-jp'?'jp-th':'th-jp'; demoState.flipped=false; renderDemo(); };
+renderDemo();
+
 renderAcc();
 renderFaq();
 // open first feature by default
