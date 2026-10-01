@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01y';
+const APP_VERSION = '2026-10-01z';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5182,55 +5182,27 @@ function renderToneSection(){
   📌 声調は5種類ありますが、声調符号(マーク)は<span style="color:#f2b705;font-weight:700;">่ ้ ๊ ๋ の4種類</span>だけです。マークが無い状態そのものが「สามัญ(中声)」を表すので実質5パターンに対応していますが、<b style="color:#fff;">同じマークでも、頭の子音が中子音/高子音/低子音のどれかによって結果の声調が変わります</b>。これが次の「子音クラス」が重要な理由です。
   </div>
 
-  <div style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;margin-bottom:10px;">
-    <div style="font-weight:700;color:#fff;margin-bottom:8px;font-size:14px;">🖼️ イラストでイメージをつかもう</div>
+  <div style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;">
+    <div style="font-weight:700;color:#fff;margin-bottom:8px;font-size:14px;">🖼️ イラストと発音表記でイメージをつかもう</div>
     <p style="font-size:13px;color:#e4e1e8;line-height:1.7;margin:0 0 9px;">
-    声の高さの動きを、表情とグラフでイメージにしてみました。画像はタップで拡大できます。下のボタンでイラスト内の例の単語を実際に聞けます。
+    声の高さの動きを、表情とグラフでイメージにしてみました。画像はタップで拡大できます。単語カードのローマ字についている記号も、実はそのまま声調を表しています。
     </p>
     <div style="display:flex;flex-direction:column;gap:10px;">
       ${[
-        ['tone_card_mid.jpg','มา','maa'],
-        ['tone_card_low.jpg','เด็ก','dèk'],
-        ['tone_card_falling.jpg','ข้าว','khâao'],
-        ['tone_card_high.jpg','รถ','rót'],
-        ['tone_card_rising.jpg','หมา','mǎa'],
+        ['tone_card_mid.jpg','มา','maa','なし','サーマン(中声)'],
+        ['tone_card_low.jpg','เด็ก','dèk','`(グレイブ)','エーク(低声)'],
+        ['tone_card_falling.jpg','ข้าว','khâao','^(サーカムフレックス)','トー(下降声)'],
+        ['tone_card_high.jpg','รถ','rót','´(アキュート)','トリー(高声)'],
+        ['tone_card_rising.jpg','หมา','mǎa','ˇ(キャロン)','ジャッタワー(上昇声)'],
       ].map(function(v){
         return '<div style="background:rgba(255,255,255,.05);border-radius:10px;padding:8px;">'
           +'<img src="'+v[0]+'" loading="lazy" style="width:100%;border-radius:8px;display:block;cursor:zoom-in;" onclick="openImgLightbox(this.src)">'
-          +'<div style="display:flex;align-items:center;gap:10px;margin-top:8px;">'
+          +'<div style="display:flex;align-items:center;gap:8px;margin-top:8px;">'
           +'<span style="font-family:\'Sarabun\',sans-serif;font-size:19px;color:#fff;">'+v[1]+'</span>'
           +'<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#f2b705;font-weight:700;">'+v[2]+'</span>'
           +'<span style="flex:1;"></span>'
+          +'<span style="font-size:11px;color:#b8b2c0;text-align:right;white-space:nowrap;">'+v[3]+' → '+v[4]+'</span>'
           +'<button onclick="speak(\''+v[1]+'\')" style="width:30px;height:30px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:14px;cursor:pointer;flex-shrink:0;">🔊</button>'
-          +'</div>'
-          +'</div>';
-      }).join('')}
-    </div>
-  </div>
-
-  <div style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;">
-    <div style="font-weight:700;color:#fff;margin-bottom:8px;font-size:14px;">🔤 発音表記の記号と声調をつなげて覚えよう</div>
-    <p style="font-size:13px;color:#e4e1e8;line-height:1.7;margin:0 0 9px;">
-    単語カードの発音表記(ローマ字)についている記号も、実はそのまま声調を表しています。Thai Pocaの単語で確認してみましょう。
-    </p>
-    <div style="display:flex;flex-direction:column;gap:6px;">
-      ${[
-        ['มา','maa','来る','なし','サーマン(中声)'],
-        ['เด็ก','dèk','子供','`(グレイブ)','エーク(低声)'],
-        ['ข้าว','khâao','米・ご飯','^(サーカムフレックス)','トー(下降声)'],
-        ['รถ','rót','車','´(アキュート)','トリー(高声)'],
-        ['หมา','mǎa','犬','ˇ(キャロン)','ジャッタワー(上昇声)'],
-      ].map(function(w){
-        return '<div style="display:flex;flex-direction:column;gap:3px;background:rgba(255,255,255,.05);border-radius:8px;padding:8px 10px;">'
-          +'<div style="display:flex;align-items:center;gap:8px;">'
-          +'<span style="font-family:\'Sarabun\',sans-serif;font-size:19px;color:#fff;">'+w[0]+'</span>'
-          +'<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#f2b705;font-weight:700;">'+w[1]+'</span>'
-          +'<span style="flex:1;"></span>'
-          +'<button onclick="speak(\''+w[0]+'\')" style="width:26px;height:26px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:12px;cursor:pointer;flex-shrink:0;">🔊</button>'
-          +'</div>'
-          +'<div style="display:flex;align-items:baseline;gap:8px;">'
-          +'<span style="font-size:12px;color:var(--muted);flex:1;min-width:0;">'+w[2]+'</span>'
-          +'<span style="font-size:11px;color:#b8b2c0;text-align:right;white-space:nowrap;">'+w[3]+' → '+w[4]+'</span>'
           +'</div>'
           +'</div>';
       }).join('')}
