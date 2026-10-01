@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01m';
+const APP_VERSION = '2026-10-01n';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4868,8 +4868,9 @@ function renderVowelSection(){
       h += '</div>';
       if(!isRare){
         h += '<div style="padding:3px 10px 5px;border-top:1px solid rgba(0,0,0,.06);">';
-        h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:15px;color:#2b2118;font-weight:500;">'+v.name_th+'</div>';
-        h += '<div style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:11px;color:#8a7a55;margin-top:1px;">'+v.name_ro+'&nbsp;&nbsp;<span style="color:#5a4d3a;">'+v.name_jp+'</span></div>';
+        h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:18px;color:#2b2118;font-weight:500;">'+v.name_th+'</div>';
+        h += '<div style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:13px;color:#8a7a55;margin-top:2px;">'+v.name_ro+'</div>';
+        h += '<div style="font-size:13px;color:#5a4d3a;margin-top:1px;">'+v.name_jp+'</div>';
         h += '</div>';
       } else {
         h += '<div style="padding:3px 10px 5px;border-top:1px solid rgba(0,0,0,.06);">';
