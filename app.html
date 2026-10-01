@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01u';
+const APP_VERSION = '2026-10-01v';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5180,6 +5180,32 @@ function renderToneSection(){
   </div>
   <div style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;margin-bottom:10px;">
   📌 声調は5種類ありますが、声調符号(マーク)は<span style="color:#f2b705;font-weight:700;">่ ้ ๊ ๋ の4種類</span>だけです。マークが無い状態そのものが「สามัญ(中声)」を表すので実質5パターンに対応していますが、<b style="color:#fff;">同じマークでも、頭の子音が中子音/高子音/低子音のどれかによって結果の声調が変わります</b>。これが次の「子音クラス」が重要な理由です。
+  </div>
+
+  <div style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;margin-bottom:10px;">
+    <div style="font-weight:700;color:#fff;margin-bottom:8px;font-size:14px;">🖼️ イラストでイメージをつかもう</div>
+    <p style="font-size:13px;color:#e4e1e8;line-height:1.7;margin:0 0 9px;">
+    声の高さの動きを、表情とグラフでイメージにしてみました。画像はタップで拡大できます。下のボタンで同じ音節(กา)の聞き比べもできます。
+    </p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      ${[
+        ['tone_mid_flat','กา','kaa'],
+        ['tone_low_a_grave','ก่า','kàa'],
+        ['tone_falling_a_circ','ก้า','kâa'],
+        ['tone_high_a_acute','ก๊า','káa'],
+        ['tone_rising_a_caron','ก๋า','kǎa'],
+      ].map(function(v){
+        return '<div style="background:rgba(255,255,255,.05);border-radius:10px;padding:8px;">'
+          +'<img src="'+(PG_IMAGES[v[0]]||'')+'" loading="lazy" style="width:100%;border-radius:8px;display:block;cursor:zoom-in;" onclick="openImgLightbox(this.src)">'
+          +'<div style="display:flex;align-items:center;gap:10px;margin-top:8px;">'
+          +'<span style="font-family:\'Sarabun\',sans-serif;font-size:19px;color:#fff;">'+v[1]+'</span>'
+          +'<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#f2b705;font-weight:700;">'+v[2]+'</span>'
+          +'<span style="flex:1;"></span>'
+          +'<button onclick="speak(\''+v[1]+'\')" style="width:30px;height:30px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:14px;cursor:pointer;flex-shrink:0;">🔊</button>'
+          +'</div>'
+          +'</div>';
+      }).join('')}
+    </div>
   </div>
 
   <div style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;">
