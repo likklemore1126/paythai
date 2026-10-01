@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01t';
+const APP_VERSION = '2026-10-01u';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5193,7 +5193,7 @@ function renderToneSection(){
         ['เด็ก','dèk','子供','`(グレイブ)','エーク(低声)'],
         ['ข้าว','khâao','米・ご飯','^(サーカムフレックス)','トー(下降声)'],
         ['รถ','rót','車','´(アキュート)','トリー(高声)'],
-        ['อาหาร','aahǎan','料理・食べ物','ˇ(キャロン)','ジャッタワー(上昇声)'],
+        ['หมา','mǎa','犬','ˇ(キャロン)','ジャッタワー(上昇声)'],
       ].map(function(w){
         return '<div style="display:flex;flex-direction:column;gap:3px;background:rgba(255,255,255,.05);border-radius:8px;padding:8px 10px;">'
           +'<div style="display:flex;align-items:center;gap:8px;">'
@@ -5223,7 +5223,7 @@ function renderToneSection(){
 
   <div style="display:grid;grid-template-columns:1fr;gap:9px;">
     <div style="background:rgba(74,124,196,.22);border:1px solid rgba(143,180,232,.35);border-radius:10px;padding:11px 13px;">
-      <div style="font-size:15px;font-weight:700;color:#bcd6f7;margin-bottom:5px;">平音節(伸ばせる終わり方)</div>
+      <div style="font-size:15px;font-weight:700;color:#bcd6f7;margin-bottom:5px;">平音節(伸ばせる終わり方) <span style="font-size:12px;font-weight:400;color:#8fb4e8;">= live syllable</span></div>
       <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0 0 7px;">
       次のどちらかで終わる音節です。<br>
       ①長母音で終わる(例:มา・ดู)<br>
@@ -5235,19 +5235,23 @@ function renderToneSection(){
     </div>
 
     <div style="background:rgba(192,57,43,.22);border:1px solid rgba(232,150,143,.35);border-radius:10px;padding:11px 13px;">
-      <div style="font-size:15px;font-weight:700;color:#f4c2bd;margin-bottom:5px;">促音節(伸ばせない終わり方)</div>
+      <div style="font-size:15px;font-weight:700;color:#f4c2bd;margin-bottom:5px;">促音節(伸ばせない終わり方) <span style="font-size:12px;font-weight:400;color:#e8988f;">= dead syllable</span></div>
       <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0 0 7px;">
       次のどちらかで終わる音節です。<br>
       ①短母音で終わる、かつ末子音が無い(例:กะ・ดุ)<br>
       ②k・t・pの音で終わる(例:มาก・นัด・กับ)
       </p>
       <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0;">
-      これらは「音が途中でせき止められる」終わり方です。「มาก(多い)」の「ก」は、日本語の小さい「っ」のように、音がぷつっと止まります。伸ばそうとしても伸ばせません。
+      これらは「音が途中でせき止められる」終わり方です。「มาก(多い)」の「ก」では、最後の音のところで声が止まり、そのまま伸ばすことができません。日本語の「っ」に少し似た感覚はありますが、<b style="color:#fff;">同じ音ではありません。</b>
       </p>
     </div>
   </div>
 
-  <div style="margin-top:11px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
+  <div style="margin-top:11px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13.5px;color:#b8b2c0;line-height:1.7;">
+  📎 「平音節/促音節」はThai Pocaでの呼び方で、言語学では<b style="color:#e4e1e8;">live syllable(平音節) / dead syllable(促音節)</b>と呼ばれます。まずは「伸ばせる/伸ばせない」の感覚で覚えればOKです。
+  </div>
+
+  <div style="margin-top:9px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
   💡 綴り字の上の子音字(ก・ด・บなど)は何種類もありますが、実際に発音する末子音の音は少数に整理されます。たとえば ด・ต・ถ・ท・ธ・จ・ช・ซ・ศ・ษ・ส はどれも語末では同じ「t」の音になります。文字は違っても、発音される音の種類(平音節か促音節か)で考えるのがポイントです。
   </div>
 
@@ -5334,6 +5338,10 @@ function renderToneSection(){
 <summary style="background:#4a7cc4;color:#fff;">低子音　ค ง ช ซ ฑ ฒ ท น พ ฟ ม ย ร ล ว ฬ ฮ 他<span class="fold-chev" style="color:#fff;">▾</span></summary>
 <div class="fold-body" style="padding-top:8px;">
 
+<div style="margin-bottom:10px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13.5px;color:#b8b2c0;line-height:1.7;">
+  📌 この段階では、低子音をすべて暗記する必要はありません。まずは声調が決まる仕組みを理解しましょう。
+</div>
+
 <div style="margin-bottom:12px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
   <div style="font-weight:700;color:#fff;margin-bottom:6px;">🔗 低子音には「対応する高子音」があるものとないものがある</div>
   <p style="margin:0 0 8px;">下の7組は、同じ発音の高子音とペアになっている低子音です。「なぜ同じ音なのに文字が複数あるのか」はこのペア関係が理由です。</p>
@@ -5374,25 +5382,25 @@ function renderToneSection(){
 <summary style="background:#8a6d1f;color:#fff;">声調判定トレーニング(実例で練習)<span class="fold-chev" style="color:#fff;">▾</span></summary>
 <div class="fold-body" style="padding-top:8px;">
 <div style="background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:13.5px;color:#e4e1e8;line-height:1.9;">
-単語を見たら、この4ステップで声調を判定できます。<br>
-① 最初の子音は中子音/高子音/低子音のどれ？<br>
-② 母音は長母音/短母音？<br>
-③ 末子音は伸ばせる音(平音節)/止まる音(促音節)？<br>
-④ 声調符号(่ ้ ๊ ๋)は付いている？<br>
-→ この4つの組み合わせで声調が決まります。
+単語を見たら、次の<b style="color:#fff;">3つの要素</b>で声調を判定できます。<br>
+① <b style="color:#fff;">子音クラス</b> → 中子音・高子音・低子音<br>
+② <b style="color:#fff;">音節タイプ</b> → 平音節(live)・促音節(dead)<br>
+③ <b style="color:#fff;">声調符号</b> → なし・่・้・๊・๋<br>
+<span style="color:#b8b2c0;font-size:12.5px;">※②の音節タイプは、母音の長短と末子音の有無・種類から判断します(長母音+m・n・ng・y・w系=平音節、短母音のみ/末子音がk・t・p系=促音節)。</span><br>
+→ この3つの組み合わせで声調が決まります。
 </div>
 ${[
   {th:'กิน', ro:'kin', jp:'食べる', cls:'中子音', clsColor:'#c0392b', bg:'rgba(192,57,43,.14)',
-   steps:['ก = <b style="color:#c0392b;">中子音</b>','ิ = <b style="color:#fff;">短母音</b>','น(ん) → <b style="color:#fff;">平音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
+   steps:['ก = <b style="color:#c0392b;">中子音</b>','ิ(短母音)+น(ん) → <b style="color:#fff;">平音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
    result:'中子音+平音節+符号なし = <b style="color:#f2b705;">中声(サーマン)</b>'},
   {th:'มา', ro:'maa', jp:'来る', cls:'低子音', clsColor:'#4a7cc4', bg:'rgba(74,124,196,.14)',
-   steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า = <b style="color:#fff;">長母音</b>','末子音なし → <b style="color:#fff;">平音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
+   steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า(長母音)+末子音なし → <b style="color:#fff;">平音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
    result:'低子音+平音節+符号なし = <b style="color:#f2b705;">中声(サーマン)</b>'},
   {th:'ม้า', ro:'máa', jp:'馬', cls:'低子音', clsColor:'#4a7cc4', bg:'rgba(74,124,196,.14)',
-   steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า = <b style="color:#fff;">長母音</b>','末子音なし → <b style="color:#fff;">平音節</b>','้ → <b style="color:#fff;">マイトー</b>'],
+   steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า(長母音)+末子音なし → <b style="color:#fff;">平音節</b>','้ → <b style="color:#fff;">マイトー</b>'],
    result:'低子音+マイトー = <b style="color:#f2b705;">高声(トリー)</b>'},
   {th:'มาก', ro:'mâak', jp:'多い、とても', cls:'低子音', clsColor:'#4a7cc4', bg:'rgba(74,124,196,.14)',
-   steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า = <b style="color:#fff;">長母音</b>','ก(k) → <b style="color:#fff;">促音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
+   steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า(長母音)+ก(k) → <b style="color:#fff;">促音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
    result:'低子音+促音節(長母音)+符号なし = <b style="color:#f2b705;">下降声(トー)</b>'},
 ].map(function(ex){
   return '<div style="background:#241f2c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 15px;margin-bottom:11px;">'
@@ -5403,7 +5411,7 @@ ${[
     +'<button onclick="event.stopPropagation();speak(\''+ex.th+'\')" style="width:28px;height:28px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:13px;cursor:pointer;margin-left:auto;flex-shrink:0;">🔊</button>'
     +'</div>'
     +'<div style="font-size:13px;color:#e4e1e8;line-height:2;padding-left:8px;border-left:2px solid '+ex.clsColor+';margin-bottom:9px;">'
-    +ex.steps.map(function(s,i){ return '① ② ③ ④'.split(' ')[i]+' '+s; }).join('<br>')
+    +ex.steps.map(function(s,i){ return '① ② ③'.split(' ')[i]+' '+s; }).join('<br>')
     +'</div>'
     +'<div style="text-align:center;padding:8px;background:'+ex.bg+';border-radius:8px;font-size:13.5px;color:#e4e1e8;">'+ex.result+'</div>'
     +'</div>';
