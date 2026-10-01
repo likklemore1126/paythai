@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01o';
+const APP_VERSION = '2026-10-01p';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4639,7 +4639,7 @@ const VOWEL_DATA = [
     ex:'เพราะ',  ex_ro:'phrɔ́',  ex_jp:'なぜなら',       rare:false, spk:'เอาะ' },
   { group:'単母音（短）', color:'#c0392b',
     id:'s17', display:'เออะ', ro:'ɤ',  kana:'ウ',
-    name_th:'สระเออะ', name_ro:'sà-rà oe', name_jp:'サラ ウー',
+    name_th:'สระเออะ', name_ro:'sà-rà oe', name_jp:'サラ ウ',
     ex:'เลอะ',   ex_ro:'lɯ̀',    ex_jp:'汚れる',         rare:false, spk:'เออะ' },
   // ─── 単母音（長）9種 ────────────────────────────────────────
   { group:'単母音（長）', color:'#2980b9',
