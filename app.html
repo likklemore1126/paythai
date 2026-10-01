@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01j';
+const APP_VERSION = '2026-10-01k';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5360,34 +5360,38 @@ function renderNumbers(){
   const numAudioBtnOnDark=(th)=>`<button onclick="event.stopPropagation();speak('${th}')" style="width:34px;height:34px;border-radius:50%;background:var(--yellow);border:none;color:#2b2118;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>`;
 
   // 基本数字0〜9＋位の単位: 表=数字、裏=実用例文、のフリップカード。
+  // 1列・横長カード。表=数字を横並びでコンパクトに、裏=例文を横幅いっぱい使って折り返しを減らす。
   const numFlipCard=(n,height)=>{
     const ex = NUM_EX[n.arabic];
-    const isLong = n.arabic.length > 5; // 100,000 / 1,000,000 は桁が多いので縮小してスタック表示
-    const thNumSize = isLong ? 24 : 30;
-    const arabicSize = isLong ? 13 : 15;
+    const isLong = n.arabic.length > 5; // 100,000 / 1,000,000 は桁が多いので縮小
+    const thNumSize = isLong ? 22 : 28;
     return `
 <div class="mf-wrap" style="height:${height}px;">
 <div class="mf-inner" onclick="this.classList.toggle('flipped')">
-  <div class="mf-face" style="background:var(--tag);border:1px solid var(--tag-edge);padding:10px;gap:2px;">
-    <div style="display:flex;flex-direction:column;gap:1px;">
-      <span style="font-family:'Sarabun',sans-serif;font-size:${thNumSize}px;color:#2b2118;line-height:1.3;">${n.th_num}</span>
-      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:${arabicSize}px;color:#b5860a;overflow-wrap:break-word;">${n.arabic}</span>
+  <div class="mf-face" style="background:var(--tag);border:1px solid var(--tag-edge);flex-direction:row;align-items:center;padding:8px 12px;gap:10px;">
+    <div style="display:flex;flex-direction:column;align-items:flex-start;min-width:76px;flex-shrink:0;">
+      <span style="font-family:'Sarabun',sans-serif;font-size:${thNumSize}px;color:#2b2118;line-height:1.2;">${n.th_num}</span>
+      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#b5860a;">${n.arabic}</span>
     </div>
-    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#6b5c3e;">${n.ro}</div>
-    <div style="font-family:'Sarabun',sans-serif;font-size:15px;color:#4a3d2a;">${n.th_word}</div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;">
-      <span style="font-size:10px;color:#8a7a55;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;">タップで例文</span>
+    <div style="flex:1;min-width:0;">
+      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#6b5c3e;">${n.ro}</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:#4a3d2a;">${n.th_word}</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;">
       ${numAudioBtn(n.th_word)}
+      <span style="font-size:9px;color:#8a7a55;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;white-space:nowrap;">例文→</span>
     </div>
   </div>
-  <div class="mf-face mf-back" style="background:#ede4cc;border:1px solid var(--tag-edge);padding:10px;gap:4px;">
+  <div class="mf-face mf-back" style="background:#ede4cc;border:1px solid var(--tag-edge);flex-direction:row;align-items:center;padding:8px 12px;gap:10px;">
     ${ex ? `
-    <div style="font-size:10px;color:#8a7a55;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;">例文</div>
-    <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:#2b2118;line-height:1.4;flex:1;">${ex.th}</div>
-    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:#6b5c3e;">${ex.ro}</div>
-    <div style="font-size:12px;color:#4a3d2a;margin-bottom:2px;">${ex.jp}</div>
-    <div style="display:flex;justify-content:flex-end;">${numAudioBtn(ex.th)}</div>
-    ` : `<div style="flex:1;display:flex;align-items:center;color:#8a7a55;font-size:12px;">例文準備中</div>`}
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:10px;color:#8a7a55;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;">例文</div>
+      <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:#2b2118;line-height:1.35;">${ex.th}</div>
+      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:#6b5c3e;margin-top:2px;">${ex.ro}</div>
+      <div style="font-size:12px;color:#4a3d2a;margin-top:1px;">${ex.jp}</div>
+    </div>
+    <div style="flex-shrink:0;">${numAudioBtn(ex.th)}</div>
+    ` : `<div style="flex:1;color:#8a7a55;font-size:12px;">例文準備中</div>`}
   </div>
 </div>
 </div>`;
@@ -5410,14 +5414,14 @@ function renderNumbers(){
 
 <!-- 基本数字 0〜9 -->
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:8px 0 6px;">基本数字（タップでめくって例文）</div>
-<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:16px;">
-${NUMS.filter(n=>['0','1','2','3','4','5','6','7','8','9'].includes(n.arabic)).map(n=>numFlipCard(n,150)).join('')}
+<div style="display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:16px;">
+${NUMS.filter(n=>['0','1','2','3','4','5','6','7','8','9'].includes(n.arabic)).map(n=>numFlipCard(n,96)).join('')}
 </div>
 
 <!-- 位の単位 -->
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 6px;">位の単位（タップでめくって例文）</div>
-<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:20px;">
-${units.map(n=>numFlipCard(n,205)).join('')}
+<div style="display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:20px;">
+${units.map(n=>numFlipCard(n,108)).join('')}
 </div>
 
 <!-- ルール解説 -->
