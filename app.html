@@ -5355,7 +5355,9 @@ function renderNumbers(){
 
   // 🔊は枠内タップではなく、タイ文字(母音表)と同じ34pxの独立したボタンにする
   // (枠のどこを押しても音が出る方式だと、読んでいるだけで誤って再生されてしまうため)
-  const numAudioBtn=(th)=>`<button onclick="event.stopPropagation();speak('${th}')" style="width:34px;height:34px;border-radius:50%;background:var(--yellow);border:none;color:#2b2118;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>`;
+  const numAudioBtn=(th)=>`<button onclick="event.stopPropagation();speak('${th}')" style="width:34px;height:34px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>`;
+  // 2桁組み合わせ例(exCard)は背景がまだ暗色のままなので、そちらだけ従来の黄色ボタンを使う
+  const numAudioBtnOnDark=(th)=>`<button onclick="event.stopPropagation();speak('${th}')" style="width:34px;height:34px;border-radius:50%;background:var(--yellow);border:none;color:#2b2118;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>`;
 
   // 基本数字0〜9＋位の単位: 表=数字、裏=実用例文、のフリップカード。
   const numFlipCard=(n,height)=>{
@@ -5363,26 +5365,26 @@ function renderNumbers(){
     return `
 <div class="mf-wrap" style="height:${height}px;">
 <div class="mf-inner" onclick="this.classList.toggle('flipped')">
-  <div class="mf-face" style="background:var(--bg2);border:1px solid #38353f;padding:10px;gap:2px;">
+  <div class="mf-face" style="background:var(--tag);border:1px solid var(--tag-edge);padding:10px;gap:2px;">
     <div style="display:flex;align-items:baseline;gap:6px;">
-      <span style="font-family:'Sarabun',sans-serif;font-size:30px;color:#fff;line-height:1;flex-shrink:0;">${n.th_num}</span>
-      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:var(--yellow);word-break:break-all;">${n.arabic}</span>
+      <span style="font-family:'Sarabun',sans-serif;font-size:30px;color:#2b2118;line-height:1;flex-shrink:0;">${n.th_num}</span>
+      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#b5860a;word-break:break-all;">${n.arabic}</span>
     </div>
-    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);">${n.ro}</div>
-    <div style="font-family:'Sarabun',sans-serif;font-size:15px;color:var(--muted2);">${n.th_word}</div>
+    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#6b5c3e;">${n.ro}</div>
+    <div style="font-family:'Sarabun',sans-serif;font-size:15px;color:#4a3d2a;">${n.th_word}</div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;">
-      <span style="font-size:10px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;">タップで例文</span>
+      <span style="font-size:10px;color:#8a7a55;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;">タップで例文</span>
       ${numAudioBtn(n.th_word)}
     </div>
   </div>
-  <div class="mf-face mf-back" style="background:#2e2b35;border:1px solid #38353f;padding:10px;gap:4px;">
+  <div class="mf-face mf-back" style="background:#ede4cc;border:1px solid var(--tag-edge);padding:10px;gap:4px;">
     ${ex ? `
-    <div style="font-size:10px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;">例文</div>
-    <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:#fff;line-height:1.4;flex:1;">${ex.th}</div>
-    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);">${ex.ro}</div>
-    <div style="font-size:12px;color:var(--muted2);margin-bottom:2px;">${ex.jp}</div>
+    <div style="font-size:10px;color:#8a7a55;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;">例文</div>
+    <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:#2b2118;line-height:1.4;flex:1;">${ex.th}</div>
+    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:#6b5c3e;">${ex.ro}</div>
+    <div style="font-size:12px;color:#4a3d2a;margin-bottom:2px;">${ex.jp}</div>
     <div style="display:flex;justify-content:flex-end;">${numAudioBtn(ex.th)}</div>
-    ` : `<div style="flex:1;display:flex;align-items:center;color:var(--muted);font-size:12px;">例文準備中</div>`}
+    ` : `<div style="flex:1;display:flex;align-items:center;color:#8a7a55;font-size:12px;">例文準備中</div>`}
   </div>
 </div>
 </div>`;
@@ -5397,7 +5399,7 @@ function renderNumbers(){
   <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${n.ro}</div>
   <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:var(--muted2);">${n.th_word}</div>
   <div style="font-size:12px;color:#f2b705;margin-top:2px;">${n.note}</div>
-  <div style="display:flex;justify-content:flex-end;margin-top:2px;">${numAudioBtn(n.th_word)}</div>
+  <div style="display:flex;justify-content:flex-end;margin-top:2px;">${numAudioBtnOnDark(n.th_word)}</div>
 </div>`;
 
   return `
