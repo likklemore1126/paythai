@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01n';
+const APP_VERSION = '2026-10-01o';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4721,11 +4721,11 @@ const VOWEL_DATA = [
     name_th:'สระเอา', name_ro:'sà-rà ao', name_jp:'サラ アオ',
     ex:'เอา',    ex_ro:'ao',     ex_jp:'取る・欲しい',   rare:false, spk:'เอา' },
   { group:'特殊母音', color:'#16a085',
-    id:'sp5', display:'ฤ',    ro:'rɯ', kana:'ルー',
+    id:'sp5', display:'ฤ',    ro:'rɯ', kana:'ル',
     name_th:'สระฤ', name_ro:'sà-rà rɯ', name_jp:'サラ ル',
     ex:'ฤดู',    ex_ro:'rɯduu',  ex_jp:'季節',           rare:false, spk:'รึ' },
   { group:'特殊母音', color:'#16a085',
-    id:'sp6', display:'ฤๅ',   ro:'rɯɯ',kana:'ルーー',
+    id:'sp6', display:'ฤๅ',   ro:'rɯɯ',kana:'ルー',
     name_th:'สระฤๅ', name_ro:'sà-rà rɯɯ', name_jp:'サラ ルー',
     ex:'ฤาษี',  ex_ro:'rɯɯsǐi', ex_jp:'仙人',           rare:false, spk:'รือ' },
 ];
@@ -4851,18 +4851,27 @@ function renderVowelSection(){
       const exBg     = isRare ? '#e0d9ce' : '#ede4cc';
       const hasEx    = v.ex && v.ex !== '—';
 
+      // เอียะ/เอือะ等は表示文字が横に長く、そのままだとro/kana欄を圧迫して
+      // カナが1文字ずつ改行される不具合が出るため、クラスタ数(結合記号を除いた
+      // 実質的な文字数)が多い場合は表示文字のサイズを少し縮小してスペースを確保する。
+      let dispClusterCount = 0;
+      const ATTACH_RE = /[ัำิีึืุู]/;
+      for(let ci=0; ci<v.display.length; ci++){ if(!ATTACH_RE.test(v.display[ci])) dispClusterCount++; }
+      const dispFontSize = dispClusterCount>=4 ? 30 : 41;
+      const dispMinWidth = dispClusterCount>=4 ? 38 : 50;
+
       h += '<div class="mf-wrap" style="height:198px;">';
       h += '<div class="mf-inner" onclick="this.classList.toggle(\'flipped\')">';
 
       // ── 表面：母音記号大表示 ＋ Paiboon/カナ ＋ 母音🔊 ＋ 母音名 ──
       h += '<div class="mf-face" style="background:'+cardBg+';border:1px solid '+cardBord+';box-shadow:0 3px 8px rgba(0,0,0,.22);">';
       h += '<div style="display:flex;align-items:center;padding:10px 10px 7px;gap:6px;">';
-      h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:41px;font-weight:500;line-height:1.25;min-width:50px;text-align:center;">'+colorizeDisplay(v.display)+'</div>';
+      h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:'+dispFontSize+'px;font-weight:500;line-height:1.25;min-width:'+dispMinWidth+'px;text-align:center;">'+colorizeDisplay(v.display)+'</div>';
       h += '<div style="flex:1;min-width:0;">';
-      h += '<div style="display:flex;align-items:baseline;gap:4px;flex-wrap:wrap;">';
+      h += '<div>';
       h += '<span class="vowel-symbol-ro" data-th="'+v.display+'" data-jp="'+v.name_jp+'" data-pgkey="'+pgKeyForVowelRo(v.ro)+'" style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:17px;font-weight:700;color:'+col+';text-decoration:underline dotted #a9986b 1.5px;text-underline-offset:3px;cursor:pointer;">'+v.ro+'</span>';
-      h += '<span style="font-size:14px;color:#6b5c3e;">'+v.kana+'</span>';
       h += '</div>';
+      h += '<div style="font-size:14px;color:#6b5c3e;margin-top:2px;white-space:nowrap;">'+v.kana+'</div>';
       h += '</div>';
       h += '<button onclick="event.stopPropagation();playVowelAudio(\''+v.id+'\',\''+v.spk+'\')" style="width:34px;height:34px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>';
       h += '</div>';
