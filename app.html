@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-02c';
+const APP_VERSION = '2026-10-02d';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -6248,11 +6248,11 @@ const PG_IMAGES = {
   "vowel_ram_horn": "vowel_ram_horn.jpg",
   "vowel_eng": "vowel_eng.jpg",
   "vowel_turned_m": "vowel_turned_m.jpg",
-  "tone_mid_flat": "tone_mid_flat.jpg",
-  "tone_low_a_grave": "tone_low_a_grave.jpg",
-  "tone_high_a_acute": "tone_high_a_acute.jpg",
-  "tone_falling_a_circ": "tone_falling_a_circ.jpg",
-  "tone_rising_a_caron": "tone_rising_a_caron.jpg",
+  "tone_mid_flat": "tone_mid_flat.webp",
+  "tone_low_a_grave": "tone_low_a_grave.webp",
+  "tone_high_a_acute": "tone_high_a_acute.webp",
+  "tone_falling_a_circ": "tone_falling_a_circ.webp",
+  "tone_rising_a_caron": "tone_rising_a_caron.webp",
 };
 </script>
 
