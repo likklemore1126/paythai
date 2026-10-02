@@ -235,7 +235,7 @@ footer{text-align:center;padding:6px 0 2px;}
 .list-body{flex:1;min-width:0;}
 .list-row1{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
 .list-th{font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;}
-.list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted2);line-height:1.4;}
+.list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted2);line-height:1.4;}
 .list-jp{font-size:14px;color:var(--fg);text-align:left;line-height:1.5;margin-top:2px;}
 .gram-list-row{align-items:flex-start!important;}
 .gram-list-row .glr-body{flex:1;min-width:0;}
@@ -245,7 +245,7 @@ footer{text-align:center;padding:6px 0 2px;}
 .conv-list-item.learned-item{background:rgba(76,154,106,.08);}
 .conv-list-row1{display:flex;align-items:baseline;gap:8px;}
 .conv-list-th{font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;flex:1;line-height:1.4;}
-.conv-list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted2);padding-left:36px;line-height:1.4;}
+.conv-list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted2);padding-left:36px;line-height:1.4;}
 .conv-list-jp{font-size:14px;color:var(--fg);padding-left:36px;line-height:1.5;}
 .list-badge{font-size:10px;background:#2d6a4f;color:#b7e4c7;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;align-self:center;flex-shrink:0;}
 /* --- 戻るボタン --- */
@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-02a';
+const APP_VERSION = '2026-10-02b';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4878,13 +4878,13 @@ function renderVowelSection(){
       if(!isRare){
         h += '<div style="padding:3px 10px 5px;border-top:1px solid rgba(0,0,0,.06);">';
         h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:18px;color:#2b2118;font-weight:500;">'+v.name_th+'</div>';
-        h += '<div style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:13px;color:#8a7a55;margin-top:2px;">'+v.name_ro+'</div>';
+        h += '<div style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#8a7a55;margin-top:2px;">'+v.name_ro+'</div>';
         h += '<div style="font-size:13px;color:#5a4d3a;margin-top:1px;">'+v.name_jp+'</div>';
         h += '</div>';
       } else {
         h += '<div style="padding:3px 10px 5px;border-top:1px solid rgba(0,0,0,.06);">';
         h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:15px;color:#aaa;font-weight:500;">'+v.name_th+'</div>';
-        h += '<div style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:11px;color:#aaa;margin-top:1px;">'+v.name_ro+'</div>';
+        h += '<div style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#aaa;margin-top:1px;">'+v.name_ro+'</div>';
         h += '</div>';
       }
       h += '<div style="margin-top:auto;text-align:center;font-size:10.5px;color:#8a7a55;font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;padding:4px 0 6px;">タップして例単語を見る</div>';
@@ -4894,14 +4894,14 @@ function renderVowelSection(){
       h += '<div class="mf-face mf-back" style="background:'+exBg+';border:1px solid '+cardBord+';">';
       h += '<div style="padding:9px 10px 4px;display:flex;align-items:baseline;gap:6px;">';
       h += '<span style="font-family:\'Sarabun\',sans-serif;font-size:19px;color:'+col+';font-weight:500;">'+v.display+'</span>';
-      h += '<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:12px;color:#6b5c3e;">'+v.ro+'</span>';
+      h += '<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#6b5c3e;">'+v.ro+'</span>';
       h += '</div>';
       if(hasEx){
         h += '<div style="flex:1;padding:4px 10px;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;">';
         h += '<div style="font-size:10px;color:#8a7a55;font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;">例単語</div>';
         h += '<div style="display:flex;align-items:baseline;gap:4px;flex-wrap:wrap;">';
         h += '<span style="font-family:\'Sarabun\',sans-serif;font-size:23px;color:#2b2118;font-weight:500;">'+v.ex+'</span>';
-        h += '<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:11px;color:#6b5c3e;">'+v.ex_ro+'</span>';
+        h += '<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#6b5c3e;">'+v.ex_ro+'</span>';
         h += '</div>';
         h += '<div style="font-size:12px;color:#4a3d2a;">'+v.ex_jp+'</div>';
         h += '</div>';
@@ -5490,7 +5490,7 @@ function renderNumbers(){
       <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#b5860a;">${n.arabic}</span>
     </div>
     <div style="flex:1;min-width:0;">
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;">${n.ro}</div>
+      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;">${n.ro}</div>
       <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#4a3d2a;">${n.th_word}</div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;">
@@ -5503,7 +5503,7 @@ function renderNumbers(){
     <div style="flex:1;min-width:0;">
       <div style="font-size:10px;color:#8a7a55;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;">例文</div>
       <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:#2b2118;line-height:1.35;">${ex.th}</div>
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:#6b5c3e;margin-top:2px;">${ex.ro}</div>
+      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;margin-top:2px;">${ex.ro}</div>
       <div style="font-size:12px;color:#4a3d2a;margin-top:1px;">${ex.jp}</div>
     </div>
     <div style="flex-shrink:0;">${numAudioBtn(ex.th)}</div>
@@ -5521,7 +5521,7 @@ function renderNumbers(){
     <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#b5860a;">${n.arabic}</span>
   </div>
   <div style="flex:1;min-width:0;">
-    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;">${n.ro}</div>
+    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;">${n.ro}</div>
     <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#4a3d2a;">${n.th_word}</div>
     <div style="font-size:12px;color:#9a6a1f;margin-top:2px;">${n.note}</div>
   </div>
@@ -5534,13 +5534,13 @@ function renderNumbers(){
 <!-- 基本数字 0〜9 -->
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:8px 0 6px;">基本数字（タップでめくって例文）</div>
 <div style="display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:16px;">
-${NUMS.filter(n=>['0','1','2','3','4','5','6','7','8','9'].includes(n.arabic)).map(n=>numFlipCard(n,96)).join('')}
+${NUMS.filter(n=>['0','1','2','3','4','5','6','7','8','9'].includes(n.arabic)).map(n=>numFlipCard(n,106)).join('')}
 </div>
 
 <!-- 位の単位 -->
 <div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 6px;">位の単位（タップでめくって例文）</div>
 <div style="display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:20px;">
-${units.map(n=>numFlipCard(n,108)).join('')}
+${units.map(n=>numFlipCard(n,124)).join('')}
 </div>
 
 <!-- ルール解説 -->
