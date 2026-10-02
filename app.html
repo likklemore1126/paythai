@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-02e';
+const APP_VERSION = '2026-10-02f';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3651,18 +3651,41 @@ function renderHelpBody(){
 }
 let lbNavList = [];
 let lbNavIndex = -1;
+// #pgBody内の画像を「.pg-section-label」の区切りでグループ分けし、
+// 指定した画像と同じセクション(母音記号 / 複合母音・特殊母音 / 声調記号)の
+// 画像一覧だけを返す(セクションをまたいだスワイプ移動を避けるため)
+function getPgSectionImages(targetSrc){
+  const body = document.getElementById('pgBody');
+  if(!body) return [];
+  const children = Array.from(body.children);
+  let groups = [];
+  let current = [];
+  children.forEach(ch=>{
+    if(ch.classList && ch.classList.contains('pg-section-label')){
+      if(current.length) groups.push(current);
+      current = [];
+    } else if(ch.classList && ch.classList.contains('pg-card')){
+      const im = ch.querySelector('img');
+      if(im && im.src) current.push(im);
+    }
+  });
+  if(current.length) groups.push(current);
+  for(const g of groups){
+    if(g.some(im=>im.src===targetSrc)) return g;
+  }
+  return [];
+}
 function openImgLightbox(src){
   if(!src) return;
   document.getElementById('imgLightboxImg').src = src;
   const lb = document.getElementById('imgLightbox');
   lb.style.display = 'flex';
-  // 発音記号ガイド(母音・声調イラスト)から開いた場合は、同じギャラリー内を
+  // 発音記号ガイド(母音・声調イラスト)から開いた場合は、同じセクション内を
   // スワイプで前後に移動できるようにする
-  const pgImgs = Array.from(document.querySelectorAll('#pgBody img[data-key]')).filter(im=>im.src);
-  const idx = pgImgs.findIndex(im=>im.src === src);
-  if(idx >= 0){
-    lbNavList = pgImgs.map(im=>im.src);
-    lbNavIndex = idx;
+  const sectionImgs = getPgSectionImages(src);
+  if(sectionImgs.length){
+    lbNavList = sectionImgs.map(im=>im.src);
+    lbNavIndex = lbNavList.indexOf(src);
   } else {
     lbNavList = [];
     lbNavIndex = -1;
