@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-01z2';
+const APP_VERSION = '2026-10-02a';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5165,7 +5165,7 @@ function renderToneSection(){
   <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:10px;">
     ${[
       ['─','กา','สามัญ(中声)'],
-      ['↘低','ก่า','เอก(低声)'],
+      ['↘','ก่า','เอก(低声)'],
       ['↗↘','ก้า','โท(下降声)'],
       ['↑','ก๊า','ตรี(高声)'],
       ['↗','ก๋า','จัตวา(上昇声)'],
@@ -5296,7 +5296,7 @@ function renderToneSection(){
   <tr style="background:rgba(192,57,43,.1);">
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">─</div><div style="font-size:12px;color:var(--muted);">サーマン</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">─</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↑</div><div style="font-size:12px;color:var(--muted);">トリー</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタワー</div></td>
@@ -5321,8 +5321,8 @@ function renderToneSection(){
   </tr>
   <tr style="background:rgba(76,154,106,.1);">
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタワー</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘低</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↘</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
     <td colspan="2" style="text-align:center;padding:8px 4px;color:var(--muted);font-size:13px;">—</td>
   </tr>
@@ -5364,10 +5364,10 @@ function renderToneSection(){
   </tr>
   <tr style="background:rgba(74,124,196,.1);">
     <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#fff;">─</div><div style="font-size:11px;color:var(--muted);">サーマン</div></td>
-    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#fff;">↑高</div><div style="font-size:11px;color:var(--muted);">トリー</div></td>
-    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#fff;">↘高</div><div style="font-size:11px;color:var(--muted);">トー</div></td>
-    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#f2b705;">↘高</div><div style="font-size:11px;color:var(--muted);">トー</div></td>
-    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#f2b705;">↑高</div><div style="font-size:11px;color:var(--muted);">トリー</div></td>
+    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#fff;">↑</div><div style="font-size:11px;color:var(--muted);">トリー</div></td>
+    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#fff;">↘</div><div style="font-size:11px;color:var(--muted);">トー</div></td>
+    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#f2b705;">↘</div><div style="font-size:11px;color:var(--muted);">トー</div></td>
+    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#f2b705;">↑</div><div style="font-size:11px;color:var(--muted);">トリー</div></td>
   </tr>
   </table>
   <p style="margin:8px 0 0;font-size:12.5px;color:#b8b2c0;line-height:1.6;">📌 低子音はトリー・ジャッタワーの符号を使いません。そのかわり「促音節(短母音)」や「マイトー」からも高声(トリー)に、「促音節(長母音)」や「マイエーク」からも下降声(トー)に、それぞれ2通りの経路でたどり着けるのが低子音の特徴です(例: ม้า=máa「馬」はマイトーで高声)。</p>
