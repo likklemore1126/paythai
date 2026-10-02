@@ -316,7 +316,7 @@ footer{text-align:center;padding:6px 0 2px;}
 </head>
 <body>
 <div id="installBanner" style="display:none;padding:10px 14px;text-align:center;font-size:12.5px;line-height:1.5;cursor:pointer;"></div>
-<div id="imgLightbox" onclick="closeImgLightbox()" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.92);align-items:center;justify-content:center;padding:20px;">
+<div id="imgLightbox" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.92);align-items:center;justify-content:center;padding:20px;">
   <img id="imgLightboxImg" src="" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;">
   <div style="position:absolute;top:max(env(safe-area-inset-top),14px);right:18px;color:#fff;font-size:28px;line-height:1;">✕</div>
 </div>
@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-02d';
+const APP_VERSION = '2026-10-02e';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3649,15 +3649,61 @@ function renderHelpBody(){
     });
   });
 }
+let lbNavList = [];
+let lbNavIndex = -1;
 function openImgLightbox(src){
   if(!src) return;
   document.getElementById('imgLightboxImg').src = src;
   const lb = document.getElementById('imgLightbox');
   lb.style.display = 'flex';
+  // 発音記号ガイド(母音・声調イラスト)から開いた場合は、同じギャラリー内を
+  // スワイプで前後に移動できるようにする
+  const pgImgs = Array.from(document.querySelectorAll('#pgBody img[data-key]')).filter(im=>im.src);
+  const idx = pgImgs.findIndex(im=>im.src === src);
+  if(idx >= 0){
+    lbNavList = pgImgs.map(im=>im.src);
+    lbNavIndex = idx;
+  } else {
+    lbNavList = [];
+    lbNavIndex = -1;
+  }
+}
+function lbShowIndex(i){
+  if(lbNavList.length===0) return;
+  if(i<0) i = 0;
+  if(i>lbNavList.length-1) i = lbNavList.length-1;
+  lbNavIndex = i;
+  document.getElementById('imgLightboxImg').src = lbNavList[i];
 }
 function closeImgLightbox(){
   document.getElementById('imgLightbox').style.display = 'none';
 }
+(function(){
+  const lb = document.getElementById('imgLightbox');
+  if(!lb) return;
+  let startX=null, startY=null, justSwiped=false;
+  lb.addEventListener('touchstart', e=>{
+    if(e.touches.length!==1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, {passive:true});
+  lb.addEventListener('touchend', e=>{
+    if(startX===null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    startX = null; startY = null;
+    if(lbNavList.length>0 && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
+      justSwiped = true;
+      if(dx < 0) lbShowIndex(lbNavIndex+1);
+      else lbShowIndex(lbNavIndex-1);
+      setTimeout(()=>{ justSwiped=false; }, 0);
+    }
+  }, {passive:true});
+  lb.addEventListener('click', ()=>{
+    if(justSwiped){ justSwiped=false; return; }
+    closeImgLightbox();
+  });
+})();
 
 // ジャンプナビ用：折りたたみセクション(id=details自身)へ移動する際、
 // ブラウザ標準のフラグメント遷移だけではdetails自身が対象の場合は開かない
@@ -6224,8 +6270,8 @@ if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged=()=>{};
     <div class="pg-section-label">声調記号(音の高さ)</div>
     <div class="pg-card" id="pg-tone_mid_flat"><img src="" data-key="tone_mid_flat"></div>
     <div class="pg-card" id="pg-tone_low_a_grave"><img src="" data-key="tone_low_a_grave"></div>
-    <div class="pg-card" id="pg-tone_high_a_acute"><img src="" data-key="tone_high_a_acute"></div>
     <div class="pg-card" id="pg-tone_falling_a_circ"><img src="" data-key="tone_falling_a_circ"></div>
+    <div class="pg-card" id="pg-tone_high_a_acute"><img src="" data-key="tone_high_a_acute"></div>
     <div class="pg-card" id="pg-tone_rising_a_caron"><img src="" data-key="tone_rising_a_caron"></div>
   </div>
 </div>
