@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-03a';
+const APP_VERSION = '2026-10-03b';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5251,21 +5251,21 @@ function renderToneSection(){
   📌 声調は5種類ありますが、声調符号(マーク)は<span style="color:#f2b705;font-weight:700;">่ ้ ๊ ๋ の4種類</span>だけです。マークが無い状態そのものが「สามัญ(中声)」を表すので実質5パターンに対応していますが、<b style="color:#fff;">同じマークでも、頭の子音が中子音/高子音/低子音のどれかによって結果の声調が変わります</b>。これが次の「子音クラス」が重要な理由です。
   </div>
 
-  <div style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;">
+  <div id="t-illust" style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;">
     <div style="font-weight:700;color:#fff;margin-bottom:8px;font-size:14px;">🖼️ イラストと発音表記でイメージをつかもう</div>
     <p style="font-size:13px;color:#e4e1e8;line-height:1.7;margin:0 0 9px;">
-    声の高さの動きを、表情とグラフでイメージにしてみました。画像はタップで拡大できます。単語カードのローマ字についている記号も、実はそのまま声調を表しています。
+    声の高さの動きを、表情とグラフでイメージにしてみました。→ 横にスワイプ・画像タップで拡大表示できます。単語カードのローマ字についている記号も、実はそのまま声調を表しています。
     </p>
-    <div style="display:flex;flex-direction:column;gap:10px;">
+    <div style="display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;">
       ${[
-        ['tone_card_mid.jpg','มา','maa','サーマン(中声)'],
-        ['tone_card_low.jpg','เด็ก','dèk','エーク(低声)'],
-        ['tone_card_falling.jpg','ข้าว','khâao','トー(下降声)'],
-        ['tone_card_high.jpg','รถ','rót','トリー(高声)'],
-        ['tone_card_rising.jpg','หมา','mǎa','ジャッタワー(上昇声)'],
+        ['tone_mid_flat','มา','maa','サーマン(中声)'],
+        ['tone_low_a_grave','เด็ก','dèk','エーク(低声)'],
+        ['tone_falling_a_circ','ข้าว','khâao','トー(下降声)'],
+        ['tone_high_a_acute','รถ','rót','トリー(高声)'],
+        ['tone_rising_a_caron','หมา','mǎa','ジャッタワー(上昇声)'],
       ].map(function(v){
-        return '<div style="background:rgba(255,255,255,.05);border-radius:10px;padding:8px;">'
-          +'<img src="'+v[0]+'" loading="lazy" style="width:100%;border-radius:8px;display:block;cursor:zoom-in;" onclick="openImgLightbox(this.src)">'
+        return '<div style="background:rgba(255,255,255,.05);border-radius:10px;padding:8px;flex:0 0 78%;scroll-snap-align:start;">'
+          +'<img src="'+(PG_IMAGES[v[0]]||'')+'" loading="lazy" style="width:100%;border-radius:8px;display:block;cursor:zoom-in;" onclick="openImgLightbox(this.src)">'
           +'<div style="display:flex;align-items:center;gap:8px;margin-top:8px;background:#2d2836;border-radius:8px;padding:8px 10px;">'
           +'<span style="font-family:\'Sarabun\',sans-serif;font-size:19px;color:#fff;">'+v[1]+'</span>'
           +'<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#f2b705;font-weight:700;">'+v[2]+'</span>'
@@ -5485,24 +5485,7 @@ ${[
 }).join('')}
 </div>
 </details>
-
-<!-- 声調イラスト -->
-<details class="fold-sec" id="t-illust" style="margin-top:14px;">
-<summary style="background:#6b5c3e;color:#fff;">表情イラストで確認<span class="fold-chev" style="color:#fff;">▾</span></summary>
-<div class="fold-body" style="padding:8px 0 4px;">
-<div class="illust-grid">
-  ${[
-    ['tone_mid_flat',        '中声・サーマン'],
-    ['tone_low_a_grave',     '低声・エーク'],
-    ['tone_falling_a_circ',  '下降声・トー'],
-    ['tone_high_a_acute',    '高声・トリー'],
-    ['tone_rising_a_caron',  '上昇声・ジャッタワー'],
-  ].map(function(t){
-    return '<figure><img src="'+(PG_IMAGES[t[0]]||'')+'" loading="lazy" onclick="openImgLightbox(this.src)"><figcaption>'+t[1]+'</figcaption></figure>';
-  }).join('')}
-</div>
-</div>
-</details>`;
+`;
 }
 
 // 基本数字0〜9＋位の単位(計16件)の実用例文。
