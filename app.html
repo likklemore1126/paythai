@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-03h';
+const APP_VERSION = '2026-10-03i';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5256,7 +5256,7 @@ function renderToneSection(){
     <p style="font-size:13px;color:#e4e1e8;line-height:1.7;margin:0 0 9px;">
     声の高さの動きを、表情とグラフでイメージにしてみました。→ 横にスワイプ・画像タップで拡大表示できます。単語カードのローマ字についている記号も、実はそのまま声調を表しています。
     </p>
-    <div style="display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;">
+    <div style="display:flex;align-items:flex-start;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;">
       ${[
         ['tone_mid_flat','มา','maa','中声'],
         ['tone_low_a_grave','เด็ก','dèk','低声'],
