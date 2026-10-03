@@ -1,7 +1,7 @@
 // Thai Pocket Cards Service Worker
 // NOTE: Bump SW_VERSION whenever app.html's APP_VERSION changes,
 // so returning users get the fresh file instead of a stale cached one.
-const SW_VERSION = '2026-10-03c';
+const SW_VERSION = '2026-10-03d';
 const CACHE_NAME = `taka-thaipocket-${SW_VERSION}`;
 
 const APP_SHELL = [
@@ -29,7 +29,22 @@ const APP_SHELL = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
+    caches.open(CACHE_NAME).then((cache) =>
+      // cache.addAll() uses the browser's normal HTTP cache for each fetch, so when a
+      // file's URL doesn't change between versions (images, audio, icons), the browser
+      // can silently hand back an old cached response here instead of real bytes from
+      // the network — meaning a new SW version can still precache stale image content.
+      // {cache:'reload'} forces every precache fetch to bypass the HTTP cache so a
+      // version bump always pulls the current file from the server.
+      Promise.all(
+        APP_SHELL.map((url) =>
+          fetch(url, { cache: 'reload' }).then((response) => {
+            if (!response.ok) throw new Error(`precache fetch failed: ${url} (${response.status})`);
+            return cache.put(url, response);
+          })
+        )
+      )
+    )
   );
   self.skipWaiting();
 });
@@ -57,7 +72,9 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith(
     caches.match(request).then((cached) => {
-      const networkFetch = fetch(request)
+      // Bypass the HTTP cache here too, for the same reason as the install step above:
+      // otherwise this background refresh can quietly re-save an old cached response.
+      const networkFetch = fetch(request, { cache: 'reload' })
         .then((response) => {
           if (response && response.ok) {
             const clone = response.clone();
