@@ -1427,7 +1427,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-03g';
+const APP_VERSION = '2026-10-03h';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5258,11 +5258,11 @@ function renderToneSection(){
     </p>
     <div style="display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;">
       ${[
-        ['tone_mid_flat','มา','maa','サーマン(中声)'],
-        ['tone_low_a_grave','เด็ก','dèk','エーク(低声)'],
-        ['tone_falling_a_circ','ข้าว','khâao','トー(下降声)'],
-        ['tone_high_a_acute','รถ','rót','トリー(高声)'],
-        ['tone_rising_a_caron','หมา','mǎa','ジャッタワー(上昇声)'],
+        ['tone_mid_flat','มา','maa','中声'],
+        ['tone_low_a_grave','เด็ก','dèk','低声'],
+        ['tone_falling_a_circ','ข้าว','khâao','下降声'],
+        ['tone_high_a_acute','รถ','rót','高声'],
+        ['tone_rising_a_caron','หมา','mǎa','上昇声'],
       ].map(function(v){
         return '<div style="background:rgba(255,255,255,.05);border-radius:10px;padding:8px;flex:0 0 78%;min-width:0;scroll-snap-align:start;">'
           +'<img src="'+(PG_IMAGES[v[0]]||'')+'" loading="lazy" style="width:100%;border-radius:8px;display:block;cursor:zoom-in;" onclick="openImgLightbox(this.src)">'
@@ -5270,7 +5270,7 @@ function renderToneSection(){
           +'<span style="font-family:\'Sarabun\',sans-serif;font-size:19px;color:#fff;flex-shrink:0;">'+v[1]+'</span>'
           +'<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#f2b705;font-weight:700;flex-shrink:0;">'+v[2]+'</span>'
           +'<span style="flex:1;min-width:0;"></span>'
-          +'<span style="font-size:12px;color:#e4e1e8;text-align:right;min-width:0;">→ '+v[3]+'</span>'
+          +'<span style="font-size:12px;color:#e4e1e8;text-align:right;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">→ '+v[3]+'</span>'
           +'<button onclick="speak(\''+v[1]+'\')" style="width:30px;height:30px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:14px;cursor:pointer;flex-shrink:0;">🔊</button>'
           +'</div>'
           +'</div>';
