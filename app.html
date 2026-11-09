@@ -94,7 +94,7 @@ header{padding-bottom:10px;}
 .th-big{font-family:'Sarabun',sans-serif;font-weight:500;font-size:44px;line-height:1.4;margin-top:16px;letter-spacing:1px;}
 .th-big.sm{font-size:25px;}
 .nb{white-space:nowrap;}
-.th-big.conv{font-size:30px;line-height:1.45;letter-spacing:.5px;text-wrap:balance;}
+.th-big.conv{max-width:100%;font-size:30px;line-height:1.45;letter-spacing:.5px;text-wrap:balance;}
 .jp-big{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:25px;line-height:1.45;margin-top:16px;}
 .ro-front{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:#6b5c3e;margin-top:8px;}
 .tap-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:13px;color:#9c8d68;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
@@ -1386,6 +1386,19 @@ const fTH = s => s ? s.replace(/\{PT}/g, PT[st.gender].th).replace(/\{PS}/g, PT[
 
 // 会話カードのタイ語を、不自然な位置で改行されないよう「語のかたまり」に分ける
 // (ブラウザのタイ語辞書で語に分け、単語帳にある複合語は1つにまとめ、末尾の ครับ/ค่ะ などが1語だけ孤立しないようにする)
+
+// 保険: 語のかたまり(.nb)が枠より広いときは、かたまり指定をやめて普通に折り返す(文字が枠からはみ出さないように)
+function fitThaiConv(){
+  const run=()=>document.querySelectorAll('.th-big.conv').forEach(el=>{
+    const spans=el.querySelectorAll('.nb'); if(!spans.length) return;
+    const W=el.clientWidth; if(!W) return;
+    let bad=false; spans.forEach(sp=>{ if(sp.offsetWidth>W-2) bad=true; });
+    if(!bad){ const rg=document.createRange(); rg.selectNodeContents(el); const rc=[...rg.getClientRects()]; if(rc.length){ const w=Math.max(...rc.map(x=>x.right))-Math.min(...rc.map(x=>x.left)); if(w>W+1) bad=true; } }
+    if(bad) el.textContent=el.textContent;
+  });
+  run();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+}
 let _thWordSet=null;
 function thWordSet(){
   if(_thWordSet) return _thWordSet;
@@ -1404,6 +1417,7 @@ function thWrapHtml(text){
     if(!isTh(t) && !isSp(t) && toks.length && !isSp(toks[toks.length-1])) toks[toks.length-1]+=t;
     else toks.push(t);
   });
+  if(toks.filter(t=>!isSp(t)).length<2 && text.length>8) return text; // 辞書が使えない端末では何もしない
   const words=thWordSet(), out=[];
   for(let i=0;i<toks.length;){
     let best=i, acc='';
@@ -1428,7 +1442,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-09g';
+const APP_VERSION = '2026-11-09h';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5687,6 +5701,7 @@ function render(){
 
   document.getElementById('faceFront').innerHTML=front;
   document.getElementById('faceBack').innerHTML=back;
+  fitThaiConv();
   document.getElementById('cardInner').classList.toggle('flipped',st.flipped);
   document.getElementById('dotCount').textContent=(st.idx+1)+' / '+l.length;
   const learnedCount=(st.mode==='vocab' && st.pos==='all')
