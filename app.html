@@ -281,33 +281,6 @@ footer{text-align:center;padding:6px 0 2px;}
 #stickySubRow::-webkit-scrollbar{display:none;}
 #stickySubRow .chip{display:inline-flex;margin-right:6px;}
 
-/* --- 発音記号ガイド モーダル --- */
-#pgOverlay{display:none;position:fixed;inset:0;background:rgba(20,18,15,.32);z-index:200;}
-#pgOverlay.open{display:block;}
-#pgModal{position:fixed;inset:0;width:100%;height:100%;background:#fdfbf6;border-radius:0;box-shadow:none;display:flex;flex-direction:column;overflow:hidden;z-index:201;}
-#pgWordBar{flex-shrink:0;background:#efe6cf;padding:10px 16px;border-bottom:1px solid #d9cba0;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
-#pgWordBar .pg-th{font-family:'Sarabun',sans-serif;font-size:20px;color:#3c3746;font-weight:700;}
-#pgWordBar .pg-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;}
-#pgWordBar .pg-jp{font-size:14px;color:#5a5142;flex-basis:100%;}
-#pgWordBar.empty{display:none;}
-#pgHeader{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top,0px)) 16px 14px;background:#3c3746;color:#fff;flex-shrink:0;}
-#pgHeader h3{margin:0;font-size:17px;}
-#pgCloseBtn{background:#55505f;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-size:15px;font-weight:700;cursor:pointer;}
-#pgBody{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 12px calc(24px + env(safe-area-inset-bottom,0px));flex:1;}
-.pg-section-label{font-size:14px;font-weight:700;color:#8a7d5f;margin:10px 4px 6px;letter-spacing:.05em;}
-.pg-card{scroll-margin-top:8px;margin-bottom:14px;border-radius:12px;overflow:hidden;border:1px solid #eadfc4;background:#fff;}
-.pg-card img{display:block;width:100%;height:auto;}
-.pg-card.pg-highlight{outline:3px solid #e0a72e;}
-@keyframes pgPulse{0%{box-shadow:0 0 0 0 rgba(224,167,46,.85);}70%{box-shadow:0 0 0 16px rgba(224,167,46,0);}100%{box-shadow:0 0 0 0 rgba(224,167,46,0);}}
-.pg-card.pg-pulse{animation:pgPulse .8s ease-out;}
-
-/* 単語カード等のro表記内で、特殊記号を含む音節だけをタップ対象にする色付きリンク。
-   隣り合う音節が両方ともリンクになるケース(例:ráan sàduak sɯ́ɯ)で、文字色だけだと
-   繋がって「1つのリンク」に見えてしまうため、チップ状の背景で個々の音節を
-   はっきり区切る。 */
-.pg-seg{display:inline-block;color:#c0392b;font-weight:800;background:rgba(192,57,43,.13);border:1px solid rgba(192,57,43,.35);border-radius:7px;padding:0 5px;margin:1px 2px;text-decoration:none;}
-
-.ro-front,.back-ro,.list-ro-text,.conv-list-ro,.ex-ro,.rb{cursor:pointer;text-decoration:underline dotted #a9986b 1.5px;text-underline-offset:4px;}
 .list-ro-text{display:inline-block;}
 .ro-front{display:inline-block;align-self:center;}
 .back-ro,.conv-list-ro{display:inline-block;align-self:flex-start;}
@@ -334,7 +307,6 @@ footer{text-align:center;padding:6px 0 2px;}
     <div class="progress-line"><span class="progress-text" id="progressText"></span></div>
   </header>
 
-  <div id="pgTipWrap"></div>
   <div class="stage" id="cardStage">
     <div class="flip-wrap" id="flipWrap">
       <div class="card-inner" id="cardInner">
@@ -1427,7 +1399,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-10-07a';
+const APP_VERSION = '2026-11-09a';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3343,7 +3315,7 @@ function buildExampleStatic(item, pos) {
 
 function buildExBox(ex) {
   const noteHtml = ex.note ? `<div style="margin-top:8px;padding:7px 10px;background:rgba(242,183,5,.15);border-left:3px solid #f2b705;border-radius:4px;font-size:15px;color:#5a4500;line-height:1.6;">${ex.note}</div>` : '';
-  const roHtml = st.showRo ? `<div class="ex-ro" style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;margin-top:3px;line-height:1.4;cursor:pointer;text-decoration:underline dotted #a9986b 1.5px;text-underline-offset:4px;">${renderRoSegments(ex.ro)}</div>` : '';
+  const roHtml = st.showRo ? `<div class="ex-ro" style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;margin-top:3px;line-height:1.4;">${(ex.ro||'')}</div>` : '';
   return `<div class="ex-box" style="background:rgba(0,0,0,.06);border-radius:10px;padding:10px 14px;margin-top:8px;">
     <div style="font-size:13px;color:#9c8d68;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin-bottom:4px;">例文</div>
     <div class="ex-th" style="font-family:'Sarabun',sans-serif;font-size:23px;font-weight:500;color:#2b2118;line-height:1.3;">${ex.th}</div>
@@ -3527,7 +3499,6 @@ function escAttr(s){
 // ─── コーチマーク（初回だけ出るミニ案内） ──────────────────────────
 const TIPS = {
   wlSearch: '🔍 タイ語・日本語訳・読み(ローマ字)のどれでも検索できます。読み方が多少違っててもだいたい拾えます。',
-  pgTap: '📖 発音記号(ローマ字表記)の部分をタップすると、詳しい発音ガイドが開きます。',
   numbersTab: '⬆️ 上のタブを右にスクロールすると、タイ文字タブの右に「数字」タブもあります。\n⬇️ 下のタブを右にスクロールすると、母音タブの右に「声調」タブがあります。',
   convScenes: '⬆️ 上のタブを右にスクロールすると、ホテルや緊急などのシーンタブがあります。',
   exportImport: '💾 機種変更時は、エクスポートで自分自身にメールなどで送っておき、新しい端末でその内容を開いてコピーし、インポートすれば学習記録を引き継げます。',
@@ -3575,10 +3546,6 @@ const HELP_TOPICS = [
 ※ 機種によってメニュー名や場所が多少異なる場合があります。
 
 これで単語カードの🔊ボタンからタイ語の発音が聞けるようになります。`},
-  { icon:'📖', title:'発音ガイドの見方', body:`カードや単語リストに出てくる、ローマ字表記(例:aahǎan)の部分を<b>タップ</b>すると、その単語の発音を詳しく分解したガイドが開きます。
-
-声調記号(ˇ ˆ ´ など)の意味や、一つ一つの音の出し方を確認したい時に使ってください。
-<img src="help_pg_1.jpeg" style="width:100%;border-radius:10px;margin:8px 0;display:block;cursor:zoom-in;" onclick="openImgLightbox('help_pg_1.jpeg')">` },
   { icon:'🔍', title:'検索の使い方(リストタブ)', body:`リストタブの検索窓では、次のどれで入力しても該当する単語が見つかります。
 
 ・タイ語(例:วันนี้)
@@ -3651,27 +3618,17 @@ function renderHelpBody(){
 }
 let lbNavList = [];
 let lbNavIndex = -1;
-// #pgBody内の画像を「.pg-section-label」の区切りでグループ分けし、
-// 指定した画像と同じセクション(母音記号 / 複合母音・特殊母音 / 声調記号)の
-// 画像一覧だけを返す(セクションをまたいだスワイプ移動を避けるため)
+// 母音・声調イラストをライトボックスで開いた時、同じグループ内(母音記号 / 複合母音・特殊母音 / 声調記号)
+// だけをスワイプで前後に移動できるようにする(グループをまたいだ移動を避けるため)。
+const LB_GROUPS = [
+  ['vowel_a','vowel_i','vowel_u','vowel_e','vowel_o','vowel_epsilon','vowel_open_o','vowel_ram_horn','vowel_eng','vowel_turned_m'],
+  ['vowel_ia','vowel_uea','vowel_ua','vowel_am','vowel_ai','vowel_ao'],
+  ['tone_mid_flat','tone_low_a_grave','tone_falling_a_circ','tone_high_a_acute','tone_rising_a_caron'],
+];
 function getPgSectionImages(targetSrc){
-  const body = document.getElementById('pgBody');
-  if(!body) return [];
-  const children = Array.from(body.children);
-  let groups = [];
-  let current = [];
-  children.forEach(ch=>{
-    if(ch.classList && ch.classList.contains('pg-section-label')){
-      if(current.length) groups.push(current);
-      current = [];
-    } else if(ch.classList && ch.classList.contains('pg-card')){
-      const im = ch.querySelector('img');
-      if(im && im.src) current.push(im);
-    }
-  });
-  if(current.length) groups.push(current);
-  for(const g of groups){
-    if(g.some(im=>im.src===targetSrc)) return g;
+  for(const g of LB_GROUPS){
+    const urls = g.map(k=>PG_IMAGES[k] ? new URL(PG_IMAGES[k], document.baseURI).href : '');
+    if(urls.includes(targetSrc)) return urls.filter(Boolean).map(u=>({src:u}));
   }
   return [];
 }
@@ -3680,8 +3637,7 @@ function openImgLightbox(src){
   document.getElementById('imgLightboxImg').src = src;
   const lb = document.getElementById('imgLightbox');
   lb.style.display = 'flex';
-  // 発音記号ガイド(母音・声調イラスト)から開いた場合は、同じセクション内を
-  // スワイプで前後に移動できるようにする
+  // 母音・声調イラストから開いた場合は、同じグループ内をスワイプで前後に移動できるようにする
   const sectionImgs = getPgSectionImages(src);
   if(sectionImgs.length){
     lbNavList = sectionImgs.map(im=>im.src);
@@ -3794,7 +3750,6 @@ document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) updateI
 
 function currentTipId(){
   if(st.mode==='wordlist' && st.wordlistMode==='vocab') return 'wlSearch';
-  if(st.mode==='vocab') return 'pgTap';
   if(st.mode==='font') return 'numbersTab';
   if(st.mode==='conversation') return 'convScenes';
   return null;
@@ -3890,7 +3845,7 @@ function formatGramTitle(title){
     while(cut > 0 && out[cut-1] === ' ') cut--;
     out = out.slice(0, cut) + '<br>' + out.slice(cut).replace(/^ +/, '');
   }
-  out = out.replace(/([\u0E00-\u0E7F]+)\(([^)]*)\)/g, (m,th,ro)=>`<span class="rb">${th}(${renderRoSegments(ro)})</span>`);
+  out = out.replace(/([\u0E00-\u0E7F]+)\(([^)]*)\)/g, (m,th,ro)=>`<span class="rb">${th}(${(ro||'')})</span>`);
   return out;
 }
 
@@ -3927,76 +3882,6 @@ function applyScrollFade(el){
     el.addEventListener('scroll', update, {passive:true});
     el.dataset.fadeBound = '1';
   }
-}
-
-// 発音記号ガイド用: テキスト中の特殊母音記号・声調記号を、実際に出てくる順番で検出する。
-// (元は下部の別<script>ブロックで定義されていたが、renderRoSegments()を単語カードの
-// 初回描画(ページ読み込み直後の同期処理)から呼び出すようになったため、
-// applyScrollFadeと同じ理由でこちらも呼び出し箇所より確実に前へ移動した)
-function detectPGKeys(text){
-  // 文章中に実際に出てくる順番で記号を検出する
-  if(!text) return [];
-  const norm = text.normalize('NFD');
-  const vowelMap = {'ɛ':'vowel_epsilon','ɔ':'vowel_open_o','ɤ':'vowel_ram_horn','ŋ':'vowel_eng','ɯ':'vowel_turned_m'};
-  const toneMap = {'̀':'tone_low_a_grave','́':'tone_high_a_acute','̂':'tone_falling_a_circ','̌':'tone_rising_a_caron'};
-  const found = [];
-  const seen = new Set();
-  let hasToneMark = false;
-  for(let i=0;i<norm.length;i++){
-    const ch = norm[i];
-    if(vowelMap[ch] && !seen.has(vowelMap[ch])){
-      found.push({index:i, key:vowelMap[ch]});
-      seen.add(vowelMap[ch]);
-    } else if(toneMap[ch] && !seen.has(toneMap[ch])){
-      found.push({index:i, key:toneMap[ch]});
-      seen.add(toneMap[ch]);
-      hasToneMark = true;
-    }
-  }
-  found.sort((a,b)=>a.index-b.index);
-  const orderedKeys = found.map(f=>f.key);
-  if(!hasToneMark) orderedKeys.push('tone_mid_flat'); // 声調記号が無ければ平声として末尾に追加
-  return orderedKeys;
-}
-
-// 単語カードの音節ごとリンク化用: detectPGKeysと違い「声調記号が無ければ平声を補う」
-// 処理をしない(=本当に特殊記号を含む音節だけを検出する)。これが無いと、記号を
-// 一切含まない普通の音節(例:「din」)まで平声(tone_mid_flat)扱いでリンクになって
-// しまい、「記号がある部分だけ色付きリンクにする」という目的に合わなくなるため。
-function detectPGKeysStrict(text){
-  if(!text) return [];
-  const norm = text.normalize('NFD');
-  const vowelMap = {'ɛ':'vowel_epsilon','ɔ':'vowel_open_o','ɤ':'vowel_ram_horn','ŋ':'vowel_eng','ɯ':'vowel_turned_m'};
-  const toneMap = {'̀':'tone_low_a_grave','́':'tone_high_a_acute','̂':'tone_falling_a_circ','̌':'tone_rising_a_caron'};
-  const found = [];
-  const seen = new Set();
-  for(let i=0;i<norm.length;i++){
-    const ch = norm[i];
-    if(vowelMap[ch] && !seen.has(vowelMap[ch])){
-      found.push({index:i, key:vowelMap[ch]});
-      seen.add(vowelMap[ch]);
-    } else if(toneMap[ch] && !seen.has(toneMap[ch])){
-      found.push({index:i, key:toneMap[ch]});
-      seen.add(toneMap[ch]);
-    }
-  }
-  found.sort((a,b)=>a.index-b.index);
-  return found.map(f=>f.key);
-}
-
-// ro表記(ローマ字)をスペース区切りの音節ごとに分割し、特殊記号を含む音節だけを
-// 色付き・太字のタップ対象(.pg-seg)にする。タップするとその音節の記号だけを
-// 対象に発音ガイドが開く(単語全体の記号を一つずつ探す必要がなくなる)。
-// 記号を含まない音節はそのままの見た目で表示する(全体タップの発音ガイドは
-// これまで通り既存のクリックハンドラでカバーされる)。
-function renderRoSegments(ro){
-  if(!ro) return '';
-  return ro.split(' ').map(function(token){
-    if(!token) return '';
-    const keys = detectPGKeysStrict(token);
-    if(!keys.length) return token;
-    return '<span class="pg-seg" data-pgkeys="'+keys.join(',')+'">'+token+'</span>';
-  }).join(' ');
 }
 
 function renderModeTabs(){
@@ -4182,7 +4067,7 @@ function renderWordList(){
         html+=`<div class="list-item learned-list-vocab learned-item" data-id="${item.id}" data-pos="${item._pos}">
           <span class="list-num">${idx+1}</span>
           <div class="list-body">
-            <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${renderRoSegments(item.ro)}</span></span></div>
+            <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${(item.ro||'')}</span></span></div>
             <div class="list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
           </div>
           <span class="list-badge">済</span>
@@ -4201,7 +4086,7 @@ function renderWordList(){
             <span class="list-badge">済</span>
             <button class="list-fav-btn ${fav?'on':''}" data-fav-id="${item.id}" data-fav-cat="conversation" style="margin-left:auto;">${fav?'★':'☆'}</button>
           </div>
-          <div class="conv-list-ro">${renderRoSegments(fRO(item.ro))}</div>
+          <div class="conv-list-ro">${(fRO(item.ro)||'')}</div>
           <div class="conv-list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
         </div>`;
       });
@@ -4316,7 +4201,7 @@ function renderWordList(){
         html+=`<div class="list-item fav-list-vocab" data-id="${item.id}" data-pos="${item._pos}">
           <span class="list-num">${idx+1}</span>
           <div class="list-body">
-            <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${renderRoSegments(item.ro)}</span></span></div>
+            <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${(item.ro||'')}</span></span></div>
             <div class="list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
           </div>
           <button class="list-fav-btn on" data-fav-id="${item.id}" data-fav-cat="${item._pos}">★</button>
@@ -4332,7 +4217,7 @@ function renderWordList(){
             <span class="conv-list-th">${fTH(item.th)}</span>
             <button class="list-fav-btn on" data-fav-id="${item.id}" data-fav-cat="conversation" style="margin-left:auto;">★</button>
           </div>
-          <div class="conv-list-ro">${renderRoSegments(fRO(item.ro))}</div>
+          <div class="conv-list-ro">${(fRO(item.ro)||'')}</div>
           <div class="conv-list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
         </div>`;
       });
@@ -4445,7 +4330,7 @@ function renderWordList(){
           ${learned?'<span class="list-badge">済</span>':''}
           <button class="list-fav-btn ${fav?'on':''}" data-fav-id="${item.id}" data-fav-cat="conversation" style="margin-left:auto;">${fav?'★':'☆'}</button>
         </div>
-        <div class="conv-list-ro">${renderRoSegments(fRO(item.ro))}</div>
+        <div class="conv-list-ro">${(fRO(item.ro)||'')}</div>
         <div class="conv-list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
       </div>`;
     });
@@ -4554,7 +4439,7 @@ function renderWordList(){
       ih+=`<div class="list-item${learned?' learned-item':''}" data-id="${item.id}" data-pos="${item._pos}">
         <span class="list-num">${idx+1}</span>
         <div class="list-body">
-          <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${renderRoSegments(item.ro)}</span></span></div>
+          <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${(item.ro||'')}</span></span></div>
           <div class="list-jp">${(()=>{
           const jp=item.jp;
           const parts=[];
@@ -4802,28 +4687,6 @@ const VOWEL_DATA = [
 // ══════════════════════════════════════════════════════════════════════
 //  renderVowelSection — 見本デザイン準拠（カード型 2列グリッド）
 // ══════════════════════════════════════════════════════════════════════
-function pgKeyForVowelRo(ro){
-  const map = {
-    'a':'vowel_a', 'aa':'vowel_a',
-    'i':'vowel_i', 'ii':'vowel_i',
-    'u':'vowel_u', 'uu':'vowel_u',
-    'e':'vowel_e', 'ee':'vowel_e',
-    'o':'vowel_o', 'oo':'vowel_o',
-    'ɛ':'vowel_epsilon', 'ɛɛ':'vowel_epsilon',
-    'ɔ':'vowel_open_o', 'ɔɔ':'vowel_open_o',
-    'ɤ':'vowel_ram_horn', 'ɤɤ':'vowel_ram_horn',
-    'ɯ':'vowel_turned_m', 'ɯɯ':'vowel_turned_m',
-    'ia':'vowel_ia', 'iia':'vowel_ia',
-    'ɯa':'vowel_uea', 'ɯɯa':'vowel_uea',
-    'ua':'vowel_ua', 'uua':'vowel_ua',
-    'am':'vowel_am',
-    'ai':'vowel_ai',
-    'ao':'vowel_ao',
-    'rɯ':'vowel_turned_m', 'rɯɯ':'vowel_turned_m',
-  };
-  return map[ro] || '';
-}
-
 function renderVowelSection(){
   const groups = ['単母音（短）','単母音（長）','複合母音','特殊母音'];
   const groupLabel = {
@@ -4938,7 +4801,7 @@ function renderVowelSection(){
       h += '<div style="font-family:\'Sarabun\',sans-serif;font-size:'+dispFontSize+'px;font-weight:500;line-height:1.25;min-width:'+dispMinWidth+'px;text-align:center;">'+colorizeDisplay(v.display)+'</div>';
       h += '<div style="flex:1;min-width:0;">';
       h += '<div>';
-      h += '<span class="vowel-symbol-ro" data-th="'+v.display+'" data-jp="'+v.name_jp+'" data-pgkey="'+pgKeyForVowelRo(v.ro)+'" style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:17px;font-weight:700;color:'+col+';text-decoration:underline dotted #a9986b 1.5px;text-underline-offset:3px;cursor:pointer;">'+v.ro+'</span>';
+      h += '<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:17px;font-weight:700;color:'+col+';">'+v.ro+'</span>';
       h += '</div>';
       h += '<div style="font-size:14px;color:#6b5c3e;margin-top:2px;white-space:nowrap;">'+v.kana+'</div>';
       h += '</div>';
@@ -5634,8 +5497,6 @@ function render(){
   document.getElementById('resetBtn').style.display=(isStatic||isWordlist)?'none':'inline';
   const progLine=document.querySelector('.progress-line');
   if(progLine) progLine.style.display=(isStatic||isWordlist)?'none':'block';
-  const pgTipWrap=document.getElementById('pgTipWrap');
-  if(pgTipWrap) pgTipWrap.innerHTML=(st.mode==='vocab')?renderCoachMark('pgTap'):'';
   const modeTipWrap=document.getElementById('modeTipWrap');
   if(modeTipWrap) modeTipWrap.innerHTML=(st.mode==='font')?renderCoachMark('numbersTab'):'';
   const subTipWrap=document.getElementById('subTipWrap');
@@ -5712,7 +5573,7 @@ function render(){
       <div class="gram-explain">${explainSentences.map(s=>`<p>${s}。</p>`).join('')}</div>
       <div class="ex-box">
         <div class="ex-th">${fTH(item.ex_th)}</div>
-        ${st.showRo?`<div class="ex-ro">${renderRoSegments(fRO(item.ex_ro))}</div>`:''}
+        ${st.showRo?`<div class="ex-ro">${(fRO(item.ex_ro)||'')}</div>`:''}
         <div class="ex-jp">${item.ex_jp}</div>
       </div>
       <div class="back-actions">
@@ -5731,13 +5592,13 @@ function render(){
       </div>`:'';
     if(st.dir==='th-jp'){
       front=`${ribHtml}${hole}${sc}<div class="th-big sm">${thT}</div>
-        ${st.showRo?`<div class="ro-front">${renderRoSegments(roT)}</div>`:''}
+        ${st.showRo?`<div class="ro-front">${(roT||'')}</div>`:''}
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップして意味を見る</div>`;
       back=`${ribHtml}${hole}
         <div class="conv-back-wrap">
           <div class="th-big sm" style="margin-top:10px;">${thT}</div>
-          ${st.showRo?`<div class="back-ro">${renderRoSegments(roT)}</div>`:''}
+          ${st.showRo?`<div class="back-ro">${(roT||'')}</div>`:''}
           <div class="back-jp" style="margin-top:8px;">${item.jp}</div>
           ${bdHtml}
           <div class="back-actions">
@@ -5753,7 +5614,7 @@ function render(){
       back=`${ribHtml}${hole}
         <div class="conv-back-wrap">
           <div class="th-big sm" style="margin-top:24px;">${thT}</div>
-          ${st.showRo?`<div class="back-ro">${renderRoSegments(roT)}</div>`:''}
+          ${st.showRo?`<div class="back-ro">${(roT||'')}</div>`:''}
           ${bdHtml}
           <div class="back-actions">
             <button class="audio-btn" id="audB">🔊</button>
@@ -5767,12 +5628,12 @@ function render(){
     const lvB='';
     if(st.dir==='th-jp'){
       front=`${ribHtml}${hole}${lvB}<div class="th-big">${item.th}</div>
-        ${st.showRo?`<div class="ro-front">${renderRoSegments(item.ro)}</div>`:''}
+        ${st.showRo?`<div class="ro-front">${(item.ro||'')}</div>`:''}
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップして意味を見る</div>`;
       back=`${ribHtml}${hole}
         <div class="th-big sm" style="margin-top:8px;">${item.th}</div>
-        ${st.showRo?`<div class="back-ro">${renderRoSegments(item.ro)}</div>`:''}
+        ${st.showRo?`<div class="back-ro">${(item.ro||'')}</div>`:''}
         <div class="back-jp" style="margin-top:10px;">${item.jp}</div>
         <div id="exampleBox" style="overflow-y:auto;overflow-x:hidden;"></div>
         <div class="back-actions">
@@ -5785,7 +5646,7 @@ function render(){
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップしてタイ語を見る</div>`;
       back=`${ribHtml}${hole}<div class="th-big sm" style="margin-top:24px;">${item.th}</div>
-        ${st.showRo?`<div class="back-ro">${renderRoSegments(item.ro)}</div>`:''}
+        ${st.showRo?`<div class="back-ro">${(item.ro||'')}</div>`:''}
         <div id="exampleBox" style="overflow-y:auto;overflow-x:hidden;"></div>
         <div class="back-actions">
           <button class="audio-btn" id="audB">🔊</button>
@@ -6242,46 +6103,6 @@ if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged=()=>{};
 (async()=>{ await loadAll(); render(); await checkAppUpdate(); })();
 </script>
 
-<!-- 発音記号ガイド モーダル -->
-<div id="pgOverlay"></div>
-<div id="pgModal" style="display:none;">
-  <div id="pgHeader">
-    <h3>発音記号ガイド</h3>
-    <button id="pgCloseBtn" onclick="closePronunciationGuide()">閉じる</button>
-  </div>
-  <div id="pgWordBar" class="empty">
-    <span class="pg-th" id="pgWordTh"></span>
-    <span class="pg-ro" id="pgWordRo"></span>
-    <span class="pg-jp" id="pgWordJp"></span>
-  </div>
-  <div id="pgBody">
-    <div class="pg-section-label">母音記号</div>
-    <div class="pg-card" id="pg-vowel_a"><img src="" data-key="vowel_a"></div>
-    <div class="pg-card" id="pg-vowel_i"><img src="" data-key="vowel_i"></div>
-    <div class="pg-card" id="pg-vowel_u"><img src="" data-key="vowel_u"></div>
-    <div class="pg-card" id="pg-vowel_e"><img src="" data-key="vowel_e"></div>
-    <div class="pg-card" id="pg-vowel_o"><img src="" data-key="vowel_o"></div>
-    <div class="pg-card" id="pg-vowel_epsilon"><img src="" data-key="vowel_epsilon"></div>
-    <div class="pg-card" id="pg-vowel_open_o"><img src="" data-key="vowel_open_o"></div>
-    <div class="pg-card" id="pg-vowel_ram_horn"><img src="" data-key="vowel_ram_horn"></div>
-    <div class="pg-card" id="pg-vowel_eng"><img src="" data-key="vowel_eng"></div>
-    <div class="pg-card" id="pg-vowel_turned_m"><img src="" data-key="vowel_turned_m"></div>
-    <div class="pg-section-label">複合母音・特殊母音</div>
-    <div class="pg-card" id="pg-vowel_ia"><img src="" data-key="vowel_ia"></div>
-    <div class="pg-card" id="pg-vowel_uea"><img src="" data-key="vowel_uea"></div>
-    <div class="pg-card" id="pg-vowel_ua"><img src="" data-key="vowel_ua"></div>
-    <div class="pg-card" id="pg-vowel_am"><img src="" data-key="vowel_am"></div>
-    <div class="pg-card" id="pg-vowel_ai"><img src="" data-key="vowel_ai"></div>
-    <div class="pg-card" id="pg-vowel_ao"><img src="" data-key="vowel_ao"></div>
-    <div class="pg-section-label">声調記号(音の高さ)</div>
-    <div class="pg-card" id="pg-tone_mid_flat"><img src="" data-key="tone_mid_flat"></div>
-    <div class="pg-card" id="pg-tone_low_a_grave"><img src="" data-key="tone_low_a_grave"></div>
-    <div class="pg-card" id="pg-tone_falling_a_circ"><img src="" data-key="tone_falling_a_circ"></div>
-    <div class="pg-card" id="pg-tone_high_a_acute"><img src="" data-key="tone_high_a_acute"></div>
-    <div class="pg-card" id="pg-tone_rising_a_caron"><img src="" data-key="tone_rising_a_caron"></div>
-  </div>
-</div>
-
 <script>
 const PG_IMAGES = {
   "vowel_ia": "vowel_ia.jpg",
@@ -6309,127 +6130,6 @@ const PG_IMAGES = {
 </script>
 
 <script>
-// 画像をimgタグへ流し込み
-document.querySelectorAll('#pgBody img[data-key]').forEach(el=>{
-  const k = el.getAttribute('data-key');
-  if(PG_IMAGES[k]){
-    el.src = PG_IMAGES[k];
-    el.style.cursor = 'zoom-in';
-    el.onclick = ()=>openImgLightbox(el.src);
-  }
-});
-
-let pgBodyScrollLockY = 0;
-function openPronunciationGuide(info){
-  info = info || {th:'',ro:'',jp:''};
-  if(typeof gtag === 'function'){
-    gtag('event', 'pronunciation_guide_view', { item_name: info.th || '', item_jp: info.jp || '' });
-  }
-  const overlay = document.getElementById('pgOverlay');
-  const modal = document.getElementById('pgModal');
-  overlay.classList.add('open');
-  modal.style.display = 'flex';
-
-  const bar = document.getElementById('pgWordBar');
-  if(info.th || info.ro){
-    bar.classList.remove('empty');
-    document.getElementById('pgWordTh').textContent = info.th || '';
-    document.getElementById('pgWordRo').textContent = info.ro || '';
-    document.getElementById('pgWordJp').textContent = info.jp || '';
-  } else {
-    bar.classList.add('empty');
-  }
-
-  document.querySelectorAll('.pg-card').forEach(c=>{c.classList.remove('pg-highlight'); c.classList.remove('pg-pulse');});
-  // forceKeys(複数): 音節リンク(.pg-seg)からのタップ用。forceKey(単数): 母音表からのタップ用(従来通り)。
-  // どちらも無ければ、単語全体の文字列から自動検出(従来通り)。
-  const keys = info.forceKeys ? info.forceKeys : (info.forceKey ? [info.forceKey] : detectPGKeys(info.ro || ''));
-  let firstEl = null;
-  const pulseEls = [];
-  keys.forEach(k=>{
-    const el = document.getElementById('pg-'+k);
-    if(el){ el.classList.add('pg-highlight'); if(!firstEl) firstEl = el; pulseEls.push(el); }
-  });
-  // 背景スクロールロック
-  pgBodyScrollLockY = window.scrollY;
-  document.body.style.position='fixed';
-  document.body.style.top = -pgBodyScrollLockY+'px';
-  document.body.style.width='100%';
-  setTimeout(()=>{
-    if(firstEl){ firstEl.scrollIntoView({block:'start'}); }
-    else { document.getElementById('pgBody').scrollTop = 0; }
-    // 「今この記号を見てますよ」を一瞬強調するパルス演出
-    pulseEls.forEach(el=>el.classList.add('pg-pulse'));
-    setTimeout(()=>{ pulseEls.forEach(el=>el.classList.remove('pg-pulse')); }, 1600);
-  }, 30);
-}
-
-function closePronunciationGuide(){
-  document.getElementById('pgOverlay').classList.remove('open');
-  document.getElementById('pgModal').style.display='none';
-  document.body.style.position='';
-  document.body.style.top='';
-  document.body.style.width='';
-  window.scrollTo(0, pgBodyScrollLockY);
-}
-
-function getPGWordInfo(el){
-  if(el.classList.contains('vowel-symbol-ro')){
-    return { th: el.dataset.th || '', ro: el.textContent.trim(), jp: el.dataset.jp || '', forceKey: el.dataset.pgkey || '' };
-  }
-  if(el.classList.contains('rb')){
-    // 文法タイトル内の「タイ語(ローマ字)」表記
-    const m = el.textContent.trim().match(/^(.*?)\(([^)]*)\)$/);
-    return { th: m ? m[1].trim() : el.textContent.trim(), ro: m ? m[2].trim() : '', jp: '' };
-  }
-  if(el.classList.contains('ex-ro')){
-    const box = el.closest('.ex-box');
-    const thEl = box ? box.querySelector('.ex-th') : null;
-    const jpEl = box ? box.querySelector('.ex-jp') : null;
-    return { th: thEl ? thEl.textContent.trim() : '', ro: el.textContent.trim(), jp: jpEl ? jpEl.textContent.trim() : '' };
-  }
-  const face = el.closest('#faceFront, #faceBack');
-  if(face){
-    const thEl = face.querySelector('.th-big, .jp-big');
-    const jpEl = face.querySelector('.back-jp');
-    return { th: thEl ? thEl.textContent.trim() : '', ro: el.textContent.trim(), jp: jpEl ? jpEl.textContent.trim() : '' };
-  }
-  const listRow = el.closest('.list-item');
-  if(listRow){
-    const thEl = listRow.querySelector('.list-th');
-    const jpEl = listRow.querySelector('.list-jp');
-    return { th: thEl ? thEl.textContent.trim() : '', ro: el.textContent.trim(), jp: jpEl ? jpEl.textContent.trim() : '' };
-  }
-  const convRow = el.closest('.conv-list-item');
-  if(convRow){
-    const thEl = convRow.querySelector('.conv-list-th');
-    const jpEl = convRow.querySelector('.conv-list-jp');
-    return { th: thEl ? thEl.textContent.trim() : '', ro: el.textContent.trim(), jp: jpEl ? jpEl.textContent.trim() : '' };
-  }
-  return { th: '', ro: el.textContent.trim(), jp: '' };
-}
-
-// 発音記号(ro表記)をタップしたらガイドを開く(背景タップでは閉じない)
-document.addEventListener('click', function(e){
-  // 音節ごとの色付きリンク(.pg-seg)がタップされた場合は、その音節の記号だけを対象にする
-  const seg = e.target.closest('.pg-seg');
-  if(seg){
-    e.stopPropagation();
-    e.preventDefault();
-    const container = seg.closest('.ro-front,.back-ro,.list-ro-text,.conv-list-ro,.vowel-symbol-ro,.ex-ro,.rb') || seg;
-    const info = getPGWordInfo(container);
-    info.forceKeys = (seg.dataset.pgkeys || '').split(',').filter(Boolean);
-    openPronunciationGuide(info);
-    return;
-  }
-  const el = e.target.closest('.ro-front,.back-ro,.list-ro-text,.conv-list-ro,.vowel-symbol-ro,.ex-ro,.rb');
-  if(el){
-    e.stopPropagation();
-    e.preventDefault();
-    openPronunciationGuide(getPGWordInfo(el));
-  }
-}, true);
-
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     navigator.serviceWorker.register('sw.js').then(function(reg){
