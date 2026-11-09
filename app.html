@@ -14,7 +14,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Thai Poca">
-<meta name="theme-color" content="#1c1b1f">
+<meta name="theme-color" content="#1d1c1b">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -23,14 +23,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;700&family=Sriracha&family=Zen+Maru+Gothic:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#1c1b1f;--bg2:#26242b;--tag:#f3ead8;--tag-edge:#e6d9bf;
-  --ink:#2b2118;--pink:#e8447a;--yellow:#f2b705;--green:#4c9a6a;
-  --blue:#4a7cc4;--purple:#8b5cf6;--orange:#f97316;
-  --muted:#8a8390;--muted2:#bdb6c2;
+  --bg:#1d1c1b;--bg2:#262523;--tag:#f3ead8;--tag-edge:#e6d9bf;
+  --ink:#2b2118;--pink:#cf9ea3;--yellow:#c9bda6;--green:#9fb8a0;
+  --blue:#9db2c4;--purple:#b4a7c6;--orange:#cdb09a;
+  --muted:#8c877f;--muted2:#bfb9b0;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;margin:0;}
-body{background:radial-gradient(circle at 20% 0%,#2a2730 0%,var(--bg) 55%);
+body{background:radial-gradient(circle at 20% 0%,#2f2d2a 0%,var(--bg) 55%);
   color:var(--muted2);font-family:'Zen Maru Gothic',sans-serif;
   overscroll-behavior:none;touch-action:manipulation;
   display:flex;flex-direction:column;min-height:100vh;}
@@ -54,24 +54,24 @@ header{padding-bottom:10px;}
   transition:transform .12s,background .18s;}
 .mode-tab:active{transform:scale(.95);}
 .mode-tab[data-mode="vocab"].active{background:var(--yellow);color:#2b2118;border-color:var(--yellow);}
-.mode-tab[data-mode="conversation"].active{background:var(--pink);color:#fff;border-color:var(--pink);}
-.mode-tab[data-mode="grammar"].active{background:var(--green);color:#fff;border-color:var(--green);}
-.mode-tab[data-mode="font"].active{background:var(--blue);color:#fff;border-color:var(--blue);}
-.mode-tab[data-mode="numbers"].active{background:var(--purple);color:#fff;border-color:var(--purple);}
-.mode-tab[data-mode="thaienglish"].active{background:var(--orange);color:#fff;border-color:var(--orange);}
+.mode-tab[data-mode="conversation"].active{background:var(--pink);color:#1d1c1b;border-color:var(--pink);}
+.mode-tab[data-mode="grammar"].active{background:var(--green);color:#1d1c1b;border-color:var(--green);}
+.mode-tab[data-mode="font"].active{background:var(--blue);color:#1d1c1b;border-color:var(--blue);}
+.mode-tab[data-mode="numbers"].active{background:var(--purple);color:#1d1c1b;border-color:var(--purple);}
+.mode-tab[data-mode="thaienglish"].active{background:var(--orange);color:#1d1c1b;border-color:var(--orange);}
 .sub-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;min-height:28px;}
 .sub-row::-webkit-scrollbar{display:none;}
 .chip{flex:0 0 auto;padding:5px 12px;border-radius:999px;font-size:13px;
   font-family:'IBM Plex Mono','Noto Sans Mono',monospace;background:var(--bg2);
-  border:1px solid #38353f;color:var(--muted2);cursor:pointer;}
+  border:1px solid #3b3935;color:var(--muted2);cursor:pointer;}
 .chip.active-vocab{background:var(--yellow);color:#2b2118;border-color:var(--yellow);}
-.chip.active-conv{background:var(--pink);color:#fff;border-color:var(--pink);}
-.chip.active-font{background:var(--blue);color:#fff;border-color:var(--blue);}
+.chip.active-conv{background:var(--pink);color:#1d1c1b;border-color:var(--pink);}
+.chip.active-font{background:var(--blue);color:#1d1c1b;border-color:var(--blue);}
 .settings-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;min-height:28px;}
-.pill{background:var(--bg2);border:1px solid #38353f;color:var(--muted2);
+.pill{background:var(--bg2);border:1px solid #3b3935;color:var(--muted2);
   border-radius:999px;padding:5px 11px;font-size:13px;
   font-family:'IBM Plex Mono','Noto Sans Mono',monospace;cursor:pointer;}
-.pill.on{background:#f2b705;color:#2b2118;border-color:#f2b705;font-weight:700;}
+.pill.on{background:#c9bda6;color:#2b2118;border-color:#c9bda6;font-weight:700;}
 .progress-line{display:flex;justify-content:flex-end;margin-top:5px;min-height:16px;}
 .progress-text{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
 /* ─── CARD ─── */
@@ -147,7 +147,7 @@ header{padding-bottom:10px;}
 /* ─── NAV ─── */
 .nav-row{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:14px;}
 .nav-btn{width:46px;height:46px;border-radius:50%;background:var(--bg2);
-  border:1px solid #38353f;color:#fff;font-size:21px;cursor:pointer;}
+  border:1px solid #3b3935;color:#fff;font-size:21px;cursor:pointer;}
 .nav-btn:active{transform:scale(.9);}
 .dot-count{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);min-width:60px;text-align:center;}
 /* ─── STATIC ─── */
@@ -156,7 +156,7 @@ header{padding-bottom:10px;}
 /* ジャンプナビ(タイ文字:母音/声調タブ) */
 .jump-nav{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;margin-bottom:6px;-webkit-overflow-scrolling:touch;}
 .jump-nav::-webkit-scrollbar{display:none;}
-.jump-nav a{flex-shrink:0;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#e4e1e8;font-size:13px;font-weight:700;text-decoration:none;}
+.jump-nav a{flex-shrink:0;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#e6e3de;font-size:13px;font-weight:700;text-decoration:none;}
 .jump-nav a:active{background:var(--yellow);color:#2b2118;}
 /* 開閉セクション(タイ文字:母音/声調タブ) */
 .fold-sec{border:1px solid rgba(255,255,255,.12);border-radius:14px;margin-bottom:12px;overflow:hidden;background:rgba(255,255,255,.03);}
@@ -173,8 +173,8 @@ header{padding-bottom:10px;}
 .illust-grid figcaption{padding:5px 4px;font-size:14px;font-weight:700;color:#4a3f28;text-align:center;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 /* font table */
 .font-table{width:100%;border-collapse:collapse;font-size:16px;}
-.font-table th{background:#2e2b35;color:var(--muted2);padding:7px 8px;font-size:13px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-weight:500;text-align:left;}
-.font-table td{padding:8px 8px;border-bottom:1px solid #2e2b35;vertical-align:middle;}
+.font-table th{background:#2f2d2a;color:var(--muted2);padding:7px 8px;font-size:13px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-weight:500;text-align:left;}
+.font-table td{padding:8px 8px;border-bottom:1px solid #2f2d2a;vertical-align:middle;}
 .font-table tr:nth-child(even) td{background:rgba(255,255,255,.025);}
 .ft-label{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
 .ft-std{font-family:'Sarabun',sans-serif;font-size:28px;}
@@ -185,7 +185,7 @@ header{padding-bottom:10px;}
 .ft-cell-s{background:#fff8ee;border-radius:8px;padding:4px 10px;display:inline-block;color:#2b2118;}
 /* numbers grid */
 .num-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px;}
-.num-card{background:var(--bg2);border:1px solid #38353f;border-radius:14px;padding:12px 14px;cursor:pointer;
+.num-card{background:var(--bg2);border:1px solid #3b3935;border-radius:14px;padding:12px 14px;cursor:pointer;
   display:flex;align-items:center;gap:12px;transition:transform .12s;}
 .num-card:active{transform:scale(.96);}
 .num-th-big{font-family:'Sarabun',sans-serif;font-size:34px;color:#fff;line-height:1;}
@@ -209,7 +209,7 @@ footer{text-align:center;padding:6px 0 2px;}
   #undoToast{bottom:36px;}
 }
 #undoToast.hide{opacity:0;pointer-events:none;}
-#undoBtn{background:#f2b705;color:#2b2118;border:none;border-radius:14px;padding:10px 20px;font-size:17px;font-weight:700;cursor:pointer;white-space:nowrap;}
+#undoBtn{background:#c9bda6;color:#2b2118;border:none;border-radius:14px;padding:10px 20px;font-size:17px;font-weight:700;cursor:pointer;white-space:nowrap;}
 .reset-btn{font-size:13px;color:var(--muted);background:none;border:none;text-decoration:underline;cursor:pointer;font-family:'Zen Maru Gothic',sans-serif;}
 .audio-note{font-size:13px;color:#fff;margin-top:6px;line-height:1.6;}
 @media(max-height:700px){.flip-wrap{height:355px;}}
@@ -221,11 +221,11 @@ footer{text-align:center;padding:6px 0 2px;}
 @media(min-width:768px) and (max-height:800px){.flip-wrap{height:390px;}}
 
 /* --- レベルpill色 --- */
-.pill-level[data-level="beginner"]{background:#2d6a4f;color:#b7e4c7;border-color:#40916c;}
-.pill-level[data-level="intermediate"]{background:#7c3a00;color:#ffd8a8;border-color:#e07a00;}
+.pill-level[data-level="beginner"]{background:#34473c;color:#bcd3c2;border-color:#5b7f68;}
+.pill-level[data-level="intermediate"]{background:#4a4033;color:#e0cfa8;border-color:#8a7a55;}
 /* --- 性別pill色 --- */
-.pill-gender[data-gender="male"]{background:#1a3a5c;color:#90caf9;border-color:#2979bb;}
-.pill-gender[data-gender="female"]{background:#5c1a3a;color:#f48fb1;border-color:#bb2963;}
+.pill-gender[data-gender="male"]{background:#2c3a46;color:#a9bfd0;border-color:#5a7388;}
+.pill-gender[data-gender="female"]{background:#46303a;color:#d4a9b6;border-color:#8c5d6e;}
 /* --- リストタブ --- */
 #listPage{padding:4px 0;}
 .list-item{display:flex;align-items:flex-start;gap:0;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .15s;}
@@ -247,10 +247,10 @@ footer{text-align:center;padding:6px 0 2px;}
 .conv-list-th{font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;flex:1;line-height:1.4;}
 .conv-list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted2);padding-left:36px;line-height:1.4;}
 .conv-list-jp{font-size:14px;color:var(--fg);padding-left:36px;line-height:1.5;}
-.list-badge{font-size:10px;background:#2d6a4f;color:#b7e4c7;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;align-self:center;flex-shrink:0;}
+.list-badge{font-size:10px;background:#34473c;color:#bcd3c2;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;align-self:center;flex-shrink:0;}
 /* --- 戻るボタン --- */
 .back-btn{display:none;background:var(--yellow);color:#2b2118;border:none;border-radius:20px;padding:8px 14px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;}
-.mode-tab[data-mode="wordlist"].active{background:#a78bfa;color:#1a0050;border-color:#a78bfa;}
+.mode-tab[data-mode="wordlist"].active{background:#a8b8b5;color:#1d1c1b;border-color:#a8b8b5;}
 
 
 /* === 方向pillに国旗背景 === */
@@ -296,8 +296,8 @@ footer{text-align:center;padding:6px 0 2px;}
 <div class="wrap">
   <header>
     <div class="title-row">
-      <div><div class="title-th">Thai Pocket Cards</div><div id="verLabel" style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:10px;color:#6b6570;margin-top:2px;"></div></div>
-      <button id="helpBtn" style="display:none;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#e4e1e8;font-size:15px;font-weight:700;cursor:pointer;flex-shrink:0;">?</button>
+      <div><div class="title-th">Thai Pocket Cards</div><div id="verLabel" style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:10px;color:#6e6a64;margin-top:2px;"></div></div>
+      <button id="helpBtn" style="display:none;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#e6e3de;font-size:15px;font-weight:700;cursor:pointer;flex-shrink:0;">?</button>
     </div>
     <div class="mode-tabs" id="modeTabs"></div>
     <div id="modeTipWrap"></div>
@@ -321,11 +321,11 @@ footer{text-align:center;padding:6px 0 2px;}
       <button class="nav-btn" id="nextBtn">&#8250;</button>
     </div>
     <div class="nav-row" id="toListRow" style="display:none;margin-top:8px;">
-      <button class="back-btn" id="toListBtn" style="display:block;font-size:16px;padding:10px 20px;background:rgba(242,183,5,.15);color:var(--yellow);border:1.5px solid var(--yellow);">📋 リストで見る</button>
+      <button class="back-btn" id="toListBtn" style="display:block;font-size:16px;padding:10px 20px;background:rgba(201,189,166,.15);color:var(--yellow);border:1.5px solid var(--yellow);">📋 リストで見る</button>
     </div>
     <div class="nav-row" id="backRow" style="display:none;gap:8px;">
       <button class="back-btn" id="backBtn" style="display:block;font-size:16px;padding:10px 20px;">← リストへ戻る</button>
-      <button class="back-btn" id="stayBtn" style="display:block;font-size:16px;padding:10px 20px;background:rgba(242,183,5,.15);color:var(--yellow);border:1.5px solid var(--yellow);">ここに残る</button>
+      <button class="back-btn" id="stayBtn" style="display:block;font-size:16px;padding:10px 20px;background:rgba(201,189,166,.15);color:var(--yellow);border:1.5px solid var(--yellow);">ここに残る</button>
     </div>
   </div>
 
@@ -337,8 +337,8 @@ footer{text-align:center;padding:6px 0 2px;}
   <footer>
     <div id="exportTipWrap"></div>
     <div id="exportImportWrap" style="display:flex;gap:10px;max-width:320px;margin:0 auto;">
-      <button class="reset-btn" id="exportBtn" style="flex:1;aspect-ratio:1/0.4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-decoration:none;font-size:13px;font-weight:700;text-align:center;line-height:1.4;background:rgba(255,255,255,.05);color:#c9c4bb;border:1.5px solid rgba(255,255,255,.18);border-radius:14px;"><span style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:6px;background:rgba(242,183,5,.18);color:#f2b705;">EX</span>学習記録を<br>エクスポート</button>
-      <button class="reset-btn" id="importBtn" style="flex:1;aspect-ratio:1/0.4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-decoration:none;font-size:13px;font-weight:700;text-align:center;line-height:1.4;background:rgba(255,255,255,.05);color:#c9c4bb;border:1.5px solid rgba(255,255,255,.18);border-radius:14px;"><span style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:6px;background:rgba(242,183,5,.18);color:#f2b705;">IN</span>学習記録を<br>インポート</button>
+      <button class="reset-btn" id="exportBtn" style="flex:1;aspect-ratio:1/0.4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-decoration:none;font-size:13px;font-weight:700;text-align:center;line-height:1.4;background:rgba(255,255,255,.05);color:#c9c4bb;border:1.5px solid rgba(255,255,255,.18);border-radius:14px;"><span style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:6px;background:rgba(201,189,166,.18);color:#c9bda6;">EX</span>学習記録を<br>エクスポート</button>
+      <button class="reset-btn" id="importBtn" style="flex:1;aspect-ratio:1/0.4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-decoration:none;font-size:13px;font-weight:700;text-align:center;line-height:1.4;background:rgba(255,255,255,.05);color:#c9c4bb;border:1.5px solid rgba(255,255,255,.18);border-radius:14px;"><span style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:6px;background:rgba(201,189,166,.18);color:#c9bda6;">IN</span>学習記録を<br>インポート</button>
     </div>
     <div id="resetTipWrap"></div>
     <button class="reset-btn" id="resetBtn" style="text-decoration:none;margin:6px auto 0;max-width:320px;width:100%;display:block;font-size:14px;font-weight:700;padding:8px 16px;background:rgba(192,57,43,.12);color:#e8968f;border:1px solid rgba(192,57,43,.45);border-radius:10px;">⚠️ 学習記録をリセット</button>
@@ -348,13 +348,13 @@ footer{text-align:center;padding:6px 0 2px;}
 
 <!-- 更新通知 モーダル -->
 <div id="updateOverlay" style="display:none;position:fixed;inset:0;background:rgba(20,18,15,.6);z-index:320;"></div>
-<div id="updateModal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,380px);max-height:80vh;background:#241f2c;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:321;flex-direction:column;overflow:hidden;">
+<div id="updateModal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,380px);max-height:80vh;background:#232220;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:321;flex-direction:column;overflow:hidden;">
   <div style="padding:16px 18px 8px;">
     <h3 style="margin:0 0 8px;font-size:16px;color:#fff;">🔄 アプリが更新されました</h3>
-    <p style="margin:0 0 10px;font-size:13px;color:#e4e1e8;line-height:1.6;">
+    <p style="margin:0 0 10px;font-size:13px;color:#e6e3de;line-height:1.6;">
     今回の更新で不具合修正や機能追加が行われました。<b style="color:#fff;">この端末に学習データを自動でバックアップ済み</b>なので、特別な操作は不要です。
     </p>
-    <div style="background:#2d2836;border-radius:10px;padding:10px 12px;margin-bottom:6px;">
+    <div style="background:#2f2d2a;border-radius:10px;padding:10px 12px;margin-bottom:6px;">
       <p style="margin:0;font-size:12px;color:#c9c4d0;line-height:1.7;">
       もし更新後に学習記録の件数がおかしいと感じたら、下の「バックアップから復元」をタップすれば、自動保存されたデータにワンタップで戻せます。
       </p>
@@ -371,7 +371,7 @@ footer{text-align:center;padding:6px 0 2px;}
 
 <!-- 学習記録リセット モーダル -->
 <div id="resetOverlay" style="display:none;position:fixed;inset:0;background:rgba(20,18,15,.6);z-index:300;"></div>
-<div id="resetModal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,380px);max-height:80vh;background:#241f2c;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:301;flex-direction:column;overflow:hidden;">
+<div id="resetModal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,380px);max-height:80vh;background:#232220;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:301;flex-direction:column;overflow:hidden;">
   <div style="padding:16px 18px 8px;">
     <h3 style="margin:0 0 4px;font-size:16px;color:#fff;">学習記録をリセット</h3>
     <p style="margin:0;font-size:12px;color:var(--muted);line-height:1.5;">リセットしたい分類にチェックを入れてください。チェックした分類の「覚えた」記録が消えます(元に戻せません)。</p>
@@ -385,13 +385,13 @@ footer{text-align:center;padding:6px 0 2px;}
 
 <!-- 汎用モーダル（alert / confirm / prompt 置き換え）-->
 <div id="genOverlay" style="display:none;position:fixed;inset:0;background:rgba(20,18,15,.6);z-index:340;"></div>
-<div id="genModal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,380px);max-height:80vh;background:#241f2c;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:341;flex-direction:column;overflow:hidden;">
+<div id="genModal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,380px);max-height:80vh;background:#232220;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:341;flex-direction:column;overflow:hidden;">
   <div style="padding:18px 18px 8px;">
     <h3 id="genModalTitle" style="margin:0 0 8px;font-size:16px;color:#fff;display:none;"></h3>
-    <p id="genModalMsg" style="margin:0;font-size:13.5px;color:#e4e1e8;line-height:1.65;white-space:pre-wrap;"></p>
+    <p id="genModalMsg" style="margin:0;font-size:13.5px;color:#e6e3de;line-height:1.65;white-space:pre-wrap;"></p>
   </div>
   <div id="genModalInputWrap" style="padding:6px 18px 4px;display:none;">
-    <textarea id="genModalInput" rows="4" style="width:100%;box-sizing:border-box;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:#1a1620;color:#fff;font-size:16px;padding:10px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;resize:vertical;"></textarea>
+    <textarea id="genModalInput" rows="4" style="width:100%;box-sizing:border-box;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:#1d1c1b;color:#fff;font-size:16px;padding:10px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;resize:vertical;"></textarea>
   </div>
   <div style="padding:14px 18px 16px;display:flex;gap:8px;border-top:1px solid rgba(255,255,255,.08);">
     <button id="genModalCancelBtn" style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:none;color:var(--muted2);font-size:14px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;display:none;">キャンセル</button>
@@ -401,7 +401,7 @@ footer{text-align:center;padding:6px 0 2px;}
 
 <!-- ヘルプページ -->
 <div id="helpOverlay" style="display:none;position:fixed;inset:0;background:rgba(20,18,15,.7);z-index:360;"></div>
-<div id="helpModal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92vw,420px);max-height:85vh;background:#1c1b1f;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:361;flex-direction:column;overflow:hidden;">
+<div id="helpModal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92vw,420px);max-height:85vh;background:#1d1c1b;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:361;flex-direction:column;overflow:hidden;">
   <div style="padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
     <h3 style="margin:0;font-size:17px;color:#fff;">📖 ヘルプ</h3>
     <button id="helpCloseBtn" style="background:none;border:none;color:#9c8d68;font-size:20px;cursor:pointer;padding:2px 6px;">✕</button>
@@ -1399,7 +1399,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-09b';
+const APP_VERSION = '2026-11-09c';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3314,7 +3314,7 @@ function buildExampleStatic(item, pos) {
 }
 
 function buildExBox(ex) {
-  const noteHtml = ex.note ? `<div style="margin-top:8px;padding:7px 10px;background:rgba(242,183,5,.15);border-left:3px solid #f2b705;border-radius:4px;font-size:15px;color:#5a4500;line-height:1.6;">${ex.note}</div>` : '';
+  const noteHtml = ex.note ? `<div style="margin-top:8px;padding:7px 10px;background:rgba(201,189,166,.15);border-left:3px solid #c9bda6;border-radius:4px;font-size:15px;color:#4a4234;line-height:1.6;">${ex.note}</div>` : '';
   const roHtml = st.showRo ? `<div class="ex-ro" style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;margin-top:3px;line-height:1.4;">${(ex.ro||'')}</div>` : '';
   return `<div class="ex-box" style="background:rgba(0,0,0,.06);border-radius:10px;padding:10px 14px;margin-top:8px;">
     <div style="font-size:13px;color:#9c8d68;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin-bottom:4px;">例文</div>
@@ -3508,9 +3508,9 @@ function renderCoachMark(id, margin){
   if(seenTips.has(id)) return '';
   const msg = TIPS[id];
   if(!msg) return '';
-  return `<div class="coach-mark" data-tip-id="${id}" style="margin:${margin||'8px 12px'};padding:10px 34px 10px 12px;position:relative;background:rgba(74,124,196,.15);border:1px solid rgba(74,124,196,.4);border-radius:10px;font-size:13px;color:#cfe0f5;line-height:1.5;white-space:pre-line;text-align:left;">
+  return `<div class="coach-mark" data-tip-id="${id}" style="margin:${margin||'8px 12px'};padding:10px 34px 10px 12px;position:relative;background:rgba(201,189,166,.10);border:1px solid rgba(201,189,166,.28);border-radius:10px;font-size:13px;color:#e6e3de;line-height:1.5;white-space:pre-line;text-align:left;">
     ${msg}
-    <button class="tip-dismiss" data-tip-id="${id}" style="position:absolute;top:6px;right:8px;background:none;border:none;color:#9fc3e8;font-size:16px;cursor:pointer;padding:2px 6px;">✕</button>
+    <button class="tip-dismiss" data-tip-id="${id}" style="position:absolute;top:6px;right:8px;background:none;border:none;color:#bfb9b0;font-size:16px;cursor:pointer;padding:2px 6px;">✕</button>
   </div>`;
 }
 function dismissTip(id){
@@ -3600,14 +3600,14 @@ function renderHelpBody(){
   body.innerHTML = HELP_TOPICS.map((t,i)=>{
     const open = helpOpenIdx===i;
     return `<div style="border-bottom:1px solid rgba(255,255,255,.06);">
-      <button class="help-topic-btn" data-idx="${i}" style="width:100%;text-align:left;background:none;border:none;padding:14px 18px;display:flex;align-items:center;gap:10px;cursor:pointer;color:#e4e1e8;font-size:14.5px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;">
+      <button class="help-topic-btn" data-idx="${i}" style="width:100%;text-align:left;background:none;border:none;padding:14px 18px;display:flex;align-items:center;gap:10px;cursor:pointer;color:#e6e3de;font-size:14.5px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;">
         <span style="font-size:18px;">${t.icon}</span>
         <span style="flex:1;">${t.title}</span>
         <span style="color:#8a7a55;font-size:13px;">${open?'▲':'▼'}</span>
       </button>
       ${open?`<div style="padding:0 18px 16px 46px;font-size:13.5px;color:#cfc9d6;line-height:1.75;white-space:pre-line;">${t.body}</div>`:''}
     </div>`;
-  }).join('') + `<div style="padding:16px 18px 8px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11.5px;color:#6b6570;">version ${APP_VERSION}</div>`;
+  }).join('') + `<div style="padding:16px 18px 8px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11.5px;color:#6e6a64;">version ${APP_VERSION}</div>`;
   body.querySelectorAll('.help-topic-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const idx = parseInt(btn.dataset.idx, 10);
@@ -3729,9 +3729,9 @@ function updateInstallBanner(){
   const platform = detectPlatform();
   if(platform!=='ios' && platform!=='android'){ el.style.display='none'; return; }
   const label = platform==='ios' ? '📲 共有ボタンから「ホーム画面に追加」してください(タップで詳細)' : '📲 メニューから「アプリをインストール」してください(タップで詳細)';
-  el.style.background = 'rgba(242,183,5,.15)';
-  el.style.color = '#f2b705';
-  el.style.borderBottom = '1.5px solid rgba(242,183,5,.4)';
+  el.style.background = 'rgba(201,189,166,.15)';
+  el.style.color = '#c9bda6';
+  el.style.borderBottom = '1.5px solid rgba(201,189,166,.4)';
   el.textContent = label;
   el.style.display = 'block';
   el.onclick = ()=>{
@@ -4188,7 +4188,7 @@ function renderWordList(){
     const favConvItems=CONV.filter(i=>st.favorites.conversation.has(i.id)).map(i=>({...i,_type:'conv'}));
     const favGramItems=GRAM.filter(i=>st.favorites.grammar.has(i.id)).map(i=>({...i,_type:'gram'}));
     const totalFav=favVocabItems.length+favConvItems.length+favGramItems.length;
-    html+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(242,183,5,.12);border:1px solid rgba(242,183,5,.3);border-radius:8px;padding:8px 10px;">
+    html+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(201,189,166,.12);border:1px solid rgba(201,189,166,.3);border-radius:8px;padding:8px 10px;">
       ⭐ カード裏面やリストの☆をタップして追加した、後で見返したい単語・会話文・文法の一覧です
     </div>`;
     html+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${totalFav}件</div>`;
@@ -4316,7 +4316,7 @@ function renderWordList(){
     </div>`;
     let items=st.wordlistScene==='ALL'?CONV:CONV.filter(i=>i.scene===st.wordlistScene);
     const convLearnedCount=[...st.learned.conversation].filter(id=>items.some(i=>i.id===id)).length;
-    html+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(242,183,5,.12);border:1px solid rgba(242,183,5,.3);border-radius:8px;padding:8px 10px;">
+    html+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(201,189,166,.12);border:1px solid rgba(201,189,166,.3);border-radius:8px;padding:8px 10px;">
       💡 タップするとカードで確認できます
     </div>`;
     html+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${convLearnedCount} 学習済み / 全${items.length}</div>`;
@@ -4389,7 +4389,7 @@ function renderWordList(){
   </div>`;
   html+=`<div style="padding:0 12px 8px;position:relative;">
     <input type="text" id="wlSearchInput" value="${escAttr(st.wordlistSearch)}" placeholder="🔍 タイ語・意味・読みで検索" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-      style="width:100%;box-sizing:border-box;padding:10px 36px 10px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.15);background:#1a1620;color:#fff;font-size:16px;font-family:'Zen Maru Gothic',sans-serif;">
+      style="width:100%;box-sizing:border-box;padding:10px 36px 10px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.15);background:#1d1c1b;color:#fff;font-size:16px;font-family:'Zen Maru Gothic',sans-serif;">
     <button id="wlSearchClear" style="display:${st.wordlistSearch?'flex':'none'};position:absolute;right:20px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:14px;align-items:center;justify-content:center;cursor:pointer;">✕</button>
   </div>`;
   html+=renderCoachMark('wlSearch');
@@ -4425,7 +4425,7 @@ function renderWordList(){
     if(q.trim()){
       ih+=`<div style="padding:6px 12px 4px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${filtered.length}件ヒット</div>`;
     } else {
-      ih+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(242,183,5,.12);border:1px solid rgba(242,183,5,.3);border-radius:8px;padding:8px 10px;">
+      ih+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(201,189,166,.12);border:1px solid rgba(201,189,166,.3);border-radius:8px;padding:8px 10px;">
         💡 単語をタップすると単語カードで確認できます
       </div>`;
     }
@@ -5089,9 +5089,9 @@ function renderToneSection(){
 </div>
 
 <!-- 声調の全体像(5声調イントロ) -->
-<div id="t-overview" style="background:#241f2c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px;margin-bottom:14px;">
+<div id="t-overview" style="background:#232220;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px;margin-bottom:14px;">
   <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px;">まず「5つの声調」を知ろう</div>
-  <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0 0 10px;">
+  <p style="font-size:14px;color:#e6e3de;line-height:1.7;margin:0 0 10px;">
   タイ語には5つの声調(音の高さの変化パターン)があります。綴り・母音が同じでも、声調が違うと別の単語・別の意味になります。下は「กา」という同じ音節に声調符号だけを変えた5パターンです。🔊ボタンで実際に聞き比べてみてください。
   </p>
   <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:10px;">
@@ -5103,20 +5103,20 @@ function renderToneSection(){
       ['↗','ก๋า','จัตวา(上昇声)'],
     ].map(function(t){
       return '<div style="background:rgba(255,255,255,.06);border-radius:8px;padding:6px 2px 7px;text-align:center;">'
-        +'<div style="font-size:15px;color:#f2b705;">'+t[0]+'</div>'
+        +'<div style="font-size:15px;color:#c9bda6;">'+t[0]+'</div>'
         +'<div style="font-family:\'Sarabun\',sans-serif;font-size:18px;color:#fff;margin-top:2px;">'+t[1]+'</div>'
         +'<div style="font-size:10px;color:var(--muted);margin:1px 0 4px;">'+t[2]+'</div>'
         +'<button onclick="speak(\''+t[1]+'\')" style="width:24px;height:24px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:11px;cursor:pointer;">🔊</button>'
         +'</div>';
     }).join('')}
   </div>
-  <div style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;margin-bottom:10px;">
-  📌 声調は5種類ありますが、声調符号(マーク)は<span style="color:#f2b705;font-weight:700;">่ ้ ๊ ๋ の4種類</span>だけです。マークが無い状態そのものが「สามัญ(中声)」を表すので実質5パターンに対応していますが、<b style="color:#fff;">同じマークでも、頭の子音が中子音/高子音/低子音のどれかによって結果の声調が変わります</b>。これが次の「子音クラス」が重要な理由です。
+  <div style="padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e6e3de;line-height:1.7;margin-bottom:10px;">
+  📌 声調は5種類ありますが、声調符号(マーク)は<span style="color:#c9bda6;font-weight:700;">่ ้ ๊ ๋ の4種類</span>だけです。マークが無い状態そのものが「สามัญ(中声)」を表すので実質5パターンに対応していますが、<b style="color:#fff;">同じマークでも、頭の子音が中子音/高子音/低子音のどれかによって結果の声調が変わります</b>。これが次の「子音クラス」が重要な理由です。
   </div>
 
-  <div id="t-illust" style="padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;">
+  <div id="t-illust" style="padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;">
     <div style="font-weight:700;color:#fff;margin-bottom:8px;font-size:14px;">🖼️ イラストと発音表記でイメージをつかもう</div>
-    <p style="font-size:13px;color:#e4e1e8;line-height:1.7;margin:0 0 9px;">
+    <p style="font-size:13px;color:#e6e3de;line-height:1.7;margin:0 0 9px;">
     声の高さの動きを、表情とグラフでイメージにしてみました。→ 横にスワイプ・画像タップで拡大表示できます。単語カードのローマ字についている記号も、実はそのまま声調を表しています。
     </p>
     <div style="display:flex;align-items:flex-start;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;">
@@ -5129,11 +5129,11 @@ function renderToneSection(){
       ].map(function(v){
         return '<div style="background:rgba(255,255,255,.05);border-radius:10px;padding:8px;flex:0 0 78%;min-width:0;scroll-snap-align:start;">'
           +'<img src="'+(PG_IMAGES[v[0]]||'')+'" loading="lazy" style="width:100%;border-radius:8px;display:block;cursor:zoom-in;" onclick="openImgLightbox(this.src)">'
-          +'<div style="display:flex;align-items:center;gap:8px;margin-top:8px;background:#2d2836;border-radius:8px;padding:8px 10px;min-width:0;">'
+          +'<div style="display:flex;align-items:center;gap:8px;margin-top:8px;background:#2f2d2a;border-radius:8px;padding:8px 10px;min-width:0;">'
           +'<span style="font-family:\'Sarabun\',sans-serif;font-size:19px;color:#fff;flex-shrink:0;">'+v[1]+'</span>'
-          +'<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#f2b705;font-weight:700;flex-shrink:0;">'+v[2]+'</span>'
+          +'<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#c9bda6;font-weight:700;flex-shrink:0;">'+v[2]+'</span>'
           +'<span style="flex:1;min-width:0;"></span>'
-          +'<span style="font-size:12px;color:#e4e1e8;text-align:right;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">→ '+v[3]+'</span>'
+          +'<span style="font-size:12px;color:#e6e3de;text-align:right;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">→ '+v[3]+'</span>'
           +'<button onclick="speak(\''+v[1]+'\')" style="width:30px;height:30px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:14px;cursor:pointer;flex-shrink:0;">🔊</button>'
           +'</div>'
           +'</div>';
@@ -5146,7 +5146,7 @@ function renderToneSection(){
 <details class="fold-sec" id="t-explain">
 <summary>まず「末子音」って何?<span class="fold-chev">▾</span></summary>
 <div class="fold-body">
-<div style="background:#241f2c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+<div style="background:#232220;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
   <p style="font-size:15px;color:#d8d3de;line-height:1.7;margin:0 0 11px;">
   タイ語の音節は、最後にどんな音で終わるか(末子音)によって「平音節」と「促音節」の2種類に分かれます。この2種類の違いが、声調記号が無い時の「基本の声調」を決める材料の1つになります。
   </p>
@@ -5154,58 +5154,58 @@ function renderToneSection(){
   <div style="display:grid;grid-template-columns:1fr;gap:9px;">
     <div style="background:rgba(74,124,196,.22);border:1px solid rgba(143,180,232,.35);border-radius:10px;padding:11px 13px;">
       <div style="font-size:15px;font-weight:700;color:#bcd6f7;margin-bottom:5px;">平音節(伸ばせる終わり方) <span style="font-size:12px;font-weight:400;color:#8fb4e8;">= live syllable</span></div>
-      <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0 0 7px;">
+      <p style="font-size:14px;color:#e6e3de;line-height:1.7;margin:0 0 7px;">
       次のどちらかで終わる音節です。<br>
       ①長母音で終わる(例:มา・ดู)<br>
       ②m・n・ng・y・wの音で終わる(例:กิน・นาง・สาย)
       </p>
-      <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0;">
+      <p style="font-size:14px;color:#e6e3de;line-height:1.7;margin:0;">
       これらは「音を伸ばして終われる」終わり方です。試しに「กิน(食べる)」の「น」の部分を、口を止めずにそのまま伸ばしてみてください。「んんん…」と続けられるはずです。
       </p>
     </div>
 
     <div style="background:rgba(192,57,43,.22);border:1px solid rgba(232,150,143,.35);border-radius:10px;padding:11px 13px;">
       <div style="font-size:15px;font-weight:700;color:#f4c2bd;margin-bottom:5px;">促音節(伸ばせない終わり方) <span style="font-size:12px;font-weight:400;color:#e8988f;">= dead syllable</span></div>
-      <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0 0 7px;">
+      <p style="font-size:14px;color:#e6e3de;line-height:1.7;margin:0 0 7px;">
       次のどちらかで終わる音節です。<br>
       ①短母音で終わる、かつ末子音が無い(例:กะ・ดุ)<br>
       ②k・t・pの音で終わる(例:มาก・นัด・กับ)
       </p>
-      <p style="font-size:14px;color:#e4e1e8;line-height:1.7;margin:0;">
+      <p style="font-size:14px;color:#e6e3de;line-height:1.7;margin:0;">
       これらは「音が途中でせき止められる」終わり方です。「มาก(多い)」の「ก」では、最後の音のところで声が止まり、そのまま伸ばすことができません。日本語の「っ」に少し似た感覚はありますが、<b style="color:#fff;">同じ音ではありません。</b>
       </p>
     </div>
   </div>
 
-  <div style="margin-top:11px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13.5px;color:#b8b2c0;line-height:1.7;">
-  📎 「平音節/促音節」はThai Pocaでの呼び方で、言語学では<b style="color:#e4e1e8;">live syllable(平音節) / dead syllable(促音節)</b>と呼ばれます。まずは「伸ばせる/伸ばせない」の感覚で覚えればOKです。
+  <div style="margin-top:11px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13.5px;color:#bab5ac;line-height:1.7;">
+  📎 「平音節/促音節」はThai Pocaでの呼び方で、言語学では<b style="color:#e6e3de;">live syllable(平音節) / dead syllable(促音節)</b>と呼ばれます。まずは「伸ばせる/伸ばせない」の感覚で覚えればOKです。
   </div>
 
-  <div style="margin-top:9px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
+  <div style="margin-top:9px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e6e3de;line-height:1.7;">
   💡 綴り字の上の子音字(ก・ด・บなど)は何種類もありますが、実際に発音する末子音の音は少数に整理されます。たとえば ด・ต・ถ・ท・ธ・จ・ช・ซ・ศ・ษ・ส はどれも語末では同じ「t」の音になります。文字は違っても、発音される音の種類(平音節か促音節か)で考えるのがポイントです。
   </div>
 
-  <div style="margin-top:9px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
+  <div style="margin-top:9px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e6e3de;line-height:1.7;">
   🔔 平音節の中でも <b style="color:#fff;">ng(ŋ)</b> と <b style="color:#fff;">n</b> は日本人が混同しやすい音です。日本語の「ン」は後ろに続く音によって自然に変化していて、実は無意識に両方使い分けています。<br><br>
-  <b style="color:#f2b705;">ng(ŋ)</b>=舌をどこにも付けず、鼻に息を抜く音。「<b>バンコク</b>」の「ン」がこれです。<br>
-  <b style="color:#f2b705;">n</b>=舌先を上の歯茎にしっかり付けて止める音。「<b>スワンナプーム</b>(空港名)」の最初の「ン」がこれです。<br><br>
+  <b style="color:#c9bda6;">ng(ŋ)</b>=舌をどこにも付けず、鼻に息を抜く音。「<b>バンコク</b>」の「ン」がこれです。<br>
+  <b style="color:#c9bda6;">n</b>=舌先を上の歯茎にしっかり付けて止める音。「<b>スワンナプーム</b>(空港名)」の最初の「ン」がこれです。<br><br>
   この2つを意識して区別できると、グッと通じやすいタイ語になります。
   </div>
 
-  <div style="margin-top:9px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
+  <div style="margin-top:9px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e6e3de;line-height:1.7;">
   <div style="font-weight:700;color:#fff;margin-bottom:8px;">✍️ 促音節(k・t・p)は「綴りの文字」ではなく「実際の音」で考える</div>
   <p style="margin:0 0 8px;">促音節を作る末子音は、綴りに使われる文字の種類は多くても、実際に出る音は3つだけに整理されます。</p>
   <table style="width:100%;border-collapse:collapse;font-size:13px;">
-  <tr style="background:#241f2c;"><th style="padding:5px;text-align:center;color:var(--muted2);width:20%;">実際の音</th><th style="padding:5px;text-align:left;color:var(--muted2);">綴りに使われる文字(代表例)</th></tr>
-  <tr><td style="padding:6px 5px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;color:#f2b705;font-weight:700;">k</td><td style="padding:6px 5px;font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;">ก ข ค ฆ</td></tr>
-  <tr><td style="padding:6px 5px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;color:#f2b705;font-weight:700;">t</td><td style="padding:6px 5px;font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;">จ ช ซ ฌ ฎ ฏ ฐ ฑ ฒ ด ต ถ ท ธ ศ ษ ส</td></tr>
-  <tr><td style="padding:6px 5px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;color:#f2b705;font-weight:700;">p</td><td style="padding:6px 5px;font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;">บ ป พ ภ ฟ</td></tr>
+  <tr style="background:#232220;"><th style="padding:5px;text-align:center;color:var(--muted2);width:20%;">実際の音</th><th style="padding:5px;text-align:left;color:var(--muted2);">綴りに使われる文字(代表例)</th></tr>
+  <tr><td style="padding:6px 5px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;color:#c9bda6;font-weight:700;">k</td><td style="padding:6px 5px;font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;">ก ข ค ฆ</td></tr>
+  <tr><td style="padding:6px 5px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;color:#c9bda6;font-weight:700;">t</td><td style="padding:6px 5px;font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;">จ ช ซ ฌ ฎ ฏ ฐ ฑ ฒ ด ต ถ ท ธ ศ ษ ส</td></tr>
+  <tr><td style="padding:6px 5px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;color:#c9bda6;font-weight:700;">p</td><td style="padding:6px 5px;font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;">บ ป พ ภ ฟ</td></tr>
   </table>
-  <p style="margin:8px 0 0;font-size:13px;color:#b8b2c0;">例えば「มาก(多い)」のก、「นัด(約束する)」のด、「กับ(〜と)」のบは、綴りの文字は違いますが、実際の発音(k/t/p)で見ればどれも「促音節」として同じ扱いです。</p>
+  <p style="margin:8px 0 0;font-size:13px;color:#bab5ac;">例えば「มาก(多い)」のก、「นัด(約束する)」のด、「กับ(〜と)」のบは、綴りの文字は違いますが、実際の発音(k/t/p)で見ればどれも「促音節」として同じ扱いです。</p>
   </div>
 
-  <div style="margin-top:9px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
-  📌 なぜこの分類が大事かというと<span style="color:#f2b705;font-weight:700;white-space:nowrap;font-size:1.15em;">声調記号(ก่ ก้ ก๊ ก๋)</span>が付いていない単語でも、<b style="color:#fff;">子音クラス(中子音/高子音/低子音)</b>と<b style="color:#fff;">この音節タイプ</b>の組み合わせで、基本の声調が自動的に決まるからです。下の表はその組み合わせをまとめたものです。
+  <div style="margin-top:9px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e6e3de;line-height:1.7;">
+  📌 なぜこの分類が大事かというと<span style="color:#c9bda6;font-weight:700;white-space:nowrap;font-size:1.15em;">声調記号(ก่ ก้ ก๊ ก๋)</span>が付いていない単語でも、<b style="color:#fff;">子音クラス(中子音/高子音/低子音)</b>と<b style="color:#fff;">この音節タイプ</b>の組み合わせで、基本の声調が自動的に決まるからです。下の表はその組み合わせをまとめたものです。
   </div>
 </div>
 </div>
@@ -5217,7 +5217,7 @@ function renderToneSection(){
 <div class="fold-body" style="padding-top:8px;">
 <div style="margin-bottom:10px;">
   <table style="width:100%;border-collapse:collapse;font-size:14px;">
-  <tr style="background:#2a2730;">
+  <tr style="background:#2f2d2a;">
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>平音節</th>
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>促音節</th>
     <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ก่</div><div style="font-size:10px;color:var(--muted);">マイエーク</div></th>
@@ -5228,10 +5228,10 @@ function renderToneSection(){
   <tr style="background:rgba(192,57,43,.1);">
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">─</div><div style="font-size:12px;color:var(--muted);">サーマン</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">─</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↑</div><div style="font-size:12px;color:var(--muted);">トリー</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタワー</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#c9bda6;">↘</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#c9bda6;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#c9bda6;">↑</div><div style="font-size:12px;color:var(--muted);">トリー</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#c9bda6;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタワー</div></td>
   </tr>
   </table>
 </div>
@@ -5244,7 +5244,7 @@ function renderToneSection(){
 <div class="fold-body" style="padding-top:8px;">
 <div style="margin-bottom:10px;">
   <table style="width:100%;border-collapse:collapse;font-size:14px;">
-  <tr style="background:#2a2730;">
+  <tr style="background:#2f2d2a;">
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>平音節</th>
     <th style="padding:5px 4px;text-align:center;font-size:12px;color:var(--muted2);">符号なし<br>促音節</th>
     <th style="padding:5px 4px;text-align:center;"><div style="font-family:'Sarabun',sans-serif;font-size:21px;color:#fff;">ข่</div><div style="font-size:10px;color:var(--muted);">マイエーク</div></th>
@@ -5254,8 +5254,8 @@ function renderToneSection(){
   <tr style="background:rgba(76,154,106,.1);">
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↗</div><div style="font-size:12px;color:var(--muted);">ジャッタワー</div></td>
     <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#fff;">↘</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↘</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
-    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#f2b705;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#c9bda6;">↘</div><div style="font-size:12px;color:var(--muted);">エーク</div></td>
+    <td style="text-align:center;padding:8px 4px;"><div style="font-size:17px;color:#c9bda6;">↗↘</div><div style="font-size:12px;color:var(--muted);">トー</div></td>
     <td colspan="2" style="text-align:center;padding:8px 4px;color:var(--muted);font-size:13px;">—</td>
   </tr>
   </table>
@@ -5268,11 +5268,11 @@ function renderToneSection(){
 <summary style="background:#4a7cc4;color:#fff;">低子音　ค ง ช ซ ฑ ฒ ท น พ ฟ ม ย ร ล ว ฬ ฮ 他<span class="fold-chev" style="color:#fff;">▾</span></summary>
 <div class="fold-body" style="padding-top:8px;">
 
-<div style="margin-bottom:10px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13.5px;color:#b8b2c0;line-height:1.7;">
+<div style="margin-bottom:10px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13.5px;color:#bab5ac;line-height:1.7;">
   📌 この段階では、低子音をすべて暗記する必要はありません。まずは声調が決まる仕組みを理解しましょう。
 </div>
 
-<div style="margin-bottom:12px;padding:10px 12px;background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e4e1e8;line-height:1.7;">
+<div style="margin-bottom:12px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e6e3de;line-height:1.7;">
   <div style="font-weight:700;color:#fff;margin-bottom:6px;">🔗 低子音には「対応する高子音」があるものとないものがある</div>
   <p style="margin:0 0 8px;">下の7組は、同じ発音の高子音とペアになっている低子音です。「なぜ同じ音なのに文字が複数あるのか」はこのペア関係が理由です。</p>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px;">
@@ -5282,12 +5282,12 @@ function renderToneSection(){
         +'</div>';
     }).join('')}
   </div>
-  <p style="margin:0;font-size:13px;color:#b8b2c0;">それ以外の低子音(ง ณ น ม ย ร ล ว ฬ など)は、対応する高子音を持たない「単独字」です。</p>
+  <p style="margin:0;font-size:13px;color:#bab5ac;">それ以外の低子音(ง ณ น ม ย ร ล ว ฬ など)は、対応する高子音を持たない「単独字」です。</p>
 </div>
 
 <div style="margin-bottom:10px;">
   <table style="width:100%;border-collapse:collapse;font-size:13px;">
-  <tr style="background:#2a2730;">
+  <tr style="background:#2f2d2a;">
     <th style="padding:5px 3px;text-align:center;font-size:11px;color:var(--muted2);">符号なし<br>平音節</th>
     <th style="padding:5px 3px;text-align:center;font-size:11px;color:var(--muted2);">符号なし<br>促音節・短母音</th>
     <th style="padding:5px 3px;text-align:center;font-size:11px;color:var(--muted2);">符号なし<br>促音節・長母音</th>
@@ -5298,52 +5298,52 @@ function renderToneSection(){
     <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#fff;">─</div><div style="font-size:11px;color:var(--muted);">サーマン</div></td>
     <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#fff;">↑</div><div style="font-size:11px;color:var(--muted);">トリー</div></td>
     <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#fff;">↘</div><div style="font-size:11px;color:var(--muted);">トー</div></td>
-    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#f2b705;">↘</div><div style="font-size:11px;color:var(--muted);">トー</div></td>
-    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#f2b705;">↑</div><div style="font-size:11px;color:var(--muted);">トリー</div></td>
+    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#c9bda6;">↘</div><div style="font-size:11px;color:var(--muted);">トー</div></td>
+    <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#c9bda6;">↑</div><div style="font-size:11px;color:var(--muted);">トリー</div></td>
   </tr>
   </table>
-  <p style="margin:8px 0 0;font-size:12.5px;color:#b8b2c0;line-height:1.6;">📌 低子音はトリー・ジャッタワーの符号を使いません。そのかわり「促音節(短母音)」や「マイトー」からも高声(トリー)に、「促音節(長母音)」や「マイエーク」からも下降声(トー)に、それぞれ2通りの経路でたどり着けるのが低子音の特徴です(例: ม้า=máa「馬」はマイトーで高声)。</p>
+  <p style="margin:8px 0 0;font-size:12.5px;color:#bab5ac;line-height:1.6;">📌 低子音はトリー・ジャッタワーの符号を使いません。そのかわり「促音節(短母音)」や「マイトー」からも高声(トリー)に、「促音節(長母音)」や「マイエーク」からも下降声(トー)に、それぞれ2通りの経路でたどり着けるのが低子音の特徴です(例: ม้า=máa「馬」はマイトーで高声)。</p>
 </div>
 </div>
 </details>
 
 <!-- 声調判定トレーニング -->
 <details class="fold-sec" id="t-train" style="margin-top:14px;">
-<summary style="background:#8a6d1f;color:#fff;">声調判定トレーニング(実例で練習)<span class="fold-chev" style="color:#fff;">▾</span></summary>
+<summary style="background:#6e6450;color:#fff;">声調判定トレーニング(実例で練習)<span class="fold-chev" style="color:#fff;">▾</span></summary>
 <div class="fold-body" style="padding-top:8px;">
-<div style="background:#2d2836;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:13.5px;color:#e4e1e8;line-height:1.9;">
+<div style="background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:13.5px;color:#e6e3de;line-height:1.9;">
 単語を見たら、次の<b style="color:#fff;">3つの要素</b>で声調を判定できます。<br>
 ① <b style="color:#fff;">子音クラス</b> → 中子音・高子音・低子音<br>
 ② <b style="color:#fff;">音節タイプ</b> → 平音節(live)・促音節(dead)<br>
 ③ <b style="color:#fff;">声調符号</b> → なし・่・้・๊・๋<br>
-<span style="color:#b8b2c0;font-size:12.5px;">※②の音節タイプは、母音の長短と末子音の有無・種類から判断します(長母音+m・n・ng・y・w系=平音節、短母音のみ/末子音がk・t・p系=促音節)。</span><br>
+<span style="color:#bab5ac;font-size:12.5px;">※②の音節タイプは、母音の長短と末子音の有無・種類から判断します(長母音+m・n・ng・y・w系=平音節、短母音のみ/末子音がk・t・p系=促音節)。</span><br>
 → この3つの組み合わせで声調が決まります。
 </div>
 ${[
   {th:'กิน', ro:'kin', jp:'食べる', cls:'中子音', clsColor:'#c0392b', bg:'rgba(192,57,43,.14)',
    steps:['ก = <b style="color:#c0392b;">中子音</b>','ิ(短母音)+น(ん) → <b style="color:#fff;">平音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
-   result:'中子音+平音節+符号なし = <b style="color:#f2b705;">中声(サーマン)</b>'},
+   result:'中子音+平音節+符号なし = <b style="color:#c9bda6;">中声(サーマン)</b>'},
   {th:'มา', ro:'maa', jp:'来る', cls:'低子音', clsColor:'#4a7cc4', bg:'rgba(74,124,196,.14)',
    steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า(長母音)+末子音なし → <b style="color:#fff;">平音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
-   result:'低子音+平音節+符号なし = <b style="color:#f2b705;">中声(サーマン)</b>'},
+   result:'低子音+平音節+符号なし = <b style="color:#c9bda6;">中声(サーマン)</b>'},
   {th:'ม้า', ro:'máa', jp:'馬', cls:'低子音', clsColor:'#4a7cc4', bg:'rgba(74,124,196,.14)',
    steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า(長母音)+末子音なし → <b style="color:#fff;">平音節</b>','้ → <b style="color:#fff;">マイトー</b>'],
-   result:'低子音+マイトー = <b style="color:#f2b705;">高声(トリー)</b>'},
+   result:'低子音+マイトー = <b style="color:#c9bda6;">高声(トリー)</b>'},
   {th:'มาก', ro:'mâak', jp:'多い、とても', cls:'低子音', clsColor:'#4a7cc4', bg:'rgba(74,124,196,.14)',
    steps:['ม = <b style="color:#4a7cc4;">低子音</b>','า(長母音)+ก(k) → <b style="color:#fff;">促音節</b>','声調符号 → <b style="color:#fff;">なし</b>'],
-   result:'低子音+促音節(長母音)+符号なし = <b style="color:#f2b705;">下降声(トー)</b>'},
+   result:'低子音+促音節(長母音)+符号なし = <b style="color:#c9bda6;">下降声(トー)</b>'},
 ].map(function(ex){
-  return '<div style="background:#241f2c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 15px;margin-bottom:11px;">'
+  return '<div style="background:#232220;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 15px;margin-bottom:11px;">'
     +'<div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;">'
     +'<span style="font-family:\'Sarabun\',sans-serif;font-size:28px;color:#fff;">'+ex.th+'</span>'
-    +'<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#f2b705;">'+ex.ro+'</span>'
+    +'<span style="font-family:\'IBM Plex Mono\',\'Noto Sans Mono\',monospace;font-size:14px;color:#c9bda6;">'+ex.ro+'</span>'
     +'<span style="font-size:12.5px;color:var(--muted);">('+ex.jp+')</span>'
     +'<button onclick="event.stopPropagation();speak(\''+ex.th+'\')" style="width:28px;height:28px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:13px;cursor:pointer;margin-left:auto;flex-shrink:0;">🔊</button>'
     +'</div>'
-    +'<div style="font-size:13px;color:#e4e1e8;line-height:2;padding-left:8px;border-left:2px solid '+ex.clsColor+';margin-bottom:9px;">'
+    +'<div style="font-size:13px;color:#e6e3de;line-height:2;padding-left:8px;border-left:2px solid '+ex.clsColor+';margin-bottom:9px;">'
     +ex.steps.map(function(s,i){ return '① ② ③'.split(' ')[i]+' '+s; }).join('<br>')
     +'</div>'
-    +'<div style="text-align:center;padding:8px;background:'+ex.bg+';border-radius:8px;font-size:13.5px;color:#e4e1e8;">'+ex.result+'</div>'
+    +'<div style="text-align:center;padding:8px;background:'+ex.bg+';border-radius:8px;font-size:13.5px;color:#e6e3de;">'+ex.result+'</div>'
     +'</div>';
 }).join('')}
 </div>
@@ -5402,7 +5402,7 @@ function renderNumbers(){
   <div class="mf-face" style="background:var(--tag);border:1px solid var(--tag-edge);flex-direction:row;align-items:center;padding:8px 12px;gap:10px;">
     <div style="display:flex;flex-direction:column;align-items:flex-start;min-width:76px;flex-shrink:0;">
       <span style="font-family:'Sarabun',sans-serif;font-size:${thNumSize}px;color:#2b2118;line-height:1.2;">${n.th_num}</span>
-      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#b5860a;">${n.arabic}</span>
+      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#8a7a55;">${n.arabic}</span>
     </div>
     <div style="flex:1;min-width:0;">
       <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;">${n.ro}</div>
@@ -5433,7 +5433,7 @@ function renderNumbers(){
 <div style="background:var(--tag);border:1px solid var(--tag-edge);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:12px;min-width:0;">
   <div style="display:flex;flex-direction:column;align-items:flex-start;min-width:72px;flex-shrink:0;">
     <span style="font-family:'Sarabun',sans-serif;font-size:30px;color:#2b2118;line-height:1.2;">${n.th_num}</span>
-    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#b5860a;">${n.arabic}</span>
+    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#8a7a55;">${n.arabic}</span>
   </div>
   <div style="flex:1;min-width:0;">
     <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;">${n.ro}</div>
