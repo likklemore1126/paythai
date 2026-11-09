@@ -253,25 +253,12 @@ footer{text-align:center;padding:6px 0 2px;}
 .mode-tab[data-mode="wordlist"].active{background:#a8b8b5;color:#1d1c1b;border-color:#a8b8b5;}
 
 
-/* === 方向pillに国旗背景 === */
+/* === 方向pill(国旗なし・シンプル) === */
 #dirPill {
-  background-size: cover;
-  background-position: center;
   font-weight: 800;
   font-size:13px;
-  text-shadow: 0 0 4px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.7);
-  border: 1.5px solid rgba(255,255,255,.25);
-  color: #fff;
   min-width: 68px;
   text-align: center;
-}
-/* TH→JP: タイ国旗 */
-#dirPill[data-dir="th-jp"] {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 375'%3E%3Crect width='900' height='375' fill='%23A51931'/%3E%3Crect y='75' width='900' height='225' fill='%23F4F5F8'/%3E%3Crect y='150' width='900' height='75' fill='%232D2A4A'/%3E%3C/svg%3E");
-}
-/* JP→TH: 日本国旗 */
-#dirPill[data-dir="jp-th"] {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Crect width='900' height='600' fill='%23fff'/%3E%3Ccircle cx='450' cy='300' r='180' fill='%23BC002D'/%3E%3C/svg%3E");
 }
 
 /* --- TOPボタン --- */
@@ -341,8 +328,8 @@ footer{text-align:center;padding:6px 0 2px;}
       <button class="reset-btn" id="importBtn" style="flex:1;aspect-ratio:1/0.4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-decoration:none;font-size:13px;font-weight:700;text-align:center;line-height:1.4;background:rgba(255,255,255,.05);color:#ece9e4;border:1.5px solid rgba(212,154,120,.55);border-radius:14px;"><span style="display:inline-block;font-size:11px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:6px;background:var(--accent);color:#1d1c1b;">IN</span>学習記録を<br>インポート</button>
     </div>
     <div id="resetTipWrap"></div>
-    <button class="reset-btn" id="resetBtn" style="text-decoration:none;margin:6px auto 0;max-width:320px;width:100%;display:block;font-size:14px;font-weight:700;padding:8px 16px;background:rgba(192,57,43,.12);color:#e8968f;border:1px solid rgba(192,57,43,.45);border-radius:10px;">⚠️ 学習記録をリセット</button>
-    <button id="openHelpBtn" style="display:block;width:100%;max-width:320px;margin:10px auto 0;background:none;border:none;color:#8a9bc4;font-size:13px;text-decoration:underline;cursor:pointer;padding:6px;">📖 ヘルプを見る</button>
+    <button class="reset-btn" id="resetBtn" style="text-decoration:none;margin:6px auto 0;max-width:320px;width:100%;display:block;font-size:14px;font-weight:700;padding:8px 16px;background:rgba(212,154,120,.10);color:#d9ab8f;border:1px solid rgba(212,154,120,.45);border-radius:10px;">⚠️ 学習記録をリセット</button>
+    <button id="openHelpBtn" style="display:block;width:100%;max-width:320px;margin:10px auto 0;background:none;border:none;color:#bfb9b0;font-size:13px;text-decoration:underline;cursor:pointer;padding:6px;">📖 ヘルプを見る</button>
   </footer>
 </div>
 
@@ -1399,7 +1386,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-09e';
+const APP_VERSION = '2026-11-09f';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
