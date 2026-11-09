@@ -26,7 +26,7 @@
   --bg:#1d1c1b;--bg2:#262523;--tag:#f3ead8;--tag-edge:#e6d9bf;
   --ink:#2b2118;--pink:#cf9ea3;--yellow:#c9bda6;--green:#9fb8a0;
   --blue:#9db2c4;--purple:#b4a7c6;--orange:#cdb09a;
-  --muted:#8c877f;--muted2:#bfb9b0;
+  --muted:#aaa59b;--muted2:#ece9e4;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;margin:0;}
@@ -221,8 +221,8 @@ footer{text-align:center;padding:6px 0 2px;}
 @media(min-width:768px) and (max-height:800px){.flip-wrap{height:390px;}}
 
 /* --- レベルpill色 --- */
-.pill-level[data-level="beginner"]{background:#34473c;color:#bcd3c2;border-color:#5b7f68;}
-.pill-level[data-level="intermediate"]{background:#4a4033;color:#e0cfa8;border-color:#8a7a55;}
+.pill-level[data-level="beginner"]{background:#9fb8a0;color:#1d1c1b;border-color:#9fb8a0;font-weight:700;}
+.pill-level[data-level="intermediate"]{background:#d49a78;color:#1d1c1b;border-color:#d49a78;font-weight:700;}
 /* --- 性別pill色 --- */
 .pill-gender[data-gender="male"]{background:#2c3a46;color:#a9bfd0;border-color:#5a7388;}
 .pill-gender[data-gender="female"]{background:#46303a;color:#d4a9b6;border-color:#8c5d6e;}
@@ -1399,7 +1399,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-09c';
+const APP_VERSION = '2026-11-09d';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3510,7 +3510,7 @@ function renderCoachMark(id, margin){
   if(!msg) return '';
   return `<div class="coach-mark" data-tip-id="${id}" style="margin:${margin||'8px 12px'};padding:10px 34px 10px 12px;position:relative;background:rgba(201,189,166,.10);border:1px solid rgba(201,189,166,.28);border-radius:10px;font-size:13px;color:#e6e3de;line-height:1.5;white-space:pre-line;text-align:left;">
     ${msg}
-    <button class="tip-dismiss" data-tip-id="${id}" style="position:absolute;top:6px;right:8px;background:none;border:none;color:#bfb9b0;font-size:16px;cursor:pointer;padding:2px 6px;">✕</button>
+    <button class="tip-dismiss" data-tip-id="${id}" style="position:absolute;top:6px;right:8px;background:none;border:none;color:#ece9e4;font-size:16px;cursor:pointer;padding:2px 6px;">✕</button>
   </div>`;
 }
 function dismissTip(id){
@@ -5177,7 +5177,7 @@ function renderToneSection(){
     </div>
   </div>
 
-  <div style="margin-top:11px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13.5px;color:#bab5ac;line-height:1.7;">
+  <div style="margin-top:11px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13.5px;color:#d9d5ce;line-height:1.7;">
   📎 「平音節/促音節」はThai Pocaでの呼び方で、言語学では<b style="color:#e6e3de;">live syllable(平音節) / dead syllable(促音節)</b>と呼ばれます。まずは「伸ばせる/伸ばせない」の感覚で覚えればOKです。
   </div>
 
@@ -5201,7 +5201,7 @@ function renderToneSection(){
   <tr><td style="padding:6px 5px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;color:#c9bda6;font-weight:700;">t</td><td style="padding:6px 5px;font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;">จ ช ซ ฌ ฎ ฏ ฐ ฑ ฒ ด ต ถ ท ธ ศ ษ ส</td></tr>
   <tr><td style="padding:6px 5px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;color:#c9bda6;font-weight:700;">p</td><td style="padding:6px 5px;font-family:'Sarabun',sans-serif;font-size:17px;color:#fff;">บ ป พ ภ ฟ</td></tr>
   </table>
-  <p style="margin:8px 0 0;font-size:13px;color:#bab5ac;">例えば「มาก(多い)」のก、「นัด(約束する)」のด、「กับ(〜と)」のบは、綴りの文字は違いますが、実際の発音(k/t/p)で見ればどれも「促音節」として同じ扱いです。</p>
+  <p style="margin:8px 0 0;font-size:13px;color:#d9d5ce;">例えば「มาก(多い)」のก、「นัด(約束する)」のด、「กับ(〜と)」のบは、綴りの文字は違いますが、実際の発音(k/t/p)で見ればどれも「促音節」として同じ扱いです。</p>
   </div>
 
   <div style="margin-top:9px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:14px;color:#e6e3de;line-height:1.7;">
@@ -5268,7 +5268,7 @@ function renderToneSection(){
 <summary style="background:#4a7cc4;color:#fff;">低子音　ค ง ช ซ ฑ ฒ ท น พ ฟ ม ย ร ล ว ฬ ฮ 他<span class="fold-chev" style="color:#fff;">▾</span></summary>
 <div class="fold-body" style="padding-top:8px;">
 
-<div style="margin-bottom:10px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13.5px;color:#bab5ac;line-height:1.7;">
+<div style="margin-bottom:10px;padding:10px 12px;background:#2f2d2a;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:13.5px;color:#d9d5ce;line-height:1.7;">
   📌 この段階では、低子音をすべて暗記する必要はありません。まずは声調が決まる仕組みを理解しましょう。
 </div>
 
@@ -5282,7 +5282,7 @@ function renderToneSection(){
         +'</div>';
     }).join('')}
   </div>
-  <p style="margin:0;font-size:13px;color:#bab5ac;">それ以外の低子音(ง ณ น ม ย ร ล ว ฬ など)は、対応する高子音を持たない「単独字」です。</p>
+  <p style="margin:0;font-size:13px;color:#d9d5ce;">それ以外の低子音(ง ณ น ม ย ร ล ว ฬ など)は、対応する高子音を持たない「単独字」です。</p>
 </div>
 
 <div style="margin-bottom:10px;">
@@ -5302,7 +5302,7 @@ function renderToneSection(){
     <td style="text-align:center;padding:8px 3px;"><div style="font-size:16px;color:#c9bda6;">↑</div><div style="font-size:11px;color:var(--muted);">トリー</div></td>
   </tr>
   </table>
-  <p style="margin:8px 0 0;font-size:12.5px;color:#bab5ac;line-height:1.6;">📌 低子音はトリー・ジャッタワーの符号を使いません。そのかわり「促音節(短母音)」や「マイトー」からも高声(トリー)に、「促音節(長母音)」や「マイエーク」からも下降声(トー)に、それぞれ2通りの経路でたどり着けるのが低子音の特徴です(例: ม้า=máa「馬」はマイトーで高声)。</p>
+  <p style="margin:8px 0 0;font-size:12.5px;color:#d9d5ce;line-height:1.6;">📌 低子音はトリー・ジャッタワーの符号を使いません。そのかわり「促音節(短母音)」や「マイトー」からも高声(トリー)に、「促音節(長母音)」や「マイエーク」からも下降声(トー)に、それぞれ2通りの経路でたどり着けるのが低子音の特徴です(例: ม้า=máa「馬」はマイトーで高声)。</p>
 </div>
 </div>
 </details>
@@ -5316,7 +5316,7 @@ function renderToneSection(){
 ① <b style="color:#fff;">子音クラス</b> → 中子音・高子音・低子音<br>
 ② <b style="color:#fff;">音節タイプ</b> → 平音節(live)・促音節(dead)<br>
 ③ <b style="color:#fff;">声調符号</b> → なし・่・้・๊・๋<br>
-<span style="color:#bab5ac;font-size:12.5px;">※②の音節タイプは、母音の長短と末子音の有無・種類から判断します(長母音+m・n・ng・y・w系=平音節、短母音のみ/末子音がk・t・p系=促音節)。</span><br>
+<span style="color:#d9d5ce;font-size:12.5px;">※②の音節タイプは、母音の長短と末子音の有無・種類から判断します(長母音+m・n・ng・y・w系=平音節、短母音のみ/末子音がk・t・p系=促音節)。</span><br>
 → この3つの組み合わせで声調が決まります。
 </div>
 ${[
