@@ -93,6 +93,8 @@ header{padding-bottom:10px;}
 .face-front{justify-content:center;align-items:center;text-align:center;}
 .th-big{font-family:'Sarabun',sans-serif;font-weight:500;font-size:44px;line-height:1.4;margin-top:16px;letter-spacing:1px;}
 .th-big.sm{font-size:25px;}
+.nb{white-space:nowrap;}
+.th-big.conv{font-size:30px;line-height:1.45;letter-spacing:.5px;text-wrap:balance;}
 .jp-big{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:25px;line-height:1.45;margin-top:16px;}
 .ro-front{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:#6b5c3e;margin-top:8px;}
 .tap-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:13px;color:#9c8d68;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
@@ -1381,12 +1383,52 @@ let st = {
 const seenTips = new Set();
 
 const fTH = s => s ? s.replace(/\{PT}/g, PT[st.gender].th).replace(/\{PS}/g, PT[st.gender].ps) : s;
+
+// 会話カードのタイ語を、不自然な位置で改行されないよう「語のかたまり」に分ける
+// (ブラウザのタイ語辞書で語に分け、単語帳にある複合語は1つにまとめ、末尾の ครับ/ค่ะ などが1語だけ孤立しないようにする)
+let _thWordSet=null;
+function thWordSet(){
+  if(_thWordSet) return _thWordSet;
+  _thWordSet=new Set();
+  Object.values(DATA).forEach(a=>a.forEach(w=>{ if(w.th && !/\s/.test(w.th) && w.th.length>=4) _thWordSet.add(w.th); }));
+  Object.values(CONV_BREAKDOWN).forEach(a=>a.forEach(w=>{ if(w.th && !/\s/.test(w.th) && w.th.length>=4 && w.th.length<=12) _thWordSet.add(w.th); }));
+  return _thWordSet;
+}
+function thWrapHtml(text){
+  if(!text || typeof Intl==='undefined' || !Intl.Segmenter) return text;
+  let raw;
+  try{ raw=[...new Intl.Segmenter('th',{granularity:'word'}).segment(text)].map(x=>x.segment); }catch(e){ return text; }
+  const isTh=t=>/[\u0e00-\u0e7f]/.test(t), isSp=t=>/^\s+$/.test(t);
+  const toks=[];
+  raw.forEach(t=>{
+    if(!isTh(t) && !isSp(t) && toks.length && !isSp(toks[toks.length-1])) toks[toks.length-1]+=t;
+    else toks.push(t);
+  });
+  const words=thWordSet(), out=[];
+  for(let i=0;i<toks.length;){
+    let best=i, acc='';
+    if(!isSp(toks[i])){
+      for(let j=i;j<Math.min(toks.length,i+6);j++){
+        if(isSp(toks[j])) break;
+        acc+=toks[j];
+        if(j>i && words.has(acc)) best=j;
+      }
+    }
+    out.push(toks.slice(i,best+1).join('')); i=best+1;
+  }
+  for(let i=0;i<out.length-1;i++){ if(/ภาษา$/.test(out[i]) && !isSp(out[i+1])){ out[i]+=out[i+1]; out.splice(i+1,1); } }
+  const n=out.length;
+  if(n>=2 && !isSp(out[n-1]) && !isSp(out[n-2]) && out[n-1].replace(/[\u0e31\u0e34-\u0e3a\u0e47-\u0e4e]/g,'').length<=3){
+    out[n-2]+=out.pop();
+  }
+  return out.map(t=>isSp(t)?t:'<span class="nb">'+t+'</span>').join('');
+}
 const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT[st.gender].psr) : s;
 
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-09f';
+const APP_VERSION = '2026-11-09g';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5578,13 +5620,13 @@ function render(){
         ${bd.map(w=>`<div class="cb-row"><span class="cb-th">${fTH(w.th)}</span><span class="cb-ro">${fRO(w.ro)}</span><span class="cb-jp">${w.jp}</span></div>`).join('')}
       </div>`:'';
     if(st.dir==='th-jp'){
-      front=`${ribHtml}${hole}${sc}<div class="th-big sm">${thT}</div>
+      front=`${ribHtml}${hole}${sc}<div class="th-big conv">${thWrapHtml(thT)}</div>
         ${st.showRo?`<div class="ro-front">${(roT||'')}</div>`:''}
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップして意味を見る</div>`;
       back=`${ribHtml}${hole}
         <div class="conv-back-wrap">
-          <div class="th-big sm" style="margin-top:10px;">${thT}</div>
+          <div class="th-big conv" style="margin-top:10px;">${thWrapHtml(thT)}</div>
           ${st.showRo?`<div class="back-ro">${(roT||'')}</div>`:''}
           <div class="back-jp" style="margin-top:8px;">${item.jp}</div>
           ${bdHtml}
@@ -5600,7 +5642,7 @@ function render(){
         <div class="tap-hint">タップしてタイ語を見る</div>`;
       back=`${ribHtml}${hole}
         <div class="conv-back-wrap">
-          <div class="th-big sm" style="margin-top:24px;">${thT}</div>
+          <div class="th-big conv" style="margin-top:24px;">${thWrapHtml(thT)}</div>
           ${st.showRo?`<div class="back-ro">${(roT||'')}</div>`:''}
           ${bdHtml}
           <div class="back-actions">
