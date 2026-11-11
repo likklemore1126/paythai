@@ -317,8 +317,18 @@ footer{text-align:center;padding:6px 0 2px;}
 .nc-rule .r-x{font-family:'Sarabun',sans-serif;font-size:17px;color:var(--muted);text-decoration:line-through;}
 .nc-rule .r-o{font-family:'Sarabun',sans-serif;font-size:20px;color:var(--accent);}
 .nc-rule .r-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
-.nc-rule .r-ng{margin:10px 0;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.05);font-family:'Sarabun',sans-serif;font-size:17px;color:var(--muted2);}
-.nc-rule .r-ng b{color:#fff;font-weight:600;}
+.nc-rule .r-ng{margin:10px 0;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);display:flex;align-items:center;gap:10px;}
+.nc-rule .r-ng .g{display:flex;align-items:center;gap:8px;min-width:0;}
+.nc-rule .r-ng .g-m{font-size:15px;font-weight:800;flex-shrink:0;}
+.nc-rule .r-ng .g-x .g-m{color:#d9a198;} .nc-rule .r-ng .g-o .g-m{color:#9fb8a0;}
+.nc-rule .r-ng .g-t{display:flex;flex-direction:column;min-width:0;}
+.nc-rule .r-ng .g-th{font-family:'Sarabun',sans-serif;font-size:19px;line-height:1.3;}
+.nc-rule .r-ng .g-x .g-th{color:var(--muted);text-decoration:line-through;}
+.nc-rule .r-ng .g-o .g-th{color:#fff;font-weight:600;}
+.nc-rule .r-ng .g-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12.5px;color:var(--muted);line-height:1.3;}
+.nc-rule .r-ng .g-o .g-ro{color:var(--muted2);}
+.nc-rule .r-ng .g-arrow{color:var(--muted);font-size:16px;flex-shrink:0;margin:0 4px;}
+.nc-rule .r-t{font-family:'Sarabun',sans-serif;font-size:16px;color:#ece9e4;}
 .nc-rule .r-note{font-size:13px;line-height:1.7;color:var(--muted2);margin:10px 0 2px;}
 .nc-rule .r-sum{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0;}
 .nc-rule .r-sum span{flex:1;text-align:center;padding:8px 6px;border-radius:12px;background:rgba(255,255,255,.05);display:flex;flex-direction:column;}
@@ -1625,7 +1635,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-11h';
+const APP_VERSION = '2026-11-11i';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4911,19 +4921,22 @@ function renderNumbers(){
 
   if(numUI.view==='rules'){
     const row=(n,hl)=>{ const t=thaiNumber(n); return `<div class="nc-ex"><span class="e-n">${n.toLocaleString('en-US')}</span><span class="e-t"><span class="e-th">${hl&&t.th.lastIndexOf(hl)>=0?(t.th.slice(0,t.th.lastIndexOf(hl))+'<b>'+hl+'</b>'+t.th.slice(t.th.lastIndexOf(hl)+hl.length)):t.th}</span><span class="e-ro">${t.ro}</span></span><button class="nc-spk sm" onclick="numSpeak(${n})" aria-label="音声を聞く">🔊</button></div>`; };
+    // タイ文字が読めなくても分かるよう、説明の中のタイ語にはすべて読み(ローマ字)を添える
+    const r1=NUMS.find(x=>x.arabic==='1').ro, r2=NUMS.find(x=>x.arabic==='2').ro;
+    const ng=(xTh,xRo,oTh,oRo)=>`<div class="r-ng"><span class="g g-x"><span class="g-m">✕</span><span class="g-t"><span class="g-th">${xTh}</span><span class="g-ro">${xRo}</span></span></span><span class="g-arrow">→</span><span class="g g-o"><span class="g-m">○</span><span class="g-t"><span class="g-th">${oTh}</span><span class="g-ro">${oRo}</span></span></span></div>`;
     return `<div class="nc">${seg}
       <div class="nc-rule">
         <div class="r-h"><span class="r-no">1</span>一の位が「1」のとき</div>
-        <div class="r-b">2桁以上の数で一の位が1のときは、<span class="r-x">หนึ่ง</span> ではなく <b class="r-o">เอ็ด</b> <span class="r-ro">(èt)</span> と読みます。</div>
-        <div class="r-ng">✕ สิบหนึ่ง　→　○ <b>สิบเอ็ด</b></div>
+        <div class="r-b">2桁以上の数で一の位が1のときは、<span class="r-x">หนึ่ง</span> <span class="r-ro">(${r1})</span> ではなく <b class="r-o">เอ็ด</b> <span class="r-ro">(èt)</span> と読みます。</div>
+        ${ng('สิบหนึ่ง','sìp '+r1,'สิบเอ็ด','sìp èt')}
         ${row(11,'เอ็ด')}${row(21,'เอ็ด')}${row(31,'เอ็ด')}
-        <div class="r-note">1だけのときは หนึ่ง のままです。101 や 1,001 のように十の位が0のときも หนึ่ง と読みます。</div>
+        <div class="r-note">1だけのときは <span class="r-t">หนึ่ง</span> <span class="r-ro">(${r1})</span> のままです。101 や 1,001 のように十の位が0のときも、同じく <span class="r-ro">${r1}</span> と読みます。</div>
         ${row(1)}${row(101,'หนึ่ง')}
       </div>
       <div class="nc-rule">
         <div class="r-h"><span class="r-no">2</span>十の位が「2」のとき</div>
-        <div class="r-b">20〜29の十の位は、<span class="r-x">สอง</span> ではなく <b class="r-o">ยี่</b> <span class="r-ro">(yîi)</span> と読みます。理由はなく、決まった言い方です。</div>
-        <div class="r-ng">✕ สองสิบ　→　○ <b>ยี่สิบ</b></div>
+        <div class="r-b">20〜29の十の位は、<span class="r-x">สอง</span> <span class="r-ro">(${r2})</span> ではなく <b class="r-o">ยี่</b> <span class="r-ro">(yîi)</span> と読みます。理由はなく、決まった言い方です。</div>
+        ${ng('สองสิบ',r2+' sìp','ยี่สิบ','yîi sìp')}
         ${row(20,'ยี่')}${row(22,'ยี่')}${row(25,'ยี่')}${row(29,'ยี่')}
       </div>
       <div class="nc-rule">
