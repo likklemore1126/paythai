@@ -155,28 +155,6 @@ header{padding-bottom:10px;}
 .dot-count{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);min-width:60px;text-align:center;}
 /* ─── STATIC ─── */
 .static-page{flex:1;overflow-y:auto;padding:4px 0 16px;}
-.sec-title{font-size:14px;font-weight:700;color:var(--muted2);margin:14px 0 8px;letter-spacing:.5px;text-transform:uppercase;}
-/* イラストグリッド(3列) */
-/* font table */
-/* numbers grid */
-.num-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px;}
-.num-card{background:var(--bg2);border:1px solid #3b3935;border-radius:14px;padding:12px 14px;cursor:pointer;
-  display:flex;align-items:center;gap:12px;transition:transform .12s;}
-.num-card:active{transform:scale(.96);}
-.num-th-big{font-family:'Sarabun',sans-serif;font-size:34px;color:#fff;line-height:1;}
-.num-info{flex:1;}
-.num-arabic{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:20px;color:var(--yellow);}
-.num-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);margin-top:3px;}
-.num-th-word{font-family:'Sarabun',sans-serif;font-size:17px;color:var(--muted2);margin-top:2px;}
-.num-spk{font-size:18px;color:var(--muted);}
-/* ─── ミニフリップカード(母音タブ・数字タブで共通使用) ─── */
-.mf-wrap{position:relative;perspective:1200px;}
-.mf-inner{position:relative;width:100%;height:100%;cursor:pointer;
-  transition:transform .4s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d;}
-.mf-inner.flipped{transform:rotateY(180deg);}
-.mf-face{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  display:flex;flex-direction:column;overflow:hidden;}
-.mf-back{transform:rotateY(180deg);overflow-y:auto;overflow-x:hidden;}
 footer{text-align:center;padding:6px 0 2px;}
 /* ─── 取り消しトースト ─── */
 #undoToast{position:absolute;bottom:52px;left:50%;transform:translateX(-50%);background:#2b2118;color:#f3ead8;border-radius:24px;padding:14px 22px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:12px;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:opacity .3s;pointer-events:auto;white-space:nowrap;}
@@ -295,6 +273,65 @@ footer{text-align:center;padding:6px 0 2px;}
 .qz-msg{text-align:center;font-size:15px;color:var(--muted2);margin-bottom:6px;}
 .qz-wrong{margin-top:8px;display:flex;flex-direction:column;gap:8px;}
 .qz-wrong .qz-ans{margin-top:0;}
+
+/* ─── 数字タブ(電卓型) ─── */
+.nc{padding:0 2px 20px;}
+.nc-seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--bg2);border:1px solid #3b3935;margin-bottom:10px;}
+.nc-seg button{flex:1;padding:9px 6px;border-radius:10px;border:none;background:transparent;color:var(--muted);font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;}
+.nc-seg button.on{background:var(--purple);color:#1d1c1b;}
+.nc-disp{background:var(--tag);border:1.5px solid var(--tag-edge);border-radius:18px;padding:12px 16px 14px;color:var(--ink);min-height:164px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;gap:6px;}
+.nc-disp .d-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+.nc-disp .d-thnum{font-family:'Sarabun',sans-serif;font-size:17px;color:#8a7a55;white-space:nowrap;}
+.nc-disp .d-num{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-weight:500;line-height:1.1;letter-spacing:-.5px;white-space:nowrap;}
+.nc-disp .d-read{display:flex;align-items:flex-end;gap:10px;}
+.nc-disp .d-txt{flex:1;min-width:0;}
+.nc-disp .d-th{font-family:'Sarabun',sans-serif;font-weight:500;line-height:1.3;overflow-wrap:anywhere;}
+.nc-disp .d-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;line-height:1.4;margin-top:2px;overflow-wrap:anywhere;}
+.nc-spk{width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--tag);border:none;font-size:25px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.nc-spk.sm{width:36px;height:36px;font-size:18px;}
+.nc-spk:active{transform:scale(.92);}
+.nc-rule .nc-spk,.nc-exbox .nc-spk{background:#3f3c38;color:#ece9e4;}
+.nc-keys{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
+.nc-key{height:56px;border-radius:14px;background:var(--bg2);border:1px solid #3b3935;color:#ece9e4;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-family:inherit;padding:0;}
+.nc-key:active{background:#3b3935;}
+.nc-key .k-n{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:23px;font-weight:500;line-height:1.1;}
+.nc-key .k-r{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);line-height:1.2;}
+.nc-key.fn{background:transparent;}
+.nc-key.fn .k-n{color:var(--accent);font-size:20px;}
+.nc-key.fn .k-r{font-family:inherit;font-size:10px;}
+.nc-lbl{font-size:12px;font-weight:700;color:var(--muted);margin:14px 0 8px;letter-spacing:.5px;}
+.nc-units{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.nc-unit{height:50px;border-radius:12px;background:transparent;border:1px solid #3b3935;color:#ece9e4;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:inherit;padding:0;}
+.nc-unit.on{border-color:var(--purple);background:rgba(180,167,198,.14);}
+.nc-unit .u-n{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;font-weight:500;line-height:1.2;}
+.nc-unit .u-t{font-family:'Sarabun',sans-serif;font-size:14px;color:var(--muted2);line-height:1.25;}
+.nc-exbox{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);}
+.nc-exbox .x-txt{flex:1;min-width:0;}
+.nc-exbox .x-th{font-family:'Sarabun',sans-serif;font-size:19px;color:#fff;line-height:1.4;overflow-wrap:anywhere;}
+.nc-exbox .x-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12.5px;color:var(--muted);line-height:1.4;}
+.nc-exbox .x-jp{font-size:14px;color:#ece9e4;margin-top:3px;}
+.nc-rule{border-radius:16px;background:var(--bg2);border:1px solid #3b3935;padding:14px 14px 12px;margin-bottom:12px;}
+.nc-rule .r-h{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;}
+.nc-rule .r-no{width:24px;height:24px;border-radius:50%;background:var(--purple);color:#1d1c1b;font-size:13px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
+.nc-rule .r-b{font-size:14px;line-height:1.75;color:#ece9e4;}
+.nc-rule .r-x{font-family:'Sarabun',sans-serif;font-size:17px;color:var(--muted);text-decoration:line-through;}
+.nc-rule .r-o{font-family:'Sarabun',sans-serif;font-size:20px;color:var(--accent);}
+.nc-rule .r-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
+.nc-rule .r-ng{margin:10px 0;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.05);font-family:'Sarabun',sans-serif;font-size:17px;color:var(--muted2);}
+.nc-rule .r-ng b{color:#fff;font-weight:600;}
+.nc-rule .r-note{font-size:13px;line-height:1.7;color:var(--muted2);margin:10px 0 2px;}
+.nc-rule .r-sum{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0;}
+.nc-rule .r-sum span{flex:1;text-align:center;padding:8px 6px;border-radius:12px;background:rgba(255,255,255,.05);display:flex;flex-direction:column;}
+.nc-rule .r-sum b{font-family:'Sarabun',sans-serif;font-size:22px;color:#fff;font-weight:500;}
+.nc-rule .r-sum i{font-style:normal;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);}
+.nc-rule .r-sum em{font-style:normal;font-size:20px;color:var(--muted);}
+.nc-ex{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,.08);}
+.nc-ex .e-n{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:17px;font-weight:500;color:#fff;min-width:46px;}
+.nc-ex .e-t{flex:1;min-width:0;display:flex;flex-direction:column;}
+.nc-ex .e-th{font-family:'Sarabun',sans-serif;font-size:19px;color:#ece9e4;line-height:1.3;}
+.nc-ex .e-th b{color:var(--accent);font-weight:600;}
+.nc-ex .e-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12.5px;color:var(--muted);}
+.nc-link{display:block;width:100%;padding:14px;border-radius:14px;background:transparent;border:1.5px solid #4a4743;color:var(--muted2);font-size:14.5px;font-weight:700;cursor:pointer;font-family:inherit;}
 </style>
 </head>
 <body>
@@ -1588,7 +1625,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-11g';
+const APP_VERSION = '2026-11-11h';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4656,7 +4693,7 @@ const QUIZ_NUM_BOUNDS = {r1:[1,99], r2:[100,999], r3:[1000,9999], r4:[10000,9999
 function thaiNumber(n){
   const g=a=>NUMS.find(x=>x.arabic===a);
   const dg=d=>g(String(d));
-  const units=[null,g('10'),g('100'),g('1,000'),g('10,000')];
+  const units=[null,g('10'),g('100'),g('1,000'),g('10,000'),g('100,000'),g('1,000,000')];
   const th=[], ro=[]; const str=String(n), L=str.length;
   for(let i=0;i<L;i++){
     const d=+str[i], place=L-1-i; if(d===0) continue;
@@ -4849,105 +4886,82 @@ const NUM_EX = {
   '1,000,000':{th:'ที่ดินแปลงนี้ราคาล้านบาทครับ',         ro:'thîi din plɛɛng níi raakhaa láan bàat khráp', jp:'この土地は100万バーツです'},
 };
 
+// ─── 数字タブ(電卓型) ─────────────────────────────────────────
+// 上の表示窓に、キーで打った数のタイ語の読みと音声を出す。読み方のルールは別画面に分ける。
+const numUI = {view:'calc', val:''};   // val: 打った数字の文字列(最大7桁)
+function numDraw(){ const sp=document.getElementById('staticPage'); if(sp && st.mode==='numbers') sp.innerHTML=renderNumbers(); }
+function numKey(d){
+  if(numUI.val.length>=7) return;
+  if(numUI.val==='0') numUI.val='';
+  numUI.val+=String(d); numDraw();
+}
+function numBack(){ numUI.val=numUI.val.slice(0,-1); numDraw(); }
+function numClear(){ numUI.val=''; numDraw(); }
+function numSet(n){ numUI.val=String(n); numUI.view='calc'; numDraw(); window.scrollTo(0,0); }
+function numView(v){ numUI.view=v; numDraw(); window.scrollTo(0,0); }
+function numCur(){ const n=parseInt(numUI.val||'0',10)||0; return n; }
+function numReading(n){ if(n===0){ const z=NUMS.find(x=>x.arabic==='0'); return {th:z.th_word, ro:z.ro}; } return thaiNumber(n); }
+function numSpeak(n){ speak(numReading(typeof n==='number'?n:numCur()).th); }
+function numSpeakEx(key){ const ex=NUM_EX[key]; if(ex) speak(ex.th); }
 function renderNumbers(){
-  const basic=NUMS.filter(n=>parseInt(n.arabic)<=9||n.arabic==='0');
-  const units=NUMS.filter(n=>['10','100','1,000','10,000','100,000','1,000,000'].includes(n.arabic));
-  const examples=[
-    {arabic:'11',th_num:'๑๑',th_word:'สิบเอ็ด',ro:'sìp èt',note:'10+เอ็ด'},
-    {arabic:'20',th_num:'๒๐',th_word:'ยี่สิบ',ro:'yîi sìp',note:'ยี่+10'},
-    {arabic:'21',th_num:'๒๑',th_word:'ยี่สิบเอ็ด',ro:'yîi sìp èt',note:'ยี่+10+เอ็ด'},
-    {arabic:'31',th_num:'๓๑',th_word:'สามสิบเอ็ด',ro:'sǎam sìp èt',note:'3+10+เอ็ด'},
-    {arabic:'41',th_num:'๔๑',th_word:'สี่สิบเอ็ด',ro:'sìi sìp èt',note:'4+10+เอ็ด'},
-    {arabic:'22',th_num:'๒๒',th_word:'ยี่สิบสอง',ro:'yîi sìp sɔɔng',note:'ยี่+10+2'},
-    {arabic:'25',th_num:'๒๕',th_word:'ยี่สิบห้า',ro:'yîi sìp hâa',note:'ยี่+10+5'},
-    {arabic:'99',th_num:'๙๙',th_word:'เก้าสิบเก้า',ro:'kâao sìp kâao',note:'9+10+9'},
-  ];
+  const seg=`<div class="nc-seg">
+    <button class="${numUI.view==='calc'?'on':''}" onclick="numView('calc')">🔢 読み方を調べる</button>
+    <button class="${numUI.view==='rules'?'on':''}" onclick="numView('rules')">📌 読み方のルール</button>
+  </div>`;
 
-  // 🔊は枠内タップではなく、タイ文字(母音表)と同じ34pxの独立したボタンにする
-  // (枠のどこを押しても音が出る方式だと、読んでいるだけで誤って再生されてしまうため)
-  const numAudioBtn=(th)=>`<button onclick="event.stopPropagation();speak('${th}')" style="width:34px;height:34px;border-radius:50%;background:#2b2118;border:none;color:#f3ead8;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">🔊</button>`;
+  if(numUI.view==='rules'){
+    const row=(n,hl)=>{ const t=thaiNumber(n); return `<div class="nc-ex"><span class="e-n">${n.toLocaleString('en-US')}</span><span class="e-t"><span class="e-th">${hl&&t.th.lastIndexOf(hl)>=0?(t.th.slice(0,t.th.lastIndexOf(hl))+'<b>'+hl+'</b>'+t.th.slice(t.th.lastIndexOf(hl)+hl.length)):t.th}</span><span class="e-ro">${t.ro}</span></span><button class="nc-spk sm" onclick="numSpeak(${n})" aria-label="音声を聞く">🔊</button></div>`; };
+    return `<div class="nc">${seg}
+      <div class="nc-rule">
+        <div class="r-h"><span class="r-no">1</span>一の位が「1」のとき</div>
+        <div class="r-b">2桁以上の数で一の位が1のときは、<span class="r-x">หนึ่ง</span> ではなく <b class="r-o">เอ็ด</b> <span class="r-ro">(èt)</span> と読みます。</div>
+        <div class="r-ng">✕ สิบหนึ่ง　→　○ <b>สิบเอ็ด</b></div>
+        ${row(11,'เอ็ด')}${row(21,'เอ็ด')}${row(31,'เอ็ด')}
+        <div class="r-note">1だけのときは หนึ่ง のままです。101 や 1,001 のように十の位が0のときも หนึ่ง と読みます。</div>
+        ${row(1)}${row(101,'หนึ่ง')}
+      </div>
+      <div class="nc-rule">
+        <div class="r-h"><span class="r-no">2</span>十の位が「2」のとき</div>
+        <div class="r-b">20〜29の十の位は、<span class="r-x">สอง</span> ではなく <b class="r-o">ยี่</b> <span class="r-ro">(yîi)</span> と読みます。理由はなく、決まった言い方です。</div>
+        <div class="r-ng">✕ สองสิบ　→　○ <b>ยี่สิบ</b></div>
+        ${row(20,'ยี่')}${row(22,'ยี่')}${row(25,'ยี่')}${row(29,'ยี่')}
+      </div>
+      <div class="nc-rule">
+        <div class="r-h"><span class="r-no">3</span>組み合わせ(21)</div>
+        <div class="r-b">21は、ルール1と2の両方が当てはまります。</div>
+        <div class="r-sum"><span><b>ยี่สิบ</b><i>yîi sìp</i></span><em>+</em><span><b>เอ็ด</b><i>èt</i></span></div>
+        ${row(21)}${row(121)}
+      </div>
+      <button class="nc-link" onclick="numView('calc')">🔢 好きな数で読み方を確かめる</button>
+    </div>`;
+  }
 
-  // 基本数字0〜9＋位の単位: 表=数字、裏=実用例文、のフリップカード。
-  // 1列・横長カード。表=数字を横並びでコンパクトに、裏=例文を横幅いっぱい使って折り返しを減らす。
-  const numFlipCard=(n,height)=>{
-    const ex = NUM_EX[n.arabic];
-    const isLong = n.arabic.length > 5; // 100,000 / 1,000,000 は桁が多いので縮小
-    const thNumSize = isLong ? 22 : 28;
-    return `
-<div class="mf-wrap" style="height:${height}px;">
-<div class="mf-inner" onclick="this.classList.toggle('flipped')">
-  <div class="mf-face" style="background:var(--tag);border:1px solid var(--tag-edge);flex-direction:row;align-items:center;padding:8px 12px;gap:10px;">
-    <div style="display:flex;flex-direction:column;align-items:flex-start;min-width:76px;flex-shrink:0;">
-      <span style="font-family:'Sarabun',sans-serif;font-size:${thNumSize}px;color:#2b2118;line-height:1.2;">${n.th_num}</span>
-      <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#8a7a55;">${n.arabic}</span>
+  const n=numCur(), rd=numReading(n);
+  const fmt=n.toLocaleString('en-US');
+  const thNum=fmt.replace(/[0-9]/g,d=>'๐๑๒๓๔๕๖๗๘๙'[+d]);
+  const L=rd.th.length, thFs=L>40?16:L>28?18:L>18?22:L>10?26:32;
+  const numFs=fmt.length>7?36:44;
+  const dg=d=>NUMS.find(x=>x.arabic===String(d));
+  const key=d=>`<button class="nc-key" onclick="numKey(${d})"><span class="k-n">${d}</span><span class="k-r">${dg(d).ro}</span></button>`;
+  const units=['10','100','1,000','10,000','100,000','1,000,000'].map(a=>{ const u=NUMS.find(x=>x.arabic===a); return `<button class="nc-unit ${fmt===a?'on':''}" onclick="numSet(${a.replace(/,/g,'')})"><span class="u-n">${a}</span><span class="u-t">${u.th_word}</span></button>`; }).join('');
+  const ex=NUM_EX[fmt];
+  const exHtml=ex?`<div class="nc-lbl">「${fmt}」を使った例文</div>
+    <div class="nc-exbox"><div class="x-txt"><div class="x-th">${ex.th}</div><div class="x-ro">${ex.ro}</div><div class="x-jp">${ex.jp}</div></div><button class="nc-spk sm" onclick="numSpeakEx('${fmt}')" aria-label="例文の音声を聞く">🔊</button></div>`:'';
+  return `<div class="nc">${seg}
+    <div class="nc-disp">
+      <div class="d-top"><span class="d-thnum">${thNum}</span><span class="d-num" style="font-size:${numFs}px">${fmt}</span></div>
+      <div class="d-read"><div class="d-txt"><div class="d-th" style="font-size:${thFs}px">${rd.th}</div><div class="d-ro">${rd.ro}</div></div><button class="nc-spk" onclick="numSpeak()" aria-label="音声を聞く">🔊</button></div>
     </div>
-    <div style="flex:1;min-width:0;">
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;">${n.ro}</div>
-      <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#4a3d2a;">${n.th_word}</div>
+    <div class="nc-keys">
+      ${[7,8,9,4,5,6,1,2,3].map(key).join('')}
+      <button class="nc-key fn" onclick="numClear()" aria-label="クリア"><span class="k-n">C</span><span class="k-r">クリア</span></button>
+      ${key(0)}
+      <button class="nc-key fn" onclick="numBack()" aria-label="1文字消す"><span class="k-n">⌫</span><span class="k-r">1つ消す</span></button>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;">
-      ${numAudioBtn(n.th_word)}
-      <span style="font-size:9px;color:#8a7a55;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;white-space:nowrap;">例文→</span>
-    </div>
-  </div>
-  <div class="mf-face mf-back" style="background:#ede4cc;border:1px solid var(--tag-edge);flex-direction:row;align-items:center;padding:8px 12px;gap:10px;">
-    ${ex ? `
-    <div style="flex:1;min-width:0;">
-      <div style="font-size:10px;color:#8a7a55;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;">例文</div>
-      <div style="font-family:'Sarabun',sans-serif;font-size:16px;color:#2b2118;line-height:1.35;">${ex.th}</div>
-      <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;margin-top:2px;">${ex.ro}</div>
-      <div style="font-size:12px;color:#4a3d2a;margin-top:1px;">${ex.jp}</div>
-    </div>
-    <div style="flex-shrink:0;">${numAudioBtn(ex.th)}</div>
-    ` : `<div style="flex:1;color:#8a7a55;font-size:12px;">例文準備中</div>`}
-  </div>
-</div>
-</div>`;
-  };
-
-  // 1列・横長カード(基本数字/位の単位と同じクリーム背景に統一)。横長で余白が目立たないよう文字サイズを拡大。
-  const exCard=(n)=>`
-<div style="background:var(--tag);border:1px solid var(--tag-edge);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:12px;min-width:0;">
-  <div style="display:flex;flex-direction:column;align-items:flex-start;min-width:72px;flex-shrink:0;">
-    <span style="font-family:'Sarabun',sans-serif;font-size:30px;color:#2b2118;line-height:1.2;">${n.th_num}</span>
-    <span style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#8a7a55;">${n.arabic}</span>
-  </div>
-  <div style="flex:1;min-width:0;">
-    <div style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;">${n.ro}</div>
-    <div style="font-family:'Sarabun',sans-serif;font-size:18px;color:#4a3d2a;">${n.th_word}</div>
-    <div style="font-size:12px;color:#9a6a1f;margin-top:2px;">${n.note}</div>
-  </div>
-  <div style="flex-shrink:0;">${numAudioBtn(n.th_word)}</div>
-</div>`;
-
-  return `
-<div class="sec-title">🔢 タイ数字</div>
-
-<!-- 基本数字 0〜9 -->
-<div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:8px 0 6px;">基本数字（タップでめくって例文）</div>
-<div style="display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:16px;">
-${NUMS.filter(n=>['0','1','2','3','4','5','6','7','8','9'].includes(n.arabic)).map(n=>numFlipCard(n,106)).join('')}
-</div>
-
-<!-- 位の単位 -->
-<div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 6px;">位の単位（タップでめくって例文）</div>
-<div style="display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:20px;">
-${units.map(n=>numFlipCard(n,124)).join('')}
-</div>
-
-<!-- ルール解説 -->
-<div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">📌 特別ルール（2桁以上の場合）</div>
-
-<img src="num_rule1.jpeg" alt="ルール①一の位が1のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;cursor:zoom-in;" onclick="openImgLightbox('num_rule1.jpeg')">
-<img src="num_rule2.jpeg" alt="ルール②十の位が2のとき" style="width:100%;border-radius:12px;margin-bottom:10px;display:block;cursor:zoom-in;" onclick="openImgLightbox('num_rule2.jpeg')">
-<img src="num_rule3.jpeg" alt="ルール③組み合わせ21" style="width:100%;border-radius:12px;margin-bottom:16px;display:block;cursor:zoom-in;" onclick="openImgLightbox('num_rule3.jpeg')">
-
-<!-- 練習 -->
-<div style="font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin:0 0 8px;">🔊 タップして確認</div>
-<div style="display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:8px;">
-${examples.map(n=>exCard(n)).join('')}
-</div>
-`;
+    <div class="nc-lbl">位の単位</div>
+    <div class="nc-units">${units}</div>
+    ${exHtml}
+  </div>`;
 }
 
 function render(){
