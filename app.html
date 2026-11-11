@@ -244,7 +244,7 @@ footer{text-align:center;padding:6px 0 2px;}
 
 /* ─── 4択テスト ─── */
 .mode-tab[data-mode="quiz"].active{background:var(--blue);color:#1d1c1b;border-color:var(--blue);}
-.qz{padding:6px 2px 24px;}
+.qz{padding:0 2px 16px;}
 .qz-h{font-size:17px;font-weight:700;color:#fff;margin:6px 0 4px;}
 .qz-sub{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;}
 .qz-lbl{font-size:12px;font-weight:700;color:var(--muted);margin:16px 0 8px;letter-spacing:.5px;}
@@ -253,22 +253,32 @@ footer{text-align:center;padding:6px 0 2px;}
 .qz-chip.on{background:var(--blue);border-color:var(--blue);color:#1d1c1b;}
 .qz-main{display:block;width:100%;margin-top:22px;padding:16px;border-radius:16px;border:none;background:var(--accent);color:#1d1c1b;font-size:17px;font-weight:800;cursor:pointer;font-family:inherit;}
 .qz-main:disabled{opacity:.4;}
+.qz-next{margin-top:10px;padding:13px;position:sticky;bottom:calc(8px + env(safe-area-inset-bottom));box-shadow:0 0 0 6px var(--bg);}
+.qz-next[hidden]{display:block;visibility:hidden;}
 .qz-ghost{display:block;width:100%;margin-top:10px;padding:14px;border-radius:16px;background:transparent;border:1.5px solid #4a4743;color:var(--muted2);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
-.qz-top{display:flex;align-items:center;justify-content:space-between;margin:4px 0 10px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);}
+.qz-top{display:flex;align-items:center;justify-content:space-between;margin:0 0 4px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);}
 .qz-quit{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;font-family:inherit;padding:6px 0 6px 12px;}
-.qz-bar{height:5px;border-radius:3px;background:#3b3935;overflow:hidden;margin-bottom:14px;}
+.qz-bar{height:5px;border-radius:3px;background:#3b3935;overflow:hidden;margin-bottom:10px;}
 .qz-bar>i{display:block;height:100%;background:var(--blue);}
-.qz-q{background:var(--tag);border:1.5px solid var(--tag-edge);border-radius:18px;padding:22px 16px;text-align:center;color:var(--ink);min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
-.qz-q .qz-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:40px;line-height:1.35;overflow-wrap:anywhere;}
+.qz-q{background:var(--tag);border:1.5px solid var(--tag-edge);border-radius:18px;padding:12px 16px;text-align:center;color:var(--ink);height:148px;box-sizing:border-box;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+.qz-q.done{flex-direction:row;text-align:left;justify-content:space-between;gap:12px;}
+.qz-q .a-txt{flex:1;min-width:0;}
+.qz-q .a-mark{font-size:14px;font-weight:800;margin-bottom:2px;}
+.qz-q .a-mark.ok{color:#4f7a5a;} .qz-q .a-mark.ng{color:#b0584a;}
+.qz-q .a-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:30px;line-height:1.25;overflow-wrap:anywhere;}
+.qz-q .a-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;}
+.qz-q .a-jp{font-size:15px;font-weight:700;margin-top:2px;line-height:1.35;}
+.qz-q .qz-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:36px;line-height:1.2;overflow-wrap:anywhere;}
 .qz-q .qz-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;}
-.qz-q .qz-jp{font-size:24px;font-weight:700;line-height:1.5;}
+.qz-q .qz-jp{font-size:23px;font-weight:700;line-height:1.4;}
 .qz-q .qz-note{font-size:12px;color:#8a7a55;}
-.qz-spk{width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--tag);border:none;font-size:25px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.qz-spk.big{width:84px;height:84px;font-size:44px;}
-.qz-opts{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
-.qz-opt{display:block;width:100%;text-align:left;padding:14px 16px;border-radius:14px;background:var(--bg2);border:1.5px solid #3b3935;color:#ece9e4;font-size:16px;font-weight:600;line-height:1.45;cursor:pointer;font-family:inherit;}
-.qz-opt .o-th{font-family:'Sarabun',sans-serif;font-size:24px;font-weight:500;}
-.qz-opt .o-ro{display:block;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;font-weight:400;color:var(--muted);margin-top:2px;}
+.qz-spk{width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--tag);border:none;font-size:25px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.qz-spk.big{width:76px;height:76px;font-size:40px;}
+.qz-opts{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.qz-opt{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:14px;background:var(--bg2);border:1.5px solid #3b3935;color:#ece9e4;font-size:15.5px;font-weight:600;line-height:1.4;min-height:46px;box-sizing:border-box;cursor:pointer;font-family:inherit;}
+.qz-opt.th{display:flex;align-items:baseline;flex-wrap:wrap;column-gap:12px;}
+.qz-opt .o-th{font-family:'Sarabun',sans-serif;font-size:22px;font-weight:500;line-height:1.25;}
+.qz-opt .o-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;font-weight:400;color:var(--muted);}
 .qz-opt.ok{background:#34473c;border-color:#9fb8a0;color:#e3efe5;}
 .qz-opt.ng{background:#4a302d;border-color:#c98478;color:#f1d9d4;}
 .qz-opt.dim{opacity:.45;}
@@ -1578,7 +1588,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-11d';
+const APP_VERSION = '2026-11-11e';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4669,7 +4679,6 @@ function quizPick(n){
   quiz.results.push({word:q.word, ok:q.opts[n].id===q.word.id});
   quizDraw(false);
   if(quiz.type!=='listen') speak(q.word.th);
-  const nx=document.getElementById('qzNext'); if(nx) nx.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
 function quizNext(){
   if(quiz.picked===null) return;
@@ -4704,23 +4713,22 @@ function renderQuiz(){
       prompt=`<button class="qz-spk big" onclick="quizSpeakCur()" aria-label="もう一度聞く">🔊</button><div class="qz-note">タップでもう一度聞く</div>`;
     }
     const opts=q.opts.map((o,n)=>{
-      let cls='qz-opt';
+      let cls='qz-opt'+(quiz.type==='jp-th'?' th':'');
       if(done){ if(o.id===w.id) cls+=' ok'; else if(n===quiz.picked) cls+=' ng'; else cls+=' dim'; }
       const body=(quiz.type==='jp-th')
         ? `<span class="o-th">${o.th}</span>${ro(o.ro)?`<span class="o-ro">${o.ro}</span>`:''}`
         : o.jp;
       return `<button class="${cls}" ${done?'disabled':''} onclick="quizPick(${n})">${body}</button>`;
     }).join('');
-    let ans='';
     if(done){
       const ok=q.opts[quiz.picked].id===w.id;
-      ans=`<div class="qz-ans"><div class="a-txt"><div class="a-mark ${ok?'ok':'ng'}">${ok?'⭕ 正解':'❌ 不正解'}</div><div class="a-th">${w.th}</div>${w.ro?`<div class="a-ro">${w.ro}</div>`:''}<div class="a-jp">${w.jp}</div></div><button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button></div>
-        <button class="qz-main" id="qzNext" onclick="quizNext()">${quiz.i>=total-1?'結果を見る':'次の問題へ'}</button>`;
+      prompt=`<div class="a-txt"><div class="a-mark ${ok?'ok':'ng'}">${ok?'⭕ 正解':'❌ 不正解'}</div><div class="a-th"${w.th.length>13?' style="font-size:23px"':''}>${w.th}</div>${w.ro?`<div class="a-ro">${w.ro}</div>`:''}<div class="a-jp">${w.jp}</div></div><button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button>`;
     }
+    const ans=`<button class="qz-main qz-next" id="qzNext" onclick="quizNext()" ${done?'':'hidden'}>${quiz.i>=total-1?'結果を見る':'次の問題へ'}</button>`;
     return `<div class="qz">
       <div class="qz-top"><span>${quiz.i+1} / ${total}</span><button class="qz-quit" onclick="quizToSetup()">やめる</button></div>
       <div class="qz-bar"><i style="width:${Math.round((quiz.i+(done?1:0))/total*100)}%"></i></div>
-      <div class="qz-q">${prompt}</div>
+      <div class="qz-q${done?' done':''}">${prompt}</div>
       <div class="qz-opts">${opts}</div>
       ${ans}
     </div>`;
