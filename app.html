@@ -1588,7 +1588,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-11e';
+const APP_VERSION = '2026-11-11f';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4628,7 +4628,7 @@ function renderSettings(){
 // 出題形式: タイ語→日本語 / 日本語→タイ語 / 音声を聞いて日本語を選ぶ
 const QUIZ_N = 10;
 const QUIZ_TYPES = {'th-jp':'タイ語 → 日本語','jp-th':'日本語 → タイ語','listen':'🔊 聞いて選ぶ'};
-const quiz = {phase:'setup', type:'th-jp', pos:'all', qs:[], i:0, picked:null, results:[]};
+const quiz = {phase:'setup', type:'th-jp', pos:'all', numRange:'mix', qs:[], i:0, picked:null, results:[]};
 function quizPool(pos){
   const beg=(st.level==='beginner');
   const keys=(pos==='all')?Object.keys(POS_LABELS):[pos];
@@ -4648,9 +4648,56 @@ function quizMakeQuestion(word, pool, wide){
   if(picked.length<3) take(wide);                   // それでも足りなければ全単語から
   return {word, opts:shuffleArr([word,...picked])};
 }
+
+// ─── テスト: 数字(金額の聞き取り練習用) ───────────────────────
+// 数字タブの読み(NUMS)を部品にして、1〜99,999 のタイ語の読みを組み立てる
+const QUIZ_NUM_RANGES = {mix:'ミックス', r1:'1〜99', r2:'100〜999', r3:'1,000〜9,999', r4:'10,000〜99,999'};
+const QUIZ_NUM_BOUNDS = {r1:[1,99], r2:[100,999], r3:[1000,9999], r4:[10000,99999]};
+function thaiNumber(n){
+  const g=a=>NUMS.find(x=>x.arabic===a);
+  const dg=d=>g(String(d));
+  const units=[null,g('10'),g('100'),g('1,000'),g('10,000')];
+  const th=[], ro=[]; const str=String(n), L=str.length;
+  for(let i=0;i<L;i++){
+    const d=+str[i], place=L-1-i; if(d===0) continue;
+    if(place===0){
+      if(d===1 && n>10){ th.push('เอ็ด'); ro.push('èt'); }
+      else { th.push(dg(d).th_word); ro.push(dg(d).ro); }
+    } else if(place===1){
+      if(d===1){ th.push('สิบ'); ro.push('sìp'); }
+      else if(d===2){ th.push('ยี่สิบ'); ro.push('yîi sìp'); }
+      else { th.push(dg(d).th_word+'สิบ'); ro.push(dg(d).ro+' sìp'); }
+    } else {
+      th.push(dg(d).th_word+units[place].th_word); ro.push(dg(d).ro+' '+units[place].ro);
+    }
+  }
+  return {th:th.join(''), ro:ro.join(' ')};
+}
+function quizNumWord(n){ const t=thaiNumber(n); return {id:'num'+n, th:t.th, ro:t.ro, jp:n.toLocaleString('en-US'), pos:'numbers', n}; }
+function quizRandNumber(range){
+  const key=(range==='mix')?['r1','r2','r2','r3','r3','r4'][Math.floor(Math.random()*6)]:range;
+  const [lo,hi]=QUIZ_NUM_BOUNDS[key];
+  let n=lo+Math.floor(Math.random()*(hi-lo+1));
+  // 値段らしく、100以上は半分くらいを切りのいい数にする
+  if(n>=100 && Math.random()<0.5){ const step=(n>=10000)?1000:(n>=1000)?100:10; n=Math.max(lo,Math.round(n/step)*step); if(n>hi) n=hi-(hi%step); }
+  return n;
+}
+// まぎらわしい数(桁の入れ替え・1桁違い・0の数違い)を優先して選択肢にする
+function quizNumQuestion(word){
+  const n=word.n, str=String(n), cand=new Set();
+  for(let i=0;i<str.length-1;i++){ if(str[i]!==str[i+1]){ const a=str.split(''); [a[i],a[i+1]]=[a[i+1],a[i]]; if(a[0]!=='0') cand.add(+a.join('')); } }
+  for(let i=0;i<str.length;i++){ for(const dl of [-1,1,-2,2]){ const d=+str[i]+dl; if(d<0||d>9||(i===0&&d===0)) continue; const a=str.split(''); a[i]=String(d); cand.add(+a.join('')); } }
+  if(n*10<=99999) cand.add(n*10);
+  if(n>=10 && n%10===0) cand.add(n/10);
+  cand.delete(n);
+  const picked=shuffleArr([...cand].filter(x=>x>=1&&x<=99999)).slice(0,3);
+  let guard=0;
+  while(picked.length<3 && guard++<200){ const x=1+Math.floor(Math.random()*Math.max(20,n*2)); if(x!==n && x<=99999 && !picked.includes(x)) picked.push(x); }
+  return {word, opts:shuffleArr([word,...picked.map(quizNumWord)])};
+}
 function quizBuild(words){
   const pool=quizPool(quiz.pos), wide=quizPool('all');
-  quiz.qs=shuffleArr(words).slice(0,QUIZ_N).map(w=>quizMakeQuestion(w,pool,wide));
+  quiz.qs=shuffleArr(words).slice(0,QUIZ_N).map(w=>w.pos==='numbers'?quizNumQuestion(w):quizMakeQuestion(w,pool,wide));
   quiz.i=0; quiz.picked=null; quiz.results=[]; quiz.phase='play';
 }
 function quizDraw(top){
@@ -4661,14 +4708,22 @@ function quizDraw(top){
 function quizSet(k,v){
   if(k==='type') quiz.type=v;
   else if(k==='pos') quiz.pos=v;
+  else if(k==='numRange') quiz.numRange=v;
   else if(k==='level'){ st.level=v; sto_set('s:level',st.level); }
   else if(k==='ro'){ st.showRo=(v==='1'); sto_set('s:showRo',st.showRo); }
   quizDraw(false);
 }
 function quizSpeakCur(){ const q=quiz.qs[quiz.i]; if(q) speak(q.word.th); }
 function quizStart(){
-  const pool=quizPool(quiz.pos); if(pool.length<4) return;
-  quizBuild(pool); quizDraw(true);
+  if(quiz.pos==='numbers'){
+    const seen=new Set(), ws=[]; let guard=0;
+    while(ws.length<QUIZ_N && guard++<500){ const n=quizRandNumber(quiz.numRange); if(seen.has(n)) continue; seen.add(n); ws.push(quizNumWord(n)); }
+    quizBuild(ws);
+  } else {
+    const pool=quizPool(quiz.pos); if(pool.length<4) return;
+    quizBuild(pool);
+  }
+  quizDraw(true);
   if(quiz.type==='listen') quizSpeakCur();
   if(typeof gtag==='function') gtag('event','quiz_start',{quiz_type:quiz.type,pos:quiz.pos,level:st.level});
 }
@@ -4702,27 +4757,30 @@ function quizSpeakWord(id){
 }
 function renderQuiz(){
   const ro=t=>(st.showRo&&t)?t:'';
+  // 長いタイ語(桁の多い数字など)は文字を小さくして枠に収める
+  const thFs=(t,base)=>{ const L=t.length; const f=L>28?base*0.44:L>22?base*0.52:L>16?base*0.66:L>12?base*0.85:base; return f<base?` style="font-size:${Math.max(14,Math.round(f))}px"`:''; };
   if(quiz.phase==='play' && quiz.qs.length){
     const q=quiz.qs[quiz.i], w=q.word, done=(quiz.picked!==null), total=quiz.qs.length;
     let prompt='';
     if(quiz.type==='th-jp'){
-      prompt=`<div class="qz-th">${w.th}</div>${ro(w.ro)?`<div class="qz-ro">${w.ro}</div>`:''}<button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button>`;
+      prompt=`<div class="qz-th"${thFs(w.th,36)}>${w.th}</div>${ro(w.ro)?`<div class="qz-ro">${w.ro}</div>`:''}<button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button>`;
     } else if(quiz.type==='jp-th'){
       prompt=`<div class="qz-jp">${w.jp}</div><div class="qz-note">タイ語はどれ?</div>`;
     } else {
       prompt=`<button class="qz-spk big" onclick="quizSpeakCur()" aria-label="もう一度聞く">🔊</button><div class="qz-note">タップでもう一度聞く</div>`;
     }
+    const optLongest=q.opts.reduce((m,o)=>o.th.length>m.length?o.th:m,''); // 4つの選択肢の文字サイズをそろえる
     const opts=q.opts.map((o,n)=>{
       let cls='qz-opt'+(quiz.type==='jp-th'?' th':'');
       if(done){ if(o.id===w.id) cls+=' ok'; else if(n===quiz.picked) cls+=' ng'; else cls+=' dim'; }
       const body=(quiz.type==='jp-th')
-        ? `<span class="o-th">${o.th}</span>${ro(o.ro)?`<span class="o-ro">${o.ro}</span>`:''}`
+        ? `<span class="o-th"${thFs(optLongest,22)}>${o.th}</span>${ro(o.ro)?`<span class="o-ro">${o.ro}</span>`:''}`
         : o.jp;
       return `<button class="${cls}" ${done?'disabled':''} onclick="quizPick(${n})">${body}</button>`;
     }).join('');
     if(done){
       const ok=q.opts[quiz.picked].id===w.id;
-      prompt=`<div class="a-txt"><div class="a-mark ${ok?'ok':'ng'}">${ok?'⭕ 正解':'❌ 不正解'}</div><div class="a-th"${w.th.length>13?' style="font-size:23px"':''}>${w.th}</div>${w.ro?`<div class="a-ro">${w.ro}</div>`:''}<div class="a-jp">${w.jp}</div></div><button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button>`;
+      prompt=`<div class="a-txt"><div class="a-mark ${ok?'ok':'ng'}">${ok?'⭕ 正解':'❌ 不正解'}</div><div class="a-th"${thFs(w.th,30)}>${w.th}</div>${w.ro?`<div class="a-ro">${w.ro}</div>`:''}<div class="a-jp">${w.jp}</div></div><button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button>`;
     }
     const ans=`<button class="qz-main qz-next" id="qzNext" onclick="quizNext()" ${done?'':'hidden'}>${quiz.i>=total-1?'結果を見る':'次の問題へ'}</button>`;
     return `<div class="qz">
@@ -4736,7 +4794,7 @@ function renderQuiz(){
   if(quiz.phase==='result' && quiz.results.length){
     const total=quiz.results.length, good=quiz.results.filter(r=>r.ok).length, wrong=quiz.results.filter(r=>!r.ok);
     const msg=good===total?'全問正解です!':good>=total*0.8?'あと少しで全問正解です。':good>=total*0.5?'半分以上できています。':'間違えた単語をもう一度見てみましょう。';
-    const wl=wrong.length?`<div class="qz-lbl">間違えた単語(${wrong.length})</div><div class="qz-wrong">${wrong.map(r=>`<div class="qz-ans"><div class="a-txt"><div class="a-th">${r.word.th}</div>${r.word.ro?`<div class="a-ro">${r.word.ro}</div>`:''}<div class="a-jp">${r.word.jp}</div></div><button class="qz-spk" onclick="quizSpeakWord('${r.word.id}')" aria-label="音声を聞く">🔊</button></div>`).join('')}</div>`:'';
+    const wl=wrong.length?`<div class="qz-lbl">間違えた問題(${wrong.length})</div><div class="qz-wrong">${wrong.map(r=>`<div class="qz-ans"><div class="a-txt"><div class="a-th">${r.word.th}</div>${r.word.ro?`<div class="a-ro">${r.word.ro}</div>`:''}<div class="a-jp">${r.word.jp}</div></div><button class="qz-spk" onclick="quizSpeakWord('${r.word.id}')" aria-label="音声を聞く">🔊</button></div>`).join('')}</div>`:'';
     return `<div class="qz">
       <div class="qz-h">📝 結果</div>
       <div class="qz-score">${good}<small> / ${total}</small></div>
@@ -4748,21 +4806,24 @@ function renderQuiz(){
     </div>`;
   }
   // 設定画面
-  const n=quizPool(quiz.pos).length;
+  const isNum=(quiz.pos==='numbers');
+  const n=isNum?99:quizPool(quiz.pos).length;
   const chip=(k,v,label,on)=>`<button class="qz-chip ${on?'on':''}" onclick="quizSet('${k}','${v}')">${label}</button>`;
   return `<div class="qz">
     <div class="qz-h">📝 4択テスト</div>
-    <div class="qz-sub">単語を${QUIZ_N}問ずつ、4つの選択肢から選ぶテストです。</div>
+    <div class="qz-sub">単語や数字を${QUIZ_N}問ずつ、4つの選択肢から選ぶテストです。</div>
     <div class="qz-lbl">出題形式</div>
     <div class="qz-chips">${Object.entries(QUIZ_TYPES).map(([k,v])=>chip('type',k,v,quiz.type===k)).join('')}</div>
-    <div class="qz-lbl">品詞</div>
-    <div class="qz-chips">${chip('pos','all','ALL',quiz.pos==='all')}${Object.entries(POS_LABELS).map(([k,v])=>chip('pos',k,v,quiz.pos===k)).join('')}</div>
-    <div class="qz-lbl">レベル</div>
-    <div class="qz-chips">${chip('level','beginner','初心者',st.level==='beginner')}${chip('level','intermediate','中級者+',st.level!=='beginner')}</div>
+    <div class="qz-lbl">区分</div>
+    <div class="qz-chips">${chip('pos','all','単語ALL',quiz.pos==='all')}${Object.entries(POS_LABELS).map(([k,v])=>chip('pos',k,v,quiz.pos===k)).join('')}${chip('pos','numbers','🔢 数字',isNum)}</div>
+    ${isNum?`<div class="qz-lbl">数字の範囲</div>
+    <div class="qz-chips">${Object.entries(QUIZ_NUM_RANGES).map(([k,v])=>chip('numRange',k,v,quiz.numRange===k)).join('')}</div>`
+    :`<div class="qz-lbl">レベル</div>
+    <div class="qz-chips">${chip('level','beginner','初心者',st.level==='beginner')}${chip('level','intermediate','中級者+',st.level!=='beginner')}</div>`}
     <div class="qz-lbl">読み(ローマ字)の表示</div>
     <div class="qz-chips">${chip('ro','1','あり',!!st.showRo)}${chip('ro','0','なし',!st.showRo)}</div>
     <button class="qz-main" onclick="quizStart()" ${n<4?'disabled':''}>${QUIZ_N}問スタート</button>
-    <div class="qz-sub" style="text-align:center;margin-top:10px;">出題範囲: ${n}語</div>
+    <div class="qz-sub" style="text-align:center;margin-top:10px;">${isNum?('出題範囲: '+(quiz.numRange==='mix'?'1〜99,999':QUIZ_NUM_RANGES[quiz.numRange])+'(聞き取りは「🔊 聞いて選ぶ」)'):('出題範囲: '+n+'語')}</div>
   </div>`;
 }
 
