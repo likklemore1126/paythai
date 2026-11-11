@@ -56,7 +56,6 @@ header{padding-bottom:10px;}
 .mode-tab[data-mode="vocab"].active{background:var(--yellow);color:#2b2118;border-color:var(--yellow);}
 .mode-tab[data-mode="conversation"].active{background:var(--pink);color:#1d1c1b;border-color:var(--pink);}
 .mode-tab[data-mode="grammar"].active{background:var(--green);color:#1d1c1b;border-color:var(--green);}
-.mode-tab[data-mode="font"].active{background:var(--blue);color:#1d1c1b;border-color:var(--blue);}
 .mode-tab[data-mode="numbers"].active{background:var(--purple);color:#1d1c1b;border-color:var(--purple);}
 .mode-tab[data-mode="thaienglish"].active{background:var(--orange);color:#1d1c1b;border-color:var(--orange);}
 .sub-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;min-height:28px;}
@@ -242,6 +241,50 @@ footer{text-align:center;padding:6px 0 2px;}
 .list-ro-text{display:inline-block;}
 .ro-front{display:inline-block;align-self:center;}
 .back-ro,.conv-list-ro{display:inline-block;align-self:flex-start;}
+
+/* ─── 4択テスト ─── */
+.mode-tab[data-mode="quiz"].active{background:var(--blue);color:#1d1c1b;border-color:var(--blue);}
+.qz{padding:6px 2px 24px;}
+.qz-h{font-size:17px;font-weight:700;color:#fff;margin:6px 0 4px;}
+.qz-sub{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;}
+.qz-lbl{font-size:12px;font-weight:700;color:var(--muted);margin:16px 0 8px;letter-spacing:.5px;}
+.qz-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.qz-chip{padding:9px 14px;border-radius:999px;font-size:14px;font-weight:700;background:var(--bg2);border:1px solid #3b3935;color:var(--muted2);cursor:pointer;font-family:inherit;}
+.qz-chip.on{background:var(--blue);border-color:var(--blue);color:#1d1c1b;}
+.qz-main{display:block;width:100%;margin-top:22px;padding:16px;border-radius:16px;border:none;background:var(--accent);color:#1d1c1b;font-size:17px;font-weight:800;cursor:pointer;font-family:inherit;}
+.qz-main:disabled{opacity:.4;}
+.qz-ghost{display:block;width:100%;margin-top:10px;padding:14px;border-radius:16px;background:transparent;border:1.5px solid #4a4743;color:var(--muted2);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
+.qz-top{display:flex;align-items:center;justify-content:space-between;margin:4px 0 10px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);}
+.qz-quit{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;font-family:inherit;padding:6px 0 6px 12px;}
+.qz-bar{height:5px;border-radius:3px;background:#3b3935;overflow:hidden;margin-bottom:14px;}
+.qz-bar>i{display:block;height:100%;background:var(--blue);}
+.qz-q{background:var(--tag);border:1.5px solid var(--tag-edge);border-radius:18px;padding:22px 16px;text-align:center;color:var(--ink);min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.qz-q .qz-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:40px;line-height:1.35;overflow-wrap:anywhere;}
+.qz-q .qz-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;}
+.qz-q .qz-jp{font-size:24px;font-weight:700;line-height:1.5;}
+.qz-q .qz-note{font-size:12px;color:#8a7a55;}
+.qz-spk{width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--tag);border:none;font-size:25px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.qz-spk.big{width:84px;height:84px;font-size:44px;}
+.qz-opts{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.qz-opt{display:block;width:100%;text-align:left;padding:14px 16px;border-radius:14px;background:var(--bg2);border:1.5px solid #3b3935;color:#ece9e4;font-size:16px;font-weight:600;line-height:1.45;cursor:pointer;font-family:inherit;}
+.qz-opt .o-th{font-family:'Sarabun',sans-serif;font-size:24px;font-weight:500;}
+.qz-opt .o-ro{display:block;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;font-weight:400;color:var(--muted);margin-top:2px;}
+.qz-opt.ok{background:#34473c;border-color:#9fb8a0;color:#e3efe5;}
+.qz-opt.ng{background:#4a302d;border-color:#c98478;color:#f1d9d4;}
+.qz-opt.dim{opacity:.45;}
+.qz-opt:disabled{cursor:default;}
+.qz-ans{margin-top:14px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;gap:12px;}
+.qz-ans .a-txt{flex:1;min-width:0;}
+.qz-ans .a-mark{font-size:14px;font-weight:800;margin-bottom:4px;}
+.qz-ans .a-mark.ok{color:#9fb8a0;} .qz-ans .a-mark.ng{color:#d9a198;}
+.qz-ans .a-th{font-family:'Sarabun',sans-serif;font-size:24px;color:#fff;line-height:1.35;overflow-wrap:anywhere;}
+.qz-ans .a-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
+.qz-ans .a-jp{font-size:15px;color:#ece9e4;margin-top:2px;}
+.qz-score{text-align:center;margin:10px 0 4px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:46px;font-weight:500;color:#fff;}
+.qz-score small{font-size:20px;color:var(--muted);}
+.qz-msg{text-align:center;font-size:15px;color:var(--muted2);margin-bottom:6px;}
+.qz-wrong{margin-top:8px;display:flex;flex-direction:column;gap:8px;}
+.qz-wrong .qz-ans{margin-top:0;}
 </style>
 </head>
 <body>
@@ -1332,7 +1375,7 @@ const CONV_BREAKDOWN = {
 const NUMS = [{"th_num":"๐","arabic":"0","ro":"sǔun","th_word":"ศูนย์"},{"th_num":"๑","arabic":"1","ro":"nɯɯng","th_word":"หนึ่ง"},{"th_num":"๒","arabic":"2","ro":"sɔɔng","th_word":"สอง"},{"th_num":"๓","arabic":"3","ro":"sǎam","th_word":"สาม"},{"th_num":"๔","arabic":"4","ro":"sìi","th_word":"สี่"},{"th_num":"๕","arabic":"5","ro":"hâa","th_word":"ห้า"},{"th_num":"๖","arabic":"6","ro":"hòk","th_word":"หก"},{"th_num":"๗","arabic":"7","ro":"cèt","th_word":"เจ็ด"},{"th_num":"๘","arabic":"8","ro":"pɛɛt","th_word":"แปด"},{"th_num":"๙","arabic":"9","ro":"kâao","th_word":"เก้า"},{"th_num":"๑๐","arabic":"10","ro":"sìp","th_word":"สิบ"},{"th_num":"๒๐","arabic":"20","ro":"yîi sìp","th_word":"ยี่สิบ"},{"th_num":"๑๐๐","arabic":"100","ro":"rɔɔi","th_word":"ร้อย"},{"th_num":"๑,๐๐๐","arabic":"1,000","ro":"phan","th_word":"พัน"},{"th_num":"๑๐,๐๐๐","arabic":"10,000","ro":"mɯ̀ɯn","th_word":"หมื่น"},{"th_num":"๑๐๐,๐๐๐","arabic":"100,000","ro":"sɛ̌ɛn","th_word":"แสน"},{"th_num":"๑,๐๐๐,๐๐๐","arabic":"1,000,000","ro":"láan","th_word":"ล้าน"}];
 
 const POS_LABELS = {noun:'名詞',verb:'動詞',adj:'形容詞',adv:'副詞',classifier:'類別詞',question:'疑問詞',greeting:'挨拶'};
-const MODE_LABELS_JP = {vocab:'単語',conversation:'会話',grammar:'文法',wordlist:'リスト',numbers:'数字'};
+const MODE_LABELS_JP = {vocab:'単語',conversation:'会話',grammar:'文法',wordlist:'リスト',quiz:'テスト',numbers:'数字'};
 const SCENES = ["ALL","日常会話","レストラン","観光","ホテル","交通","緊急"];
 const PT = {male:{th:'ครับ',ro:'khrap',ps:'ผม',psr:'phǒm'},female:{th:'ค่ะ',ro:'kha',ps:'ดิฉัน',psr:'dichǎn'}};
 
@@ -1535,7 +1578,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-11c';
+const APP_VERSION = '2026-11-11d';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4552,7 +4595,7 @@ function renderSettings(){
     return;
   }
   sr.style.display='flex';
-  const noCtrl=['numbers'].includes(st.mode);
+  const noCtrl=['numbers','quiz'].includes(st.mode);
   if(noCtrl){ sr.style.display='none'; sr.innerHTML=''; return; }
   let h='';
   if(st.mode!=='grammar') h+=`<button class="pill" id="dirPill" data-dir="${st.dir}">${st.dir==='th-jp'?'TH→JP':'JP→TH'}</button>`;
@@ -4568,6 +4611,151 @@ function renderSettings(){
   const rp=document.getElementById('roPill'); if(rp) rp.onclick=()=>{st.showRo=!st.showRo;sto_set('s:showRo',st.showRo);render();};
   const up=document.getElementById('unPill'); if(up) up.onclick=()=>{st.filterUn=!st.filterUn;sto_set('s:filterUn',st.filterUn);st.idx=0;st.flipped=false;render();};
   const shp=document.getElementById('shfPill'); if(shp) shp.onclick=()=>{st.shuffle=!st.shuffle;sto_set('s:shuffle',st.shuffle);if(st.shuffle) st.shuffled={};st.idx=0;st.flipped=false;render();};
+}
+
+
+// ─── 4択テスト(単語のみ) ─────────────────────────────────────────
+// 出題形式: タイ語→日本語 / 日本語→タイ語 / 音声を聞いて日本語を選ぶ
+const QUIZ_N = 10;
+const QUIZ_TYPES = {'th-jp':'タイ語 → 日本語','jp-th':'日本語 → タイ語','listen':'🔊 聞いて選ぶ'};
+const quiz = {phase:'setup', type:'th-jp', pos:'all', qs:[], i:0, picked:null, results:[]};
+function quizPool(pos){
+  const beg=(st.level==='beginner');
+  const keys=(pos==='all')?Object.keys(POS_LABELS):[pos];
+  const out=[];
+  keys.forEach(k=>(DATA[k]||[]).forEach(w=>{ if(w && w.th && w.jp && (!beg||w.level==='5')) out.push({id:w.id,th:w.th,ro:w.ro||'',jp:w.jp,pos:k}); }));
+  return out;
+}
+// 訳語を「、」などで区切った語のどれかが正解と重なる単語は、まぎらわしいので選択肢から外す
+function quizTerms(jp){ return String(jp).split(/[、,，・\/／;；()（）]/).map(t=>t.trim()).filter(Boolean); }
+function quizMakeQuestion(word, pool, wide){
+  const terms=new Set(quizTerms(word.jp));
+  const okD=w=>w.id!==word.id && w.th!==word.th && w.jp!==word.jp && !quizTerms(w.jp).some(t=>terms.has(t));
+  const picked=[], seenJp=new Set([word.jp]), seenTh=new Set([word.th]);
+  const take=arr=>{ for(const w of shuffleArr(arr)){ if(picked.length>=3) break; if(!okD(w)||seenJp.has(w.jp)||seenTh.has(w.th)) continue; picked.push(w); seenJp.add(w.jp); seenTh.add(w.th); } };
+  take(pool.filter(w=>w.pos===word.pos));          // まず同じ品詞から
+  if(picked.length<3) take(pool);                   // 足りなければ出題範囲の全品詞から
+  if(picked.length<3) take(wide);                   // それでも足りなければ全単語から
+  return {word, opts:shuffleArr([word,...picked])};
+}
+function quizBuild(words){
+  const pool=quizPool(quiz.pos), wide=quizPool('all');
+  quiz.qs=shuffleArr(words).slice(0,QUIZ_N).map(w=>quizMakeQuestion(w,pool,wide));
+  quiz.i=0; quiz.picked=null; quiz.results=[]; quiz.phase='play';
+}
+function quizDraw(top){
+  const sp=document.getElementById('staticPage'); if(!sp||st.mode!=='quiz') return;
+  sp.innerHTML=renderQuiz();
+  if(top) window.scrollTo(0,0);
+}
+function quizSet(k,v){
+  if(k==='type') quiz.type=v;
+  else if(k==='pos') quiz.pos=v;
+  else if(k==='level'){ st.level=v; sto_set('s:level',st.level); }
+  else if(k==='ro'){ st.showRo=(v==='1'); sto_set('s:showRo',st.showRo); }
+  quizDraw(false);
+}
+function quizSpeakCur(){ const q=quiz.qs[quiz.i]; if(q) speak(q.word.th); }
+function quizStart(){
+  const pool=quizPool(quiz.pos); if(pool.length<4) return;
+  quizBuild(pool); quizDraw(true);
+  if(quiz.type==='listen') quizSpeakCur();
+  if(typeof gtag==='function') gtag('event','quiz_start',{quiz_type:quiz.type,pos:quiz.pos,level:st.level});
+}
+function quizPick(n){
+  if(quiz.phase!=='play'||quiz.picked!==null) return;
+  const q=quiz.qs[quiz.i]; if(!q||!q.opts[n]) return;
+  quiz.picked=n;
+  quiz.results.push({word:q.word, ok:q.opts[n].id===q.word.id});
+  quizDraw(false);
+  if(quiz.type!=='listen') speak(q.word.th);
+  const nx=document.getElementById('qzNext'); if(nx) nx.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+function quizNext(){
+  if(quiz.picked===null) return;
+  if(quiz.i>=quiz.qs.length-1){
+    quiz.phase='result'; quizDraw(true);
+    if(typeof gtag==='function') gtag('event','quiz_finish',{quiz_type:quiz.type,score:quiz.results.filter(r=>r.ok).length,total:quiz.results.length});
+    return;
+  }
+  quiz.i++; quiz.picked=null; quizDraw(true);
+  if(quiz.type==='listen') quizSpeakCur();
+}
+function quizRetryWrong(){
+  const wrong=quiz.results.filter(r=>!r.ok).map(r=>r.word); if(!wrong.length) return;
+  quizBuild(wrong); quizDraw(true);
+  if(quiz.type==='listen') quizSpeakCur();
+}
+function quizToSetup(){ quiz.phase='setup'; quiz.qs=[]; quiz.results=[]; quiz.picked=null; quiz.i=0; quizDraw(true); }
+function quizSpeakWord(id){
+  const w=(quiz.results.find(r=>r.word.id===id)||{}).word || (quiz.qs.find(q=>q.word.id===id)||{}).word;
+  if(w) speak(w.th);
+}
+function renderQuiz(){
+  const ro=t=>(st.showRo&&t)?t:'';
+  if(quiz.phase==='play' && quiz.qs.length){
+    const q=quiz.qs[quiz.i], w=q.word, done=(quiz.picked!==null), total=quiz.qs.length;
+    let prompt='';
+    if(quiz.type==='th-jp'){
+      prompt=`<div class="qz-th">${w.th}</div>${ro(w.ro)?`<div class="qz-ro">${w.ro}</div>`:''}<button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button>`;
+    } else if(quiz.type==='jp-th'){
+      prompt=`<div class="qz-jp">${w.jp}</div><div class="qz-note">タイ語はどれ?</div>`;
+    } else {
+      prompt=`<button class="qz-spk big" onclick="quizSpeakCur()" aria-label="もう一度聞く">🔊</button><div class="qz-note">タップでもう一度聞く</div>`;
+    }
+    const opts=q.opts.map((o,n)=>{
+      let cls='qz-opt';
+      if(done){ if(o.id===w.id) cls+=' ok'; else if(n===quiz.picked) cls+=' ng'; else cls+=' dim'; }
+      const body=(quiz.type==='jp-th')
+        ? `<span class="o-th">${o.th}</span>${ro(o.ro)?`<span class="o-ro">${o.ro}</span>`:''}`
+        : o.jp;
+      return `<button class="${cls}" ${done?'disabled':''} onclick="quizPick(${n})">${body}</button>`;
+    }).join('');
+    let ans='';
+    if(done){
+      const ok=q.opts[quiz.picked].id===w.id;
+      ans=`<div class="qz-ans"><div class="a-txt"><div class="a-mark ${ok?'ok':'ng'}">${ok?'⭕ 正解':'❌ 不正解'}</div><div class="a-th">${w.th}</div>${w.ro?`<div class="a-ro">${w.ro}</div>`:''}<div class="a-jp">${w.jp}</div></div><button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button></div>
+        <button class="qz-main" id="qzNext" onclick="quizNext()">${quiz.i>=total-1?'結果を見る':'次の問題へ'}</button>`;
+    }
+    return `<div class="qz">
+      <div class="qz-top"><span>${quiz.i+1} / ${total}</span><button class="qz-quit" onclick="quizToSetup()">やめる</button></div>
+      <div class="qz-bar"><i style="width:${Math.round((quiz.i+(done?1:0))/total*100)}%"></i></div>
+      <div class="qz-q">${prompt}</div>
+      <div class="qz-opts">${opts}</div>
+      ${ans}
+    </div>`;
+  }
+  if(quiz.phase==='result' && quiz.results.length){
+    const total=quiz.results.length, good=quiz.results.filter(r=>r.ok).length, wrong=quiz.results.filter(r=>!r.ok);
+    const msg=good===total?'全問正解です!':good>=total*0.8?'あと少しで全問正解です。':good>=total*0.5?'半分以上できています。':'間違えた単語をもう一度見てみましょう。';
+    const wl=wrong.length?`<div class="qz-lbl">間違えた単語(${wrong.length})</div><div class="qz-wrong">${wrong.map(r=>`<div class="qz-ans"><div class="a-txt"><div class="a-th">${r.word.th}</div>${r.word.ro?`<div class="a-ro">${r.word.ro}</div>`:''}<div class="a-jp">${r.word.jp}</div></div><button class="qz-spk" onclick="quizSpeakWord('${r.word.id}')" aria-label="音声を聞く">🔊</button></div>`).join('')}</div>`:'';
+    return `<div class="qz">
+      <div class="qz-h">📝 結果</div>
+      <div class="qz-score">${good}<small> / ${total}</small></div>
+      <div class="qz-msg">${msg}</div>
+      ${wl}
+      ${wrong.length?`<button class="qz-main" onclick="quizRetryWrong()">間違えた${wrong.length}問をもう一度</button>`:''}
+      <button class="${wrong.length?'qz-ghost':'qz-main'}" onclick="quizStart()">同じ設定で次の${QUIZ_N}問</button>
+      <button class="qz-ghost" onclick="quizToSetup()">設定に戻る</button>
+    </div>`;
+  }
+  // 設定画面
+  const n=quizPool(quiz.pos).length;
+  const chip=(k,v,label,on)=>`<button class="qz-chip ${on?'on':''}" onclick="quizSet('${k}','${v}')">${label}</button>`;
+  return `<div class="qz">
+    <div class="qz-h">📝 4択テスト</div>
+    <div class="qz-sub">単語を${QUIZ_N}問ずつ、4つの選択肢から選ぶテストです。</div>
+    <div class="qz-lbl">出題形式</div>
+    <div class="qz-chips">${Object.entries(QUIZ_TYPES).map(([k,v])=>chip('type',k,v,quiz.type===k)).join('')}</div>
+    <div class="qz-lbl">品詞</div>
+    <div class="qz-chips">${chip('pos','all','ALL',quiz.pos==='all')}${Object.entries(POS_LABELS).map(([k,v])=>chip('pos',k,v,quiz.pos===k)).join('')}</div>
+    <div class="qz-lbl">レベル</div>
+    <div class="qz-chips">${chip('level','beginner','初心者',st.level==='beginner')}${chip('level','intermediate','中級者+',st.level!=='beginner')}</div>
+    <div class="qz-lbl">読み(ローマ字)の表示</div>
+    <div class="qz-chips">${chip('ro','1','あり',!!st.showRo)}${chip('ro','0','なし',!st.showRo)}</div>
+    <button class="qz-main" onclick="quizStart()" ${n<4?'disabled':''}>${QUIZ_N}問スタート</button>
+    <div class="qz-sub" style="text-align:center;margin-top:10px;">出題範囲: ${n}語</div>
+  </div>`;
 }
 
 // 基本数字0〜9＋位の単位(計16件)の実用例文。
@@ -4710,7 +4898,7 @@ function render(){
   renderSettings();
   updateHelpBtn();
 
-  const isStatic=['numbers'].includes(st.mode);
+  const isStatic=['numbers','quiz'].includes(st.mode);
   const isWordlist=(st.mode==='wordlist');
   document.getElementById('cardStage').style.display=(isStatic||isWordlist)?'none':'flex';
   document.getElementById('resetBtn').style.display=(isStatic||isWordlist)?'none':'inline';
@@ -4733,7 +4921,7 @@ function render(){
   if(isStatic){
     sp.style.display='block'; lp.style.display='none';
     if(bb) bb.style.display='none';
-    sp.innerHTML=renderNumbers();
+    sp.innerHTML=(st.mode==='quiz')?renderQuiz():renderNumbers();
     return;
   }
   if(isWordlist){
