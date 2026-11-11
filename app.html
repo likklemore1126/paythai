@@ -1436,21 +1436,30 @@ function alignConvLines(){
       sp.textContent=txt; face.appendChild(sp); const w=sp.offsetWidth; sp.remove(); return w;
     };
     const m=ck.length;
+    const roMax=parseFloat(roEl.dataset.maxfs||'')||0;
+    roEl.style.fontSize=roMax?roMax+'px':'';
     const rw=ck.map(c=>meas(roEl,c.r)), sp=meas(roEl,' ');
     const thLine=(a,b)=>ck.slice(a,b).map(c=>c.t).join('').trim();
-    let best=null;
-    el.style.fontSize='';
+    let best=null, roScale=1;
+    const roBase=parseFloat(getComputedStyle(roEl).fontSize);
+    const roSteps=[0,1,2,3].map(d=>(roBase-d)/roBase).filter(k=>roBase*k>=12.5);
+    const maxfs=parseFloat(el.dataset.maxfs||'')||0;
+    el.style.fontSize=maxfs?maxfs+'px':'';
     // まず1行に収まるか(タイ文字を最大4px小さくして試す)
     const base=parseFloat(getComputedStyle(el).fontSize);
     const roAll=rw.reduce((a,b)=>a+b,0)+sp*(m-1);
-    if(roAll<=W-2){
+    for(const k of roSteps){
+      if(best) break;
+      if(roAll*k>W-2) continue;
       for(let f=base;f>=base-4;f--){
         el.style.fontSize=f+'px';
-        if(meas(el,thLine(0,m))<=W-2){ best={mx:0,b:[0,m]}; break; }
+        if(meas(el,thLine(0,m))<=W-2){ best={mx:0,b:[0,m]}; roScale=k; break; }
       }
-      if(!best) el.style.fontSize='';
+      if(!best) el.style.fontSize=maxfs?maxfs+'px':'';
     }
     for(let n=2;n<=m && !best;n++){
+     for(const k of roSteps){
+      if(best) break;
       // m-1個の境目から n-1個を選ぶ全パターンを調べ、一番長い行が最も短くなる分け方を採用
       const cuts=[]; const rec=(start,left,cur)=>{ if(left===0){cuts.push(cur.slice());return;} for(let i=start;i<m;i++){cur.push(i);rec(i+1,left-1,cur);cur.pop();} };
       rec(1,n-1,[]);
@@ -1458,10 +1467,11 @@ function alignConvLines(){
         const b=[0,...cu,m]; let ok=true, mx=0, mn=1e9;
         for(let i=0;i<n && ok;i++){
           const a=meas(el,thLine(b[i],b[i+1])); let r=0; for(let k=b[i];k<b[i+1];k++){ r+=rw[k]+(k>b[i]?sp:0); }
-          if(a>W-2||r>W-2) ok=false; mx=Math.max(mx,a,r); mn=Math.min(mn,a);
+          r*=k; if(a>W-2||r>W-2) ok=false; mx=Math.max(mx,a,r); mn=Math.min(mn,a);
         }
-        if(ok && mn>=mx*0.4 && (!best||mx<best.mx)) best={mx,b};
+        if(ok && mn>=mx*0.4 && (!best||mx<best.mx)){ best={mx,b}; roScale=k; }
       }
+     }
     }
     if(!best) return; // 収まる分け方がなければ従来の折り返しのまま
     const th=[], ro=[];
@@ -1474,14 +1484,17 @@ function alignConvLines(){
     el.innerHTML=th.map(t=>'<div class="cl">'+esc(t)+'</div>').join('');
     roEl.innerHTML=ro.map(t=>'<div class="cl">'+esc(t)+'</div>').join('');
     roEl.classList.add('ro-lines');
+    if(roScale<1) roEl.style.fontSize=(roBase*roScale)+'px';
   });
+  alignConvLinesOnce=run;
   run();
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(run);
 }
+let alignConvLinesOnce=()=>{};
 
 // 保険: 行の対応づけができなかった会話文で、タイ語と読みの行数が違うときは、行数が多い方の文字を少しだけ小さくして行数をそろえる
 function equalizeConvLines(){
-  const lines=n=>{ const rg=document.createRange(); rg.selectNodeContents(n); return new Set([...rg.getClientRects()].filter(q=>q.width>0).map(q=>Math.round(q.top/6))).size; };
+  const lines=n=>{ const rg=document.createRange(); rg.selectNodeContents(n); const ys=[...rg.getClientRects()].filter(q=>q.width>0).map(q=>q.top+q.height/2).sort((a,b)=>a-b); let c=0,last=-1e9; ys.forEach(y=>{ if(y-last>12){c++;} last=y; }); return c; };
   const run=()=>document.querySelectorAll('.th-big.conv').forEach(el=>{
     if(el.querySelector('.cl')) return;
     const face=el.closest('.face'); const roEl=face&&face.querySelector('.ro-front,.back-ro'); if(!roEl) return;
@@ -1490,6 +1503,27 @@ function equalizeConvLines(){
     guard=0;
     while(lines(roEl)>lines(el) && guard++<4){ const f=parseFloat(getComputedStyle(roEl).fontSize); if(f<=12) break; roEl.style.fontSize=(f-1)+'px'; }
   });
+  run();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+}
+
+// 保険: 会話カードの表で、文字が多くてスピーカーボタンが下の「タップして意味を見る」に重なるときは、
+// タイ文字と読みを段階的に小さくして、カードの中に収める
+function fitConvFrontHeight(){
+  const run=()=>{
+    const face=document.getElementById('faceFront'); if(!face) return;
+    const el=face.querySelector('.th-big.conv'), aud=face.querySelector('.front-audio'), hint=face.querySelector('.tap-hint');
+    if(!el||!aud||!hint) return;
+    const roEl=face.querySelector('.ro-front');
+    const over=()=>aud.getBoundingClientRect().bottom > hint.getBoundingClientRect().top-6;
+    let fs=parseFloat(getComputedStyle(el).fontSize), n=0;
+    while(over() && fs>20 && n++<6){
+      fs-=2;
+      el.dataset.maxfs=fs;
+      if(roEl){ const rf=parseFloat(getComputedStyle(roEl).fontSize); if(rf>13){ roEl.dataset.maxfs=rf-1; roEl.style.fontSize=(rf-1)+'px'; } }
+      if(el.dataset.ck){ alignConvLinesOnce(); } else { el.style.fontSize=fs+'px'; }
+    }
+  };
   run();
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(run);
 }
@@ -1536,7 +1570,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-11a';
+const APP_VERSION = '2026-11-11b';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5800,6 +5834,7 @@ function render(){
   alignConvLines();
   fitThaiConv();
   equalizeConvLines();
+  fitConvFrontHeight();
   document.getElementById('cardInner').classList.toggle('flipped',st.flipped);
   document.getElementById('dotCount').textContent=(st.idx+1)+' / '+l.length;
   const learnedCount=(st.mode==='vocab' && st.pos==='all')
