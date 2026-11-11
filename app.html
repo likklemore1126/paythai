@@ -94,6 +94,9 @@ header{padding-bottom:10px;}
 .th-big{font-family:'Sarabun',sans-serif;font-weight:500;font-size:44px;line-height:1.4;margin-top:16px;letter-spacing:1px;}
 .th-big.sm{font-size:25px;}
 .nb{white-space:nowrap;}
+.th-big.conv .cl,.ro-lines .cl{white-space:nowrap;}
+.ro-lines{display:block !important;align-self:stretch !important;}
+.ro-front.ro-lines{text-align:center;}
 .th-big.conv{max-width:100%;font-size:30px;line-height:1.45;letter-spacing:.5px;text-wrap:balance;}
 .jp-big{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:25px;line-height:1.45;margin-top:16px;}
 .ro-front{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:#6b5c3e;margin-top:8px;}
@@ -1399,6 +1402,97 @@ function fitThaiConv(){
   run();
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(run);
 }
+
+// ─── 会話カード: タイ語の行と読み(ローマ字)の行をそろえる ───
+// 単語解説(CONV_BREAKDOWN)のまとまり単位で、タイ語もローマ字も同じ位置で改行する
+function convChunks(item){
+  const bd=CONV_BREAKDOWN[item.id]; if(!bd||!bd.length) return null;
+  const th=fTH(item.th), ro=fRO(item.ro); if(!th||!ro) return null;
+  const sk=(t,i)=>{ while(i<t.length && /\s/.test(t[i])) i++; return i; };
+  let ti=0, ri=0, prevEnd=0; const ch=[];
+  for(const w of bd){
+    const wt=(fTH(w.th)||'').replace(/\s+/g,''), wr=fRO(w.ro)||'';
+    if(!wt||!wr) return null;
+    ti=sk(th,ti); ri=sk(ro,ri);
+    const t0=ti; let k=0;
+    while(k<wt.length && ti<th.length){ if(/\s/.test(th[ti])){ti++;continue;} if(th[ti]!==wt[k]) return null; ti++; k++; }
+    if(k!==wt.length || !ro.startsWith(wr,ri)) return null;
+    ri+=wr.length;
+    ch.push({t0:prevEnd,t1:ti,r:wr}); prevEnd=ti;
+  }
+  const tailT=th.slice(ti).trim(), tailR=ro.slice(sk(ro,ri)).trim();
+  if(tailT||tailR){ const l=ch[ch.length-1]; l.t1=th.length; l.r=(l.r+' '+tailR).trim(); }
+  return ch.map(c=>({t:th.slice(c.t0,c.t1), r:c.r}));
+}
+function alignConvLines(){
+  const run=()=>document.querySelectorAll('.th-big.conv[data-ck]').forEach(el=>{
+    let ck; try{ ck=JSON.parse(el.dataset.ck); }catch(e){ return; }
+    const face=el.closest('.face'); const roEl=face&&face.querySelector('.ro-front,.back-ro');
+    if(!roEl||!ck||ck.length<1) return;
+    const W=face.clientWidth-40; if(W<=0) return;
+    const meas=(ref,txt)=>{
+      const sp=document.createElement('span'), cs=getComputedStyle(ref);
+      sp.style.cssText='position:absolute;visibility:hidden;white-space:pre;display:inline-block;font-family:'+cs.fontFamily+';font-size:'+cs.fontSize+';font-weight:'+cs.fontWeight+';letter-spacing:'+cs.letterSpacing+';';
+      sp.textContent=txt; face.appendChild(sp); const w=sp.offsetWidth; sp.remove(); return w;
+    };
+    const m=ck.length;
+    const rw=ck.map(c=>meas(roEl,c.r)), sp=meas(roEl,' ');
+    const thLine=(a,b)=>ck.slice(a,b).map(c=>c.t).join('').trim();
+    let best=null;
+    el.style.fontSize='';
+    // まず1行に収まるか(タイ文字を最大4px小さくして試す)
+    const base=parseFloat(getComputedStyle(el).fontSize);
+    const roAll=rw.reduce((a,b)=>a+b,0)+sp*(m-1);
+    if(roAll<=W-2){
+      for(let f=base;f>=base-4;f--){
+        el.style.fontSize=f+'px';
+        if(meas(el,thLine(0,m))<=W-2){ best={mx:0,b:[0,m]}; break; }
+      }
+      if(!best) el.style.fontSize='';
+    }
+    for(let n=2;n<=m && !best;n++){
+      // m-1個の境目から n-1個を選ぶ全パターンを調べ、一番長い行が最も短くなる分け方を採用
+      const cuts=[]; const rec=(start,left,cur)=>{ if(left===0){cuts.push(cur.slice());return;} for(let i=start;i<m;i++){cur.push(i);rec(i+1,left-1,cur);cur.pop();} };
+      rec(1,n-1,[]);
+      for(const cu of cuts){
+        const b=[0,...cu,m]; let ok=true, mx=0, mn=1e9;
+        for(let i=0;i<n && ok;i++){
+          const a=meas(el,thLine(b[i],b[i+1])); let r=0; for(let k=b[i];k<b[i+1];k++){ r+=rw[k]+(k>b[i]?sp:0); }
+          if(a>W-2||r>W-2) ok=false; mx=Math.max(mx,a,r); mn=Math.min(mn,a);
+        }
+        if(ok && mn>=mx*0.4 && (!best||mx<best.mx)) best={mx,b};
+      }
+    }
+    if(!best) return; // 収まる分け方がなければ従来の折り返しのまま
+    const th=[], ro=[];
+    for(let i=0;i<best.b.length-1;i++){
+      const seg=ck.slice(best.b[i],best.b[i+1]);
+      th.push(thLine(best.b[i],best.b[i+1]));
+      ro.push(seg.map(c=>c.r).join(' '));
+    }
+    const esc=t=>t.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    el.innerHTML=th.map(t=>'<div class="cl">'+esc(t)+'</div>').join('');
+    roEl.innerHTML=ro.map(t=>'<div class="cl">'+esc(t)+'</div>').join('');
+    roEl.classList.add('ro-lines');
+  });
+  run();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+}
+
+// 保険: 行の対応づけができなかった会話文で、タイ語と読みの行数が違うときは、行数が多い方の文字を少しだけ小さくして行数をそろえる
+function equalizeConvLines(){
+  const lines=n=>{ const rg=document.createRange(); rg.selectNodeContents(n); return new Set([...rg.getClientRects()].filter(q=>q.width>0).map(q=>Math.round(q.top/6))).size; };
+  const run=()=>document.querySelectorAll('.th-big.conv').forEach(el=>{
+    if(el.querySelector('.cl')) return;
+    const face=el.closest('.face'); const roEl=face&&face.querySelector('.ro-front,.back-ro'); if(!roEl) return;
+    let guard=0;
+    while(lines(el)>lines(roEl) && guard++<6){ const f=parseFloat(getComputedStyle(el).fontSize); if(f<=24) break; el.style.fontSize=(f-1)+'px'; }
+    guard=0;
+    while(lines(roEl)>lines(el) && guard++<4){ const f=parseFloat(getComputedStyle(roEl).fontSize); if(f<=12) break; roEl.style.fontSize=(f-1)+'px'; }
+  });
+  run();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+}
 let _thWordSet=null;
 function thWordSet(){
   if(_thWordSet) return _thWordSet;
@@ -1442,7 +1536,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-09h';
+const APP_VERSION = '2026-11-11a';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5633,14 +5727,16 @@ function render(){
         <div class="cb-label">🔍 単語解説</div>
         ${bd.map(w=>`<div class="cb-row"><span class="cb-th">${fTH(w.th)}</span><span class="cb-ro">${fRO(w.ro)}</span><span class="cb-jp">${w.jp}</span></div>`).join('')}
       </div>`:'';
+    const ckA=st.showRo?convChunks(item):null;
+    const ckAttr=ckA?` data-ck='${JSON.stringify(ckA).replace(/&/g,"&amp;").replace(/'/g,"&#39;")}'`:'';
     if(st.dir==='th-jp'){
-      front=`${ribHtml}${hole}${sc}<div class="th-big conv">${thWrapHtml(thT)}</div>
+      front=`${ribHtml}${hole}${sc}<div class="th-big conv"${ckAttr}>${thWrapHtml(thT)}</div>
         ${st.showRo?`<div class="ro-front">${(roT||'')}</div>`:''}
         <button class="audio-btn front-audio" id="audF">🔊</button>
         <div class="tap-hint">タップして意味を見る</div>`;
       back=`${ribHtml}${hole}
         <div class="conv-back-wrap">
-          <div class="th-big conv" style="margin-top:10px;">${thWrapHtml(thT)}</div>
+          <div class="th-big conv" style="margin-top:10px;"${ckAttr}>${thWrapHtml(thT)}</div>
           ${st.showRo?`<div class="back-ro">${(roT||'')}</div>`:''}
           <div class="back-jp" style="margin-top:8px;">${item.jp}</div>
           ${bdHtml}
@@ -5656,7 +5752,7 @@ function render(){
         <div class="tap-hint">タップしてタイ語を見る</div>`;
       back=`${ribHtml}${hole}
         <div class="conv-back-wrap">
-          <div class="th-big conv" style="margin-top:24px;">${thWrapHtml(thT)}</div>
+          <div class="th-big conv" style="margin-top:24px;"${ckAttr}>${thWrapHtml(thT)}</div>
           ${st.showRo?`<div class="back-ro">${(roT||'')}</div>`:''}
           ${bdHtml}
           <div class="back-actions">
@@ -5701,7 +5797,9 @@ function render(){
 
   document.getElementById('faceFront').innerHTML=front;
   document.getElementById('faceBack').innerHTML=back;
+  alignConvLines();
   fitThaiConv();
+  equalizeConvLines();
   document.getElementById('cardInner').classList.toggle('flipped',st.flipped);
   document.getElementById('dotCount').textContent=(st.idx+1)+' / '+l.length;
   const learnedCount=(st.mode==='vocab' && st.pos==='all')
