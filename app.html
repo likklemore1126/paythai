@@ -1588,7 +1588,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-11f';
+const APP_VERSION = '2026-11-11g';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4661,7 +4661,8 @@ function thaiNumber(n){
   for(let i=0;i<L;i++){
     const d=+str[i], place=L-1-i; if(d===0) continue;
     if(place===0){
-      if(d===1 && n>10){ th.push('เอ็ด'); ro.push('èt'); }
+      // 一の位の1を เอ็ด と読むのは、十の位があるときだけ(11, 21, 111 など)。101 や 1,001 は หนึ่ง と読む
+      if(d===1 && L>=2 && str[L-2]!=='0'){ th.push('เอ็ด'); ro.push('èt'); }
       else { th.push(dg(d).th_word); ro.push(dg(d).ro); }
     } else if(place===1){
       if(d===1){ th.push('สิบ'); ro.push('sìp'); }
