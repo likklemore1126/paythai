@@ -1432,7 +1432,7 @@ const CONV_BREAKDOWN = {
 const NUMS = [{"th_num":"๐","arabic":"0","ro":"sǔun","th_word":"ศูนย์"},{"th_num":"๑","arabic":"1","ro":"nɯɯng","th_word":"หนึ่ง"},{"th_num":"๒","arabic":"2","ro":"sɔɔng","th_word":"สอง"},{"th_num":"๓","arabic":"3","ro":"sǎam","th_word":"สาม"},{"th_num":"๔","arabic":"4","ro":"sìi","th_word":"สี่"},{"th_num":"๕","arabic":"5","ro":"hâa","th_word":"ห้า"},{"th_num":"๖","arabic":"6","ro":"hòk","th_word":"หก"},{"th_num":"๗","arabic":"7","ro":"cèt","th_word":"เจ็ด"},{"th_num":"๘","arabic":"8","ro":"pɛɛt","th_word":"แปด"},{"th_num":"๙","arabic":"9","ro":"kâao","th_word":"เก้า"},{"th_num":"๑๐","arabic":"10","ro":"sìp","th_word":"สิบ"},{"th_num":"๒๐","arabic":"20","ro":"yîi sìp","th_word":"ยี่สิบ"},{"th_num":"๑๐๐","arabic":"100","ro":"rɔɔi","th_word":"ร้อย"},{"th_num":"๑,๐๐๐","arabic":"1,000","ro":"phan","th_word":"พัน"},{"th_num":"๑๐,๐๐๐","arabic":"10,000","ro":"mɯ̀ɯn","th_word":"หมื่น"},{"th_num":"๑๐๐,๐๐๐","arabic":"100,000","ro":"sɛ̌ɛn","th_word":"แสน"},{"th_num":"๑,๐๐๐,๐๐๐","arabic":"1,000,000","ro":"láan","th_word":"ล้าน"}];
 
 const POS_LABELS = {noun:'名詞',verb:'動詞',adj:'形容詞',adv:'副詞',classifier:'類別詞',question:'疑問詞',greeting:'挨拶'};
-const MODE_LABELS_JP = {vocab:'単語',conversation:'会話',grammar:'文法',wordlist:'リスト',quiz:'テスト',numbers:'数字'};
+const MODE_LABELS_JP = {vocab:'単語',conversation:'会話',grammar:'文法',wordlist:'リスト',numbers:'数字',quiz:'テスト'};
 const SCENES = ["ALL","日常会話","レストラン","観光","ホテル","交通","緊急"];
 const PT = {male:{th:'ครับ',ro:'khrap',ps:'ผม',psr:'phǒm'},female:{th:'ค่ะ',ro:'kha',ps:'ดิฉัน',psr:'dichǎn'}};
 
@@ -1635,7 +1635,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-12b';
+const APP_VERSION = '2026-11-12c';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
