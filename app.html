@@ -147,6 +147,7 @@ header{padding-bottom:10px;}
   color:rgba(255,255,255,.35);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;
   flex-shrink:0;line-height:1;padding:0;margin-left:8px;align-self:center;}
 .list-fav-btn.on{color:var(--yellow);}
+.list-badge.weak-badge{background:#4a302d;color:#f1d9d4;white-space:nowrap;}
 /* ─── NAV ─── */
 .nav-row{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:14px;}
 .nav-btn{width:46px;height:46px;border-radius:50%;background:var(--bg2);
@@ -242,6 +243,8 @@ footer{text-align:center;padding:6px 0 2px;}
 .qz-q.done{flex-direction:row;text-align:left;justify-content:space-between;gap:12px;}
 .qz-q .a-txt{flex:1;min-width:0;}
 .qz-q .a-mark{font-size:14px;font-weight:800;margin-bottom:2px;}
+.qz-q .a-tag{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:rgba(176,88,74,.14);color:#9a4a3d;font-size:11.5px;font-weight:700;vertical-align:1px;}
+.qz-q .a-tag.good{background:rgba(79,122,90,.16);color:#3f6a4b;}
 .qz-q .a-mark.ok{color:#4f7a5a;} .qz-q .a-mark.ng{color:#b0584a;}
 .qz-q .a-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:30px;line-height:1.25;overflow-wrap:anywhere;}
 .qz-q .a-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;}
@@ -1450,6 +1453,32 @@ let st = {
 };
 const seenTips = new Set();
 
+// ── 苦手な単語(4択テストで間違えた単語) ──────────────────────────
+// st.weak = {単語ID: 連続正解数}。間違えると0で登録され、2回続けて正解すると外れる。
+st.weak = {};
+const WEAK_CLEAR_STREAK = 2;
+function weakSave(){ sto_set('s:weak', st.weak); }
+function weakFind(id){ for(const [k,a] of Object.entries(DATA)){ if(!Array.isArray(a)) continue; const w=a.find(x=>x.id===id); if(w) return {id:w.id,th:w.th,ro:w.ro||'',jp:w.jp,pos:k,level:w.level}; } return null; }
+function weakWords(){ return Object.keys(st.weak).map(weakFind).filter(Boolean); }
+function weakClean(){ // 無くなったID・統合されたIDを整理する
+  let ch=false;
+  for(const id of Object.keys(st.weak)){
+    if(typeof ID_MERGE!=='undefined' && ID_MERGE[id]){ const nw=ID_MERGE[id][0]; if(!(nw in st.weak)) st.weak[nw]=0; delete st.weak[id]; ch=true; }
+    else if(!weakFind(id)){ delete st.weak[id]; ch=true; }
+  }
+  if(ch) weakSave();
+}
+// テストの1問の結果を記録し、状態の変化を返す('added'|'still'|'progress'|'cleared'|null)
+function weakRecord(word, ok){
+  if(!word || word.pos==='numbers') return null;
+  const id=word.id, was=(id in st.weak);
+  if(!ok){ st.weak[id]=0; weakSave(); return was?'still':'added'; }
+  if(!was) return null;
+  st.weak[id]=(st.weak[id]||0)+1;
+  if(st.weak[id]>=WEAK_CLEAR_STREAK){ delete st.weak[id]; weakSave(); return 'cleared'; }
+  weakSave(); return 'progress';
+}
+
 const fTH = s => s ? s.replace(/\{PT}/g, PT[st.gender].th).replace(/\{PS}/g, PT[st.gender].ps) : s;
 
 // 会話カードのタイ語を、不自然な位置で改行されないよう「語のかたまり」に分ける
@@ -1635,14 +1664,14 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-12c';
+const APP_VERSION = '2026-11-12d';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
 }
 
 function snapshotCurrentData(){
-  const data = { learned: {}, favorites: {}, level: st.level, gender: st.gender };
+  const data = { learned: {}, favorites: {}, level: st.level, gender: st.gender, weak: {...st.weak} };
   for(const k of Object.keys(st.learned)) data.learned[k] = [...st.learned[k]];
   for(const k of Object.keys(st.favorites)) data.favorites[k] = [...st.favorites[k]];
   return data;
@@ -1678,7 +1707,9 @@ async function restoreAutoBackup(){
       sto_set('f:'+k, data.favorites[k]);
     }
   }
+  if(data.weak && typeof data.weak==='object' && !Array.isArray(data.weak)){ st.weak={...data.weak}; weakSave(); }
   migrateMergedIds();
+  weakClean();
   await appAlert('復元しました。');
   closeUpdateModal();
   render();
@@ -1740,7 +1771,9 @@ async function loadAll(){
     const d=await sto_get('f:'+k); if(d) st.favorites[k]=new Set(d);
   }
   const tips=await sto_get('s:seenTips'); if(Array.isArray(tips)) tips.forEach(id=>seenTips.add(id));
+  const wk=await sto_get('s:weak'); if(wk && typeof wk==='object' && !Array.isArray(wk)) st.weak=wk;
   migrateMergedIds();
+  weakClean();
 }
 
 // ── 例文データ（ルールベース静的生成） ────────────────────────────
@@ -4198,8 +4231,8 @@ function updateStickyTab(){
   if(st.mode!=='wordlist'){sr.style.display='none';return;}
   // スクロール量で表示切替(初期は非表示)
   sr.style.display=window.scrollY>170?'block':'none';
-  const modeTabs=`<button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocabSticky" style="margin-left:0;">単語</button><button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConvSticky">会話</button><button class="chip ${st.wordlistMode==='grammar'?'active-vocab':''}" id="wlModeGramSticky">文法</button><button class="chip ${st.wordlistMode==='learned'?'active-vocab':''}" id="wlModeLearnedSticky">学習済み</button><button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFavSticky">お気に入り</button>`;
-  if(st.wordlistMode==='favorites'||st.wordlistMode==='learned'||st.wordlistMode==='grammar'){
+  const modeTabs=`<button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocabSticky" style="margin-left:0;">単語</button><button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConvSticky">会話</button><button class="chip ${st.wordlistMode==='grammar'?'active-vocab':''}" id="wlModeGramSticky">文法</button><button class="chip ${st.wordlistMode==='learned'?'active-vocab':''}" id="wlModeLearnedSticky">学習済み</button><button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFavSticky">お気に入り</button><button class="chip ${st.wordlistMode==='weak'?'active-vocab':''}" id="wlModeWeakSticky">苦手</button>`;
+  if(st.wordlistMode==='favorites'||st.wordlistMode==='learned'||st.wordlistMode==='grammar'||st.wordlistMode==='weak'){
     sr.innerHTML=modeTabs;
   } else if(st.wordlistMode==='conversation'){
     sr.innerHTML=modeTabs+SCENES.map(s=>
@@ -4247,7 +4280,60 @@ function renderWordList(){
     <button class="chip ${st.wordlistMode==='grammar'?'active-vocab':''}" id="wlModeGram">文法</button>
     <button class="chip ${st.wordlistMode==='learned'?'active-vocab':''}" id="wlModeLearned">学習済み</button>
     <button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFav">お気に入り</button>
+    <button class="chip ${st.wordlistMode==='weak'?'active-vocab':''}" id="wlModeWeak">苦手${Object.keys(st.weak).length?'('+Object.keys(st.weak).length+')':''}</button>
   </div>`;
+
+  if(st.wordlistMode==='weak'){
+    // ── 苦手な単語(4択テストで間違えた単語) ──
+    const items=weakWords();
+    html+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${items.length}件</div>`;
+    if(!items.length){
+      html+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;line-height:1.9;">苦手な単語はまだありません<br>「テスト」で間違えた単語が、ここに自動でたまります<br>2回続けて正解すると、ここから外れます</div>`;
+    } else {
+      html+=`<div style="padding:0 12px 10px;font-size:13px;color:var(--muted2);line-height:1.7;">テストで間違えた単語です。2回続けて正解すると外れます。</div>
+        <div style="display:flex;gap:8px;padding:0 12px 12px;">
+          <button id="weakTestBtn" style="flex:1;padding:12px;border-radius:14px;border:none;background:var(--accent);color:#1d1c1b;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;">📝 苦手だけテストする</button>
+          <button id="weakClearBtn" style="padding:12px 14px;border-radius:14px;background:transparent;border:1.5px solid #4a4743;color:var(--muted2);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;">空にする</button>
+        </div>`;
+      items.forEach((item,idx)=>{
+        const fav=st.favorites[item.pos]?.has(item.id);
+        const left=WEAK_CLEAR_STREAK-(st.weak[item.id]||0);
+        html+=`<div class="list-item weak-list-vocab" data-id="${item.id}" data-pos="${item.pos}">
+          <span class="list-num">${idx+1}</span>
+          <div class="list-body">
+            <div class="list-row1"><span class="list-th">${item.th}</span><span class="list-ro"><span class="list-ro-text">${(item.ro||'')}</span></span></div>
+            <div class="list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
+          </div>
+          <span class="list-badge weak-badge">あと${left}回</span>
+          <button class="list-fav-btn ${fav?'on':''}" data-fav-id="${item.id}" data-fav-cat="${item.pos}">${fav?'★':'☆'}</button>
+        </div>`;
+      });
+    }
+    lp.innerHTML=html;
+    updateStickyTab();
+    bindFavButtons(lp);
+    lp.querySelectorAll('.weak-list-vocab').forEach(el=>{
+      el.addEventListener('click',()=>{
+        const id=el.dataset.id, pos2=el.dataset.pos;
+        const w=(DATA[pos2]||[]).find(i=>i.id===id); if(!w) return;
+        // 中級者+の単語は、初心者表示のままだとカードが開けないので表示レベルを合わせる
+        if(st.level==='beginner' && w.level!=='5'){ st.level='intermediate'; sto_set('s:level',st.level); }
+        const arr=(st.level==='beginner'?(DATA[pos2]||[]).filter(i=>i.level==='5'):(DATA[pos2]||[]));
+        const idx2=arr.findIndex(i=>i.id===id); if(idx2<0) return;
+        st.fromList=true; st.fromListTab='weak'; st.fromListPos=pos2; st.fromListItemId=id; st.fromListMode='vocab';
+        st.mode='vocab'; st.pos=pos2; st.idx=idx2; st.flipped=false; st.filterUn=false; st.shuffle=false;
+        render(); window.scrollTo(0,0);
+      });
+    });
+    const wt=document.getElementById('weakTestBtn'); if(wt) wt.onclick=()=>{ window.scrollTo(0,0); quizStartWeak(); };
+    const wc=document.getElementById('weakClearBtn'); if(wc) wc.onclick=async()=>{ if(await appConfirm('苦手な単語のリストを空にします。よろしいですか?')){ st.weak={}; weakSave(); render(); } };
+    const wmvW=document.getElementById('wlModeVocab'); if(wmvW) wmvW.onclick=()=>{st.wordlistMode='vocab';window.scrollTo(0,0);render();};
+    const wmcW=document.getElementById('wlModeConv'); if(wmcW) wmcW.onclick=()=>{st.wordlistMode='conversation';window.scrollTo(0,0);render();};
+    const wmgW=document.getElementById('wlModeGram'); if(wmgW) wmgW.onclick=()=>{st.wordlistMode='grammar';window.scrollTo(0,0);render();};
+    const wmlW=document.getElementById('wlModeLearned'); if(wmlW) wmlW.onclick=()=>{st.wordlistMode='learned';window.scrollTo(0,0);render();};
+    const wmfW=document.getElementById('wlModeFav'); if(wmfW) wmfW.onclick=()=>{st.wordlistMode='favorites';window.scrollTo(0,0);render();};
+    return;
+  }
 
   if(st.wordlistMode==='grammar'){
     // ── 文法一覧 ──
@@ -4878,7 +4964,7 @@ function quizNumQuestion(word){
   return {word, opts:shuffleArr([word,...picked.map(quizNumWord)])};
 }
 function quizBuild(words){
-  const pool=quizPool(quiz.pos), wide=quizPool('all');
+  const wide=quizPool('all'), pool=(quiz.pos==='weak')?wide:quizPool(quiz.pos);
   quiz.qs=shuffleArr(words).slice(0,QUIZ_N).map(w=>w.pos==='numbers'?quizNumQuestion(w):quizMakeQuestion(w,pool,wide));
   quiz.i=0; quiz.picked=null; quiz.results=[]; quiz.phase='play';
 }
@@ -4901,6 +4987,9 @@ function quizStart(){
     const seen=new Set(), ws=[]; let guard=0;
     while(ws.length<QUIZ_N && guard++<500){ const n=quizRandNumber(quiz.numRange); if(seen.has(n)) continue; seen.add(n); ws.push(quizNumWord(n)); }
     quizBuild(ws);
+  } else if(quiz.pos==='weak'){
+    const ws=weakWords(); if(!ws.length){ quizToSetup(); return; }
+    quizBuild(ws);
   } else {
     const pool=quizPool(quiz.pos); if(pool.length<4) return;
     quizBuild(pool);
@@ -4913,7 +5002,9 @@ function quizPick(n){
   if(quiz.phase!=='play'||quiz.picked!==null) return;
   const q=quiz.qs[quiz.i]; if(!q||!q.opts[n]) return;
   quiz.picked=n;
-  quiz.results.push({word:q.word, ok:q.opts[n].id===q.word.id});
+  const okNow=(q.opts[n].id===q.word.id);
+  quiz.results.push({word:q.word, ok:okNow});
+  quiz.fb=weakRecord(q.word, okNow);
   quizDraw(false);
   if(quiz.type!=='listen') speak(q.word.th);
 }
@@ -4932,6 +5023,8 @@ function quizRetryWrong(){
   quizBuild(wrong); quizDraw(true);
   if(quiz.type==='listen') quizSpeakCur();
 }
+function quizGoWeakList(){ st.mode='wordlist'; st.wordlistMode='weak'; window.scrollTo(0,0); render(); }
+function quizStartWeak(){ quiz.pos='weak'; st.mode='quiz'; render(); quizStart(); }
 function quizToSetup(){ quiz.phase='setup'; quiz.qs=[]; quiz.results=[]; quiz.picked=null; quiz.i=0; quizDraw(true); }
 function quizSpeakWord(id){
   const w=(quiz.results.find(r=>r.word.id===id)||{}).word || (quiz.qs.find(q=>q.word.id===id)||{}).word;
@@ -4962,7 +5055,7 @@ function renderQuiz(){
     }).join('');
     if(done){
       const ok=q.opts[quiz.picked].id===w.id;
-      prompt=`<div class="a-txt"><div class="a-mark ${ok?'ok':'ng'}">${ok?'⭕ 正解':'❌ 不正解'}</div><div class="a-th"${thFs(w.th,30)}>${w.th}</div>${w.ro?`<div class="a-ro">${w.ro}</div>`:''}<div class="a-jp">${w.jp}</div></div><button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button>`;
+      prompt=`<div class="a-txt"><div class="a-mark ${ok?'ok':'ng'}">${ok?'⭕ 正解':'❌ 不正解'}${({added:'<span class="a-tag">苦手に追加</span>',still:'<span class="a-tag">苦手のまま</span>',progress:'<span class="a-tag">あと1回正解で克服</span>',cleared:'<span class="a-tag good">苦手を克服!</span>'})[quiz.fb]||''}</div><div class="a-th"${thFs(w.th,30)}>${w.th}</div>${w.ro?`<div class="a-ro">${w.ro}</div>`:''}<div class="a-jp">${w.jp}</div></div><button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button>`;
     }
     const ans=`<button class="qz-main qz-next" id="qzNext" onclick="quizNext()" ${done?'':'hidden'}>${quiz.i>=total-1?'結果を見る':'次の問題へ'}</button>`;
     return `<div class="qz">
@@ -4983,13 +5076,15 @@ function renderQuiz(){
       <div class="qz-msg">${msg}</div>
       ${wl}
       ${wrong.length?`<button class="qz-main" onclick="quizRetryWrong()">間違えた${wrong.length}問をもう一度</button>`:''}
-      <button class="${wrong.length?'qz-ghost':'qz-main'}" onclick="quizStart()">同じ設定で次の${QUIZ_N}問</button>
+      ${(quiz.pos==='weak' && !Object.keys(st.weak).length)?'<div class="qz-msg">🎉 苦手な単語はすべて克服しました。</div>':`<button class="${wrong.length?'qz-ghost':'qz-main'}" onclick="quizStart()">${quiz.pos==='weak'?'苦手をもう一度テストする':'同じ設定で次の'+QUIZ_N+'問'}</button>`}
+      ${Object.keys(st.weak).length?`<button class="qz-ghost" onclick="quizGoWeakList()">😣 苦手な単語を見る(${Object.keys(st.weak).length}語)</button>`:''}
       <button class="qz-ghost" onclick="quizToSetup()">設定に戻る</button>
     </div>`;
   }
   // 設定画面
-  const isNum=(quiz.pos==='numbers');
-  const n=isNum?99:quizPool(quiz.pos).length;
+  const isNum=(quiz.pos==='numbers'), isWeak=(quiz.pos==='weak');
+  const weakN=Object.keys(st.weak).length;
+  const n=isNum?99:isWeak?(weakN?4:0):quizPool(quiz.pos).length;
   const chip=(k,v,label,on)=>`<button class="qz-chip ${on?'on':''}" onclick="quizSet('${k}','${v}')">${label}</button>`;
   return `<div class="qz">
     <div class="qz-h">📝 4択テスト</div>
@@ -4997,15 +5092,16 @@ function renderQuiz(){
     <div class="qz-lbl">出題形式</div>
     <div class="qz-chips">${Object.entries(QUIZ_TYPES).map(([k,v])=>chip('type',k,v,quiz.type===k)).join('')}</div>
     <div class="qz-lbl">区分</div>
-    <div class="qz-chips">${chip('pos','all','単語ALL',quiz.pos==='all')}${Object.entries(POS_LABELS).map(([k,v])=>chip('pos',k,v,quiz.pos===k)).join('')}${chip('pos','numbers','🔢 数字',isNum)}</div>
+    <div class="qz-chips">${chip('pos','all','単語ALL',quiz.pos==='all')}${Object.entries(POS_LABELS).map(([k,v])=>chip('pos',k,v,quiz.pos===k)).join('')}${chip('pos','numbers','🔢 数字',isNum)}${chip('pos','weak','😣 苦手('+weakN+')',isWeak)}</div>
     ${isNum?`<div class="qz-lbl">数字の範囲</div>
     <div class="qz-chips">${Object.entries(QUIZ_NUM_RANGES).map(([k,v])=>chip('numRange',k,v,quiz.numRange===k)).join('')}</div>`
+    :isWeak?`<div class="qz-sub" style="margin:12px 0 0;">テストで間違えた単語から出題します。2回続けて正解すると、苦手から外れます。</div>`
     :`<div class="qz-lbl">レベル</div>
     <div class="qz-chips">${chip('level','beginner','初心者',st.level==='beginner')}${chip('level','intermediate','中級者+',st.level!=='beginner')}</div>`}
     <div class="qz-lbl">読み(ローマ字)の表示</div>
     <div class="qz-chips">${chip('ro','1','あり',!!st.showRo)}${chip('ro','0','なし',!st.showRo)}</div>
     <button class="qz-main" onclick="quizStart()" ${n<4?'disabled':''}>${QUIZ_N}問スタート</button>
-    <div class="qz-sub" style="text-align:center;margin-top:10px;">${isNum?('出題範囲: '+(quiz.numRange==='mix'?'1〜99,999':QUIZ_NUM_RANGES[quiz.numRange])+'(聞き取りは「🔊 聞いて選ぶ」)'):('出題範囲: '+n+'語')}</div>
+    <div class="qz-sub" style="text-align:center;margin-top:10px;">${isNum?('出題範囲: '+(quiz.numRange==='mix'?'1〜99,999':QUIZ_NUM_RANGES[quiz.numRange])+'(聞き取りは「🔊 聞いて選ぶ」)'):isWeak?(weakN?('苦手な単語: '+weakN+'語'):'まだ苦手な単語はありません(テストで間違えるとここにたまります)'):('出題範囲: '+n+'語')}</div>
   </div>`;
 }
 
@@ -5501,7 +5597,7 @@ document.getElementById('flipWrap').addEventListener('touchend',e=>{
 },{passive:true});
 
 let lx=null,ly=null;
-const WL_MODE_ORDER=['vocab','conversation','grammar','learned','favorites'];
+const WL_MODE_ORDER=['vocab','conversation','grammar','learned','favorites','weak'];
 const listPageEl=document.getElementById('listPage');
 listPageEl.addEventListener('touchstart',e=>{
   if(e.target.closest('#wlModeRow, #wlTabRow')){ lx=null; ly=null; return; }
@@ -5530,6 +5626,7 @@ async function exportData(){
     favorites: {},
     level: st.level,
     gender: st.gender,
+    weak: {...st.weak},
   };
   for(const k of Object.keys(st.learned)){
     data.learned[k] = [...st.learned[k]];
@@ -5598,7 +5695,9 @@ async function importData(){
         }
       }
     }
+    if(data.weak && typeof data.weak==='object' && !Array.isArray(data.weak)){ st.weak={...data.weak}; weakSave(); }
     migrateMergedIds();
+    weakClean();
     // settings
     if(data.level){ st.level=data.level; sto_set('s:level',st.level); }
     if(data.gender){ st.gender=data.gender; sto_set('s:gender',st.gender); }
@@ -5610,6 +5709,7 @@ async function importData(){
   }
 }
 
+document.addEventListener('click',e=>{ const t=e.target.closest && e.target.closest('#wlModeWeak,#wlModeWeakSticky'); if(t && st.mode==='wordlist'){ st.wordlistMode='weak'; window.scrollTo(0,0); render(); } });
 document.getElementById('exportBtn').addEventListener('click', exportData);
 document.getElementById('importBtn').addEventListener('click', importData);
 
@@ -5623,6 +5723,8 @@ document.getElementById('backBtn').addEventListener('click',function(){
     st.wordlistMode='favorites';
   } else if(fromTab==='learned'){
     st.wordlistMode='learned';
+  } else if(fromTab==='weak'){
+    st.wordlistMode='weak';
   } else if(st.fromListMode==='conversation'){
     st.wordlistMode='conversation';
     st.wordlistScene=st.fromListPos;
