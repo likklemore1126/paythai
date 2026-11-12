@@ -239,16 +239,17 @@ footer{text-align:center;padding:6px 0 2px;}
 .qz-quit{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;font-family:inherit;padding:6px 0 6px 12px;}
 .qz-bar{height:5px;border-radius:3px;background:#3b3935;overflow:hidden;margin-bottom:10px;}
 .qz-bar>i{display:block;height:100%;background:var(--blue);}
-.qz-q{background:var(--tag);border:1.5px solid var(--tag-edge);border-radius:18px;padding:12px 16px;text-align:center;color:var(--ink);height:148px;box-sizing:border-box;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+.qz-q{background:var(--tag);border:1.5px solid var(--tag-edge);border-radius:18px;padding:12px 16px;text-align:center;color:var(--ink);height:164px;box-sizing:border-box;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
 .qz-q.done{flex-direction:row;text-align:left;justify-content:space-between;gap:12px;}
 .qz-q .a-txt{flex:1;min-width:0;}
 .qz-q .a-mark{font-size:14px;font-weight:800;margin-bottom:2px;}
 .qz-q .a-tag{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:rgba(176,88,74,.14);color:#9a4a3d;font-size:11.5px;font-weight:700;vertical-align:1px;}
 .qz-q .a-tag.good{background:rgba(79,122,90,.16);color:#3f6a4b;}
+.qz-q .a-lbl{display:inline-block;margin:1px 0 0;padding:1px 9px;border-radius:999px;background:#4f7a5a;color:#f4ecdc;font-size:11.5px;font-weight:800;}
 .qz-q .a-mark.ok{color:#4f7a5a;} .qz-q .a-mark.ng{color:#b0584a;}
 .qz-q .a-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:30px;line-height:1.25;overflow-wrap:anywhere;}
 .qz-q .a-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;}
-.qz-q .a-jp{font-size:15px;font-weight:700;margin-top:2px;line-height:1.35;}
+.qz-q .a-jp{font-size:15px;font-weight:700;margin-top:2px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
 .qz-q .qz-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:36px;line-height:1.2;overflow-wrap:anywhere;}
 .qz-q .qz-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;}
 .qz-q .qz-jp{font-size:23px;font-weight:700;line-height:1.4;}
@@ -257,7 +258,12 @@ footer{text-align:center;padding:6px 0 2px;}
 .qz-spk.big{width:76px;height:76px;font-size:40px;}
 .qz-opts{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
 .qz-opt{display:block;width:100%;text-align:left;padding:10px 14px;border-radius:14px;background:var(--bg2);border:1.5px solid #3b3935;color:#ece9e4;font-size:15.5px;font-weight:600;line-height:1.4;min-height:46px;box-sizing:border-box;cursor:pointer;font-family:inherit;}
-.qz-opt.th{display:flex;align-items:baseline;flex-wrap:wrap;column-gap:12px;}
+.qz-opt{display:flex;flex-wrap:wrap;align-items:center;column-gap:10px;}
+.qz-opt .o-main{flex:1;min-width:0;}
+.qz-opt.th .o-main{display:flex;align-items:baseline;flex-wrap:wrap;column-gap:12px;}
+.qz-opt .o-badge{flex-shrink:0;font-size:12px;font-weight:800;padding:2px 9px;border-radius:999px;line-height:1.5;white-space:nowrap;}
+.qz-opt .o-badge.ok{background:#9fb8a0;color:#1d1c1b;}
+.qz-opt .o-badge.ng{background:#d9a198;color:#1d1c1b;}
 .qz-opt .o-th{font-family:'Sarabun',sans-serif;font-size:22px;font-weight:500;line-height:1.25;}
 .qz-opt .o-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;font-weight:400;color:var(--muted);}
 .qz-opt .o-was{display:block;flex-basis:100%;margin-top:4px;padding-top:5px;border-top:1px solid rgba(241,217,212,.22);font-size:12.5px;font-weight:600;color:#e6c3bc;line-height:1.45;overflow-wrap:anywhere;}
@@ -1667,7 +1673,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-12e';
+const APP_VERSION = '2026-11-12f';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -5059,15 +5065,18 @@ function renderQuiz(){
       const body=(quiz.type==='jp-th')
         ? `<span class="o-th"${thFs(optLongest,22)}>${o.th}</span>${ro(o.ro)?`<span class="o-ro">${o.ro}</span>`:''}`
         : o.jp;
+      // 回答後は色だけに頼らず、「正解」「あなたの答え」を文字で示す
+      const isOk=(done && o.id===w.id), isNg=(done && n===quiz.picked && o.id!==w.id);
+      const badge=isOk?'<span class="o-badge ok">⭕ 正解</span>':isNg?'<span class="o-badge ng">❌ あなたの答え</span>':'';
       // 間違えて選んだ選択肢には、それが何だったのか(タイ語と読み、または意味)を添える
-      const was=(done && n===quiz.picked && o.id!==w.id)
-        ? `<span class="o-was">選んだ答え: ${quiz.type==='jp-th' ? o.jp : `<span class="w-th">${o.th}</span>${o.ro?` <span class="w-ro">(${o.ro})</span>`:''}`}</span>`
+      const was=isNg
+        ? `<span class="o-was">${quiz.type==='jp-th' ? 'この単語の意味: '+o.jp : `この意味のタイ語: <span class="w-th">${o.th}</span>${o.ro?` <span class="w-ro">(${o.ro})</span>`:''}`}</span>`
         : '';
-      return `<button class="${cls}" ${done?'disabled':''} onclick="quizPick(${n})">${body}${was}</button>`;
+      return `<button class="${cls}" ${done?'disabled':''} onclick="quizPick(${n})"><span class="o-main">${body}</span>${badge}${was}</button>`;
     }).join('');
     if(done){
       const ok=q.opts[quiz.picked].id===w.id;
-      prompt=`<div class="a-txt"><div class="a-mark ${ok?'ok':'ng'}">${ok?'⭕ 正解':'❌ 不正解'}${({added:'<span class="a-tag">苦手に追加</span>',still:'<span class="a-tag">苦手のまま</span>',progress:'<span class="a-tag">あと1回正解で克服</span>',cleared:'<span class="a-tag good">苦手を克服!</span>'})[quiz.fb]||''}</div><div class="a-th"${thFs(w.th,30)}>${w.th}</div>${w.ro?`<div class="a-ro">${w.ro}</div>`:''}<div class="a-jp">${w.jp}</div></div><button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button>`;
+      prompt=`<div class="a-txt"><div class="a-mark ${ok?'ok':'ng'}">${ok?'⭕ 正解':'❌ 不正解'}${({added:'<span class="a-tag">苦手に追加</span>',still:'<span class="a-tag">苦手のまま</span>',progress:'<span class="a-tag">あと1回正解で克服</span>',cleared:'<span class="a-tag good">苦手を克服!</span>'})[quiz.fb]||''}</div>${ok?'':'<div class="a-lbl">正しい答え</div>'}<div class="a-th"${thFs(w.th,30)}>${w.th}</div>${w.ro?`<div class="a-ro">${w.ro}</div>`:''}<div class="a-jp"${w.jp.length>26?' style="font-size:12px"':w.jp.length>14?' style="font-size:13px"':''}>${w.jp}</div></div><button class="qz-spk" onclick="quizSpeakCur()" aria-label="音声を聞く">🔊</button>`;
     }
     const ans=`<button class="qz-main qz-next" id="qzNext" onclick="quizNext()" ${done?'':'hidden'}>${quiz.i>=total-1?'結果を見る':'次の問題へ'}</button>`;
     return `<div class="qz">
