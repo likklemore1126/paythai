@@ -22,6 +22,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;700&family=Zen+Maru+Gothic:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* 読み(ローマ字)の発音記号用フォント。ɔ ɛ ə ʉ ŋ と声調の印を1つのファイルにまとめ、
+   声調の印が付いた文字(ɔ̌ など)だけ別のフォントで表示されるのを防ぐ(Noto Sans Monoから抜き出し、OFLライセンス) */
+@font-face{font-family:'PocaIPA';font-weight:400;font-display:swap;src:url(poca-ipa-400.woff2) format('woff2');unicode-range:U+014B,U+0254,U+0259,U+025B,U+0289,U+0300-0302,U+030C;}
+@font-face{font-family:'PocaIPA';font-weight:500 900;font-display:swap;src:url(poca-ipa-500.woff2) format('woff2');unicode-range:U+014B,U+0254,U+0259,U+025B,U+0289,U+0300-0302,U+030C;}
+
 :root{
   --bg:#1d1c1b;--bg2:#262523;--tag:#f3ead8;--tag-edge:#e6d9bf;
   --ink:#2b2118;--pink:#cf9ea3;--yellow:#c9bda6;--accent:#d49a78;--green:#9fb8a0;
@@ -40,8 +45,8 @@ button,.chip,.mode-tab{-webkit-user-select:none;user-select:none;}
   flex:1;display:flex;flex-direction:column;}
 header{padding-bottom:10px;}
 .title-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;}
-.title-th{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-weight:600;font-size:23px;color:#fff;}
-.title-sub{font-size:13px;color:var(--muted);font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
+.title-th{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-weight:600;font-size:23px;color:#fff;}
+.title-sub{font-size:13px;color:var(--muted);font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;}
 .mode-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:10px;}
 .scroll-fade-r{mask-image:linear-gradient(to right,black calc(100% - 30px),transparent 100%);-webkit-mask-image:linear-gradient(to right,black calc(100% - 30px),transparent 100%);}
 .scroll-fade-l{mask-image:linear-gradient(to left,black calc(100% - 30px),transparent 100%);-webkit-mask-image:linear-gradient(to left,black calc(100% - 30px),transparent 100%);}
@@ -61,17 +66,17 @@ header{padding-bottom:10px;}
 .sub-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;min-height:28px;}
 .sub-row::-webkit-scrollbar{display:none;}
 .chip{flex:0 0 auto;padding:5px 12px;border-radius:999px;font-size:13px;
-  font-family:'IBM Plex Mono','Noto Sans Mono',monospace;background:var(--bg2);
+  font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;background:var(--bg2);
   border:1px solid #3b3935;color:var(--muted2);cursor:pointer;}
 .chip.active-vocab{background:var(--accent);color:#1d1c1b;border-color:var(--accent);}
 .chip.active-conv{background:var(--pink);color:#1d1c1b;border-color:var(--pink);}
 .settings-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;min-height:28px;}
 .pill{background:var(--bg2);border:1px solid #3b3935;color:var(--muted2);
   border-radius:999px;padding:5px 11px;font-size:13px;
-  font-family:'IBM Plex Mono','Noto Sans Mono',monospace;cursor:pointer;}
+  font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;cursor:pointer;}
 .pill.on{background:var(--accent);color:#1d1c1b;border-color:var(--accent);font-weight:700;}
 .progress-line{display:flex;justify-content:flex-end;margin-top:5px;min-height:16px;}
-.progress-text{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
+.progress-text{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
 /* ─── CARD ─── */
 .stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0 14px;}
 .flip-wrap{width:100%;max-width:340px;height:390px;perspective:1400px;position:relative;touch-action:pan-y;}
@@ -83,11 +88,11 @@ header{padding-bottom:10px;}
   box-shadow:0 18px 30px -14px rgba(0,0,0,.55);border:1px solid var(--tag-edge);
   display:flex;flex-direction:column;padding:22px 20px 18px;color:var(--ink);}
 .face-back{transform:rotateY(180deg);overflow-y:auto;overflow-x:hidden;}
-.ribbon{position:absolute;top:14px;right:-1px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;
+.ribbon{position:absolute;top:14px;right:-1px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;
   font-size:12px;font-weight:500;color:#fff;padding:3px 10px 3px 12px;border-radius:6px 0 0 6px;}
 .hole{width:16px;height:16px;border-radius:50%;background:var(--bg);
   border:3px solid var(--tag-edge);position:absolute;top:14px;left:14px;}
-.lv{position:absolute;bottom:14px;right:14px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#9c8d68;}
+.lv{position:absolute;bottom:14px;right:14px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#9c8d68;}
 .face-front{justify-content:center;align-items:center;text-align:center;}
 .th-big{font-family:'Sarabun',sans-serif;font-weight:500;font-size:44px;line-height:1.4;margin-top:16px;letter-spacing:1px;}
 .th-big.sm{font-size:25px;}
@@ -97,15 +102,15 @@ header{padding-bottom:10px;}
 .ro-front.ro-lines{text-align:center;}
 .th-big.conv{max-width:100%;font-size:30px;line-height:1.45;letter-spacing:.5px;text-wrap:balance;}
 .jp-big{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:25px;line-height:1.45;margin-top:16px;}
-.ro-front{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:#6b5c3e;margin-top:8px;}
-.tap-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:13px;color:#9c8d68;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
+.ro-front{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:16px;color:#6b5c3e;margin-top:8px;}
+.tap-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:13px;color:#9c8d68;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;}
 .audio-btn{width:54px;height:54px;border-radius:50%;background:var(--ink);color:var(--tag);flex-shrink:0;
   border:none;font-size:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .audio-btn:active{transform:scale(.9);}
 .front-audio{margin-top:16px;}
-.scene-tag{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#8a7a55;margin-top:26px;margin-bottom:2px;}
+.scene-tag{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:#8a7a55;margin-top:26px;margin-bottom:2px;}
 /* back face content */
-.back-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;margin-top:6px;}
+.back-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;margin-top:6px;}
 .back-jp{font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:20px;margin-top:6px;line-height:1.4;}
 .conv-back-wrap{display:block;}
 .conv-breakdown{margin-top:12px;padding:10px 12px;background:rgba(43,33,24,.06);border:1px solid rgba(43,33,24,.12);border-radius:10px;
@@ -115,7 +120,7 @@ header{padding-bottom:10px;}
   padding:7px 0;border-top:1px solid rgba(43,33,24,.1);}
 .cb-row:first-of-type{border-top:none;}
 .cb-th{font-family:'Sarabun',sans-serif;font-weight:700;font-size:20px;color:#000;word-break:break-word;letter-spacing:.4px;}
-.cb-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;font-weight:600;color:#5c4a30;word-break:break-word;}
+.cb-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;font-weight:600;color:#5c4a30;word-break:break-word;}
 .cb-jp{font-size:15px;font-weight:500;color:#2b2118;grid-column:1/-1;margin-top:2px;}
 .gram-title{font-family:'Sarabun',sans-serif;font-weight:600;font-size:21px;margin-top:26px;color:var(--ink);}
 .ex-ok-btn{border:1.5px solid #4caf50;background:transparent;color:#4caf50;
@@ -132,7 +137,7 @@ header{padding-bottom:10px;}
 .gram-title .rb{white-space:nowrap;}
 .ex-box{margin-top:12px;background:rgba(0,0,0,.06);border-radius:10px;padding:10px 12px;}
 .ex-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:21px;letter-spacing:.4px;}
-.ex-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;margin-top:3px;}
+.ex-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:#6b5c3e;margin-top:3px;}
 .ex-jp{font-size:15px;margin-top:3px;}
 .back-actions{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:6px;min-height:62px;}
 .learn-btn{border:1.5px solid var(--ink);background:transparent;color:var(--ink);
@@ -153,7 +158,7 @@ header{padding-bottom:10px;}
 .nav-btn{width:46px;height:46px;border-radius:50%;background:var(--bg2);
   border:1px solid #3b3935;color:#fff;font-size:21px;cursor:pointer;}
 .nav-btn:active{transform:scale(.9);}
-.dot-count{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);min-width:60px;text-align:center;}
+.dot-count{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);min-width:60px;text-align:center;}
 /* ─── STATIC ─── */
 .static-page{flex:1;overflow-y:auto;padding:4px 0 16px;}
 footer{text-align:center;padding:6px 0 2px;}
@@ -184,11 +189,11 @@ footer{text-align:center;padding:6px 0 2px;}
 .list-item{display:flex;align-items:flex-start;gap:0;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .15s;}
 .list-item:active{background:rgba(255,255,255,.07);}
 .list-item.learned-item{background:rgba(76,154,106,.08);}
-.list-num{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);width:24px;text-align:right;flex-shrink:0;margin-right:8px;margin-top:3px;}
+.list-num{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);width:24px;text-align:right;flex-shrink:0;margin-right:8px;margin-top:3px;}
 .list-body{flex:1;min-width:0;}
 .list-row1{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
 .list-th{font-family:'Sarabun',sans-serif;font-size:20px;color:#fff;}
-.list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted2);line-height:1.4;}
+.list-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted2);line-height:1.4;}
 .list-jp{font-size:14px;color:var(--fg);text-align:left;line-height:1.5;margin-top:2px;}
 .gram-list-row{align-items:flex-start!important;}
 .gram-list-row .glr-body{flex:1;min-width:0;}
@@ -198,7 +203,7 @@ footer{text-align:center;padding:6px 0 2px;}
 .conv-list-item.learned-item{background:rgba(76,154,106,.08);}
 .conv-list-row1{display:flex;align-items:baseline;gap:8px;}
 .conv-list-th{font-family:'Sarabun',sans-serif;font-size:18px;color:#fff;flex:1;line-height:1.4;}
-.conv-list-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted2);padding-left:36px;line-height:1.4;}
+.conv-list-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted2);padding-left:36px;line-height:1.4;}
 .conv-list-jp{font-size:14px;color:var(--fg);padding-left:36px;line-height:1.5;}
 .list-badge{font-size:10px;background:#34473c;color:#bcd3c2;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;align-self:center;flex-shrink:0;}
 /* --- 戻るボタン --- */
@@ -235,7 +240,7 @@ footer{text-align:center;padding:6px 0 2px;}
 .qz-next{margin-top:10px;padding:13px;position:sticky;bottom:calc(8px + env(safe-area-inset-bottom));box-shadow:0 0 0 6px var(--bg);}
 .qz-next[hidden]{display:block;visibility:hidden;}
 .qz-ghost{display:block;width:100%;margin-top:10px;padding:14px;border-radius:16px;background:transparent;border:1.5px solid #4a4743;color:var(--muted2);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
-.qz-top{display:flex;align-items:center;justify-content:space-between;margin:0 0 4px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);}
+.qz-top{display:flex;align-items:center;justify-content:space-between;margin:0 0 4px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);}
 .qz-quit{background:none;border:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;font-family:inherit;padding:6px 0 6px 12px;}
 .qz-bar{height:5px;border-radius:3px;background:#3b3935;overflow:hidden;margin-bottom:10px;}
 .qz-bar>i{display:block;height:100%;background:var(--blue);}
@@ -248,10 +253,10 @@ footer{text-align:center;padding:6px 0 2px;}
 .qz-q .a-lbl{display:inline-block;margin:1px 0 13px;padding:1px 9px;border-radius:999px;background:#4f7a5a;color:#f4ecdc;font-size:11.5px;font-weight:800;}
 .qz-q .a-mark.ok{color:#4f7a5a;} .qz-q .a-mark.ng{color:#b0584a;}
 .qz-q .a-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:30px;line-height:1.25;overflow-wrap:anywhere;}
-.qz-q .a-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;}
+.qz-q .a-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;}
 .qz-q .a-jp{font-size:15px;font-weight:700;margin-top:2px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
 .qz-q .qz-th{font-family:'Sarabun',sans-serif;font-weight:500;font-size:36px;line-height:1.2;overflow-wrap:anywhere;}
-.qz-q .qz-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;}
+.qz-q .qz-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;}
 .qz-q .qz-jp{font-size:23px;font-weight:700;line-height:1.4;}
 .qz-q .qz-note{font-size:12px;color:#8a7a55;}
 .qz-spk{width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--tag);border:none;font-size:25px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -265,10 +270,10 @@ footer{text-align:center;padding:6px 0 2px;}
 .qz-opt .o-badge.ok{background:#9fb8a0;color:#1d1c1b;}
 .qz-opt .o-badge.ng{background:#d9a198;color:#1d1c1b;}
 .qz-opt .o-th{font-family:'Sarabun',sans-serif;font-size:22px;font-weight:500;line-height:1.25;}
-.qz-opt .o-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;font-weight:400;color:var(--muted);}
+.qz-opt .o-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;font-weight:400;color:var(--muted);}
 .qz-opt .o-was{display:block;flex-basis:100%;margin-top:4px;padding-top:5px;border-top:1px solid rgba(241,217,212,.22);font-size:12.5px;font-weight:600;color:#e6c3bc;line-height:1.45;overflow-wrap:anywhere;}
 .qz-opt .o-was .w-th{font-family:'Sarabun',sans-serif;font-size:17px;font-weight:500;color:#fff;}
-.qz-opt .o-was .w-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12.5px;font-weight:400;color:#e6c3bc;}
+.qz-opt .o-was .w-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:12.5px;font-weight:400;color:#e6c3bc;}
 .qz-opt.ok{background:#34473c;border-color:#9fb8a0;color:#e3efe5;}
 .qz-opt.ng{background:#4a302d;border-color:#c98478;color:#f1d9d4;}
 .qz-opt.dim{opacity:.45;}
@@ -278,9 +283,9 @@ footer{text-align:center;padding:6px 0 2px;}
 .qz-ans .a-mark{font-size:14px;font-weight:800;margin-bottom:4px;}
 .qz-ans .a-mark.ok{color:#9fb8a0;} .qz-ans .a-mark.ng{color:#d9a198;}
 .qz-ans .a-th{font-family:'Sarabun',sans-serif;font-size:24px;color:#fff;line-height:1.35;overflow-wrap:anywhere;}
-.qz-ans .a-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
+.qz-ans .a-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
 .qz-ans .a-jp{font-size:15px;color:#ece9e4;margin-top:2px;}
-.qz-score{text-align:center;margin:10px 0 4px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:46px;font-weight:500;color:#fff;}
+.qz-score{text-align:center;margin:10px 0 4px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:46px;font-weight:500;color:#fff;}
 .qz-score small{font-size:20px;color:var(--muted);}
 .qz-msg{text-align:center;font-size:15px;color:var(--muted2);margin-bottom:6px;}
 .qz-wrong{margin-top:8px;display:flex;flex-direction:column;gap:8px;}
@@ -294,11 +299,11 @@ footer{text-align:center;padding:6px 0 2px;}
 .nc-disp{background:var(--tag);border:1.5px solid var(--tag-edge);border-radius:18px;padding:12px 16px 14px;color:var(--ink);min-height:164px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;gap:6px;}
 .nc-disp .d-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
 .nc-disp .d-thnum{font-family:'Sarabun',sans-serif;font-size:17px;color:#8a7a55;white-space:nowrap;}
-.nc-disp .d-num{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-weight:500;line-height:1.1;letter-spacing:-.5px;white-space:nowrap;}
+.nc-disp .d-num{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-weight:500;line-height:1.1;letter-spacing:-.5px;white-space:nowrap;}
 .nc-disp .d-read{display:flex;align-items:flex-end;gap:10px;}
 .nc-disp .d-txt{flex:1;min-width:0;}
 .nc-disp .d-th{font-family:'Sarabun',sans-serif;font-weight:500;line-height:1.3;overflow-wrap:anywhere;}
-.nc-disp .d-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;line-height:1.4;margin-top:2px;overflow-wrap:anywhere;}
+.nc-disp .d-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:#6b5c3e;line-height:1.4;margin-top:2px;overflow-wrap:anywhere;}
 .nc-spk{width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--tag);border:none;font-size:25px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .nc-spk.sm{width:36px;height:36px;font-size:18px;}
 .nc-spk:active{transform:scale(.92);}
@@ -306,8 +311,8 @@ footer{text-align:center;padding:6px 0 2px;}
 .nc-keys{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
 .nc-key{height:56px;border-radius:14px;background:var(--bg2);border:1px solid #3b3935;color:#ece9e4;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-family:inherit;padding:0;}
 .nc-key:active{background:#3b3935;}
-.nc-key .k-n{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:23px;font-weight:500;line-height:1.1;}
-.nc-key .k-r{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);line-height:1.2;}
+.nc-key .k-n{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:23px;font-weight:500;line-height:1.1;}
+.nc-key .k-r{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:11px;color:var(--muted);line-height:1.2;}
 .nc-key.fn{background:transparent;}
 .nc-key.fn .k-n{color:var(--accent);font-size:20px;}
 .nc-key.fn .k-r{font-family:inherit;font-size:10px;}
@@ -315,20 +320,20 @@ footer{text-align:center;padding:6px 0 2px;}
 .nc-units{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .nc-unit{height:50px;border-radius:12px;background:transparent;border:1px solid #3b3935;color:#ece9e4;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:inherit;padding:0;}
 .nc-unit.on{border-color:var(--purple);background:rgba(180,167,198,.14);}
-.nc-unit .u-n{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;font-weight:500;line-height:1.2;}
+.nc-unit .u-n{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;font-weight:500;line-height:1.2;}
 .nc-unit .u-t{font-family:'Sarabun',sans-serif;font-size:14px;color:var(--muted2);line-height:1.25;}
 .nc-exbox{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);}
 .nc-exbox .x-txt{flex:1;min-width:0;}
 .nc-exbox .x-th{font-family:'Sarabun',sans-serif;font-size:19px;color:#fff;line-height:1.4;overflow-wrap:anywhere;}
-.nc-exbox .x-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12.5px;color:var(--muted);line-height:1.4;}
+.nc-exbox .x-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:12.5px;color:var(--muted);line-height:1.4;}
 .nc-exbox .x-jp{font-size:14px;color:#ece9e4;margin-top:3px;}
 .nc-rule{border-radius:16px;background:var(--bg2);border:1px solid #3b3935;padding:14px 14px 12px;margin-bottom:12px;}
 .nc-rule .r-h{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;color:#fff;margin-bottom:8px;}
-.nc-rule .r-no{width:24px;height:24px;border-radius:50%;background:var(--purple);color:#1d1c1b;font-size:13px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;}
+.nc-rule .r-no{width:24px;height:24px;border-radius:50%;background:var(--purple);color:#1d1c1b;font-size:13px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;}
 .nc-rule .r-b{font-size:14px;line-height:1.75;color:#ece9e4;}
 .nc-rule .r-x{font-family:'Sarabun',sans-serif;font-size:17px;color:var(--muted);text-decoration:line-through;}
 .nc-rule .r-o{font-family:'Sarabun',sans-serif;font-size:20px;color:var(--accent);}
-.nc-rule .r-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
+.nc-rule .r-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);}
 .nc-rule .r-ng{margin:10px 0;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);display:flex;align-items:center;gap:10px;}
 .nc-rule .r-ng .g{display:flex;align-items:center;gap:8px;min-width:0;}
 .nc-rule .r-ng .g-m{font-size:15px;font-weight:800;flex-shrink:0;}
@@ -337,7 +342,7 @@ footer{text-align:center;padding:6px 0 2px;}
 .nc-rule .r-ng .g-th{font-family:'Sarabun',sans-serif;font-size:19px;line-height:1.3;}
 .nc-rule .r-ng .g-x .g-th{color:var(--muted);text-decoration:line-through;}
 .nc-rule .r-ng .g-o .g-th{color:#fff;font-weight:600;}
-.nc-rule .r-ng .g-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12.5px;color:var(--muted);line-height:1.3;}
+.nc-rule .r-ng .g-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:12.5px;color:var(--muted);line-height:1.3;}
 .nc-rule .r-ng .g-o .g-ro{color:var(--muted2);}
 .nc-rule .r-ng .g-arrow{color:var(--muted);font-size:16px;flex-shrink:0;margin:0 4px;}
 .nc-rule .r-t{font-family:'Sarabun',sans-serif;font-size:16px;color:#ece9e4;}
@@ -345,14 +350,14 @@ footer{text-align:center;padding:6px 0 2px;}
 .nc-rule .r-sum{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0;}
 .nc-rule .r-sum span{flex:1;text-align:center;padding:8px 6px;border-radius:12px;background:rgba(255,255,255,.05);display:flex;flex-direction:column;}
 .nc-rule .r-sum b{font-family:'Sarabun',sans-serif;font-size:22px;color:#fff;font-weight:500;}
-.nc-rule .r-sum i{font-style:normal;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);}
+.nc-rule .r-sum i{font-style:normal;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:12px;color:var(--muted);}
 .nc-rule .r-sum em{font-style:normal;font-size:20px;color:var(--muted);}
 .nc-ex{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,.08);}
-.nc-ex .e-n{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:17px;font-weight:500;color:#fff;min-width:46px;}
+.nc-ex .e-n{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:17px;font-weight:500;color:#fff;min-width:46px;}
 .nc-ex .e-t{flex:1;min-width:0;display:flex;flex-direction:column;}
 .nc-ex .e-th{font-family:'Sarabun',sans-serif;font-size:19px;color:#ece9e4;line-height:1.3;}
 .nc-ex .e-th b{color:var(--accent);font-weight:600;}
-.nc-ex .e-ro{font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:12.5px;color:var(--muted);}
+.nc-ex .e-ro{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:12.5px;color:var(--muted);}
 .nc-link{display:block;width:100%;padding:14px;border-radius:14px;background:transparent;border:1.5px solid #4a4743;color:var(--muted2);font-size:14.5px;font-weight:700;cursor:pointer;font-family:inherit;}
 </style>
 </head>
@@ -365,7 +370,7 @@ footer{text-align:center;padding:6px 0 2px;}
 <div class="wrap">
   <header>
     <div class="title-row">
-      <div><div class="title-th">Thai Pocket Cards</div><div id="verLabel" style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:10px;color:#6e6a64;margin-top:2px;"></div></div>
+      <div><div class="title-th">Thai Pocket Cards</div><div id="verLabel" style="font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:10px;color:#6e6a64;margin-top:2px;"></div></div>
       <button id="helpBtn" style="display:none;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#e6e3de;font-size:15px;font-weight:700;cursor:pointer;flex-shrink:0;">?</button>
     </div>
     <div class="mode-tabs" id="modeTabs"></div>
@@ -460,7 +465,7 @@ footer{text-align:center;padding:6px 0 2px;}
     <p id="genModalMsg" style="margin:0;font-size:13.5px;color:#e6e3de;line-height:1.65;white-space:pre-wrap;"></p>
   </div>
   <div id="genModalInputWrap" style="padding:6px 18px 4px;display:none;">
-    <textarea id="genModalInput" rows="4" style="width:100%;box-sizing:border-box;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:#1d1c1b;color:#fff;font-size:16px;padding:10px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;resize:vertical;"></textarea>
+    <textarea id="genModalInput" rows="4" style="width:100%;box-sizing:border-box;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:#1d1c1b;color:#fff;font-size:16px;padding:10px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;resize:vertical;"></textarea>
   </div>
   <div style="padding:14px 18px 16px;display:flex;gap:8px;border-top:1px solid rgba(255,255,255,.08);">
     <button id="genModalCancelBtn" style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:none;color:var(--muted2);font-size:14px;font-weight:700;font-family:'Zen Maru Gothic',sans-serif;display:none;">キャンセル</button>
@@ -1673,7 +1678,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-18a';
+const APP_VERSION = '2026-11-18b';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3725,9 +3730,9 @@ function buildExampleStatic(item, pos) {
 
 function buildExBox(ex) {
   const noteHtml = ex.note ? `<div style="margin-top:8px;padding:7px 10px;background:rgba(201,189,166,.15);border-left:3px solid #c9bda6;border-radius:4px;font-size:15px;color:#4a4234;line-height:1.6;">${ex.note}</div>` : '';
-  const roHtml = st.showRo ? `<div class="ex-ro" style="font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;margin-top:3px;line-height:1.4;">${(ex.ro||'')}</div>` : '';
+  const roHtml = st.showRo ? `<div class="ex-ro" style="font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:15px;color:#6b5c3e;margin-top:3px;line-height:1.4;">${(ex.ro||'')}</div>` : '';
   return `<div class="ex-box" style="background:rgba(0,0,0,.06);border-radius:10px;padding:10px 14px;margin-top:8px;">
-    <div style="font-size:13px;color:#9c8d68;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;margin-bottom:4px;">例文</div>
+    <div style="font-size:13px;color:#9c8d68;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;margin-bottom:4px;">例文</div>
     <div class="ex-th" style="font-family:'Sarabun',sans-serif;font-size:23px;font-weight:500;color:#2b2118;line-height:1.3;">${ex.th}</div>
     ${roHtml}
     <div class="ex-jp" style="font-size:16px;color:#2b2118;margin-top:3px;">${ex.jp}</div>
@@ -3947,7 +3952,7 @@ function renderHelpBody(){
       </button>
       ${open?`<div style="padding:0 18px 16px 46px;font-size:13.5px;color:#cfc9d6;line-height:1.75;white-space:pre-line;">${t.body}</div>`:''}
     </div>`;
-  }).join('') + `<div style="padding:16px 18px 8px;text-align:center;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:11.5px;color:#6e6a64;">version ${APP_VERSION}</div>`;
+  }).join('') + `<div style="padding:16px 18px 8px;text-align:center;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:11.5px;color:#6e6a64;">version ${APP_VERSION}</div>`;
   body.querySelectorAll('.help-topic-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const idx = parseInt(btn.dataset.idx, 10);
@@ -4309,7 +4314,7 @@ function renderWordList(){
   if(st.wordlistMode==='weak'){
     // ── 苦手な単語(4択テストで間違えた単語) ──
     const items=weakWords();
-    html+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${items.length}件</div>`;
+    html+=`<div style="padding:0 12px 8px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${items.length}件</div>`;
     if(!items.length){
       html+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;line-height:1.9;">苦手な単語はまだありません<br>「テスト」で間違えた単語が、ここに自動でたまります<br>2回続けて正解すると、ここから外れます</div>`;
     } else {
@@ -4362,7 +4367,7 @@ function renderWordList(){
     // ── 文法一覧 ──
     const learnedSet=st.learned.grammar;
     const favSet=st.favorites.grammar;
-    html+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${GRAM.length}件</div>`;
+    html+=`<div style="padding:0 12px 8px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${GRAM.length}件</div>`;
     GRAM.forEach((item,idx)=>{
       const learned=learnedSet.has(item.id);
       const fav=favSet.has(item.id);
@@ -4412,7 +4417,7 @@ function renderWordList(){
     const learnedConvItems=CONV.filter(i=>st.learned.conversation.has(i.id)).map(i=>({...i,_type:'conv'}));
     const learnedGramItems=GRAM.filter(i=>st.learned.grammar.has(i.id)).map(i=>({...i,_type:'gram'}));
     const totalLearned2=learnedVocabItems.length+learnedConvItems.length+learnedGramItems.length;
-    html+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${totalLearned2}件</div>`;
+    html+=`<div style="padding:0 12px 8px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${totalLearned2}件</div>`;
     if(totalLearned2===0){
       html+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;">まだ「覚えた」に登録された項目がありません<br>各カードの「覚えた」ボタンから登録できます</div>`;
     }
@@ -4547,7 +4552,7 @@ function renderWordList(){
     html+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(201,189,166,.12);border:1px solid rgba(201,189,166,.3);border-radius:8px;padding:8px 10px;">
       ⭐ カード裏面やリストの☆をタップして追加した、後で見返したい単語・会話文・文法の一覧です
     </div>`;
-    html+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${totalFav}件</div>`;
+    html+=`<div style="padding:0 12px 8px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${totalFav}件</div>`;
     if(totalFav===0){
       html+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;">まだお気に入りに追加された項目がありません<br>各カードの☆ボタン、リストの☆アイコンから追加できます</div>`;
     }
@@ -4675,7 +4680,7 @@ function renderWordList(){
     html+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(201,189,166,.12);border:1px solid rgba(201,189,166,.3);border-radius:8px;padding:8px 10px;">
       💡 タップするとカードで確認できます
     </div>`;
-    html+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${convLearnedCount} 学習済み / 全${items.length}</div>`;
+    html+=`<div style="padding:0 12px 8px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${convLearnedCount} 学習済み / 全${items.length}</div>`;
     items.forEach((item,idx)=>{
       const learned=st.learned.conversation.has(item.id);
       const fav=st.favorites.conversation.has(item.id);
@@ -4779,13 +4784,13 @@ function renderWordList(){
       :(st.learned[pos]?st.learned[pos].size:0);
     let ih='';
     if(q.trim()){
-      ih+=`<div style="padding:6px 12px 4px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${filtered.length}件ヒット</div>`;
+      ih+=`<div style="padding:6px 12px 4px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">${filtered.length}件ヒット</div>`;
     } else {
       ih+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(201,189,166,.12);border:1px solid rgba(201,189,166,.3);border-radius:8px;padding:8px 10px;">
         💡 単語をタップすると単語カードで確認できます
       </div>`;
     }
-    ih+=`<div style="padding:0 12px 8px;font-family:'IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);text-align:left;">${learnedCount} 学習済み / 全${baseFiltered.length}</div>`;
+    ih+=`<div style="padding:0 12px 8px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);text-align:left;">${learnedCount} 学習済み / 全${baseFiltered.length}</div>`;
     if(filtered.length===0){
       ih+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;">該当する単語が見つかりませんでした</div>`;
     }

@@ -5,7 +5,7 @@
 - 開発者(TAKA): 非技術者。REIWA SOBA（バンコクのそば店）経営者。Claudeが実装全般を担当。
 - リポジトリ: `likklemore1126/paythai`
 - 公開URL: https://poca.takatobi.jp/app.html
-- 現バージョン: `2026-11-18a`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
+- 現バージョン: `2026-11-18b`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
 
 ## ファイル構成
 - `app.html` — アプリ本体。単語・会話・文法データもすべてJS配列としてこの中に埋め込み（約780KB超の単一ファイル）
@@ -28,6 +28,7 @@
 - 語末の半母音は y / w（ไป=pay、ข้าว=khâaw、อร่อย=arɔ̀y）
 - 声調記号 à á â ǎ（平声は記号なし）。語中の弱い短い「a」の音節は記号を付けない（sawàt dii、krapǎw）
 - ครับ=khráp / ค่ะ=khâ（`PT`）。数字は `NUMS`（nʉ̀ŋ, sɔ̌ɔŋ, rɔ́ɔy…）
+- 表示フォント: 発音記号と声調の印(ɔ ɛ ə ʉ ŋ + 結合文字)は自前の小さなフォント `poca-ipa-400/500.woff2`（Noto Sans Monoから抜き出し）で表示する。Google Fontsは文字を分割配信するので、ɔ と声調の印が別ファイルになり、iPhoneで ɔ̌ などだけ別フォントになっていたため（2026-11-18）。CSSの読み用フォント指定は `'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace`
 - 検索は `_roLoose()` で ʉ→u・ŋ→ng・長音・語末y/w を吸収するので、普通の英字入力（mai, khao, mue）でも当たる
 - 新しく読みを書くときもこのルールで書く。会話の `CONV` と `CONV_BREAKDOWN` は読みの文字列を完全一致させる（行そろえ `convChunks` が一致を前提にしている。現在35文は語順の違い等で一致しておらず、行そろえ無しで表示）
 
