@@ -5,7 +5,7 @@
 - 開発者(TAKA): 非技術者。REIWA SOBA（バンコクのそば店）経営者。Claudeが実装全般を担当。
 - リポジトリ: `likklemore1126/paythai`
 - 公開URL: https://poca.takatobi.jp/app.html
-- 現バージョン: `2026-11-18b`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
+- 現バージョン: `2026-11-19a`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
 
 ## ファイル構成
 - `app.html` — アプリ本体。単語・会話・文法データもすべてJS配列としてこの中に埋め込み（約780KB超の単一ファイル）
@@ -72,7 +72,15 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
 - **無料版**: 単語は**基本の300語のみ**（挨拶11・疑問13・類別詞25＋名詞110・動詞75・形容詞35・副詞31。IDは `free_words.json`。初心者928語を全部無料にすると買う理由が無くなるため2026-11-16に絞った）／会話は日常会話・レストランのみ（**緊急は無料に含めない**）／4択テストは無料300語の「タイ語⇔日本語」のみ（**「聞いて選ぶ」は有料**）／苦手な単語は記録だけされ、**苦手リストの表示・苦手テストは有料**／お気に入り・リストは無料範囲のみ対象
 - **有料版**: 単語すべて(初心者の残り・中級者+)／会話の全シーン（観光・ホテル・交通・緊急）／文法すべて／数字タブ／テストの中級者+と数字／お気に入り・リストが全対象
 - **価格**: 月額300円／年間3,000円／買い切り4,000円（すべて税込表記）
-- 無料範囲はそのまま開放し、有料部分をタップしたら案内を出す方針。**アプリ側の出し分け（🔒・案内）は未実装**で、現状は全機能が誰でも使える
+- 無料範囲はそのまま開放し、有料部分をタップしたら案内を出す方針
+- **アプリ側の出し分けは実装済み（2026-11-19）だが、まだ止めてある**: `PAYWALL_LIVE=false` の間は全機能が誰でも使える。確認用に `app.html?paywall=1` で開いたときだけ有効（`?paywall=0` で解除、sessionStorage `poca:pw`）
+  - 中心の関数: `isPaid()` / `canWord(w)` / `canScene(sc)` / `canMode(m)` / `vocabArr(pos)`（リストからカードを開くときも同じ並びを使う）。無料の単語IDは `FREE_WORDS`（free_words.json と同じ300語）、無料シーンは `FREE_SCENES`
+  - 🔒の付く所: 文法・数字タブ（説明ページ `lockPageHtml`）、会話シーン4つ、単語のレベル切替、テストの「聞いて選ぶ」「数字」「苦手」「中級者+」、リストの文法・苦手。学習済み・お気に入りは無料範囲だけ表示し、隠れた件数を案内
+  - 案内画面: `openPaywall(理由)`、購入コード入力 `openCodeSheet()`、契約状態 `openPlanSheet()`。シートは閉じたら画面から取り除く（WebKitの残像対策）
+  - 購入状態は localStorage `s:ent`（{code,plan,active,checkedAt}）、端末IDは `s:dev`
+  - `PAY_API` が空の間は確認用テストコードだけ使える: TEST-MONTHLY / TEST-YEARLY / TEST-LIFETIME / TEST-CANCELED（次の確認で解約扱い）/ TEST-LIMIT（3台超え）
+  - **決済Workerに必要な窓口**（すべてPOST・JSON、`{code, device}` を送る）: `/activate` → `{ok,plan:'monthly'|'yearly'|'lifetime',active}` または `{ok:false,error:'invalid'|'limit'}`／`/status` → `{ok,plan,active}`／`/deactivate` → `{ok}`／`/portal` → `{ok,url}`（Stripeのお客様用管理画面）
+  - 販売開始時: `PAY_API` を設定し、`PAYWALL_LIVE=true` にする
 - **購入者の確認方法（2026-11-18決定）**: 指さしタイと同じ「購入コード方式」（Stripe決済→コードをメールで送付→アプリで1回入力）。メールログインはiPhoneのホーム画面アプリでメールのリンクがSafariに開いてしまうため不採用
   - 1つのコードで使えるのは**3台まで**
   - 月額・年間は解約チェックあり：起動時にネットにつながっていれば1日1回まで状態を確認。**オフラインでも最後の確認から14日間**は有料部分を使える。それを過ぎたら次に確認できるまで無料範囲に戻る（学習記録は消さない）

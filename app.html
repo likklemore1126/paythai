@@ -161,6 +161,50 @@ header{padding-bottom:10px;}
 .dot-count{font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:14px;color:var(--muted);min-width:60px;text-align:center;}
 /* ─── STATIC ─── */
 .static-page{flex:1;overflow-y:auto;padding:4px 0 16px;}
+/* ── 有料版の案内(🔒) ── */
+.lk{font-size:.8em;margin-left:3px;}
+.chip.locked,.qz-chip.locked{opacity:.6;}
+.mode-tab.locked{opacity:.7;}
+#planBtn{display:none;margin-left:auto;margin-right:8px;padding:5px 11px;border-radius:999px;border:1.5px solid rgba(212,154,120,.6);background:rgba(212,154,120,.12);color:var(--accent);font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;flex-shrink:0;white-space:nowrap;}
+#planBtn.paid{border-color:rgba(159,184,160,.6);background:rgba(159,184,160,.12);color:var(--green);}
+#lockNote{display:none;float:right;margin-left:8px;background:none;border:none;padding:0;color:var(--accent);font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+.pw-ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:350;}
+.pw-sheet{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100vw,480px);max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#232220;border-radius:20px 20px 0 0;z-index:351;padding:20px 20px max(env(safe-area-inset-bottom),20px);box-shadow:0 -10px 40px rgba(0,0,0,.5);color:var(--muted2);}
+.pw-h{font-size:18px;font-weight:800;color:#fff;margin:0 0 6px;}
+.pw-reason{font-size:14px;color:var(--accent);font-weight:700;margin:0 0 12px;line-height:1.6;}
+.pw-sub{font-size:13px;color:var(--muted);line-height:1.7;margin:6px 0 10px;}
+.pw-lbl{font-size:12px;font-weight:700;color:var(--muted);margin:14px 0 6px;letter-spacing:.5px;}
+.pw-list{margin:0;padding:0;list-style:none;}
+.pw-list li{font-size:14px;line-height:1.6;padding:5px 0 5px 22px;position:relative;border-bottom:1px solid rgba(255,255,255,.06);}
+.pw-list li::before{content:'✓';position:absolute;left:2px;color:var(--green);font-weight:800;}
+.pw-list small{color:var(--muted);font-size:12px;}
+.pw-plans{display:flex;gap:8px;margin-top:6px;}
+.pw-plan{flex:1;background:var(--bg2);border:1px solid #3b3935;border-radius:14px;padding:10px 6px;text-align:center;}
+.pw-plan b{display:block;font-size:12px;color:var(--muted);font-weight:700;}
+.pw-plan span{display:block;font-size:19px;font-weight:800;color:#fff;margin-top:2px;}
+.pw-plan small{display:block;font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4;}
+.pw-tax{font-size:11.5px;color:var(--muted);text-align:right;margin-top:6px;}
+.pw-btn{display:block;width:100%;margin-top:16px;padding:15px;border-radius:16px;border:none;background:var(--accent);color:#1d1c1b;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;}
+.pw-btn:disabled{opacity:.5;}
+.pw-ghost{display:block;width:100%;margin-top:10px;padding:13px;border-radius:16px;background:transparent;border:1.5px solid #4a4743;color:var(--muted2);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
+.pw-close{display:block;margin:14px auto 0;background:none;border:none;color:var(--muted);font-size:14px;font-family:inherit;cursor:pointer;padding:8px 16px;}
+.pw-in{width:100%;box-sizing:border-box;margin-top:4px;padding:13px 14px;border-radius:12px;border:1.5px solid rgba(255,255,255,.18);background:#1d1c1b;color:#fff;font-size:18px;letter-spacing:1px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;}
+.pw-msg{min-height:20px;font-size:13.5px;line-height:1.6;margin-top:8px;color:var(--pink);white-space:pre-wrap;}
+.pw-msg.ok{color:var(--green);}
+.pw-note{font-size:13px;line-height:1.7;margin:10px 0 0;padding:10px 12px;border-radius:12px;background:rgba(201,189,166,.1);border:1px solid rgba(201,189,166,.28);color:var(--yellow);}
+.pw-kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:14px;}
+.pw-kv span{color:var(--muted);}
+.pw-kv b{color:#fff;text-align:right;font-family:'IBM Plex Mono','Zen Maru Gothic',monospace;}
+.pw-test{margin-top:16px;padding:10px 12px;border-radius:12px;border:1px dashed #5a5650;font-size:12px;color:var(--muted);line-height:1.7;}
+.pw-test button{margin:6px 6px 0 0;padding:6px 10px;border-radius:10px;border:1px solid #5a5650;background:var(--bg2);color:var(--muted2);font-size:12px;font-family:inherit;cursor:pointer;}
+.lock-page{text-align:center;padding:22px 8px 10px;}
+.lock-page .lp-ic{font-size:40px;}
+.lock-page .lp-t{font-size:18px;font-weight:800;color:#fff;margin:10px 0 8px;}
+.lock-page .lp-b{font-size:14px;color:var(--muted2);line-height:1.8;text-align:left;margin:0 auto;max-width:380px;}
+.lock-page .pw-list{text-align:left;max-width:380px;margin:12px auto 0;}
+.lock-page .pw-btn,.lock-page .pw-ghost{max-width:380px;margin-left:auto;margin-right:auto;}
+.lock-more{margin:10px 12px 16px;padding:12px 14px;border-radius:12px;border:1px solid rgba(212,154,120,.35);background:rgba(212,154,120,.08);color:var(--accent);font-size:13.5px;font-weight:700;line-height:1.6;cursor:pointer;}
+
 footer{text-align:center;padding:6px 0 2px;}
 /* ─── 取り消しトースト ─── */
 #undoToast{position:absolute;bottom:52px;left:50%;transform:translateX(-50%);background:#2b2118;color:#f3ead8;border-radius:24px;padding:14px 22px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:12px;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.5);transition:opacity .3s;pointer-events:auto;white-space:nowrap;}
@@ -371,6 +415,7 @@ footer{text-align:center;padding:6px 0 2px;}
   <header>
     <div class="title-row">
       <div><div class="title-th">Thai Pocket Cards</div><div id="verLabel" style="font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:10px;color:#6e6a64;margin-top:2px;"></div></div>
+      <button id="planBtn" onclick="openPlanSheet()"></button>
       <button id="helpBtn" style="display:none;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#e6e3de;font-size:15px;font-weight:700;cursor:pointer;flex-shrink:0;">?</button>
     </div>
     <div class="mode-tabs" id="modeTabs"></div>
@@ -378,7 +423,7 @@ footer{text-align:center;padding:6px 0 2px;}
     <div class="sub-row" id="subRow"></div>
     <div id="subTipWrap"></div>
     <div class="settings-row" id="settingsRow"></div>
-    <div class="progress-line"><span class="progress-text" id="progressText"></span></div>
+    <div class="progress-line"><button id="lockNote" onclick="openPaywall()"></button><span class="progress-text" id="progressText"></span></div>
   </header>
 
   <div class="stage" id="cardStage">
@@ -416,6 +461,7 @@ footer{text-align:center;padding:6px 0 2px;}
     </div>
     <div id="resetTipWrap"></div>
     <button class="reset-btn" id="resetBtn" style="text-decoration:none;margin:6px auto 0;max-width:320px;width:100%;display:block;font-size:14px;font-weight:700;padding:8px 16px;background:rgba(212,154,120,.10);color:#d9ab8f;border:1px solid rgba(212,154,120,.45);border-radius:10px;">⚠️ 学習記録をリセット</button>
+    <button id="openPlanBtn" onclick="openPlanSheet()" style="display:none;width:100%;max-width:320px;margin:10px auto 0;background:none;border:none;color:var(--accent);font-size:13px;text-decoration:underline;cursor:pointer;padding:6px;">🔑 プラン・購入コード</button>
     <button id="openHelpBtn" style="display:block;width:100%;max-width:320px;margin:10px auto 0;background:none;border:none;color:#bfb9b0;font-size:13px;text-decoration:underline;cursor:pointer;padding:6px;">📖 ヘルプを見る</button>
   </footer>
 </div>
@@ -497,7 +543,7 @@ const JP_READINGS = {"v401":"はなす、かたる","v402":"かえる、へん�
 
 const CONV = [{"id":"cv01","scene":"日常会話","th":"สวัสดี{PT}","ro":"sawàt dii {PR}","jp":"こんにちは / さようなら","level":"beginner"},{"id":"cv02","scene":"日常会話","th":"สบายดีไหม{PT}","ro":"sabaay dii mǎy {PR}","jp":"元気ですか","level":"beginner"},{"id":"cv03","scene":"日常会話","th":"สบายดี ขอบคุณ{PT}","ro":"sabaay dii khɔ̀ɔp khun {PR}","jp":"元気です、ありがとう","level":"beginner"},{"id":"cv04","scene":"日常会話","th":"ยินดีที่ได้รู้จัก{PT}","ro":"yin dii thîi dâay rúu càk {PR}","jp":"はじめまして","level":"beginner"},{"id":"cv05","scene":"日常会話","th":"ชื่ออะไร{PT}","ro":"chʉ̂ʉ aray {PR}","jp":"お名前は何ですか","level":"beginner"},{"id":"cv06","scene":"日常会話","th":"{PS}ชื่อ...{PT}","ro":"{PSR} chʉ̂ʉ... {PR}","jp":"私の名前は…です","level":"beginner"},{"id":"cv07","scene":"日常会話","th":"มาจากที่ไหน{PT}","ro":"maa càak thîi nǎy {PR}","jp":"どこから来ましたか","level":"beginner"},{"id":"cv08","scene":"日常会話","th":"มาจากญี่ปุ่น{PT}","ro":"maa càak yîipùn {PR}","jp":"日本から来ました","level":"beginner"},{"id":"cv09","scene":"日常会話","th":"แล้วเจอกัน{PT}","ro":"lɛ́ɛw cəə kan {PR}","jp":"またね","level":"beginner"},{"id":"cv10","scene":"日常会話","th":"ถ่ายรูปด้วยกันไหม{PT}","ro":"thàay rûup dûay kan mǎy {PR}","jp":"一緒に写真を撮りませんか","level":"beginner"},{"id":"cv11","scene":"レストラン","th":"ขอเมนูหน่อย{PT}","ro":"khɔ̌ɔ meenuu nɔ̀y {PR}","jp":"メニューをください","level":"beginner"},{"id":"cv12","scene":"レストラン","th":"สั่งอาหารได้ไหม{PT}","ro":"sàŋ aahǎan dâay mǎy {PR}","jp":"注文してもいいですか","level":"beginner"},{"id":"cv13","scene":"レストラン","th":"เอา...อย่างหนึ่ง{PT}","ro":"aw ... yàaŋ nʉ̀ŋ {PR}","jp":"…を一つください","level":"beginner"},{"id":"cv14","scene":"レストラン","th":"ไม่เผ็ดนะ{PT}","ro":"mây phèt ná {PR}","jp":"辛くしないでください","level":"beginner"},{"id":"cv15","scene":"レストラン","th":"ไม่ใส่ผักชี{PT}","ro":"mây sày phàkchii {PR}","jp":"パクチーを入れないでください","level":"beginner"},{"id":"cv16","scene":"レストラン","th":"อร่อยมาก{PT}","ro":"arɔ̀y mâak {PR}","jp":"とてもおいしいです","level":"beginner"},{"id":"cv17","scene":"レストラン","th":"เช็คบิลด้วย{PT}","ro":"chék bin dûay {PR}","jp":"お会計お願いします","level":"beginner"},{"id":"cv18","scene":"レストラン","th":"แยกบิลได้ไหม{PT}","ro":"yɛ̂ɛk bin dâay mǎy {PR}","jp":"別々に払えますか","level":"intermediate"},{"id":"cv19","scene":"レストラン","th":"รวมบิลเดียวกัน{PT}","ro":"ruam bin diaw kan {PR}","jp":"会計を一つにまとめます","level":"intermediate"},{"id":"cv20","scene":"レストラン","th":"รับบัตรเครดิตไหม{PT}","ro":"ráp bàt khreedìt mǎy {PR}","jp":"クレジットカードは使えますか","level":"beginner"},{"id":"cv21","scene":"観光","th":"เท่าไหร่{PT}","ro":"thâw rày {PR}","jp":"いくらですか","level":"beginner"},{"id":"cv22","scene":"観光","th":"ลดหน่อยได้ไหม{PT}","ro":"lót nɔ̀y dâay mǎy {PR}","jp":"少し安くしてもらえますか","level":"beginner"},{"id":"cv23","scene":"観光","th":"แพงไปหน่อย{PT}","ro":"phɛɛŋ pay nɔ̀y {PR}","jp":"ちょっと高すぎます","level":"beginner"},{"id":"cv24","scene":"観光","th":"เอาอันนี้{PT}","ro":"aw an níi {PR}","jp":"これをください","level":"beginner"},{"id":"cv25","scene":"観光","th":"มีสีอื่นไหม{PT}","ro":"mii sǐi ʉ̀ʉn mǎy {PR}","jp":"他の色はありますか","level":"beginner"},{"id":"cv26","scene":"観光","th":"มีไซส์ใหญ่กว่านี้ไหม{PT}","ro":"mii say yày kwàa níi mǎy {PR}","jp":"もっと大きいサイズはありますか","level":"beginner"},{"id":"cv27","scene":"観光","th":"ลองใส่ได้ไหม{PT}","ro":"lɔɔŋ sày dâay mǎy {PR}","jp":"試着できますか","level":"beginner"},{"id":"cv28","scene":"観光","th":"ขอถุงด้วย{PT}","ro":"khɔ̌ɔ thǔŋ dûay {PR}","jp":"袋をください","level":"beginner"},{"id":"cv29","scene":"観光","th":"มีส่วนลดไหม{PT}","ro":"mii sùan lót mǎy {PR}","jp":"割引はありますか","level":"beginner"},{"id":"cv30","scene":"観光","th":"ขอของฝากดีๆ ด้วย{PT}","ro":"khɔ̌ɔ khɔ̌ɔŋ fàak dii dii dûay {PR}","jp":"お土産にいいものをください","level":"beginner"},{"id":"cv31","scene":"交通","th":"ไป...ได้ไหม{PT}","ro":"pay ... dâay mǎy {PR}","jp":"…まで行けますか","level":"beginner"},{"id":"cv32","scene":"交通","th":"เปิดมิเตอร์ด้วย{PT}","ro":"pə̀ət mítə̂ə dûay {PR}","jp":"メーターをつけてください","level":"beginner"},{"id":"cv33","scene":"交通","th":"เลี้ยวซ้าย{PT}","ro":"líaw sáay {PR}","jp":"左に曲がってください","level":"beginner"},{"id":"cv34","scene":"交通","th":"เลี้ยวขวา{PT}","ro":"líaw khwǎa {PR}","jp":"右に曲がってください","level":"beginner"},{"id":"cv35","scene":"交通","th":"ตรงไปเลย{PT}","ro":"troŋ pay ləəy {PR}","jp":"まっすぐ行ってください","level":"beginner"},{"id":"cv36","scene":"交通","th":"จอดตรงนี้เลย{PT}","ro":"cɔ̀ɔt troŋ níi ləəy {PR}","jp":"ここで止めてください","level":"beginner"},{"id":"cv37","scene":"交通","th":"ขึ้นรถไฟที่ไหน{PT}","ro":"khʉ̂n rót fay thîi nǎy {PR}","jp":"電車はどこで乗りますか","level":"beginner"},{"id":"cv38","scene":"交通","th":"ตั๋วไป...เท่าไหร่{PT}","ro":"tǔa pay ... thâw rày {PR}","jp":"…行きのチケットはいくらですか","level":"beginner"},{"id":"cv39","scene":"交通","th":"รถออกกี่โมง{PT}","ro":"rót ɔ̀ɔk kìi mooŋ {PR}","jp":"何時に出発しますか","level":"beginner"},{"id":"cv40","scene":"交通","th":"ใช้เวลานานแค่ไหน{PT}","ro":"cháy weelaa naan khɛ̂ɛ nǎy {PR}","jp":"どのくらい時間がかかりますか","level":"beginner"},{"id":"cv41","scene":"ホテル","th":"มีห้องว่างไหม{PT}","ro":"mii hɔ̂ɔŋ wâaŋ mǎy {PR}","jp":"空き部屋はありますか","level":"beginner"},{"id":"cv42","scene":"ホテル","th":"เช็คอินกี่โมง{PT}","ro":"chék in kìi mooŋ {PR}","jp":"チェックインは何時ですか","level":"beginner"},{"id":"cv43","scene":"ホテル","th":"เช็คเอาท์กี่โมง{PT}","ro":"chék aw kìi mooŋ {PR}","jp":"チェックアウトは何時ですか","level":"beginner"},{"id":"cv45","scene":"ホテル","th":"แอร์เสีย{PT}","ro":"ɛɛ sǐa {PR}","jp":"エアコンが壊れています","level":"beginner"},{"id":"cv46","scene":"ホテル","th":"ขอผ้าเช็ดตัวเพิ่ม{PT}","ro":"khɔ̌ɔ phâa chét tua phə̂əm {PR}","jp":"タオルを追加でください","level":"beginner"},{"id":"cv47","scene":"ホテル","th":"มีที่จอดรถไหม{PT}","ro":"mii thîi cɔ̀ɔt rót mǎy {PR}","jp":"駐車場はありますか","level":"beginner"},{"id":"cv121","scene":"ホテル","th":"ใช้ที่จอดรถได้ไหม{PT}","ro":"cháy thîi cɔ̀ɔt rót dây mǎy {PR}","jp":"駐車場を利用してもいいですか","level":"beginner"},{"id":"cv122","scene":"ホテル","th":"มีค่าจอดรถไหม{PT}","ro":"mii khâa cɔ̀ɔt rót mǎy {PR}","jp":"駐車料金はかかりますか","level":"beginner"},{"id":"cv48","scene":"ホテル","th":"Wi-Fi รหัสคืออะไร{PT}","ro":"wayfay rahàt khʉʉ aray {PR}","jp":"Wi-Fiのパスワードは何ですか","level":"beginner"},{"id":"cv49","scene":"緊急","th":"ไม่สบาย{PT}","ro":"mây sabaay {PR}","jp":"体調が悪いです","level":"beginner"},{"id":"cv50","scene":"緊急","th":"ปวดหัว{PT}","ro":"pùat hǔa {PR}","jp":"頭が痛いです","level":"beginner"},{"id":"cv51","scene":"緊急","th":"ปวดท้อง{PT}","ro":"pùat thɔ́ɔŋ {PR}","jp":"お腹が痛いです","level":"beginner"},{"id":"cv52","scene":"緊急","th":"มีไข้{PT}","ro":"mii khây {PR}","jp":"熱があります","level":"beginner"},{"id":"cv53","scene":"緊急","th":"เป็นหวัด{PT}","ro":"pen wàt {PR}","jp":"風邪をひいています","level":"beginner"},{"id":"cv54","scene":"緊急","th":"แพ้ยา...{PT}","ro":"phɛ́ɛ yaa ... {PR}","jp":"…のアレルギーがあります","level":"beginner"},{"id":"cv55","scene":"緊急","th":"ขอยาแก้ปวด{PT}","ro":"khɔ̌ɔ yaa kɛ̂ɛ pùat {PR}","jp":"痛み止めをください","level":"beginner"},{"id":"cv56","scene":"緊急","th":"ใกล้ๆ มีโรงพยาบาลไหม{PT}","ro":"klây klây mii rooŋ phayaabaan mǎy {PR}","jp":"近くに病院はありますか","level":"beginner"},{"id":"cv57","scene":"交通","th":"...อยู่ที่ไหน{PT}","ro":"... yùu thîi nǎy {PR}","jp":"…はどこですか","level":"beginner"},{"id":"cv58","scene":"交通","th":"ไปยังไง{PT}","ro":"pay yaŋ ŋay {PR}","jp":"どうやって行きますか","level":"beginner"},{"id":"cv59","scene":"交通","th":"ไกลไหม{PT}","ro":"klay mǎy {PR}","jp":"遠いですか","level":"beginner"},{"id":"cv60","scene":"交通","th":"เดินไปได้ไหม{PT}","ro":"dəən pay dâay mǎy {PR}","jp":"歩いて行けますか","level":"beginner"},{"id":"cv61","scene":"交通","th":"ขอดูแผนที่ด้วย{PT}","ro":"khɔ̌ɔ duu phɛ̌ɛn thîi dûay {PR}","jp":"地図を見せてください","level":"intermediate"},{"id":"cv62","scene":"交通","th":"หลงทาง{PT}","ro":"lǒŋ thaaŋ {PR}","jp":"道に迷いました","level":"beginner"},{"id":"cv63","scene":"日常会話","th":"อายุเท่าไหร่{PT}","ro":"aayú thâw rày {PR}","jp":"何歳ですか","level":"beginner"},{"id":"cv64","scene":"日常会話","th":"ทำงานอะไร{PT}","ro":"tham ŋaan aray {PR}","jp":"何の仕事をしていますか","level":"intermediate"},{"id":"cv65","scene":"日常会話","th":"อยู่ที่ไหน{PT}","ro":"yùu thîi nǎy {PR}","jp":"どこに住んでいますか","level":"beginner"},{"id":"cv66","scene":"日常会話","th":"มาเที่ยวหรือมาทำงาน{PT}","ro":"maa thîaw rʉ̌ʉ maa tham ŋaan {PR}","jp":"観光ですか、仕事ですか","level":"intermediate"},{"id":"cv67","scene":"日常会話","th":"อยู่นานแค่ไหน{PT}","ro":"yùu naan khɛ̂ɛ nǎy {PR}","jp":"どのくらい滞在しますか","level":"beginner"},{"id":"cv68","scene":"日常会話","th":"พูดภาษาไทยได้นิดหน่อย{PT}","ro":"phûut phaasǎa thay dâay nít nɔ̀y {PR}","jp":"タイ語は少し話せます","level":"beginner"},{"id":"cv69","scene":"日常会話","th":"พูดภาษาอังกฤษได้ไหม{PT}","ro":"phûut phaasǎa aŋkrìt dâay mǎy {PR}","jp":"英語は話せますか","level":"beginner"},{"id":"cv70","scene":"日常会話","th":"พูดช้าๆ ได้ไหม{PT}","ro":"phûut cháa cháa dâay mǎy {PR}","jp":"ゆっくり話してもらえますか","level":"beginner"},{"id":"cv71","scene":"日常会話","th":"ช่วยเขียนให้หน่อย{PT}","ro":"chûay khǐan hây nɔ̀y {PR}","jp":"書いてもらえますか","level":"beginner"},{"id":"cv72","scene":"日常会話","th":"แปลเป็นภาษาอังกฤษได้ไหม{PT}","ro":"plɛɛ pen phaasǎa aŋkrìt dâay mǎy {PR}","jp":"英語に訳してもらえますか","level":"beginner"},{"id":"cv73","scene":"日常会話","th":"เบอร์โทรคืออะไร{PT}","ro":"bʉʉ thoo khʉʉ aray {PR}","jp":"電話番号は何ですか","level":"intermediate"},{"id":"cv74","scene":"日常会話","th":"ไลน์ ID คืออะไร{PT}","ro":"lay ay dii khʉʉ aray {PR}","jp":"LINE IDは何ですか","level":"beginner"},{"id":"cv75","scene":"日常会話","th":"ส่งที่อยู่มาให้{PT}","ro":"sòŋ thîi yùu maa hây {PR}","jp":"住所を送ってください","level":"intermediate"},{"id":"cv76","scene":"日常会話","th":"โทรหาได้เลย{PT}","ro":"thoo hǎa dâay ləəy {PR}","jp":"いつでも電話してください","level":"intermediate"},{"id":"cv77","scene":"緊急","th":"ช่วยด้วย{PT}","ro":"chûay dûay {PR}","jp":"助けてください","level":"beginner"},{"id":"cv78","scene":"緊急","th":"โทรตำรวจด้วย{PT}","ro":"thoo tamrùat dûay {PR}","jp":"警察を呼んでください","level":"beginner"},{"id":"cv79","scene":"緊急","th":"โทรรถพยาบาลด้วย{PT}","ro":"thoo rót phayaabaan dûay {PR}","jp":"救急車を呼んでください","level":"beginner"},{"id":"cv80","scene":"緊急","th":"โทรดับเพลิงด้วย{PT}","ro":"thoo dàp phlooŋ dûay {PR}","jp":"消防署を呼んでください","level":"intermediate"},{"id":"cv81","scene":"緊急","th":"กระเป๋าหาย{PT}","ro":"krapǎw hǎay {PR}","jp":"バッグがなくなりました","level":"beginner"},{"id":"cv82","scene":"緊急","th":"พาสปอร์ตหาย{PT}","ro":"phàat sapɔ̀ɔt hǎay {PR}","jp":"パスポートを失くしました","level":"beginner"},{"id":"cv83","scene":"緊急","th":"ขอแจ้งความด้วย{PT}","ro":"khɔ̌ɔ cɛ̂ɛŋ khwaam dûay {PR}","jp":"被害届を出したいです","level":"beginner"},{"id":"cv84","scene":"観光","th":"ที่นี่เปิดกี่โมง{PT}","ro":"thîi níi pə̀ət kìi mooŋ {PR}","jp":"ここは何時に開きますか","level":"beginner"},{"id":"cv85","scene":"観光","th":"ค่าเข้าเท่าไหร่{PT}","ro":"khâa khâw thâw rày {PR}","jp":"入場料はいくらですか","level":"beginner"},{"id":"cv86","scene":"観光","th":"ถ่ายรูปได้ไหม{PT}","ro":"thàay rûup dâay mǎy {PR}","jp":"写真を撮っていいですか","level":"beginner"},{"id":"cv87","scene":"観光","th":"ช่วยถ่ายรูปให้หน่อย{PT}","ro":"chûay thàay rûup hây nɔ̀y {PR}","jp":"写真を撮ってもらえますか","level":"beginner"},{"id":"cv88","scene":"観光","th":"ขอแผนที่ฟรีได้ไหม{PT}","ro":"khɔ̌ɔ phɛ̌ɛn thîi frii dâay mǎy {PR}","jp":"無料の地図はもらえますか","level":"beginner"},{"id":"cv89","scene":"観光","th":"มีทัวร์ภาษาญี่ปุ่นไหม{PT}","ro":"mii thua phaasǎa yîipùn mǎy {PR}","jp":"日本語のツアーはありますか","level":"beginner"},{"id":"cv90","scene":"日常会話","th":"แลกเงินได้ที่ไหน{PT}","ro":"lɛ̂ɛk ŋən dâay thîi nǎy {PR}","jp":"どこで両替できますか","level":"beginner"},{"id":"cv91","scene":"日常会話","th":"อัตราแลกเปลี่ยนเท่าไหร่{PT}","ro":"àttraa lɛ̂ɛk plìan thâw rày {PR}","jp":"為替レートはいくらですか","level":"beginner"},{"id":"cv92","scene":"日常会話","th":"ขอแลกเงินเยนเป็นบาท{PT}","ro":"khɔ̌ɔ lɛ̂ɛk ŋən yen pen bàat {PR}","jp":"円をバーツに両替させてください","level":"beginner"},{"id":"cv93","scene":"日常会話","th":"ตู้ ATM อยู่ที่ไหน{PT}","ro":"tuu ee thii em yùu thîi nǎy {PR}","jp":"ATMはどこですか","level":"beginner"},{"id":"cv94","scene":"レストラン","th":"ไม่ใส่พริกนะ{PT}","ro":"mây sày phrík ná {PR}","jp":"唐辛子を入れないでください","level":"beginner"},{"id":"cv95","scene":"日常会話","th":"ทำอะไรอยู่{PT}","ro":"tham aray yùu {PR}","jp":"何してるの?","level":"beginner"},{"id":"cv96","scene":"日常会話","th":"ตอนนี้อยู่ไหน{PT}","ro":"tɔɔn níi yùu nǎy {PR}","jp":"今どこにいるの?","level":"beginner"},{"id":"cv97","scene":"日常会話","th":"อยู่กับใคร{PT}","ro":"yùu kàp khray {PR}","jp":"誰といるの?","level":"beginner"},{"id":"cv98","scene":"日常会話","th":"ไปไหน{PT}","ro":"pay nǎy {PR}","jp":"どこ行くの?","level":"beginner"},{"id":"cv99","scene":"ホテル","th":"ผมจองห้องไว้แล้ว{PT}","ro":"phǒm cɔɔŋ hɔ̂ɔŋ wáy lɛ́ɛw {PR}","jp":"予約してあります","level":"beginner"},{"id":"cv100","scene":"ホテル","th":"ผมจะพักสองคืน{PT}","ro":"phǒm cà phák sɔ̌ɔŋ khʉʉn {PR}","jp":"2泊します","level":"beginner"},{"id":"cv101","scene":"ホテル","th":"มีอาหารเช้าไหม{PT}","ro":"mii aahǎan cháaw mǎy {PR}","jp":"朝食は付いていますか","level":"beginner"},{"id":"cv102","scene":"ホテル","th":"อาหารเช้าเริ่มกี่โมง{PT}","ro":"aahǎan cháaw rə̂əm kìi mooŋ {PR}","jp":"朝食は何時からですか","level":"beginner"},{"id":"cv103","scene":"ホテル","th":"มีสระว่ายน้ำไหม{PT}","ro":"mii sà wâay náam mǎy {PR}","jp":"プールはありますか","level":"beginner"},{"id":"cv104","scene":"ホテル","th":"มียิมไหม{PT}","ro":"mii yim mǎy {PR}","jp":"ジムはありますか","level":"beginner"},{"id":"cv105","scene":"ホテル","th":"ขอเปลี่ยนห้องได้ไหม{PT}","ro":"khɔ̌ɔ plìan hɔ̂ɔŋ dây mǎy {PR}","jp":"部屋を変えてもらえますか","level":"beginner"},{"id":"cv106","scene":"ホテル","th":"น้ำร้อนไม่ออก{PT}","ro":"nám rɔ́ɔn mây ɔ̀ɔk {PR}","jp":"お湯が出ません","level":"beginner"},{"id":"cv107","scene":"ホテル","th":"ชักโครกอุดตัน{PT}","ro":"chákkhrôok ùt tan {PR}","jp":"トイレが詰まっています","level":"intermediate"},{"id":"cv108","scene":"ホテル","th":"ผมทำกุญแจห้องหาย{PT}","ro":"phǒm tham kuncɛɛ hɔ̂ɔŋ hǎay {PR}","jp":"部屋の鍵をなくしました","level":"beginner"},{"id":"cv109","scene":"ホテル","th":"ลืมกุญแจไว้ในห้อง{PT}","ro":"lʉʉm kuncɛɛ wáy nay hɔ̂ɔŋ {PR}","jp":"部屋に鍵を置き忘れました","level":"beginner"},{"id":"cv110","scene":"ホテル","th":"ขอรูมเซอร์วิสหน่อย{PT}","ro":"khɔ̌ɔ ruum səəwít nɔ̀y {PR}","jp":"ルームサービスをお願いします","level":"beginner"},{"id":"cv111","scene":"ホテル","th":"ขอปลุกตอนเจ็ดโมงเช้าด้วย{PT}","ro":"khɔ̌ɔ plùk tɔɔn cèt mooŋ cháaw dûay {PR}","jp":"朝7時にモーニングコールをお願いします","level":"intermediate"},{"id":"cv112","scene":"ホテル","th":"ช่วยเรียกแท็กซี่ให้หน่อยได้ไหม{PT}","ro":"chûay rîak thɛ́ksîi hây nɔ̀y dây mǎy {PR}","jp":"タクシーを呼んでもらえますか","level":"beginner"},{"id":"cv113","scene":"ホテル","th":"ฝากกระเป๋าไว้ได้ไหม{PT}","ro":"fàak krapǎw wáy dây mǎy {PR}","jp":"荷物を預かってもらえますか","level":"beginner"},{"id":"cv114","scene":"ホテル","th":"ค่าใช้จ่ายเพิ่มเติมเท่าไหร่{PT}","ro":"khâa cháy càay phə̂əm təəm thâw rày {PR}","jp":"追加料金はいくらですか","level":"intermediate"},{"id":"cv115","scene":"ホテル","th":"ผมอยากพักต่ออีกคืน{PT}","ro":"phǒm yàak phák tɔ̀ɔ ìik khʉʉn {PR}","jp":"もう一泊延長したいです","level":"beginner"},{"id":"cv116","scene":"ホテル","th":"ปลั๊กไฟใช้ไม่ได้{PT}","ro":"plák fay cháy mây dây {PR}","jp":"コンセントが使えません","level":"beginner"},{"id":"cv117","scene":"ホテル","th":"ช่วยยกกระเป๋าขึ้นห้องให้หน่อยได้ไหม{PT}","ro":"chûay yók krapǎw khʉ̂n hɔ̂ɔŋ hây nɔ̀y dây mǎy {PR}","jp":"荷物を部屋まで運んでもらえますか","level":"intermediate"},{"id":"cv118","scene":"ホテル","th":"มีล็อคเกอร์ไหม{PT}","ro":"mii lɔ́kkəə mǎy {PR}","jp":"ロッカーはありますか","level":"beginner"},{"id":"cv119","scene":"ホテル","th":"สอนวิธีใช้ตู้เซฟหน่อยได้ไหม{PT}","ro":"sɔ̌ɔn wíthii cháy tûu sép nɔ̀y dây mǎy {PR}","jp":"セーフティボックスの使い方を教えてください","level":"intermediate"},{"id":"cv120","scene":"ホテル","th":"ในห้องมีแมลงสาบ{PT}","ro":"nay hɔ̂ɔŋ mii malɛɛŋsàap {PR}","jp":"部屋にゴキブリがいます","level":"beginner"},{"id":"cv123","scene":"交通","th":"ที่จอดรถอยู่ที่ไหน{PT}","ro":"thîi cɔ̀ɔt rót yùu thîi nǎy {PR}","jp":"駐車場はどこですか","level":"beginner"},{"id":"cv124","scene":"交通","th":"ค่าจอดรถเท่าไหร่{PT}","ro":"khâa cɔ̀ɔt rót thâw rày {PR}","jp":"駐車料金はいくらですか","level":"beginner"},{"id":"cv125","scene":"交通","th":"ที่จอดรถปิดกี่โมง{PT}","ro":"thîi cɔ̀ɔt rót pìt kìi mooŋ {PR}","jp":"駐車場は何時に閉まりますか","level":"beginner"},{"id":"cv126","scene":"レストラン","th":"ขอจองโต๊ะ{PT}","ro":"khɔ̌ɔ cɔɔŋ tó {PR}","jp":"予約をお願いします","level":"beginner"},{"id":"cv127","scene":"レストラン","th":"โต๊ะสำหรับสองคน{PT}","ro":"tó sǎmràp sɔ̌ɔŋ khon {PR}","jp":"2名でお願いします","level":"beginner"},{"id":"cv128","scene":"レストラン","th":"มีเมนูแนะนำไหม{PT}","ro":"mii meenuu nɛ́nam mǎy {PR}","jp":"何かおすすめはありますか","level":"beginner"},{"id":"cv129","scene":"レストラン","th":"อันนี้คืออาหารอะไร{PT}","ro":"an níi khʉʉ aahǎan aray {PR}","jp":"これは何の料理ですか","level":"beginner"},{"id":"cv130","scene":"レストラン","th":"อันนี้เผ็ดไหม{PT}","ro":"an níi phèt mǎy {PR}","jp":"これは辛いですか","level":"beginner"},{"id":"cv131","scene":"レストラン","th":"มีอาหารเจไหม{PT}","ro":"mii aahǎan cee mǎy {PR}","jp":"ベジタリアン料理はありますか","level":"intermediate"},{"id":"cv132","scene":"レストラン","th":"ผมแพ้ถั่ว{PT}","ro":"phǒm phɛ́ɛ thùa {PR}","jp":"ピーナッツアレルギーです","level":"intermediate"},{"id":"cv133","scene":"レストラン","th":"ขอน้ำเปล่าด้วย{PT}","ro":"khɔ̌ɔ nám plàaw dûay {PR}","jp":"お水をください","level":"beginner"},{"id":"cv134","scene":"レストラン","th":"ขอน้ำเปล่าเพิ่ม{PT}","ro":"khɔ̌ɔ nám plàaw phə̂əm {PR}","jp":"お冷のお代わりをください","level":"beginner"},{"id":"cv135","scene":"レストラン","th":"อันนี้ผมไม่ได้สั่ง{PT}","ro":"an níi phǒm mây dây sàŋ {PR}","jp":"これは注文していません","level":"intermediate"},{"id":"cv136","scene":"レストラン","th":"อาหารยังไม่มาเลย{PT}","ro":"aahǎan yaŋ mây maa ləəy {PR}","jp":"料理がまだ来ていません","level":"intermediate"},{"id":"cv137","scene":"レストラン","th":"ห่อกลับบ้านได้ไหม{PT}","ro":"hɔ̀ɔ klàp bâan dây mǎy {PR}","jp":"お持ち帰りできますか","level":"beginner"},{"id":"cv138","scene":"レストラン","th":"ขอพิเศษได้ไหม{PT}","ro":"khɔ̌ɔ phísèet dây mǎy {PR}","jp":"大盛りにできますか","level":"beginner"},{"id":"cv139","scene":"レストラン","th":"ห้องน้ำอยู่ที่ไหน{PT}","ro":"hɔ̂ɔŋnám yùu thîi nǎy {PR}","jp":"お手洗いはどこですか","level":"beginner"},{"id":"cv140","scene":"レストラン","th":"ขอสั่งอาหารหน่อย{PT}","ro":"khɔ̌ɔ sàŋ aahǎan nɔ̀y {PR}","jp":"注文をお願いします","level":"beginner"},{"id":"cv141","scene":"レストラン","th":"มีเบียร์ไหม{PT}","ro":"mii bia mǎy {PR}","jp":"ビールはありますか","level":"beginner"},{"id":"cv142","scene":"レストラン","th":"มีที่นั่งสูบบุหรี่ไหม{PT}","ro":"mii thîi nâŋ sùup bùrìi mǎy {PR}","jp":"喫煙席はありますか","level":"beginner"},{"id":"cv143","scene":"レストラン","th":"มีอาหารชุดไหม{PT}","ro":"mii aahǎan chút mǎy {PR}","jp":"セットメニューはありますか","level":"beginner"},{"id":"cv144","scene":"レストラン","th":"ขอตะเกียบด้วย{PT}","ro":"khɔ̌ɔ takìap dûay {PR}","jp":"お箸をください","level":"beginner"},{"id":"cv145","scene":"観光","th":"จากที่นี่ใกล้ไหม{PT}","ro":"càak thîi nîi klây mǎy {PR}","jp":"ここから近いですか","level":"beginner"},{"id":"cv146","scene":"観光","th":"ใช้เวลานานแค่ไหน{PT}","ro":"cháy weelaa naan khɛ̂ɛ nǎy {PR}","jp":"どのくらい時間がかかりますか","level":"intermediate"},{"id":"cv147","scene":"観光","th":"ที่เที่ยวแนะนำอยู่ที่ไหน{PT}","ro":"thîi thîaw nɛ́ɛnam yùu thîi nǎy {PR}","jp":"一番のおすすめの観光地はどこですか","level":"intermediate"},{"id":"cv148","scene":"観光","th":"ซื้อตั๋วออนไลน์ได้ไหม{PT}","ro":"sʉ́ʉ tǔa ɔɔnlay dây mǎy {PR}","jp":"チケットはオンラインで買えますか","level":"intermediate"},{"id":"cv149","scene":"観光","th":"มีไกด์พูดภาษาอังกฤษไหม{PT}","ro":"mii káy phûut phaasǎa aŋkrìt mǎy {PR}","jp":"英語ガイドはいますか","level":"intermediate"},{"id":"cv151","scene":"観光","th":"ห้องน้ำอยู่แถวนี้ไหม{PT}","ro":"hɔ̂ɔŋnám yùu thɛ̌ɛw níi mǎy {PR}","jp":"お手洗いは近くにありますか","level":"beginner"},{"id":"cv152","scene":"観光","th":"ที่นี่ปิดกี่โมง{PT}","ro":"thîi nîi pìt kìi mooŋ {PR}","jp":"ここは何時に閉まりますか","level":"beginner"},{"id":"cv153","scene":"観光","th":"ค่าเข้าคนต่างชาติเท่าไหร่{PT}","ro":"khâa khâw khon tàaŋ châat thâw rày {PR}","jp":"外国人料金はいくらですか","level":"intermediate"},{"id":"cv154","scene":"観光","th":"ต้องถอดรองเท้าไหม{PT}","ro":"tɔ̂ŋ thɔ̀ɔt rɔɔŋ tháaw mǎy {PR}","jp":"靴を脱ぐ必要がありますか","level":"beginner"},{"id":"cv155","scene":"観光","th":"เข้าไปในวัดได้ไหม{PT}","ro":"khâw pay nay wát dây mǎy {PR}","jp":"お寺の中に入れますか","level":"beginner"},{"id":"cv156","scene":"観光","th":"แลกเงินที่นี่ได้ไหม{PT}","ro":"lɛ̂ɛk ŋən thîi nîi dây mǎy {PR}","jp":"ここで両替できますか","level":"beginner"},{"id":"cv157","scene":"観光","th":"ของฝากแนะนำคืออะไร{PT}","ro":"khɔ̌ɔŋfàak nɛ́ɛnam khʉʉ aray {PR}","jp":"おすすめのお土産は何ですか","level":"beginner"},{"id":"cv158","scene":"観光","th":"เดินไปที่นั่นได้ไหม{PT}","ro":"dəən pay thîi nân dây mǎy {PR}","jp":"歩いてそこまで行けますか","level":"beginner"},{"id":"cv159","scene":"観光","th":"ซื้อตั๋วได้ที่ไหน{PT}","ro":"sʉ́ʉ tǔa dây thîi nǎy {PR}","jp":"チケットはどこで買えますか","level":"beginner"},{"id":"cv160","scene":"観光","th":"มีโต๊ะทัวร์ไหม{PT}","ro":"mii tó thua mǎy {PR}","jp":"ツアーデスクはありますか","level":"beginner"},{"id":"cv161","scene":"交通","th":"รถเมล์สายอะไร{PT}","ro":"rót mee sǎay aray {PR}","jp":"バスは何番ですか","level":"beginner"},{"id":"cv162","scene":"交通","th":"ชานชาลาไหน{PT}","ro":"chaan chalaa nǎy {PR}","jp":"何番線ですか","level":"intermediate"},{"id":"cv163","scene":"交通","th":"ขอตั๋วไปกลับ{PT}","ro":"khɔ̌ɔ tǔa pay klàp {PR}","jp":"往復チケットをください","level":"beginner"},{"id":"cv164","scene":"交通","th":"ขอตั๋วเที่ยวเดียว{PT}","ro":"khɔ̌ɔ tǔa thîaw diaw {PR}","jp":"片道チケットをください","level":"beginner"},{"id":"cv165","scene":"交通","th":"ต้องเปลี่ยนรถไหม{PT}","ro":"tɔ̂ŋ plìan rót mǎy {PR}","jp":"乗り換えが必要ですか","level":"intermediate"},{"id":"cv166","scene":"交通","th":"รถไฟเที่ยวสุดท้ายกี่โมง{PT}","ro":"rót fay thîaw sùt tháay kìi mooŋ {PR}","jp":"終電は何時ですか","level":"intermediate"},{"id":"cv167","scene":"交通","th":"ลงตรงนี้{PT}","ro":"loŋ troŋ níi {PR}","jp":"ここで降ります","level":"beginner"},{"id":"cv168","scene":"交通","th":"รถติดไหม{PT}","ro":"rót tìt mǎy {PR}","jp":"渋滞していますか","level":"beginner"},{"id":"cv169","scene":"交通","th":"เรียกแกร็บให้หน่อยได้ไหม{PT}","ro":"rîak krɛ́p hây nɔ̀y dây mǎy {PR}","jp":"Grabを呼んでもらえますか","level":"intermediate"},{"id":"cv170","scene":"交通","th":"มีมอเตอร์ไซค์รับจ้างไหม{PT}","ro":"mii mɔɔtəɔsay ráp câaŋ mǎy {PR}","jp":"バイクタクシーはありますか","level":"intermediate"},{"id":"cv171","scene":"交通","th":"อีกกี่สถานี{PT}","ro":"ìik kìi sathǎanii {PR}","jp":"あと何駅ですか","level":"beginner"},{"id":"cv172","scene":"緊急","th":"ผมขยับตัวไม่ได้{PT}","ro":"phǒm khayàp tua mây dây {PR}","jp":"動けません","level":"intermediate"},{"id":"cv173","scene":"緊急","th":"เวียนหัว{PT}","ro":"wian hǔa {PR}","jp":"めまいがします","level":"beginner"},{"id":"cv174","scene":"緊急","th":"อาจจะกระดูกหัก{PT}","ro":"àat cà kradùuk hàk {PR}","jp":"骨折したかもしれません","level":"intermediate"},{"id":"cv175","scene":"緊急","th":"ไฟไหม้{PT}","ro":"fay mây {PR}","jp":"火事です","level":"beginner"},{"id":"cv176","scene":"緊急","th":"แผ่นดินไหว{PT}","ro":"phɛ̀ndin wǎy {PR}","jp":"地震です","level":"beginner"},{"id":"cv177","scene":"緊急","th":"ลูกหาย{PT}","ro":"lûuk hǎay {PR}","jp":"子供が迷子になりました","level":"intermediate"},{"id":"cv178","scene":"緊急","th":"เพิ่งโดนล้วงกระเป๋า{PT}","ro":"phə̂əŋ doon lûaŋ krapǎw {PR}","jp":"今スリに遭いました","level":"intermediate"},{"id":"cv179","scene":"緊急","th":"ขอระงับบัตรเครดิต{PT}","ro":"khɔ̌ɔ raŋáp bàt khreedìt {PR}","jp":"クレジットカードを止めてください","level":"intermediate"},{"id":"cv180","scene":"緊急","th":"สถานทูตญี่ปุ่นอยู่ที่ไหน{PT}","ro":"sathǎan thûut yîipùn yùu thîi nǎy {PR}","jp":"日本大使館はどこですか","level":"intermediate"},{"id":"cv181","scene":"緊急","th":"ต้องการล่าม{PT}","ro":"tɔ̂ŋkaan lâam {PR}","jp":"通訳が必要です","level":"intermediate"},{"id":"cv182","scene":"緊急","th":"ผมมีประกัน{PT}","ro":"phǒm mii prakan {PR}","jp":"保険に入っています","level":"intermediate"},{"id":"cv183","scene":"緊急","th":"ประสบอุบัติเหตุ{PT}","ro":"prasòp ùbàttihèet {PR}","jp":"事故に遭いました","level":"intermediate"},{"id":"cv184","scene":"緊急","th":"จมน้ำ{PT}","ro":"com nám {PR}","jp":"溺れています","level":"beginner"},{"id":"cv185","scene":"緊急","th":"ผมถูกไฟลวก{PT}","ro":"phǒm thùuk fay lûak {PR}","jp":"火傷しました","level":"intermediate"},{"id":"cv186","scene":"緊急","th":"ผมมีบาดแผล{PT}","ro":"phǒm mii bàat phlɛ̌ɛ {PR}","jp":"切り傷があります","level":"beginner"},{"id":"cv187","scene":"ホテル","th":"ต้องมัดจำไหม{PT}","ro":"tɔ̂ŋ mátcam mǎy {PR}","jp":"デポジットは必要ですか","level":"intermediate"},{"id":"cv188","scene":"ホテル","th":"ไม่รู้วิธีใช้ ช่วยสอนด้วย{PT}","ro":"mây rúu wíthii cháy chûay sɔ̌ɔn dûay {PR}","jp":"使い方が分からないので教えてください","level":"intermediate"},{"id":"cv189","scene":"ホテル","th":"ช่วยทำความสะอาดห้องด้วย{PT}","ro":"chûay tham khwaam sa àat hɔ̂ɔŋ dûay {PR}","jp":"部屋の掃除をお願いします","level":"beginner"},{"id":"cv190","scene":"ホテル","th":"วันนี้ไม่ต้องทำความสะอาดห้อง{PT}","ro":"wan níi mây tɔ̂ŋ tham khwaam sa àat hɔ̂ɔŋ {PR}","jp":"今日部屋は掃除しなくていいです","level":"beginner"},{"id":"cv191","scene":"ホテル","th":"ขอน้ำดื่มฟรีด้วย{PT}","ro":"khɔ̌ɔ nám dʉ̀ʉm frii dûay {PR}","jp":"無料のお水をください","level":"beginner"},{"id":"cv192","scene":"ホテル","th":"เพื่อนพักด้วยกันได้ไหม{PT}","ro":"phʉ̂an phák dûay kan dâay mǎy {PR}","jp":"友人が一緒に宿泊してもいいですか","level":"beginner"},{"id":"cv193","scene":"ホテル","th":"ช่วยแนะนำร้านอาหารหน่อย{PT}","ro":"chûay nɛ́nam ráan aahǎan nɔ̀y {PR}","jp":"おすすめのレストランを教えてください","level":"beginner"},{"id":"cv194","scene":"ホテル","th":"สระว่ายน้ำเปิดกี่โมงถึงกี่โมง{PT}","ro":"sà wâay náam pə̀ət kìi mooŋ thʉ̌ŋ kìi mooŋ {PR}","jp":"プールは何時から何時までですか","level":"intermediate"},{"id":"cv195","scene":"ホテル","th":"จ่ายเงินตอนจองแล้ว{PT}","ro":"càay ŋən tɔɔn cɔɔŋ lɛ́ɛw {PR}","jp":"予約時に支払い済みです","level":"intermediate"},{"id":"cv196","scene":"ホテル","th":"จ่ายด้วยการสแกนได้ไหม{PT}","ro":"càay dûay kaan sakɛɛn dâay mǎy {PR}","jp":"スキャンで支払いできますか","level":"intermediate"},{"id":"cv197","scene":"ホテル","th":"นี่คือราคารวมใช่ไหม{PT}","ro":"nîi khʉʉ raakhaa ruam chây mǎy {PR}","jp":"これは合計金額ですか","level":"intermediate"},{"id":"cv198","scene":"ホテル","th":"ขอใบเสร็จได้ไหม{PT}","ro":"khɔ̌ɔ bay sèt dâay mǎy {PR}","jp":"領収書はいただけますか","level":"beginner"},{"id":"cv199","scene":"ホテル","th":"ห้องอยู่ชั้นไหน{PT}","ro":"hɔ̂ɔŋ yùu chán nǎy {PR}","jp":"部屋は何階ですか","level":"beginner"},{"id":"cv200","scene":"ホテル","th":"ห้องข้างๆเสียงดัง{PT}","ro":"hɔ̂ɔŋ khâaŋ khâaŋ sǐaŋ daŋ {PR}","jp":"他の部屋がうるさいです","level":"beginner"},{"id":"cv201","scene":"ホテル","th":"มีกลิ่นบุหรี่{PT}","ro":"mii klìn bùrìi {PR}","jp":"煙草臭いです","level":"beginner"},{"id":"cv202","scene":"ホテル","th":"ได้พักอย่างสบายมาก ขอบคุณมาก{PT}","ro":"dâay phák yàaŋ sabaay mâak khɔ̀ɔp khun mâak {PR}","jp":"とても快適に過ごせました。ありがとうございます","level":"intermediate"},{"id":"cv203","scene":"観光","th":"แถวนี้มีตลาดนัดกลางคืนไหม{PT}","ro":"thɛ̌ɛw níi mii talàat nát klaaŋ khʉʉn mǎy {PR}","jp":"近くにナイトマーケットはありますか","level":"beginner"},{"id":"cv204","scene":"レストラン","th":"ทั้งหมดเท่าไหร่{PT}","ro":"tháŋ mòt thâw rày {PR}","jp":"全部でいくらですか","level":"beginner"},{"id":"cv205","scene":"レストラン","th":"ขอเป็นเส้นบะหมี่{PT}","ro":"khɔ̌ɔ pen sên bamìi {PR}","jp":"セン・バミーでお願いします(中華風の卵麺)","level":"intermediate"},{"id":"cv206","scene":"レストラン","th":"ขอเป็นเส้นเล็ก{PT}","ro":"khɔ̌ɔ pen sên lék {PR}","jp":"セン・レックでお願いします(細い米麺)","level":"intermediate"},{"id":"cv207","scene":"レストラン","th":"ขอเป็นเส้นใหญ่{PT}","ro":"khɔ̌ɔ pen sên yày {PR}","jp":"セン・ヤイでお願いします(幅広の米麺)","level":"intermediate"},{"id":"cv208","scene":"レストラン","th":"ขอเป็นเส้นหมี่ขาว{PT}","ro":"khɔ̌ɔ pen sên mìi khǎaw {PR}","jp":"セン・ミー・カーオでお願いします(極細の米麺/ビーフン)","level":"intermediate"},{"id":"cv209","scene":"レストラン","th":"ขอเป็นมาม่า{PT}","ro":"khɔ̌ɔ pen mâamâa {PR}","jp":"ママーでお願いします(インスタント麺)","level":"intermediate"},{"id":"cv210","scene":"レストラン","th":"วันไหนหยุด{PT}","ro":"wan nǎy yùt {PR}","jp":"何曜日が休みですか","level":"beginner"},{"id":"cv211","scene":"レストラン","th":"ร้านนี้เปิดกี่โมง{PT}","ro":"ráan níi pə̀ət kìi mooŋ {PR}","jp":"この店は何時に開きますか","level":"beginner"},{"id":"cv212","scene":"レストラン","th":"ร้านนี้ปิดกี่โมง{PT}","ro":"ráan níi pìt kìi mooŋ {PR}","jp":"この店は何時に閉まりますか","level":"beginner"},{"id":"cv213","scene":"レストラン","th":"จะกลับมาอีก{PT}","ro":"cà klàp maa ìik {PR}","jp":"また来ます","level":"beginner"},{"id":"cv214","scene":"レストラン","th":"เติมเงินให้หน่อยร้อยบาท{PT}","ro":"təəm ŋən hây nɔ̀y rɔ́y bàat {PR}","jp":"100バーツチャージしてください","level":"intermediate"},{"id":"cv215","scene":"レストラン","th":"เอาอันนี้สองอัน{PT}","ro":"aw an níi sɔ̌ɔŋ an {PR}","jp":"これを2個ください","level":"beginner"},{"id":"cv216","scene":"レストラン","th":"เอาหมายเลขสิบสอง{PT}","ro":"aw mǎay lêek sìp sɔ̌ɔŋ {PR}","jp":"12番をください(番号で注文)","level":"intermediate"},{"id":"cv217","scene":"レストラン","th":"เอาจานไปคืนที่ไหน{PT}","ro":"aw caan pay khʉʉn thîi nǎy {PR}","jp":"食器はどこに返せばいいですか","level":"intermediate"},{"id":"cv218","scene":"観光","th":"ขอคิดดูก่อน{PT}","ro":"khɔ̌ɔ khít duu kɔ̀ɔn {PR}","jp":"少し考えさせてください","level":"beginner"},{"id":"cv219","scene":"観光","th":"เดี๋ยวมาใหม่{PT}","ro":"dǐaw maa mày {PR}","jp":"また後で来ます","level":"beginner"},{"id":"cv220","scene":"観光","th":"ซื้อหลายชิ้น ช่วยลดราคาหน่อย{PT}","ro":"sʉ́ʉ lǎay chín chûay lót raakhaa nɔ̀y {PR}","jp":"複数購入するので値引きしてください","level":"intermediate"},{"id":"cv221","scene":"観光","th":"อยากซื้อหลายชิ้น มีของเหลือกี่ชิ้น{PT}","ro":"yàak sʉ́ʉ lǎay chín mii khɔ̌ɔŋ lʉ̌a kìi chín {PR}","jp":"複数購入したいのですが在庫はいくつありますか","level":"intermediate"},{"id":"cv222","scene":"観光","th":"อันนี้จะเอาไปเป็นของขวัญ ไม่ต้องแกะห่อนะ{PT}","ro":"an níi cà aw pay pen khɔ̌ɔŋ khwǎn mây tɔ̂ŋ kɛ̀ hɔ̀ɔ ná {PR}","jp":"これはプレゼント用なので開封しないでください","level":"intermediate"},{"id":"cv223","scene":"観光","th":"ขอนวดไทยหนึ่งชั่วโมง{PT}","ro":"khɔ̌ɔ nûat thay nʉ̀ŋ chûamooŋ {PR}","jp":"タイマッサージを1時間お願いします","level":"beginner"},{"id":"cv224","scene":"観光","th":"ขอนวดเท้าสามสิบนาที{PT}","ro":"khɔ̌ɔ nûat tháaw sǎam sìp naathii {PR}","jp":"フットマッサージを30分お願いします","level":"beginner"},{"id":"cv225","scene":"観光","th":"ขอนวดน้ำมันเก้าสิบนาที{PT}","ro":"khɔ̌ɔ nûat nám man kâw sìp naathii {PR}","jp":"オイルマッサージを90分お願いします","level":"intermediate"},{"id":"cv226","scene":"観光","th":"เป็นรอยช้ำง่าย ขอเบาๆหน่อย{PT}","ro":"pen rooy chám ŋâay khɔ̌ɔ baw baw nɔ̀y {PR}","jp":"痣ができやすいので弱めでお願いします","level":"intermediate"},{"id":"cv227","scene":"観光","th":"เมื่อยมาก ขอแรงๆหน่อย{PT}","ro":"mʉ̂ay mâak khɔ̌ɔ rɛɛŋ rɛɛŋ nɔ̀y {PR}","jp":"体が凝っているので強めでお願いします","level":"intermediate"},{"id":"cv228","scene":"観光","th":"จั๊กจี้{PT}","ro":"cák cîi {PR}","jp":"くすぐったいです","level":"beginner"},{"id":"cv229","scene":"観光","th":"ขอโทษนะ มีธุระต้องไป ขอหยุดแค่นี้ก่อนได้ไหม{PT}","ro":"khɔ̌ɔ thôot ná mii thúrá tɔ̂ŋ pay khɔ̌ɔ yùt khɛ̂ɛ níi kɔ̀ɔn dâay mǎy {PR}","jp":"すみませんが予定があるのでもう終わりにしてください","level":"intermediate"},{"id":"cv230","scene":"観光","th":"ขอต่อเวลาอีกสามสิบนาทีได้ไหม{PT}","ro":"khɔ̌ɔ tɔ̀ɔ weelaa ìik sǎam sìp naathii dâay mǎy {PR}","jp":"あと30分延長できますか","level":"intermediate"},{"id":"cv231","scene":"観光","th":"ผ่อนคลายมาก{PT}","ro":"phɔ̀ɔn khlaay mâak {PR}","jp":"リラックスできました","level":"beginner"},{"id":"cv232","scene":"観光","th":"อยากมาอีก จองคิวได้ไหม{PT}","ro":"yàak maa ìik cɔɔŋ khiw dâay mǎy {PR}","jp":"またお願いしたいのですが予約は可能ですか","level":"beginner"},{"id":"cv233","scene":"緊急","th":"น้ำมูกไหล{PT}","ro":"nám muuk lǎy {PR}","jp":"鼻水が出ます","level":"beginner"},{"id":"cv234","scene":"緊急","th":"จามบ่อย{PT}","ro":"caam bɔ̀y {PR}","jp":"くしゃみが出ます","level":"beginner"},{"id":"cv235","scene":"緊急","th":"ท้องอืด มีแก๊สในท้อง{PT}","ro":"thɔ́ɔŋ ʉ̀ʉt mii kɛ́ɛt nay thɔ́ɔŋ {PR}","jp":"お腹が張ってガスがたまっています","level":"intermediate"},{"id":"cv236","scene":"緊急","th":"ไอ{PT}","ro":"ay {PR}","jp":"咳が出ます","level":"beginner"},{"id":"cv237","scene":"緊急","th":"โดนยุงกัด คันมาก{PT}","ro":"doon yuŋ kàt khan mâak {PR}","jp":"蚊に刺されて痒いです","level":"intermediate"},{"id":"cv238","scene":"緊急","th":"มีแผ่นแปะแก้ปวดกล้ามเนื้อไหม{PT}","ro":"mii phɛ̀n pɛ̀ kɛ̂ɛ pùat klâam nʉ́a mǎy {PR}","jp":"筋肉痛用の湿布はありますか","level":"intermediate"},{"id":"cv239","scene":"緊急","th":"มียานอนหลับไหม{PT}","ro":"mii yaa nɔɔn làp mǎy {PR}","jp":"睡眠導入剤はありますか","level":"beginner"},{"id":"cv240","scene":"緊急","th":"มีสเปรย์กันแมลงไหม{PT}","ro":"mii sapree kan malɛɛŋ mǎy {PR}","jp":"虫よけスプレーはありますか","level":"beginner"},{"id":"cv241","scene":"緊急","th":"ควรกินยาตัวไหน{PT}","ro":"khuan kin yaa tua nǎy {PR}","jp":"どの薬を飲めばいいですか","level":"intermediate"},{"id":"cv242","scene":"緊急","th":"อยากไปโรงพยาบาล ควรทำยังไงดี{PT}","ro":"yàak pay rooŋ phayaabaan khuan tham yaŋ ŋay dii {PR}","jp":"病院に行きたいのですがどうすればいいですか","level":"intermediate"},{"id":"cv243","scene":"緊急","th":"เหมือนข้อเท้าแพลง{PT}","ro":"mʉ̌an khɔ̂ɔ tháaw phlɛɛŋ {PR}","jp":"捻挫したようです","level":"intermediate"},{"id":"cv244","scene":"緊急","th":"เหมือนนิ้วซ้น{PT}","ro":"mʉ̌an níw sôn {PR}","jp":"つき指したようです","level":"intermediate"},{"id":"cv245","scene":"日常会話","th":"วันนี้เป็นยังไงบ้าง{PT}","ro":"wan níi pen yaŋ ŋay bâaŋ {PR}","jp":"今日はどうですか？","level":"beginner"},{"id":"cv246","scene":"日常会話","th":"วันนี้อากาศร้อนมาก{PT}","ro":"wan níi aakàat rɔ́ɔn mâak {PR}","jp":"今日はとても暑いですね","level":"beginner"},{"id":"cv247","scene":"日常会話","th":"ช่วงนี้งานยุ่งไหม{PT}","ro":"chûaŋ níi ŋaan yûŋ mǎy {PR}","jp":"最近、仕事は忙しいですか？","level":"beginner"},{"id":"cv248","scene":"日常会話","th":"วันนี้เลิกงานกี่โมง{PT}","ro":"wan níi lə̂ək ŋaan kìi mooŋ {PR}","jp":"今日は何時に仕事が終わりますか？","level":"beginner"},{"id":"cv249","scene":"日常会話","th":"กินข้าวหรือยัง{PT}","ro":"kin khâaw rʉ̌ʉ yaŋ {PR}","jp":"もうご飯を食べましたか？","level":"beginner"},{"id":"cv250","scene":"日常会話","th":"วันนี้กินอะไรมา{PT}","ro":"wan níi kin aray maa {PR}","jp":"今日は何を食べましたか？","level":"beginner"},{"id":"cv251","scene":"日常会話","th":"กำลังจะออกไปข้างนอก{PT}","ro":"kamlaŋ cà ɔ̀ɔk pay khâaŋ nɔ̂ɔk {PR}","jp":"これから外に出るところです","level":"intermediate"},{"id":"cv252","scene":"日常会話","th":"เดี๋ยวกลับมานะ{PT}","ro":"dǐaw klàp maa ná {PR}","jp":"ちょっとしたら戻りますね","level":"beginner"},{"id":"cv253","scene":"日常会話","th":"รอสักครู่นะ{PT}","ro":"rɔɔ sàk khrûu ná {PR}","jp":"少し待ってくださいね","level":"beginner"},{"id":"cv254","scene":"日常会話","th":"วันนี้ว่างไหม{PT}","ro":"wan níi wâaŋ mǎy {PR}","jp":"今日、暇ですか？","level":"beginner"},{"id":"cv255","scene":"日常会話","th":"พรุ่งนี้มีแผนอะไรไหม{PT}","ro":"phrûŋ níi mii phɛ̌ɛn aray mǎy {PR}","jp":"明日は何か予定がありますか？","level":"intermediate"},{"id":"cv256","scene":"日常会話","th":"แล้วเจอกันพรุ่งนี้{PT}","ro":"lɛ́ɛw cəə kan phrûŋ níi {PR}","jp":"また明日会いましょう","level":"beginner"},{"id":"cv257","scene":"日常会話","th":"เดี๋ยวค่อยคุยกัน{PT}","ro":"dǐaw khɔ̂y khuy kan {PR}","jp":"また後で話しましょう","level":"intermediate"},{"id":"cv258","scene":"日常会話","th":"ขอเวลาคิดหน่อย{PT}","ro":"khɔ̌ɔ weelaa khít nɔ̀y {PR}","jp":"少し考える時間をください","level":"intermediate"},{"id":"cv259","scene":"日常会話","th":"จำไม่ได้แล้ว{PT}","ro":"cam mây dâay lɛ́ɛw {PR}","jp":"もう思い出せません","level":"intermediate"},{"id":"cv260","scene":"日常会話","th":"ไม่แน่ใจเหมือนกัน{PT}","ro":"mây nɛ̂ɛ cay mʉ̌an kan {PR}","jp":"私もよく分かりません","level":"intermediate"},{"id":"cv261","scene":"日常会話","th":"เดี๋ยวขอเช็กก่อน{PT}","ro":"dǐaw khɔ̌ɔ chék kɔ̀ɔn {PR}","jp":"ちょっと確認します","level":"beginner"},{"id":"cv262","scene":"日常会話","th":"ส่งข้อความมาให้หน่อย{PT}","ro":"sòŋ khɔ̂ɔkhwaam maa hây nɔ̀y {PR}","jp":"メッセージを送ってください","level":"beginner"},{"id":"cv263","scene":"日常会話","th":"ช่วยส่งโลเคชันมาให้หน่อย{PT}","ro":"chûay sòŋ lookêchan maa hây nɔ̀y {PR}","jp":"位置情報を送ってください","level":"intermediate"},{"id":"cv264","scene":"日常会話","th":"เดี๋ยว{PS}ไปหา{PT}","ro":"dǐaw {PSR} pay hǎa {PR}","jp":"これから会いに行きます","level":"beginner"},{"id":"cv265","scene":"日常会話","th":"อยู่ไม่ไกลจากที่นี่{PT}","ro":"yùu mây klay càak thîi nîi {PR}","jp":"ここから遠くありません","level":"beginner"},{"id":"cv266","scene":"日常会話","th":"วันนี้รถติดมาก{PT}","ro":"wan níi rót tìt mâak {PR}","jp":"今日はとても渋滞しています","level":"beginner"},{"id":"cv267","scene":"日常会話","th":"ฝนกำลังจะตก{PT}","ro":"fǒn kamlaŋ cà tòk {PR}","jp":"雨が降りそうです","level":"beginner"},{"id":"cv268","scene":"日常会話","th":"ฝนตกหนักมาก{PT}","ro":"fǒn tòk nàk mâak {PR}","jp":"雨がとても強く降っています","level":"beginner"},{"id":"cv269","scene":"日常会話","th":"ระวังฝนด้วยนะ{PT}","ro":"rawaŋ fǒn dûay ná {PR}","jp":"雨に気をつけてくださいね","level":"beginner"},{"id":"cv270","scene":"日常会話","th":"วันนี้รู้สึกเหนื่อยนิดหน่อย{PT}","ro":"wan níi rúusʉ̀k nʉ̀ay nít nɔ̀y {PR}","jp":"今日は少し疲れています","level":"beginner"},{"id":"cv271","scene":"日常会話","th":"ขอพักแป๊บนึง{PT}","ro":"khɔ̌ɔ phák pɛ́ɛp nʉŋ {PR}","jp":"ちょっと休ませてください","level":"beginner"},{"id":"cv272","scene":"日常会話","th":"ไว้คุยกันใหม่นะ{PT}","ro":"wáy khuy kan mày ná {PR}","jp":"また話しましょうね","level":"beginner"},{"id":"cv273","scene":"レストラン","th":"ขอที่นั่งริมหน้าต่างได้ไหม{PT}","ro":"khɔ̌ɔ thîi nâŋ rim nâa tàaŋ dâay mǎy {PR}","jp":"窓側の席にできますか？","level":"beginner"},{"id":"cv274","scene":"レストラン","th":"มีโต๊ะสำหรับสามคนไหม{PT}","ro":"mii tó sǎmràp sǎam khon mǎy {PR}","jp":"3人用の席はありますか？","level":"beginner"},{"id":"cv275","scene":"レストラン","th":"ขอจานเล็กเพิ่มได้ไหม{PT}","ro":"khɔ̌ɔ caan lék phə̂əm dâay mǎy {PR}","jp":"小皿を追加でもらえますか？","level":"beginner"},{"id":"cv276","scene":"レストラン","th":"ขอช้อนเพิ่มหน่อย{PT}","ro":"khɔ̌ɔ chɔ́ɔn phə̂əm nɔ̀y {PR}","jp":"スプーンを追加してください","level":"beginner"},{"id":"cv277","scene":"レストラン","th":"ขอแก้วเพิ่มอีกใบได้ไหม{PT}","ro":"khɔ̌ɔ kɛ̂ɛw phə̂əm ìik bay dâay mǎy {PR}","jp":"グラスをもう1つもらえますか？","level":"beginner"},{"id":"cv278","scene":"レストラン","th":"ขอไม่ใส่น้ำตาลนะ{PT}","ro":"khɔ̌ɔ mây sày námtaan ná {PR}","jp":"砂糖を入れないでください","level":"beginner"},{"id":"cv279","scene":"レストラン","th":"ขอหวานน้อยหน่อย{PT}","ro":"khɔ̌ɔ wǎan nɔ́ɔy nɔ̀y {PR}","jp":"甘さを少し控えめにしてください","level":"beginner"},{"id":"cv280","scene":"レストラン","th":"ขอเผ็ดน้อยหน่อย{PT}","ro":"khɔ̌ɔ phèt nɔ́ɔy nɔ̀y {PR}","jp":"辛さを少し控えめにしてください","level":"beginner"},{"id":"cv281","scene":"レストラン","th":"ขอแยกน้ำซุปได้ไหม{PT}","ro":"khɔ̌ɔ yɛ̂ɛk nám sùp dâay mǎy {PR}","jp":"スープを別にできますか？","level":"intermediate"},{"id":"cv282","scene":"レストラン","th":"จานนี้กินกี่คนได้{PT}","ro":"caan níi kin kìi khon dâay {PR}","jp":"この料理は何人分ですか？","level":"intermediate"},{"id":"cv283","scene":"レストラン","th":"ใช้เวลาทำนานไหม{PT}","ro":"cháy weelaa tham naan mǎy {PR}","jp":"作るのに時間がかかりますか？","level":"intermediate"},{"id":"cv284","scene":"レストラン","th":"อาหารจานนี้มีเนื้อไหม{PT}","ro":"aahǎan caan níi mii nʉ́a mǎy {PR}","jp":"この料理には肉が入っていますか？","level":"beginner"},{"id":"cv285","scene":"レストラン","th":"ขอชิมก่อนได้ไหม{PT}","ro":"khɔ̌ɔ chim kɔ̀ɔn dâay mǎy {PR}","jp":"先に味見できますか？","level":"intermediate"},{"id":"cv286","scene":"レストラン","th":"ขอใส่กล่องกลับบ้านด้วย{PT}","ro":"khɔ̌ɔ sày klɔ̀ɔŋ klàp bâan dûay {PR}","jp":"持ち帰り用の箱に入れてください","level":"beginner"},{"id":"cv287","scene":"レストラン","th":"คิดเงินด้วย{PT}","ro":"khít ŋən dûay {PR}","jp":"お会計お願いします","level":"beginner"},{"id":"cv288","scene":"レストラン","th":"จ่ายคนละเท่าไหร่{PT}","ro":"càay khon lá thâw rày {PR}","jp":"一人いくら払えばいいですか？","level":"intermediate"},{"id":"cv289","scene":"観光","th":"ที่นี่คนเยอะไหม{PT}","ro":"thîi nîi khon yə́ mǎy {PR}","jp":"ここは人が多いですか？","level":"beginner"},{"id":"cv290","scene":"観光","th":"ช่วงไหนคนน้อยที่สุด{PT}","ro":"chûaŋ nǎy khon nɔ́ɔy thîi sùt {PR}","jp":"何時頃が一番空いていますか？","level":"intermediate"},{"id":"cv291","scene":"観光","th":"ต้องจองล่วงหน้าไหม{PT}","ro":"tɔ̂ŋ cɔɔŋ lûaŋ nâa mǎy {PR}","jp":"事前予約が必要ですか？","level":"intermediate"},{"id":"cv292","scene":"観光","th":"จองหน้างานได้ไหม{PT}","ro":"cɔɔŋ nâa ŋaan dâay mǎy {PR}","jp":"現地で予約できますか？","level":"intermediate"},{"id":"cv293","scene":"観光","th":"ใช้เวลาชมประมาณกี่ชั่วโมง{PT}","ro":"cháy weelaa chom pramǎan kìi chûamooŋ {PR}","jp":"見学には何時間くらいかかりますか？","level":"intermediate"},{"id":"cv294","scene":"観光","th":"จุดถ่ายรูปอยู่ตรงไหน{PT}","ro":"cùt thàay rûup yùu troŋ nǎy {PR}","jp":"写真スポットはどこですか？","level":"beginner"},{"id":"cv295","scene":"観光","th":"มีทางขึ้นไปข้างบนไหม{PT}","ro":"mii thaaŋ khʉ̂n pay khâaŋ bon mǎy {PR}","jp":"上に行く道はありますか？","level":"beginner"},{"id":"cv296","scene":"観光","th":"ต้องเสียค่าใช้จ่ายเพิ่มไหม{PT}","ro":"tɔ̂ŋ sǐa khâa cháy càay phə̂əm mǎy {PR}","jp":"追加料金はかかりますか？","level":"intermediate"},{"id":"cv297","scene":"観光","th":"สามารถเข้าได้ทุกวันไหม{PT}","ro":"sǎamâat khâw dâay thúk wan mǎy {PR}","jp":"毎日入れますか？","level":"intermediate"},{"id":"cv298","scene":"観光","th":"วันนี้มีการแสดงไหม{PT}","ro":"wan níi mii kaan sadɛɛŋ mǎy {PR}","jp":"今日はショーがありますか？","level":"beginner"},{"id":"cv299","scene":"観光","th":"การแสดงเริ่มกี่โมง{PT}","ro":"kaan sadɛɛŋ rə̂əm kìi mooŋ {PR}","jp":"ショーは何時に始まりますか？","level":"beginner"},{"id":"cv300","scene":"観光","th":"ตรงนี้ห้ามถ่ายรูปใช่ไหม{PT}","ro":"troŋ níi hâam thàay rûup chây mǎy {PR}","jp":"ここは撮影禁止ですよね？","level":"beginner"},{"id":"cv301","scene":"観光","th":"ขอถ่ายรูปกับคุณได้ไหม{PT}","ro":"khɔ̌ɔ thàay rûup kàp khun dâay mǎy {PR}","jp":"一緒に写真を撮ってもいいですか？","level":"beginner"},{"id":"cv302","scene":"ホテル","th":"ขอเช็กอินก่อนเวลาได้ไหม{PT}","ro":"khɔ̌ɔ chék in kɔ̀ɔn weelaa dâay mǎy {PR}","jp":"アーリーチェックインできますか？","level":"intermediate"},{"id":"cv303","scene":"ホテル","th":"ฝากกระเป๋าก่อนเช็กอินได้ไหม{PT}","ro":"fàak krapǎw kɔ̀ɔn chék in dâay mǎy {PR}","jp":"チェックイン前に荷物を預けられますか？","level":"intermediate"},{"id":"cv304","scene":"ホテル","th":"ขอเช็กเอาต์ช้าหน่อยได้ไหม{PT}","ro":"khɔ̌ɔ chék aw cháa nɔ̀y dâay mǎy {PR}","jp":"レイトチェックアウトできますか？","level":"intermediate"},{"id":"cv305","scene":"ホテル","th":"ต้องจ่ายค่ามัดจำเท่าไหร่{PT}","ro":"tɔ̂ŋ càay khâa mátcam thâw rày {PR}","jp":"デポジットはいくらですか？","level":"intermediate"},{"id":"cv306","scene":"ホテル","th":"มัดจำจะคืนให้เมื่อไหร่{PT}","ro":"mátcam cà khʉʉn hây mʉ̂aray {PR}","jp":"デポジットはいつ返金されますか？","level":"intermediate"},{"id":"cv307","scene":"ホテル","th":"ขอคีย์การ์ดเพิ่มอีกใบได้ไหม{PT}","ro":"khɔ̌ɔ khii káat phə̂əm ìik bay dâay mǎy {PR}","jp":"キーカードをもう1枚もらえますか？","level":"beginner"},{"id":"cv308","scene":"ホテル","th":"คีย์การ์ดใช้ไม่ได้{PT}","ro":"khii káat cháy mây dâay {PR}","jp":"キーカードが使えません","level":"beginner"},{"id":"cv309","scene":"ホテル","th":"แอร์ไม่เย็นเลย{PT}","ro":"ɛɛ mây yen ləəy {PR}","jp":"エアコンが全然冷えません","level":"beginner"},{"id":"cv310","scene":"ホテル","th":"น้ำไหลเบามาก{PT}","ro":"nám lǎy baw mâak {PR}","jp":"水の出がとても弱いです","level":"beginner"},{"id":"cv311","scene":"ホテル","th":"น้ำรั่วจากเพดาน{PT}","ro":"nám rûa càak phédan {PR}","jp":"天井から水が漏れています","level":"intermediate"},{"id":"cv312","scene":"ホテル","th":"ช่วยเปลี่ยนผ้าปูที่นอนได้ไหม{PT}","ro":"chûay plìan phâa puu thîi nɔɔn dâay mǎy {PR}","jp":"シーツを交換してもらえますか？","level":"beginner"},{"id":"cv313","scene":"ホテル","th":"ขอหมอนเพิ่มอีกใบได้ไหม{PT}","ro":"khɔ̌ɔ mɔ̌ɔn phə̂əm ìik bay dâay mǎy {PR}","jp":"枕をもう1つもらえますか？","level":"beginner"},{"id":"cv314","scene":"ホテル","th":"ห้องนี้สูบบุหรี่ได้ไหม{PT}","ro":"hɔ̂ɔŋ níi sùup bùrìi dâay mǎy {PR}","jp":"この部屋は喫煙できますか？","level":"beginner"},{"id":"cv315","scene":"交通","th":"ขอไปที่นี่{PT}","ro":"khɔ̌ɔ pay thîi nîi {PR}","jp":"ここまでお願いします","level":"beginner"},{"id":"cv316","scene":"交通","th":"ช่วยบอกทางให้หน่อย{PT}","ro":"chûay bɔ̀ɔk thaaŋ hây nɔ̀y {PR}","jp":"道を教えてください","level":"beginner"},{"id":"cv317","scene":"交通","th":"ต้องขึ้นรถสายไหน{PT}","ro":"tɔ̂ŋ khʉ̂n rót sǎay nǎy {PR}","jp":"何番のバスに乗ればいいですか？","level":"beginner"},{"id":"cv318","scene":"交通","th":"รถคันนี้ไปถึงไหม{PT}","ro":"rót khan níi pay thʉ̌ŋ mǎy {PR}","jp":"この車両で行けますか？","level":"intermediate"},{"id":"cv319","scene":"交通","th":"ต้องลงสถานีไหน{PT}","ro":"tɔ̂ŋ loŋ sathǎanii nǎy {PR}","jp":"どの駅で降りればいいですか？","level":"beginner"},{"id":"cv320","scene":"交通","th":"ต้องต่อรถตรงไหน{PT}","ro":"tɔ̂ŋ tɔ̀ɔ rót troŋ nǎy {PR}","jp":"どこで乗り換えればいいですか？","level":"beginner"},{"id":"cv321","scene":"交通","th":"ขบวนนี้ไปทางไหน{PT}","ro":"khabùan níi pay thaaŋ nǎy {PR}","jp":"この列車はどちら方面ですか？","level":"intermediate"},{"id":"cv322","scene":"交通","th":"รถไฟขบวนนี้จอดทุกสถานีไหม{PT}","ro":"rót fay khabùan níi cɔ̀ɔt thúk sathǎanii mǎy {PR}","jp":"この列車は各駅に停まりますか？","level":"intermediate"},{"id":"cv323","scene":"交通","th":"ต้องรออีกนานไหม{PT}","ro":"tɔ̂ŋ rɔɔ ìik naan mǎy {PR}","jp":"まだ長く待ちますか？","level":"beginner"},{"id":"cv324","scene":"交通","th":"รถจะมาถึงเมื่อไหร่{PT}","ro":"rót cà maa thʉ̌ŋ mʉ̂aray {PR}","jp":"車はいつ到着しますか？","level":"beginner"},{"id":"cv325","scene":"交通","th":"รถคันนี้ว่างไหม{PT}","ro":"rót khan níi wâaŋ mǎy {PR}","jp":"この車は空いていますか？","level":"beginner"},{"id":"cv326","scene":"交通","th":"ไปสนามบินราคาเท่าไหร่{PT}","ro":"pay sanǎambin raakhaa thâw rày {PR}","jp":"空港までいくらですか？","level":"beginner"},{"id":"cv327","scene":"交通","th":"มีค่าทางด่วนไหม{PT}","ro":"mii khâa thaaŋ dùan mǎy {PR}","jp":"高速料金はかかりますか？","level":"intermediate"},{"id":"cv328","scene":"交通","th":"ไม่ต้องขึ้นทางด่วน{PT}","ro":"mây tɔ̂ŋ khʉ̂n thaaŋ dùan {PR}","jp":"高速道路は使わなくていいです","level":"intermediate"},{"id":"cv329","scene":"交通","th":"ขอไปทางนี้ได้ไหม{PT}","ro":"khɔ̌ɔ pay thaaŋ níi dâay mǎy {PR}","jp":"こちらの道から行けますか？","level":"beginner"},{"id":"cv330","scene":"交通","th":"ช่วยจอดข้างหน้าให้หน่อย{PT}","ro":"chûay cɔ̀ɔt khâaŋ nâa hây nɔ̀y {PR}","jp":"前で停めてください","level":"beginner"},{"id":"cv331","scene":"交通","th":"จอดใกล้ทางเข้าได้ไหม{PT}","ro":"cɔ̀ɔt klây thaaŋ khâw dâay mǎy {PR}","jp":"入口の近くで停められますか？","level":"intermediate"},{"id":"cv332","scene":"交通","th":"ช่วยเปิดท้ายรถให้หน่อย{PT}","ro":"chûay pə̀ət thâay rót hây nɔ̀y {PR}","jp":"トランクを開けてください","level":"beginner"},{"id":"cv333","scene":"交通","th":"ขอใบเสร็จค่าแท็กซี่ได้ไหม{PT}","ro":"khɔ̌ɔ bay sèt khâa thɛ́ksîi dâay mǎy {PR}","jp":"タクシーの領収書をもらえますか？","level":"beginner"},{"id":"cv334","scene":"交通","th":"ขอจ่ายด้วยบัตรได้ไหม{PT}","ro":"khɔ̌ɔ càay dûay bàt dâay mǎy {PR}","jp":"カードで支払えますか？","level":"beginner"},{"id":"cv335","scene":"交通","th":"รถไฟฟ้าหมดกี่โมง{PT}","ro":"rót fay fáa mòt kìi mooŋ {PR}","jp":"電車は何時に終わりますか？","level":"beginner"},{"id":"cv336","scene":"交通","th":"สถานีนี้มีทางออกกี่ทาง{PT}","ro":"sathǎanii níi mii thaaŋ ɔ̀ɔk kìi thaaŋ {PR}","jp":"この駅には出口がいくつありますか？","level":"intermediate"},{"id":"cv337","scene":"交通","th":"ทางออกไหนใกล้ที่สุด{PT}","ro":"thaaŋ ɔ̀ɔk nǎy klây thîi sùt {PR}","jp":"どの出口が一番近いですか？","level":"intermediate"},{"id":"cv338","scene":"交通","th":"ไปฝั่งตรงข้ามยังไง{PT}","ro":"pay fàŋ troŋ khâam yaŋ ŋay {PR}","jp":"反対側へはどう行きますか？","level":"intermediate"},{"id":"cv339","scene":"交通","th":"ข้ามถนนตรงไหน{PT}","ro":"khâam thanǒn troŋ nǎy {PR}","jp":"どこで道路を渡ればいいですか？","level":"beginner"},{"id":"cv340","scene":"交通","th":"มีทางเชื่อมไปอีกสถานีไหม{PT}","ro":"mii thaaŋ chʉ̂am pay ìik sathǎanii mǎy {PR}","jp":"別の駅へつながる通路はありますか？","level":"intermediate"},{"id":"cv341","scene":"交通","th":"ต้องแตะบัตรตรงไหน{PT}","ro":"tɔ̂ŋ tɛ̀ bàt troŋ nǎy {PR}","jp":"どこでカードをタッチすればいいですか？","level":"beginner"},{"id":"cv342","scene":"交通","th":"บัตรโดยสารซื้อที่ไหน{PT}","ro":"bàt dooysǎan sʉ́ʉ thîi nǎy {PR}","jp":"乗車券はどこで買えますか？","level":"beginner"},{"id":"cv343","scene":"交通","th":"รถเที่ยวนี้เต็มแล้วหรือยัง{PT}","ro":"rót thîaw níi tem lɛ́ɛw rʉ̌ʉ yaŋ {PR}","jp":"この便はもう満席ですか？","level":"intermediate"},{"id":"cv344","scene":"交通","th":"ถ้าลงผิดสถานีต้องทำยังไง{PT}","ro":"thâa loŋ phìt sathǎanii tɔ̂ŋ tham yaŋ ŋay {PR}","jp":"間違った駅で降りたらどうすればいいですか？","level":"intermediate"},{"id":"cv345","scene":"緊急","th":"ช่วยเรียกรถพยาบาลให้หน่อย{PT}","ro":"chûay rîak rót phayaabaan hây nɔ̀y {PR}","jp":"救急車を呼んでください","level":"beginner"},{"id":"cv346","scene":"緊急","th":"คนนี้หมดสติ{PT}","ro":"khon níi mòt satì {PR}","jp":"この人は意識を失っています","level":"intermediate"},{"id":"cv347","scene":"緊急","th":"หายใจไม่ออก{PT}","ro":"hǎay cay mây ɔ̀ɔk {PR}","jp":"息ができません","level":"beginner"},{"id":"cv348","scene":"緊急","th":"หายใจลำบาก{PT}","ro":"hǎay cay lambàak {PR}","jp":"呼吸が苦しいです","level":"beginner"},{"id":"cv349","scene":"緊急","th":"เจ็บหน้าอก{PT}","ro":"cèp nâa ɔ̀ɔk {PR}","jp":"胸が痛いです","level":"beginner"},{"id":"cv350","scene":"緊急","th":"เลือดออกไม่หยุด{PT}","ro":"lʉ̂at ɔ̀ɔk mây yùt {PR}","jp":"出血が止まりません","level":"intermediate"},{"id":"cv351","scene":"緊急","th":"ช่วยห้ามเลือดให้หน่อย{PT}","ro":"chûay hâam lʉ̂at hây nɔ̀y {PR}","jp":"止血してください","level":"intermediate"},{"id":"cv352","scene":"緊急","th":"{PS}แพ้อาหารชนิดนี้{PT}","ro":"{PSR} phɛ́ɛ aahǎan chanít níi {PR}","jp":"この食べ物にアレルギーがあります","level":"intermediate"},{"id":"cv353","scene":"緊急","th":"{PS}แพ้ยานี้{PT}","ro":"{PSR} phɛ́ɛ yaa níi {PR}","jp":"この薬にアレルギーがあります","level":"intermediate"},{"id":"cv354","scene":"緊急","th":"เคยแพ้ยาตัวนี้มาก่อน{PT}","ro":"khəəy phɛ́ɛ yaa tua níi maa kɔ̀ɔn {PR}","jp":"以前この薬でアレルギーが出たことがあります","level":"intermediate"},{"id":"cv355","scene":"緊急","th":"{PS}ต้องไปโรงพยาบาลทันที{PT}","ro":"{PSR} tɔ̂ŋ pay rooŋ phayaabaan thanthii {PR}","jp":"すぐに病院へ行く必要があります","level":"intermediate"},{"id":"cv356","scene":"緊急","th":"ช่วยพาไปโรงพยาบาลหน่อย{PT}","ro":"chûay phaa pay rooŋ phayaabaan nɔ̀y {PR}","jp":"病院へ連れて行ってください","level":"beginner"},{"id":"cv357","scene":"緊急","th":"กระเป๋าสตางค์ถูกขโมย{PT}","ro":"krapǎw sataaŋ thùuk khamǒoy {PR}","jp":"財布を盗まれました","level":"beginner"},{"id":"cv358","scene":"緊急","th":"โทรศัพท์ถูกขโมย{PT}","ro":"thoorasàp thùuk khamǒoy {PR}","jp":"携帯電話を盗まれました","level":"beginner"},{"id":"cv359","scene":"緊急","th":"{PS}ไม่รู้ว่าเกิดอะไรขึ้น{PT}","ro":"{PSR} mây rúu wâa kə̀ət aray khʉ̂n {PR}","jp":"何が起きたのか分かりません","level":"intermediate"},{"id":"cv360","scene":"緊急","th":"ช่วยติดต่อโรงพยาบาลให้หน่อย{PT}","ro":"chûay tìttɔ̀ɔ rooŋ phayaabaan hây nɔ̀y {PR}","jp":"病院に連絡してください","level":"beginner"},{"id":"cv361","scene":"緊急","th":"ช่วยเรียกตำรวจให้หน่อย{PT}","ro":"chûay rîak tamrùat hây nɔ̀y {PR}","jp":"警察を呼んでください","level":"beginner"},{"id":"cv362","scene":"緊急","th":"{PS}ต้องการความช่วยเหลือ{PT}","ro":"{PSR} tɔ̂ŋkaan khwaam chûaylʉ̌a {PR}","jp":"助けが必要です","level":"beginner"}];
 
-const GRAM = [{"id":"gr01","title":"文末の丁寧語 ครับ(khráp) / ค่ะ(khâ)","explain":"男性は文末にครับ(khráp)、女性はค่ะ(khâ)を付けると丁寧になる。挨拶や依頼など、ほぼ全ての文に付けられる。","ex_th":"สวัสดี{PT}","ex_ro":"sawàt dii {PR}","ex_jp":"こんにちは","cat":12,"pattern":"〜です(丁寧に言う)"},{"id":"gr02","title":"疑問文を作る ไหม(mǎy)","explain":"文末にไหม(mǎy)を付けるとYes/No疑問文になる。形容詞・動詞どちらにも使える。","ex_th":"อร่อยไหม","ex_ro":"arɔ̀y mǎy","ex_jp":"おいしいですか","cat":1,"pattern":"〜ですか？"},{"id":"gr03","title":"否定形 ไม่(mây)","explain":"動詞や形容詞の前にไม่(mây)を置くと否定になる。「〜ない」の意味。","ex_th":"ไม่แพง","ex_ro":"mây phɛɛŋ","ex_jp":"高くない","cat":5,"pattern":"〜ない"},{"id":"gr04","title":"程度を表す มาก(mâak)","explain":"形容詞の後ろにมาก(mâak)を置くと「とても」になる。タイ語の形容詞は名詞の後に置く。","ex_th":"อร่อยมาก","ex_ro":"arɔ̀y mâak","ex_jp":"とてもおいしい","cat":12,"pattern":"とても〜"},{"id":"gr05","title":"類別詞(助数詞)の基本","explain":"「数字 + 類別詞」の語順。คน(khon)・ตัว(tua)・ขวด(khùat)など物の種類によって使い分ける。","ex_th":"น้ำสองขวด","ex_ro":"nám sɔ̌ɔŋ khùat","ex_jp":"水2本","cat":10,"pattern":"(数字)+(類別詞)"},{"id":"gr06","title":"完了・過去を表す แล้ว(lɛ́ɛw)","explain":"動詞や文末にแล้ว(lɛ́ɛw)を置くと「もう〜した」という完了の意味になる。","ex_th":"กินแล้ว","ex_ro":"kin lɛ́ɛw","ex_jp":"もう食べた","cat":3,"pattern":"もう〜した"},{"id":"gr07","title":"願望を表す อยาก(yàak) + 動詞","explain":"「อยาก(yàak) + 動詞」で希望・欲求を表す。英語の want to に相当。","ex_th":"อยากกินข้าว","ex_ro":"yàak kin khâaw","ex_jp":"ご飯が食べたい","cat":4,"pattern":"〜したい"},{"id":"gr08","title":"可能を表す ได้(dâay)","explain":"動詞の後ろにได้(dâay)を置くと能力・許可を表す。","ex_th":"พูดภาษาไทยได้","ex_ro":"phûut phaasǎa thay dâay","ex_jp":"タイ語が話せる","cat":4,"pattern":"〜できる"},{"id":"gr09","title":"名詞を修飾する語(語順に注意)","explain":"日本語は「新しい＋友達」の順ですが、タイ語は逆で「名詞＋修飾する語」の順になります。","ex_th":"เพื่อนใหม่","ex_ro":"phʉ̂an mày","ex_jp":"新しい友達","cat":1,"pattern":"新しい〜"},{"id":"gr10","title":"名詞文①(物について)","explain":"主語(物)＋名詞、だけで文が成立する。英語のbe動詞にあたる単語すら不要。","ex_th":"อันนี้ผัดไทย","ex_ro":"an níi phàt thay","ex_jp":"これはパッタイです","cat":1,"pattern":"これは〜です"},{"id":"gr11","title":"名詞文②(人について) เป็น(pen)","explain":"職業や国籍など、人の属性を説明する時は「主語＋เป็น(pen)＋名詞」の形を使う。","ex_th":"เพื่อนผมเป็นหมอ","ex_ro":"phʉ̂an phǒm pen mɔ̌ɔ","ex_jp":"私の友達は医者です","cat":1,"pattern":"(人)は〜です"},{"id":"gr12","title":"名詞文の否定 ไม่ใช่(mây chây)","explain":"名詞文を否定する時は「主語＋ไม่ใช่(mây chây)＋名詞」の形にする。人について「เป็น(pen)」を使った肯定文(例: เขาเป็นหมอ(khǎw pen mɔ̌ɔ)「彼は医者です」)を否定する場合も、ไม่เป็น(mây pen)ではなくไม่ใช่(mây chây)を使い「เขาไม่ใช่หมอ(khǎw mây chây mɔ̌ɔ)彼は医者ではありません」となる点に注意。","ex_th":"อันนี้ไม่ใช่ผัดไทย","ex_ro":"an níi mây chây phàt thay","ex_jp":"これはパッタイではありません","cat":1,"pattern":"〜ではありません"},{"id":"gr13","title":"名詞文の疑問「〜ですか」หรือเปล่า(rú plàaw)","explain":"「そうか否か」を尋ねる時に文末へ付ける。物・人どちらの名詞文にも使える。","ex_th":"อันนี้ผัดไทยหรือเปล่า","ex_ro":"an níi phàt thay rú plàaw","ex_jp":"これはパッタイですか？","cat":1,"pattern":"〜？(単純に確認する)"},{"id":"gr14","title":"名詞文の疑問「〜ですよね」ใช่ไหม(chây mǎy)","explain":"知ってはいるが念を押して確認したい時に使う疑問表現。","ex_th":"เพื่อนคุณเป็นหมอใช่ไหม","ex_ro":"phʉ̂an khun pen mɔ̌ɔ chây mǎy","ex_jp":"あなたの友達は医者ですよね？","cat":1,"pattern":"〜？(念を押して確認する)"},{"id":"gr15","title":"形容詞文・動詞文の基本語順","explain":"活用や過去形が無いタイ語では「主語＋形容詞・動詞(＋名詞)」の順に並べるだけでよい。","ex_th":"ผมชอบอาหารไทย","ex_ro":"phǒm chɔ̂ɔp aahǎan thay","ex_jp":"私はタイ料理が好きです","cat":1,"pattern":"主語+形容詞・動詞"},{"id":"gr16","title":"形容詞文・動詞文の否定 ไม่(mây)","explain":"形容詞・動詞の直前にไม่(mây)を置くだけで否定になる。名詞文の「ไม่ใช่(mây chây)」とは形が異なるので注意。","ex_th":"รถไม่แพง","ex_ro":"rót mây phɛɛŋ","ex_jp":"その車は高くありません","cat":5,"pattern":"〜ではない、〜しない"},{"id":"gr17","title":"未来を表す จะ(cà)","explain":"動詞の前にจะ(cà)を置くと未来の予定・意志を表す。完了はแล้ว(lɛ́ɛw)、現在は無印というように、時間の感覚を使い分けられる。","ex_th":"พรุ่งนี้ผมจะซื้อรถใหม่","ex_ro":"phrûŋ níi phǒm cà sʉ́ʉ rót mày","ex_jp":"明日、私は新しい車を買います","cat":3,"pattern":"〜するつもりだ"},{"id":"gr18","title":"疑問詞の位置(5W1H)","explain":"ใคร(誰)・อะไร(何)・ที่ไหน(どこ)・เมื่อไหร่(いつ)・ทำไม(なぜ)・ยังไง(どうやって)は、尋ねたい部分にそのまま置くことが多い。英語のように文頭へ移動させる必要はない。","ex_th":"คุณจะไปที่ไหน","ex_ro":"khun cà pay thîi nǎy","ex_jp":"あなたはどこに行きますか？","cat":2,"pattern":"誰？何？どこ？など"},{"id":"gr19","title":"禁止を表す อย่า(yàa)","explain":"動詞の前にอย่า(yàa)を置くと「〜しないで」という禁止を表す。ไม่(単なる否定)とは違い、相手に行動をやめさせる強めのニュアンスになる。","ex_th":"อย่ากินอันนี้","ex_ro":"yàa kin an níi","ex_jp":"これを食べないでください","cat":5,"pattern":"〜しないで"},{"id":"gr20","title":"比較級 กว่า(kwàa)","explain":"形容詞の後ろにกว่า(kwàa)を置き、その後ろに比較対象を続けると「〜より…」の比較級になる。","ex_th":"รถใหม่แพงกว่ารถเก่า","ex_ro":"rót mày phɛɛŋ kwàa rót kàw","ex_jp":"新しい車は古い車より高いです","cat":6,"pattern":"〜より…"},{"id":"gr21","title":"万能の ที่(thîi)","explain":"ที่(thîi)は「〜という」と名詞に説明を加えたり、「〜に、〜で」と場所を表したりする、使い道の広い単語。","ex_th":"เพื่อนที่เป็นหมอ","ex_ro":"phʉ̂an thîi pen mɔ̌ɔ","ex_jp":"医者である友達","cat":8,"pattern":"〜という、〜にある"},{"id":"gr22","title":"名詞をつなぐ กับ(kàp)","explain":"กับ(kàp)は「A กับ(kàp) B」で「AとB」と名詞をつないだり、「〜と一緒に」という意味を表したりする基本語。","ex_th":"ผมไปกับเพื่อน","ex_ro":"phǒm pay kàp phʉ̂an","ex_jp":"私は友達と一緒に行きます","cat":9,"pattern":"AとB"},{"id":"gr23","title":"進行形 กำลัง(kamlaŋ)〜อยู่(yùu)","explain":"動詞の前にกำลัง(kamlaŋ)を置くと「今〜している」という進行形になる。文末にอยู่(yùu)を添えることも多い。","ex_th":"ผมกำลังกินอาหารไทยอยู่","ex_ro":"phǒm kamlaŋ kin aahǎan thay yùu","ex_jp":"私は今タイ料理を食べているところです","cat":3,"pattern":"〜しているところ"},{"id":"gr24","title":"範囲を表す ตั้งแต่(tâŋtɛ̀ɛ)〜ถึง(thʉ̌ŋ)","explain":"時間や場所の範囲は「ตั้งแต่(起点)〜ถึง(終点)」で表す。場所限定ならจาก(càak)に置き換えることもできる。","ex_th":"ตั้งแต่วันนี้ถึงพรุ่งนี้","ex_ro":"tâŋtɛ̀ɛ wan níi thʉ̌ŋ phrûŋ níi","ex_jp":"今日から明日まで","cat":3,"pattern":"〜から〜まで"},{"id":"gr25","title":"経験を表す เคย(khəəy)","explain":"動詞の前にเคย(khəəy)を置くと「以前に〜したことがある」という経験を表す。否定は「ไม่เคย(mây khəəy)」になる。","ex_th":"ผมเคยกินอาหารไทย","ex_ro":"phǒm khəəy kin aahǎan thay","ex_jp":"私はタイ料理を食べたことがあります","cat":3,"pattern":"〜したことがある"},{"id":"gr26","title":"並列を表す ทั้ง(tháŋ)〜และ(lɛ́ɛ)〜","explain":"「ทั้ง(tháŋ) A และ(lɛ́ɛ) B」で「AもBも両方」という並列を表す。","ex_th":"รถคันนี้ทั้งใหม่และถูก","ex_ro":"rót khan níi tháŋ mày lɛ́ thùuk","ex_jp":"この車は新しくて、しかも安いです","cat":9,"pattern":"AもBも"},{"id":"gr27","title":"条件文 ถ้า(thâa)〜ก็(kɔ̂ɔ)","explain":"「ถ้า(もし)＋条件、ก็(kɔ̂ɔ)＋結果」で仮定・条件を表す。ก็(kɔ̂ɔ)は省略されることもある。","ex_th":"ถ้าแพงก็ไม่ซื้อ","ex_ro":"thâa phɛɛŋ kɔ̂ɔ mây sʉ́ʉ","ex_jp":"もし高ければ買いません","cat":9,"pattern":"もし〜なら"},{"id":"gr28","title":"理由を表す เพราะ(phrɔ́ɔ)","explain":"เพราะ(phrɔ́ɔ)は「なぜなら〜、〜だから」と理由を表す。文頭にも文中にも使える。","ex_th":"ผมชอบอาหารไทยเพราะอร่อย","ex_ro":"phǒm chɔ̂ɔp aahǎan thay phrɔ́ arɔ̀y","ex_jp":"私はタイ料理が好きです、なぜならおいしいから","cat":9,"pattern":"なぜなら〜だから"},{"id":"gr29","title":"最上級 ที่สุด(thîi sùt)","explain":"形容詞の後ろにที่สุด(thîi sùt)を置くと「一番〜」という最上級になる。","ex_th":"อาหารไทยอร่อยที่สุด","ex_ro":"aahǎan thay arɔ̀y thîi sùt","ex_jp":"タイ料理が一番おいしいです","cat":6,"pattern":"一番〜"},{"id":"gr30","cat":7,"title":"存在・所有 มี(mii)","explain":"มี(mii)は「〜がある」「〜を持っている」という存在・所有を表す基本動詞。","ex_th":"ผมมีรถ","ex_ro":"phǒm mii rót","ex_jp":"私は車を持っています","pattern":"〜がある、〜を持っている"},{"id":"gr31","cat":7,"title":"存在(場所) อยู่(yùu)","explain":"อยู่(yùu)は「〜にいる、〜にある」と場所を表す。人にも物にも使える。","ex_th":"เพื่อนอยู่ที่บ้าน","ex_ro":"phʉ̂an yùu thîi bâan","ex_jp":"友達は家にいます","pattern":"〜にいる、〜にある"},{"id":"gr32","cat":2,"title":"疑問詞 อะไร(aray)","explain":"อะไร(aray)は「何」。尋ねたい名詞の位置にそのまま置く。","ex_th":"อันนี้อะไร","ex_ro":"an níi aray","ex_jp":"これは何ですか","pattern":"〜は何ですか？"},{"id":"gr33","cat":2,"title":"疑問詞 ที่ไหน(thîi nǎy)","explain":"ที่ไหน(thîi nǎy)は「どこ」。場所を尋ねる時に使う。","ex_th":"บ้านอยู่ที่ไหน","ex_ro":"bâan yùu thîi nǎy","ex_jp":"家はどこにありますか","pattern":"〜はどこですか？"},{"id":"gr34","cat":2,"title":"疑問詞 ใคร(khray)","explain":"ใคร(khray)は「誰」。人を尋ねる時に使う。","ex_th":"เพื่อนคุณเป็นใคร","ex_ro":"phʉ̂an khun pen khray","ex_jp":"あなたの友達は誰ですか","pattern":"〜は誰ですか？"},{"id":"gr35","cat":2,"title":"疑問詞 ทำไม(thammay)","explain":"ทำไม(thammay)は「なぜ」。理由を尋ねる時に使う。","ex_th":"ทำไมรถแพง","ex_ro":"thammay rót phɛɛŋ","ex_jp":"なぜ車は高いのですか","pattern":"なぜ〜ですか？"},{"id":"gr36","cat":2,"title":"疑問詞 เท่าไหร่(thâw rày)","explain":"เท่าไหร่(thâw rày)は「いくつ、いくら」。数量や値段を尋ねる時に使う。","ex_th":"อันนี้เท่าไหร่","ex_ro":"an níi thâw rày","ex_jp":"これはいくらですか","pattern":"〜はいくらですか？"},{"id":"gr37","cat":2,"title":"疑問詞 เมื่อไหร่(mʉ̂arày)","explain":"เมื่อไหร่(mʉ̂arày)は「いつ」。時間を尋ねる時に使う。","ex_th":"คุณจะไปเมื่อไหร่","ex_ro":"khun cà pay mʉ̂arày","ex_jp":"あなたはいつ行きますか","pattern":"〜はいつですか？"},{"id":"gr38","cat":8,"title":"前置詞 ใน(nay)","explain":"ใน(nay)は「〜の中に」という位置を表す。","ex_th":"หนังสืออยู่ในกระเป๋า","ex_ro":"nǎŋ sʉ̌ʉ yùu nay krapǎw","ex_jp":"本は鞄の中にあります","pattern":"〜の中に"},{"id":"gr39","cat":8,"title":"前置詞 บน(bon)","explain":"บน(bon)は「〜の上に」という位置を表す。","ex_th":"หนังสืออยู่บนโต๊ะ","ex_ro":"nǎŋ sʉ̌ʉ yùu bon tó","ex_jp":"本は机の上にあります","pattern":"〜の上に"},{"id":"gr40","cat":8,"title":"前置詞 ใต้(tây)","explain":"ใต้(tây)は「〜の下に」という位置を表す。","ex_th":"กระเป๋าอยู่ใต้โต๊ะ","ex_ro":"krapǎw yùu tâay tó","ex_jp":"鞄は机の下にあります","pattern":"〜の下に"},{"id":"gr41","cat":8,"title":"前置詞 ข้าง(khâaŋ)","explain":"ข้าง(khâaŋ)は「〜の側に、〜のそばに」という位置を表す。","ex_th":"เพื่อนอยู่ข้างผม","ex_ro":"phʉ̂an yùu khâaŋ phǒm","ex_jp":"友達は私の側にいます","pattern":"〜の側に"},{"id":"gr42","cat":10,"title":"類別詞 คน(khon)","explain":"คน(khon)は人を数える類別詞。「数字＋คน(khon)」の順で使う。","ex_th":"เพื่อนสองคน","ex_ro":"phʉ̂an sɔ̌ɔŋ khon","ex_jp":"友達2人","pattern":"〜人(にん)"},{"id":"gr43","cat":10,"title":"類別詞 ตัว(tua)","explain":"ตัว(tua)は動物や衣類、文字などを数える類別詞。","ex_th":"แมวสองตัว","ex_ro":"mɛɛw sɔ̌ɔŋ tua","ex_jp":"猫2匹","pattern":"〜匹、〜着"},{"id":"gr44","cat":10,"title":"類別詞 ใบ(bay)","explain":"ใบ(bay)は紙や葉、皿など薄く平たい物を数える類別詞。","ex_th":"กระดาษสามใบ","ex_ro":"kradàat sǎam bay","ex_jp":"紙3枚","pattern":"〜枚"},{"id":"gr45","cat":10,"title":"類別詞 อัน(an)","explain":"อัน(an)は分類しにくい小物全般に使える便利な類別詞。","ex_th":"ขนมสามอัน","ex_ro":"khanǒm sǎam an","ex_jp":"お菓子3個","pattern":"〜個"},{"id":"gr46","cat":4,"title":"助動詞 ต้อง(tɔ̂ɔŋ)","explain":"ต้อง(tɔ̂ɔŋ)は動詞の前に置いて「〜しなければならない」という義務を表す。","ex_th":"ผมต้องไปทำงาน","ex_ro":"phǒm tɔ̂ɔŋ pay tham ŋaan","ex_jp":"私は仕事に行かなければなりません","pattern":"〜しなければならない"},{"id":"gr47","cat":4,"title":"助動詞 ควร(khuan)","explain":"ควร(khuan)は動詞の前に置いて「〜すべきだ」という助言・提案を表す。","ex_th":"คุณควรไปหาหมอ","ex_ro":"khun khuan pay hǎa mɔ̌ɔ","ex_jp":"あなたは医者に行くべきです","pattern":"〜すべきだ"},{"id":"gr48","cat":5,"title":"否定 ไม่ได้(mây dâay)","explain":"ไม่ได้(mây dâay)は過去の出来事を否定したり、「〜できない」という不可能を表したりする。文脈で判断する。","ex_th":"ผมไม่ได้ไปทำงาน","ex_ro":"phǒm mây dâay pay tham ŋaan","ex_jp":"私は仕事に行きませんでした","pattern":"〜しなかった、〜できない"},{"id":"gr49","cat":5,"title":"否定 ยังไม่(yaŋ mây)","explain":"ยังไม่(yaŋ mây)は「まだ〜していない」という未完了の否定を表す。","ex_th":"ผมยังไม่กินข้าว","ex_ro":"phǒm yaŋ mây kin khâaw","ex_jp":"私はまだご飯を食べていません","pattern":"まだ〜していない"},{"id":"gr50","cat":6,"title":"同等比較 เหมือน(mʉ̌an)","explain":"เหมือน(mʉ̌an)は「〜と同じ」という同等比較を表す。","ex_th":"รถใหม่เหมือนรถเก่า","ex_ro":"rót mày mʉ̌an rót kàw","ex_jp":"新しい車は古い車と同じです","pattern":"〜と同じ"},{"id":"gr51","cat":11,"title":"使役 ให้(hây)","explain":"「ให้(hây)＋人＋動詞」で「(人)に〜させる、〜してあげる」という使役を表す。","ex_th":"ผมให้เพื่อนกินอาหารไทย","ex_ro":"phǒm hây phʉ̂an kin aahǎan thay","ex_jp":"私は友達にタイ料理を食べさせます","pattern":"(人)に〜させる"},{"id":"gr52","cat":11,"title":"受身 ถูก(thùuk)","explain":"「ถูก(thùuk)＋動詞」で「〜される」という受身を表す。良くない出来事に使うことが多い。","ex_th":"รถถูกซื้อแล้ว","ex_ro":"rót thùuk sʉ́ʉ lɛ́ɛw","ex_jp":"その車はもう買われました","pattern":"〜される"},{"id":"gr53","cat":11,"title":"可能 สามารถ(sǎamâat)","explain":"สามารถ(sǎamâat)もได้(dâay)と同じく可能を表す。「สามารถ(sǎamâat)＋動詞＋ได้(dâay)」のように前後で挟むフォーマルな言い方もよく使われる。","ex_th":"ผมสามารถพูดภาษาไทยได้","ex_ro":"phǒm sǎamâat phûut phaasǎa thay dâay","ex_jp":"私はタイ語を話すことができます","pattern":"〜することができる"},{"id":"gr54","cat":12,"title":"強調 เอง(eeŋ)","explain":"เอง(eeŋ)は文末などに置いて「自分で、〜自身」という強調を表す。","ex_th":"ผมทำเอง","ex_ro":"phǒm tham eeŋ","ex_jp":"私は自分でやります","pattern":"自分で〜"},{"id":"gr55","cat":12,"title":"強調 เลย(lə̌əy)","explain":"เลย(lə̌əy)は形容詞・動詞の後ろに置いて「本当に、全く」という強調を表す。","ex_th":"อร่อยเลย","ex_ro":"arɔ̀y lə̌əy","ex_jp":"本当においしいです","pattern":"本当に〜、全く〜"},{"id":"gr56","cat":12,"title":"念押し นะ(ná)","explain":"นะ(ná)は文末に置いて柔らかく念を押したり、お願いを和らげたりする。","ex_th":"กินข้าวนะ","ex_ro":"kin khâaw ná","ex_jp":"ご飯食べてね","pattern":"〜ね"},{"id":"gr57","cat":12,"title":"勧誘・軽い命令 สิ(sì)","explain":"สิ(sì)は文末に置いて、軽い命令や勧誘、催促のニュアンスを表す。","ex_th":"กินสิ","ex_ro":"kin sì","ex_jp":"食べてよ","pattern":"〜してよ"},{"id":"gr58","cat":3,"title":"完了確認 หรือยัง(rʉ̌ʉ yaŋ)","explain":"「(主語+)形容詞・動詞(+名詞)+หรือยัง(rʉ̌ʉ yaŋ)」で「もう〜しましたか？」「まだ〜ですか？」と、行為・状態がすでに起きたか完了したかを尋ねる表現になる。親しい人との会話では短く「〜รือยัง(rʉʉ yaŋ)」とだけ言うこともある。","ex_th":"จ่ายเงินหรือยัง","ex_ro":"càay ŋən rʉ̌ʉ yaŋ","ex_jp":"もう支払いましたか？","pattern":"もう〜しましたか？"},{"id":"gr59","cat":4,"title":"許可を求める ขอ(khɔ̌ɔ) + 動詞","explain":"「ขอ(khɔ̌ɔ) + 動詞」で「〜させてください」「〜してもいいですか」と相手に許可を求めたり依頼したりする丁寧な表現になる。「ขอ(khɔ̌ɔ) + 名詞」で「〜をください」という使い方もあり、ขอ(khɔ̌ɔ)の後ろに動詞を置くか名詞を置くかで意味が変わる。なお「借りる」は ยืม(yʉʉm)、「貸す」は ให้ยืม(hây yʉʉm) という表現がある。","ex_th":"ขอถ่ายรูปหน่อย","ex_ro":"khɔ̌ɔ thàay rûup nɔ̀y","ex_jp":"写真を撮らせてください","pattern":"〜させてください"},{"id":"gr60","cat":4,"title":"助言・提案 文 + ดีกว่า(dii kwàa)","explain":"文末にดีกว่า(dii kwàa)を置くだけで「〜したほうがいいです」という助言・提案の表現になる。文頭から作り直す必要がなく、言いたい文の最後に付け足すだけでよい、比較的丁寧な言い方。","ex_th":"จองโต๊ะก่อนดีกว่า","ex_ro":"cɔɔŋ tó kɔ̀ɔn dii kwàa","ex_jp":"先にテーブルを予約したほうがいいです","pattern":"〜したほうがいい"},{"id":"gr61","cat":6,"title":"同等比較② A กับ(kàp) B 〜 เหมือนกัน(mʉ̌an kan)","explain":"「A กับ(kàp) B + 形容詞など + เหมือนกัน(mʉ̌an kan)」で「AとBは〜が同じです」という表現になる。gr50のเหมือน(A เหมือน B「AはBと同じ」という一方向の直接比較)とは違い、こちらはกับ(kàp)で2つを並べてから「(お互いに)同じだ」とまとめる形。日常会話ではこちらの「เหมือนกัน(mʉ̌an kan)」を使う場面の方が多い。「〜」の部分には見た目・サイズ・年齢・形・ブランドなど何が同じかを表す語を置き、共通認識がある場合は省略もできる。","ex_th":"เสื้อตัวนี้กับตัวนั้นสีเหมือนกัน","ex_ro":"sʉ̂a tua níi kàp tua nán sǐi mʉ̌an kan","ex_jp":"この服とあの服は色が同じです","pattern":"AとBは〜が同じ"},{"id":"gr62","cat":3,"title":"動詞+ไป(pay)/มา(maa)(方向を表す複合動詞)","explain":"動詞の後ろにไป(pay)やมา(maa)を置くと、その動作が話し手から見て「向こうへ(ไป)」「こちらへ(มา)」行われることを表す、とても生産的なパターン。単語帳にあるพาไป(連れて行く)・ออกไป(出て行く)・เข้ามา(入ってくる)・เอามา(持って来る)なども、すべてこの「動詞+ไป/มา」の型の具体例で、他の動詞にも同じように応用できる。","ex_th":"เขาเดินไปโรงเรียน","ex_ro":"khǎw dəən pay rooŋ rian","ex_jp":"彼は学校へ歩いて行きます","pattern":"動詞+ไป/มา"}];
+const GRAM = [{"id":"gr01","title":"文末の丁寧語 ครับ(khráp) / ค่ะ(khâ)","explain":"男性は文末にครับ(khráp)、女性はค่ะ(khâ)を付けると丁寧になる。挨拶や依頼など、ほぼ全ての文に付けられる。","ex_th":"สวัสดี{PT}","ex_ro":"sawàt dii {PR}","ex_jp":"こんにちは","cat":12,"pattern":"〜です(丁寧に言う)"},{"id":"gr02","title":"疑問文を作る ไหม(mǎy)","explain":"文末にไหม(mǎy)を付けるとYes/No疑問文になる。形容詞・動詞どちらにも使える。","ex_th":"อร่อยไหม","ex_ro":"arɔ̀y mǎy","ex_jp":"おいしいですか","cat":1,"pattern":"〜ですか？"},{"id":"gr03","title":"否定形 ไม่(mây)","explain":"動詞や形容詞の前にไม่(mây)を置くと否定になる。「〜ない」の意味。","ex_th":"ไม่แพง","ex_ro":"mây phɛɛŋ","ex_jp":"高くない","cat":5,"pattern":"〜ない"},{"id":"gr04","title":"程度を表す มาก(mâak)","explain":"形容詞の後ろにมาก(mâak)を置くと「とても」になる。タイ語の形容詞は名詞の後に置く。","ex_th":"อร่อยมาก","ex_ro":"arɔ̀y mâak","ex_jp":"とてもおいしい","cat":12,"pattern":"とても〜"},{"id":"gr05","title":"類別詞(助数詞)の基本","explain":"「数字 + 類別詞」の語順。คน(khon)・ตัว(tua)・ขวด(khùat)など物の種類によって使い分ける。","ex_th":"น้ำสองขวด","ex_ro":"nám sɔ̌ɔŋ khùat","ex_jp":"水2本","cat":10,"pattern":"(数字)+(類別詞)"},{"id":"gr06","title":"完了・過去を表す แล้ว(lɛ́ɛw)","explain":"動詞や文末にแล้ว(lɛ́ɛw)を置くと「もう〜した」という完了の意味になる。","ex_th":"กินแล้ว","ex_ro":"kin lɛ́ɛw","ex_jp":"もう食べた","cat":3,"pattern":"もう〜した"},{"id":"gr07","title":"願望を表す อยาก(yàak) + 動詞","explain":"「อยาก(yàak) + 動詞」で希望・欲求を表す。英語の want to に相当。","ex_th":"อยากกินข้าว","ex_ro":"yàak kin khâaw","ex_jp":"ご飯が食べたい","cat":4,"pattern":"〜したい"},{"id":"gr08","title":"可能を表す ได้(dâay)","explain":"動詞の後ろにได้(dâay)を置くと能力・許可を表す。","ex_th":"พูดภาษาไทยได้","ex_ro":"phûut phaasǎa thay dâay","ex_jp":"タイ語が話せる","cat":4,"pattern":"〜できる"},{"id":"gr09","title":"名詞を修飾する語(語順に注意)","explain":"日本語は「新しい＋友達」の順ですが、タイ語は逆で「名詞＋修飾する語」の順になります。","ex_th":"เพื่อนใหม่","ex_ro":"phʉ̂an mày","ex_jp":"新しい友達","cat":1,"pattern":"新しい〜"},{"id":"gr10","title":"名詞文①(物について)","explain":"主語(物)＋名詞、だけで文が成立する。英語のbe動詞にあたる単語すら不要。","ex_th":"อันนี้ผัดไทย","ex_ro":"an níi phàt thay","ex_jp":"これはパッタイです","cat":1,"pattern":"これは〜です"},{"id":"gr11","title":"名詞文②(人について) เป็น(pen)","explain":"職業や国籍など、人の属性を説明する時は「主語＋เป็น(pen)＋名詞」の形を使う。","ex_th":"เพื่อนผมเป็นหมอ","ex_ro":"phʉ̂an phǒm pen mɔ̌ɔ","ex_jp":"私の友達は医者です","cat":1,"pattern":"(人)は〜です"},{"id":"gr12","title":"名詞文の否定 ไม่ใช่(mây chây)","explain":"名詞文を否定する時は「主語＋ไม่ใช่(mây chây)＋名詞」の形にする。人について「เป็น(pen)」を使った肯定文(例: เขาเป็นหมอ(khǎw pen mɔ̌ɔ)「彼は医者です」)を否定する場合も、ไม่เป็น(mây pen)ではなくไม่ใช่(mây chây)を使い「เขาไม่ใช่หมอ(khǎw mây chây mɔ̌ɔ)彼は医者ではありません」となる点に注意。","ex_th":"อันนี้ไม่ใช่ผัดไทย","ex_ro":"an níi mây chây phàt thay","ex_jp":"これはパッタイではありません","cat":1,"pattern":"〜ではありません"},{"id":"gr13","title":"名詞文の疑問「〜ですか」หรือเปล่า(rú plàaw)","explain":"「そうか否か」を尋ねる時に文末へ付ける。物・人どちらの名詞文にも使える。","ex_th":"อันนี้ผัดไทยหรือเปล่า","ex_ro":"an níi phàt thay rú plàaw","ex_jp":"これはパッタイですか？","cat":1,"pattern":"〜？(単純に確認する)"},{"id":"gr14","title":"名詞文の疑問「〜ですよね」ใช่ไหม(chây mǎy)","explain":"知ってはいるが念を押して確認したい時に使う疑問表現。","ex_th":"เพื่อนคุณเป็นหมอใช่ไหม","ex_ro":"phʉ̂an khun pen mɔ̌ɔ chây mǎy","ex_jp":"あなたの友達は医者ですよね？","cat":1,"pattern":"〜？(念を押して確認する)"},{"id":"gr15","title":"形容詞文・動詞文の基本語順","explain":"活用や過去形が無いタイ語では「主語＋形容詞・動詞(＋名詞)」の順に並べるだけでよい。","ex_th":"ผมชอบอาหารไทย","ex_ro":"phǒm chɔ̂ɔp aahǎan thay","ex_jp":"私はタイ料理が好きです","cat":1,"pattern":"主語+形容詞・動詞"},{"id":"gr16","title":"形容詞文・動詞文の否定 ไม่(mây)","explain":"形容詞・動詞の直前にไม่(mây)を置くだけで否定になる。名詞文の「ไม่ใช่(mây chây)」とは形が異なるので注意。","ex_th":"รถไม่แพง","ex_ro":"rót mây phɛɛŋ","ex_jp":"その車は高くありません","cat":5,"pattern":"〜ではない、〜しない"},{"id":"gr17","title":"未来を表す จะ(cà)","explain":"動詞の前にจะ(cà)を置くと未来の予定・意志を表す。完了はแล้ว(lɛ́ɛw)、現在は無印というように、時間の感覚を使い分けられる。","ex_th":"พรุ่งนี้ผมจะซื้อรถใหม่","ex_ro":"phrûŋ níi phǒm cà sʉ́ʉ rót mày","ex_jp":"明日、私は新しい車を買います","cat":3,"pattern":"〜するつもりだ"},{"id":"gr18","title":"疑問詞の位置(5W1H)","explain":"ใคร(誰)・อะไร(何)・ที่ไหน(どこ)・เมื่อไหร่(いつ)・ทำไม(なぜ)・ยังไง(どうやって)は、尋ねたい部分にそのまま置くことが多い。英語のように文頭へ移動させる必要はない。","ex_th":"คุณจะไปที่ไหน","ex_ro":"khun cà pay thîi nǎy","ex_jp":"あなたはどこに行きますか？","cat":2,"pattern":"誰？何？どこ？など"},{"id":"gr19","title":"禁止を表す อย่า(yàa)","explain":"動詞の前にอย่า(yàa)を置くと「〜しないで」という禁止を表す。ไม่(単なる否定)とは違い、相手に行動をやめさせる強めのニュアンスになる。","ex_th":"อย่ากินอันนี้","ex_ro":"yàa kin an níi","ex_jp":"これを食べないでください","cat":5,"pattern":"〜しないで"},{"id":"gr20","title":"比較級 กว่า(kwàa)","explain":"形容詞の後ろにกว่า(kwàa)を置き、その後ろに比較対象を続けると「〜より…」の比較級になる。","ex_th":"รถใหม่แพงกว่ารถเก่า","ex_ro":"rót mày phɛɛŋ kwàa rót kàw","ex_jp":"新しい車は古い車より高いです","cat":6,"pattern":"〜より…"},{"id":"gr21","title":"万能の ที่(thîi)","explain":"ที่(thîi)は「〜という」と名詞に説明を加えたり、「〜に、〜で」と場所を表したりする、使い道の広い単語。","ex_th":"เพื่อนที่เป็นหมอ","ex_ro":"phʉ̂an thîi pen mɔ̌ɔ","ex_jp":"医者である友達","cat":8,"pattern":"〜という、〜にある"},{"id":"gr22","title":"名詞をつなぐ กับ(kàp)","explain":"กับ(kàp)は「A กับ(kàp) B」で「AとB」と名詞をつないだり、「〜と一緒に」という意味を表したりする基本語。","ex_th":"ผมไปกับเพื่อน","ex_ro":"phǒm pay kàp phʉ̂an","ex_jp":"私は友達と一緒に行きます","cat":9,"pattern":"AとB"},{"id":"gr23","title":"進行形 กำลัง(kamlaŋ)〜อยู่(yùu)","explain":"動詞の前にกำลัง(kamlaŋ)を置くと「今〜している」という進行形になる。文末にอยู่(yùu)を添えることも多い。","ex_th":"ผมกำลังกินอาหารไทยอยู่","ex_ro":"phǒm kamlaŋ kin aahǎan thay yùu","ex_jp":"私は今タイ料理を食べているところです","cat":3,"pattern":"〜しているところ"},{"id":"gr24","title":"範囲を表す ตั้งแต่(tâŋtɛ̀ɛ)〜ถึง(thʉ̌ŋ)","explain":"時間や場所の範囲は「ตั้งแต่(起点)〜ถึง(終点)」で表す。場所限定ならจาก(càak)に置き換えることもできる。","ex_th":"ตั้งแต่วันนี้ถึงพรุ่งนี้","ex_ro":"tâŋtɛ̀ɛ wan níi thʉ̌ŋ phrûŋ níi","ex_jp":"今日から明日まで","cat":3,"pattern":"〜から〜まで"},{"id":"gr25","title":"経験を表す เคย(khəəy)","explain":"動詞の前にเคย(khəəy)を置くと「以前に〜したことがある」という経験を表す。否定は「ไม่เคย(mây khəəy)」になる。","ex_th":"ผมเคยกินอาหารไทย","ex_ro":"phǒm khəəy kin aahǎan thay","ex_jp":"私はタイ料理を食べたことがあります","cat":3,"pattern":"〜したことがある"},{"id":"gr26","title":"並列を表す ทั้ง(tháŋ)〜และ(lɛ́ɛ)〜","explain":"「ทั้ง(tháŋ) A และ(lɛ́ɛ) B」で「AもBも両方」という並列を表す。","ex_th":"รถคันนี้ทั้งใหม่และถูก","ex_ro":"rót khan níi tháŋ mày lɛ́ thùuk","ex_jp":"この車は新しくて、しかも安いです","cat":9,"pattern":"AもBも"},{"id":"gr27","title":"条件文 ถ้า(thâa)〜ก็(kɔ̂ɔ)","explain":"「ถ้า(もし)＋条件、ก็(kɔ̂ɔ)＋結果」で仮定・条件を表す。ก็(kɔ̂ɔ)は省略されることもある。","ex_th":"ถ้าแพงก็ไม่ซื้อ","ex_ro":"thâa phɛɛŋ kɔ̂ɔ mây sʉ́ʉ","ex_jp":"もし高ければ買いません","cat":9,"pattern":"もし〜なら"},{"id":"gr28","title":"理由を表す เพราะ(phrɔ́ɔ)","explain":"เพราะ(phrɔ́ɔ)は「なぜなら〜、〜だから」と理由を表す。文頭にも文中にも使える。","ex_th":"ผมชอบอาหารไทยเพราะอร่อย","ex_ro":"phǒm chɔ̂ɔp aahǎan thay phrɔ́ arɔ̀y","ex_jp":"私はタイ料理が好きです、なぜならおいしいから","cat":9,"pattern":"なぜなら〜だから"},{"id":"gr29","title":"最上級 ที่สุด(thîi sùt)","explain":"形容詞の後ろにที่สุด(thîi sùt)を置くと「一番〜」という最上級になる。","ex_th":"อาหารไทยอร่อยที่สุด","ex_ro":"aahǎan thay arɔ̀y thîi sùt","ex_jp":"タイ料理が一番おいしいです","cat":6,"pattern":"一番〜"},{"id":"gr30","cat":7,"title":"存在・所有 มี(mii)","explain":"มี(mii)は「〜がある」「〜を持っている」という存在・所有を表す基本動詞。","ex_th":"ผมมีรถ","ex_ro":"phǒm mii rót","ex_jp":"私は車を持っています","pattern":"〜がある、〜を持っている"},{"id":"gr31","cat":7,"title":"存在(場所) อยู่(yùu)","explain":"อยู่(yùu)は「〜にいる、〜にある」と場所を表す。人にも物にも使える。","ex_th":"เพื่อนอยู่ที่บ้าน","ex_ro":"phʉ̂an yùu thîi bâan","ex_jp":"友達は家にいます","pattern":"〜にいる、〜にある"},{"id":"gr32","cat":2,"title":"疑問詞 อะไร(aray)","explain":"อะไร(aray)は「何」。尋ねたい名詞の位置にそのまま置く。","ex_th":"อันนี้อะไร","ex_ro":"an níi aray","ex_jp":"これは何ですか","pattern":"〜は何ですか？"},{"id":"gr33","cat":2,"title":"疑問詞 ที่ไหน(thîi nǎy)","explain":"ที่ไหน(thîi nǎy)は「どこ」。場所を尋ねる時に使う。","ex_th":"บ้านอยู่ที่ไหน","ex_ro":"bâan yùu thîi nǎy","ex_jp":"家はどこにありますか","pattern":"〜はどこですか？"},{"id":"gr34","cat":2,"title":"疑問詞 ใคร(khray)","explain":"ใคร(khray)は「誰」。人を尋ねる時に使う。","ex_th":"เพื่อนคุณเป็นใคร","ex_ro":"phʉ̂an khun pen khray","ex_jp":"あなたの友達は誰ですか","pattern":"〜は誰ですか？"},{"id":"gr35","cat":2,"title":"疑問詞 ทำไม(thammay)","explain":"ทำไม(thammay)は「なぜ」。理由を尋ねる時に使う。","ex_th":"ทำไมรถแพง","ex_ro":"thammay rót phɛɛŋ","ex_jp":"なぜ車は高いのですか","pattern":"なぜ〜ですか？"},{"id":"gr36","cat":2,"title":"疑問詞 เท่าไหร่(thâw rày)","explain":"เท่าไหร่(thâw rày)は「いくつ、いくら」。数量や値段を尋ねる時に使う。","ex_th":"อันนี้เท่าไหร่","ex_ro":"an níi thâw rày","ex_jp":"これはいくらですか","pattern":"〜はいくらですか？"},{"id":"gr37","cat":2,"title":"疑問詞 เมื่อไหร่(mʉ̂arày)","explain":"เมื่อไหร่(mʉ̂arày)は「いつ」。時間を尋ねる時に使う。","ex_th":"คุณจะไปเมื่อไหร่","ex_ro":"khun cà pay mʉ̂arày","ex_jp":"あなたはいつ行きますか","pattern":"〜はいつですか？"},{"id":"gr38","cat":8,"title":"前置詞 ใน(nay)","explain":"ใน(nay)は「〜の中に」という位置を表す。","ex_th":"หนังสืออยู่ในกระเป๋า","ex_ro":"nǎŋ sʉ̌ʉ yùu nay krapǎw","ex_jp":"本は鞄の中にあります","pattern":"〜の中に"},{"id":"gr39","cat":8,"title":"前置詞 บน(bon)","explain":"บน(bon)は「〜の上に」という位置を表す。","ex_th":"หนังสืออยู่บนโต๊ะ","ex_ro":"nǎŋ sʉ̌ʉ yùu bon tó","ex_jp":"本は机の上にあります","pattern":"〜の上に"},{"id":"gr40","cat":8,"title":"前置詞 ใต้(tây)","explain":"ใต้(tây)は「〜の下に」という位置を表す。","ex_th":"กระเป๋าอยู่ใต้โต๊ะ","ex_ro":"krapǎw yùu tâay tó","ex_jp":"鞄は机の下にあります","pattern":"〜の下に"},{"id":"gr41","cat":8,"title":"前置詞 ข้าง(khâaŋ)","explain":"ข้าง(khâaŋ)は「〜の側に、〜のそばに」という位置を表す。","ex_th":"เพื่อนอยู่ข้างผม","ex_ro":"phʉ̂an yùu khâaŋ phǒm","ex_jp":"友達は私の側にいます","pattern":"〜の側に"},{"id":"gr42","cat":10,"title":"類別詞 คน(khon)","explain":"คน(khon)は人を数える類別詞。「数字＋คน(khon)」の順で使う。","ex_th":"เพื่อนสองคน","ex_ro":"phʉ̂an sɔ̌ɔŋ khon","ex_jp":"友達2人","pattern":"〜人(にん)"},{"id":"gr43","cat":10,"title":"類別詞 ตัว(tua)","explain":"ตัว(tua)は動物や衣類、文字などを数える類別詞。","ex_th":"แมวสองตัว","ex_ro":"mɛɛw sɔ̌ɔŋ tua","ex_jp":"猫2匹","pattern":"〜匹、〜着"},{"id":"gr44","cat":10,"title":"類別詞 ใบ(bay)","explain":"ใบ(bay)は紙や葉、皿など薄く平たい物を数える類別詞。","ex_th":"กระดาษสามใบ","ex_ro":"kradàat sǎam bay","ex_jp":"紙3枚","pattern":"〜枚"},{"id":"gr45","cat":10,"title":"類別詞 อัน(an)","explain":"อัน(an)は分類しにくい小物全般に使える便利な類別詞。","ex_th":"ขนมสามอัน","ex_ro":"khanǒm sǎam an","ex_jp":"お菓子3個","pattern":"〜個"},{"id":"gr46","cat":4,"title":"助動詞 ต้อง(tɔ̂ɔŋ)","explain":"ต้อง(tɔ̂ɔŋ)は動詞の前に置いて「〜しなければならない」という義務を表す。","ex_th":"ผมต้องไปทำงาน","ex_ro":"phǒm tɔ̂ɔŋ pay tham ŋaan","ex_jp":"私は仕事に行かなければなりません","pattern":"〜しなければならない"},{"id":"gr47","cat":4,"title":"助動詞 ควร(khuan)","explain":"ควร(khuan)は動詞の前に置いて「〜すべきだ」という助言・提案を表す。","ex_th":"คุณควรไปหาหมอ","ex_ro":"khun khuan pay hǎa mɔ̌ɔ","ex_jp":"あなたは医者に行くべきです","pattern":"〜すべきだ"},{"id":"gr48","cat":5,"title":"否定 ไม่ได้(mây dâay)","explain":"ไม่ได้(mây dâay)は過去の出来事を否定したり、「〜できない」という不可能を表したりする。文脈で判断する。","ex_th":"ผมไม่ได้ไปทำงาน","ex_ro":"phǒm mây dâay pay tham ŋaan","ex_jp":"私は仕事に行きませんでした","pattern":"〜しなかった、〜できない"},{"id":"gr49","cat":5,"title":"否定 ยังไม่(yaŋ mây)","explain":"ยังไม่(yaŋ mây)は「まだ〜していない」という未完了の否定を表す。","ex_th":"ผมยังไม่กินข้าว","ex_ro":"phǒm yaŋ mây kin khâaw","ex_jp":"私はまだご飯を食べていません","pattern":"まだ〜していない"},{"id":"gr50","cat":6,"title":"同等比較 เหมือน(mʉ̌an)","explain":"เหมือน(mʉ̌an)は「〜と同じ」という同等比較を表す。","ex_th":"รถใหม่เหมือนรถเก่า","ex_ro":"rót mày mʉ̌an rót kàw","ex_jp":"新しい車は古い車と同じです","pattern":"〜と同じ"},{"id":"gr51","cat":11,"title":"使役 ให้(hây)","explain":"「ให้(hây)＋人＋動詞」で「(人)に〜させる、〜してあげる」という使役を表す。","ex_th":"ผมให้เพื่อนกินอาหารไทย","ex_ro":"phǒm hây phʉ̂an kin aahǎan thay","ex_jp":"私は友達にタイ料理を食べさせます","pattern":"(人)に〜させる"},{"id":"gr52","cat":11,"title":"受身 ถูก(thùuk)","explain":"「ถูก(thùuk)＋動詞」で「〜される」という受身を表す。良くない出来事に使うことが多い。","ex_th":"รถถูกซื้อแล้ว","ex_ro":"rót thùuk sʉ́ʉ lɛ́ɛw","ex_jp":"その車はもう買われました","pattern":"〜される"},{"id":"gr53","cat":11,"title":"可能 สามารถ(sǎamâat)","explain":"สามารถ(sǎamâat)もได้(dâay)と同じく可能を表す。「สามารถ(sǎamâat)＋動詞＋ได้(dâay)」のように前後で挟むフォーマルな言い方もよく使われる。","ex_th":"ผมสามารถพูดภาษาไทยได้","ex_ro":"phǒm sǎamâat phûut phaasǎa thay dâay","ex_jp":"私はタイ語を話すことができます","pattern":"〜することができる"},{"id":"gr54","cat":12,"title":"強調 เอง(eeŋ)","explain":"เอง(eeŋ)は文末などに置いて「自分で、〜自身」という強調を表す。","ex_th":"ผมทำเอง","ex_ro":"phǒm tham eeŋ","ex_jp":"私は自分でやります","pattern":"自分で〜"},{"id":"gr55","cat":12,"title":"強調 เลย(ləəy)","explain":"เลย(ləəy)は形容詞・動詞の後ろに置いて「本当に、全く」という強調を表す。","ex_th":"อร่อยเลย","ex_ro":"arɔ̀y ləəy","ex_jp":"本当においしいです","pattern":"本当に〜、全く〜"},{"id":"gr56","cat":12,"title":"念押し นะ(ná)","explain":"นะ(ná)は文末に置いて柔らかく念を押したり、お願いを和らげたりする。","ex_th":"กินข้าวนะ","ex_ro":"kin khâaw ná","ex_jp":"ご飯食べてね","pattern":"〜ね"},{"id":"gr57","cat":12,"title":"勧誘・軽い命令 สิ(sì)","explain":"สิ(sì)は文末に置いて、軽い命令や勧誘、催促のニュアンスを表す。","ex_th":"กินสิ","ex_ro":"kin sì","ex_jp":"食べてよ","pattern":"〜してよ"},{"id":"gr58","cat":3,"title":"完了確認 หรือยัง(rʉ̌ʉ yaŋ)","explain":"「(主語+)形容詞・動詞(+名詞)+หรือยัง(rʉ̌ʉ yaŋ)」で「もう〜しましたか？」「まだ〜ですか？」と、行為・状態がすでに起きたか完了したかを尋ねる表現になる。親しい人との会話では短く「〜รือยัง(rʉʉ yaŋ)」とだけ言うこともある。","ex_th":"จ่ายเงินหรือยัง","ex_ro":"càay ŋən rʉ̌ʉ yaŋ","ex_jp":"もう支払いましたか？","pattern":"もう〜しましたか？"},{"id":"gr59","cat":4,"title":"許可を求める ขอ(khɔ̌ɔ) + 動詞","explain":"「ขอ(khɔ̌ɔ) + 動詞」で「〜させてください」「〜してもいいですか」と相手に許可を求めたり依頼したりする丁寧な表現になる。「ขอ(khɔ̌ɔ) + 名詞」で「〜をください」という使い方もあり、ขอ(khɔ̌ɔ)の後ろに動詞を置くか名詞を置くかで意味が変わる。なお「借りる」は ยืม(yʉʉm)、「貸す」は ให้ยืม(hây yʉʉm) という表現がある。","ex_th":"ขอถ่ายรูปหน่อย","ex_ro":"khɔ̌ɔ thàay rûup nɔ̀y","ex_jp":"写真を撮らせてください","pattern":"〜させてください"},{"id":"gr60","cat":4,"title":"助言・提案 文 + ดีกว่า(dii kwàa)","explain":"文末にดีกว่า(dii kwàa)を置くだけで「〜したほうがいいです」という助言・提案の表現になる。文頭から作り直す必要がなく、言いたい文の最後に付け足すだけでよい、比較的丁寧な言い方。","ex_th":"จองโต๊ะก่อนดีกว่า","ex_ro":"cɔɔŋ tó kɔ̀ɔn dii kwàa","ex_jp":"先にテーブルを予約したほうがいいです","pattern":"〜したほうがいい"},{"id":"gr61","cat":6,"title":"同等比較② A กับ(kàp) B 〜 เหมือนกัน(mʉ̌an kan)","explain":"「A กับ(kàp) B + 形容詞など + เหมือนกัน(mʉ̌an kan)」で「AとBは〜が同じです」という表現になる。gr50のเหมือน(A เหมือน B「AはBと同じ」という一方向の直接比較)とは違い、こちらはกับ(kàp)で2つを並べてから「(お互いに)同じだ」とまとめる形。日常会話ではこちらの「เหมือนกัน(mʉ̌an kan)」を使う場面の方が多い。「〜」の部分には見た目・サイズ・年齢・形・ブランドなど何が同じかを表す語を置き、共通認識がある場合は省略もできる。","ex_th":"เสื้อตัวนี้กับตัวนั้นสีเหมือนกัน","ex_ro":"sʉ̂a tua níi kàp tua nán sǐi mʉ̌an kan","ex_jp":"この服とあの服は色が同じです","pattern":"AとBは〜が同じ"},{"id":"gr62","cat":3,"title":"動詞+ไป(pay)/มา(maa)(方向を表す複合動詞)","explain":"動詞の後ろにไป(pay)やมา(maa)を置くと、その動作が話し手から見て「向こうへ(ไป)」「こちらへ(มา)」行われることを表す、とても生産的なパターン。単語帳にあるพาไป(連れて行く)・ออกไป(出て行く)・เข้ามา(入ってくる)・เอามา(持って来る)なども、すべてこの「動詞+ไป/มา」の型の具体例で、他の動詞にも同じように応用できる。","ex_th":"เขาเดินไปโรงเรียน","ex_ro":"khǎw dəən pay rooŋ rian","ex_jp":"彼は学校へ歩いて行きます","pattern":"動詞+ไป/มา"}];
 
 // 会話文の単語別解説(裏面に常時表示)。{PT}/{PS}などのプレースホルダーは
 // PT_NOTE として別枠でまとめて表示する。
@@ -1678,7 +1724,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-18b';
+const APP_VERSION = '2026-11-19a';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -1773,6 +1819,7 @@ function migrateMergedIds(){
 }
 
 async function loadAll(){
+  entLoad();
   const lv=await sto_get('s:level'); if(lv) st.level=lv;
   const gd=await sto_get('s:gender'); if(gd) st.gender=gd;
   const ro=await sto_get('s:showRo'); if(ro!==null && ro!==undefined) st.showRo=ro;
@@ -4094,12 +4141,242 @@ function shuffleArr(arr){
   for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
   return a;
 }
+
+// ─── 有料版・無料版の出し分け ─────────────────────────────────
+// 販売開始までは PAYWALL_LIVE=false。確認用に app.html?paywall=1 で開いたときだけ有効になる(?paywall=0 で解除)。
+// 購入コード方式: Stripeで購入 → メールでコード → アプリで1回入力。1コード3台まで。
+// 月額・年間はネットにつながっていれば1日1回まで契約状態を確認し、オフラインでも最後の確認から14日間は使える。
+const PAYWALL_LIVE = false;      // 販売開始時に true にする
+const PAY_API = '';              // 決済Worker のURL(未設定の間は、確認用のテストコードだけ使える)
+const PAY_LP = 'lp.html#price';  // 購入ページ
+const FREE_WORDS = new Set(["n001", "n016", "n033", "n037", "n038", "n991", "n990", "n091", "n702", "n021", "n031", "n023", "n003", "n053", "n045", "n046", "n054", "n707", "n048", "n059", "n982", "n013", "n051", "n553", "n999", "n008", "n009", "n011", "n961", "n958", "n960", "n036", "n041", "n081", "n014", "n015", "n040", "n963", "n964", "n968", "n969", "n028", "n090", "n007", "n044", "n049", "n076", "n061", "n058", "n020", "n622", "n623", "n974", "n475", "n975", "n004", "n977", "n681", "n682", "n684", "n989", "n064", "n010", "n030", "n042", "n519", "n874", "n876", "n877", "n878", "n518", "n851", "n852", "n849", "n855", "n886", "n865", "n758", "n752", "n765", "n768", "n705", "n706", "n050", "n564", "n984", "n047", "n985", "n987", "n063", "n576", "n579", "n546", "n545", "n547", "n734", "n735", "n741", "n997", "n814", "n773", "n1002", "n1001", "n025", "n979", "n980", "n973", "n976", "n066", "n663", "v001", "v002", "v003", "v004", "v005", "v006", "v007", "v008", "v009", "v010", "v011", "v012", "v013", "v014", "v015", "v016", "v017", "v018", "v019", "v020", "v021", "v022", "v024", "v027", "v029", "v030", "v033", "v043", "v046", "v047", "v048", "v051", "v060", "v061", "v065", "v296", "v333", "v352", "v354", "v405", "v414", "v415", "v429", "v295", "v427", "v023", "v025", "v026", "v031", "v032", "v034", "v037", "v044", "v045", "v049", "v050", "v052", "v056", "v058", "v067", "v298", "v312", "v328", "v329", "v330", "v331", "v343", "v344", "v345", "v377", "v378", "v403", "v417", "v418", "v425", "a001", "a002", "a003", "a005", "a009", "a010", "a011", "a012", "a013", "a014", "a015", "a031", "a032", "a033", "a038", "a039", "a045", "a049", "a103", "a216", "a203", "a200", "a006", "a007", "a008", "a025", "a035", "a042", "a043", "a046", "a202", "a205", "a209", "a212", "a213", "d001", "d002", "d007", "d008", "d015", "d181", "d182", "d183", "d184", "d185", "d024", "d163", "d164", "d022", "d021", "d097", "d194", "d009", "d004", "d012", "d013", "d016", "d020", "d025", "d061", "d066", "d075", "d165", "d177", "d186", "d187", "g001", "g002", "g003", "g004", "g005", "g006", "g007", "g008", "g011", "g012", "g013", "q001", "q002", "q003", "q004", "q006", "q007", "q008", "q009", "q010", "q011", "q012", "q013", "q014", "c001", "c002", "c003", "c004", "c005", "c006", "c007", "c008", "c009", "c010", "c011", "c012", "c013", "c014", "c015", "c016", "c017", "c018", "c019", "c020", "c021", "c022", "c023", "c024", "c025"]); // 無料の単語300語(free_words.json と同じ)
+const FREE_SCENES = ['日常会話','レストラン'];
+const ENT_KEY='s:ent', DEV_KEY='s:dev', ENT_OFFLINE_DAYS=14, ENT_CHECK_HOURS=24;
+const PLAN_LABEL = {monthly:'月額プラン', yearly:'年間プラン', lifetime:'買い切り'};
+let ent=null;
+(function(){ try{ const q=new URLSearchParams(location.search); if(q.get('paywall')==='1') sessionStorage.setItem('poca:pw','1'); if(q.get('paywall')==='0') sessionStorage.removeItem('poca:pw'); }catch(e){} })();
+function paywallOn(){ if(PAYWALL_LIVE) return true; try{ return sessionStorage.getItem('poca:pw')==='1'; }catch(e){ return false; } }
+function payTestMode(){ return !PAY_API && paywallOn(); }
+function entLoad(){ try{ ent=JSON.parse(localStorage.getItem(ENT_KEY)||'null'); }catch(e){ ent=null; } }
+function entSave(){ try{ if(ent) localStorage.setItem(ENT_KEY,JSON.stringify(ent)); else localStorage.removeItem(ENT_KEY); }catch(e){} }
+function deviceId(){
+  try{ let d=localStorage.getItem(DEV_KEY); if(!d){ d=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(36).slice(2)); localStorage.setItem(DEV_KEY,d); } return d; }
+  catch(e){ return 'nodev'; }
+}
+// 'free' 未購入 / 'paid' 有料版 / 'stale' オフラインが14日を超えた / 'ended' 解約・期限切れ
+function entState(){
+  if(!ent || !ent.code) return 'free';
+  if(!ent.active) return 'ended';
+  if(ent.plan==='lifetime') return 'paid';
+  if(Date.now()-(ent.checkedAt||0) > ENT_OFFLINE_DAYS*864e5) return 'stale';
+  return 'paid';
+}
+function isPaid(){ return !paywallOn() || entState()==='paid'; }
+function canWord(w){ return isPaid() || FREE_WORDS.has(w.id); }
+function canScene(sc){ return isPaid() || sc==='ALL' || FREE_SCENES.includes(sc); }
+function canMode(m){ return isPaid() || !['grammar','numbers'].includes(m); }
+const LK='<span class="lk">🔒</span>';
+// 単語カードの並び(リストからカードを開くときも同じ並びを使う)
+function vocabArr(pos){
+  let a=(pos==='all')?Object.values(DATA).filter(Array.isArray).flat():(DATA[pos]||[]);
+  if(st.level==='beginner') a=a.filter(i=>i.level==='5');
+  if(!isPaid()) a=a.filter(canWord);
+  return a;
+}
+function allWordCount(){ return Object.values(DATA).filter(Array.isArray).reduce((n,a)=>n+a.length,0); }
+
+// ── 決済Workerとのやりとり ──
+async function payCall(path, body){
+  if(payTestMode()) return payMock(path, body);
+  const r=await fetch(PAY_API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  return await r.json();
+}
+// 確認用のテストコード(PAY_API が未設定のときだけ)
+async function payMock(path, body){
+  await new Promise(r=>setTimeout(r,400));
+  const c=String(body.code||'');
+  if(c==='TEST-LIMIT') return {ok:false,error:'limit'};
+  const plan={'TEST-MONTHLY':'monthly','TEST-YEARLY':'yearly','TEST-LIFETIME':'lifetime','TEST-CANCELED':'monthly'}[c];
+  if(!plan) return {ok:false,error:'invalid'};
+  if(path==='/deactivate') return {ok:true};
+  if(path==='/portal') return {ok:false,error:'test'};
+  if(path==='/status' && c==='TEST-CANCELED') return {ok:true,plan,active:false};
+  return {ok:true,plan,active:true};
+}
+function normCode(c){ return String(c||'').toUpperCase().replace(/[\s　]/g,'').replace(/[‐－―ー−]/g,'-'); }
+const PAY_ERR = {
+  invalid:'このコードは見つかりませんでした。\n購入時のメールに書かれたコードを、もう一度確かめてください。',
+  limit:'このコードは、すでに3台の端末で使われています。\n使わなくなった端末で「この端末の登録を外す」を押してから、もう一度お試しください。',
+  inactive:'このコードのプランは、解約済みか期限が切れています。',
+  network:'通信できませんでした。\nネットにつながっているか確かめて、もう一度お試しください。'
+};
+async function entActivate(code){
+  code=normCode(code);
+  if(!code) return {ok:false,msg:'購入コードを入力してください。'};
+  let r;
+  try{ r=await payCall('/activate',{code,device:deviceId()}); }catch(e){ return {ok:false,msg:PAY_ERR.network}; }
+  if(!r || !r.ok) return {ok:false,msg:PAY_ERR[r&&r.error]||PAY_ERR.invalid};
+  if(!r.active) return {ok:false,msg:PAY_ERR.inactive};
+  ent={code,plan:r.plan,active:true,checkedAt:Date.now(),since:Date.now()}; entSave();
+  if(typeof gtag==='function') gtag('event','paid_activate',{plan:r.plan});
+  return {ok:true};
+}
+// 月額・年間の契約が続いているかを確認(1日1回まで。オフラインや通信エラーのときは何もしない)
+let entChecking=false;
+async function entCheck(force){
+  if(!paywallOn() || !ent || !ent.code || !ent.active || ent.plan==='lifetime' || entChecking) return;
+  if(!force && Date.now()-(ent.checkedAt||0) < ENT_CHECK_HOURS*36e5) return;
+  if(navigator.onLine===false) return;
+  entChecking=true;
+  const before=entState();
+  try{
+    const r=await payCall('/status',{code:ent.code,device:deviceId()});
+    if(r && r.ok){
+      if(r.active){ ent.active=true; ent.plan=r.plan||ent.plan; ent.checkedAt=Date.now(); }
+      else ent.active=false;
+      entSave();
+    } else if(r && (r.error==='invalid' || r.error==='device')){ ent.active=false; entSave(); }
+  }catch(e){}
+  entChecking=false;
+  const after=entState();
+  if(before!==after){
+    render();
+    if(after==='ended') appAlert('ご利用のプランの期間が終わったため、無料版に戻りました。\n学習記録やお気に入りはそのまま残っています。\nもう一度ご利用になる場合は「🔑 プラン・購入コード」からどうぞ。');
+  }
+}
+async function entDeactivate(){
+  if(!ent) return;
+  try{ const r=await payCall('/deactivate',{code:ent.code,device:deviceId()}); if(!r||!r.ok) throw 0; }
+  catch(e){ await appAlert(PAY_ERR.network); return false; }
+  ent=null; entSave(); return true;
+}
+
+// ── 案内のシート(下から出る画面)。閉じたら画面から取り除く ──
+function sheetOpen(html){
+  sheetClose();
+  const ov=document.createElement('div'); ov.className='pw-ov'; ov.id='pwOv'; ov.onclick=sheetClose;
+  const sh=document.createElement('div'); sh.className='pw-sheet'; sh.id='pwSheet'; sh.innerHTML=html;
+  document.body.appendChild(ov); document.body.appendChild(sh);
+}
+function sheetClose(){ ['pwOv','pwSheet'].forEach(id=>{ const el=document.getElementById(id); if(el) el.remove(); }); }
+function pwFeatures(){
+  const conv=CONV.length, sc=SCENES.length-1;
+  return `<ul class="pw-list">
+    <li>単語 全${allWordCount().toLocaleString()}語 <small>(無料は基本の${FREE_WORDS.size}語)</small></li>
+    <li>会話 全${conv}文・${sc}シーン <small>(観光・ホテル・交通・緊急も)</small></li>
+    <li>文法 ${GRAM.length}項目</li>
+    <li>数字タブ <small>(値段や時間の読み方)</small></li>
+    <li>テストの全機能 <small>(聞いて選ぶ・数字・苦手の克服)</small></li>
+    <li>お気に入り・学習リストを全範囲で</li>
+  </ul>`;
+}
+function pwPlans(){
+  return `<div class="pw-plans">
+    <div class="pw-plan"><b>月額</b><span>¥300</span><small>1か月ごと</small></div>
+    <div class="pw-plan"><b>年間</b><span>¥3,000</span><small>月あたり¥250</small></div>
+    <div class="pw-plan"><b>買い切り</b><span>¥4,000</span><small>ずっと使える</small></div>
+  </div><div class="pw-tax">価格はすべて税込です</div>`;
+}
+function pwStateNote(){
+  const s=entState();
+  if(s==='stale') return `<div class="pw-note">最後の確認から${ENT_OFFLINE_DAYS}日以上たったため、一時的に無料版になっています。ネットにつながると自動で確認して元に戻ります。</div><button class="pw-ghost" onclick="entCheckUI()">今すぐ確認する</button>`;
+  if(s==='ended') return `<div class="pw-note">${PLAN_LABEL[ent.plan]||'プラン'}の期間が終わっています。学習記録はそのまま残っています。</div>`;
+  return '';
+}
+function openPaywall(reason){
+  if(!paywallOn()) return;
+  if(entState()==='paid'){ openPlanSheet(); return; }
+  sheetOpen(`<div class="pw-h">🔒 有料版で使えます</div>
+    ${reason?`<div class="pw-reason">${reason}</div>`:''}
+    ${pwStateNote()}
+    <div class="pw-lbl">有料版でできること</div>${pwFeatures()}
+    <div class="pw-lbl">料金</div>${pwPlans()}
+    <button class="pw-btn" onclick="payOpenLP()">プランを選んで購入する</button>
+    <button class="pw-ghost" onclick="openCodeSheet()">🔑 購入コードをお持ちの方</button>
+    <button class="pw-close" onclick="sheetClose()">閉じる</button>`);
+  if(typeof gtag==='function') gtag('event','paywall_view',{reason:reason||'plan'});
+}
+function payOpenLP(){ window.open(PAY_LP,'_blank'); }
+function openCodeSheet(){
+  sheetOpen(`<div class="pw-h">🔑 購入コードを入力</div>
+    <div class="pw-sub">購入後にメールで届いたコードを入力してください。1つのコードで3台まで使えます。</div>
+    <input id="pwCode" class="pw-in" placeholder="POCA-XXXX-XXXX" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done">
+    <div id="pwMsg" class="pw-msg"></div>
+    <button class="pw-btn" id="pwGo" onclick="entActivateUI()">有料版にする</button>
+    ${payTestMode()?'<div class="pw-test">【確認用】テストコード:<br>TEST-MONTHLY(月額) / TEST-YEARLY(年間) / TEST-LIFETIME(買い切り) / TEST-CANCELED(次の確認で解約扱い) / TEST-LIMIT(3台を超えた)</div>':''}
+    <button class="pw-close" onclick="openPlanSheet()">戻る</button>`);
+  const inp=document.getElementById('pwCode');
+  if(inp) inp.addEventListener('keydown',e=>{ if(e.key==='Enter') entActivateUI(); });
+}
+async function entActivateUI(){
+  const inp=document.getElementById('pwCode'), msg=document.getElementById('pwMsg'), go=document.getElementById('pwGo');
+  if(!inp||!msg) return;
+  go.disabled=true; msg.className='pw-msg'; msg.textContent='確認しています…';
+  const r=await entActivate(inp.value);
+  go.disabled=false;
+  if(!r.ok){ msg.textContent=r.msg; return; }
+  sheetClose(); render();
+  appAlert(`有料版になりました(${PLAN_LABEL[ent.plan]||''})。\nすべての単語・会話・文法・数字・テストが使えます。`);
+}
+function openPlanSheet(){
+  if(!paywallOn()) return;
+  const s=entState();
+  if(s!=='paid'){ openPaywall(); return; }
+  const life=(ent.plan==='lifetime');
+  const d=new Date(ent.checkedAt||Date.now());
+  const masked=ent.code.length>6?ent.code.slice(0,5)+'…'+ent.code.slice(-4):ent.code;
+  sheetOpen(`<div class="pw-h">✓ 有料版をご利用中です</div>
+    <div class="pw-kv"><span>プラン</span><b>${PLAN_LABEL[ent.plan]||ent.plan}</b></div>
+    <div class="pw-kv"><span>購入コード</span><b>${masked}</b></div>
+    ${life?'':`<div class="pw-kv"><span>最後の確認</span><b>${d.getMonth()+1}月${d.getDate()}日</b></div>
+    <div class="pw-sub">月額・年間プランは、ネットにつながっているときに1日1回、ご契約が続いているかを自動で確認します。電波のない場所でも、最後の確認から${ENT_OFFLINE_DAYS}日間はそのまま使えます。</div>
+    <button class="pw-ghost" onclick="payOpenPortal()">お支払い・解約の手続き</button>`}
+    <button class="pw-ghost" onclick="entDeactivateUI()">この端末の登録を外す</button>
+    <div class="pw-sub">機種変更などで使わなくなった端末の登録を外すと、別の端末で使える台数が1台分空きます。</div>
+    ${payTestMode()?`<div class="pw-test">【確認用】<br><button onclick="payTestStale()">最後の確認を15日前にする</button><button onclick="entCheckUI()">今すぐ契約を確認する</button></div>`:''}
+    <button class="pw-close" onclick="sheetClose()">閉じる</button>`);
+}
+async function payOpenPortal(){
+  try{
+    const r=await payCall('/portal',{code:ent.code,device:deviceId()});
+    if(r && r.ok && r.url){ window.open(r.url,'_blank'); return; }
+    await appAlert(r&&r.error==='test'?'確認用のテストコードのため、手続きの画面はありません。':'手続きの画面を開けませんでした。時間をおいてもう一度お試しください。');
+  }catch(e){ await appAlert(PAY_ERR.network); }
+}
+async function entDeactivateUI(){
+  if(!await appConfirm('この端末の登録を外して、無料版に戻します。\n学習記録はそのまま残ります。もう一度使うときは、同じ購入コードを入力してください。\nよろしいですか?')) return;
+  if(await entDeactivate()){ sheetClose(); render(); appAlert('この端末の登録を外しました。'); }
+}
+async function entCheckUI(){ if(!ent) return; await entCheck(true); sheetClose(); if(entState()==='paid') appAlert('確認できました。有料版をそのままお使いいただけます。'); else if(entState()==='stale') appAlert(PAY_ERR.network); }
+function payTestStale(){ if(!ent) return; ent.checkedAt=Date.now()-(ENT_OFFLINE_DAYS+1)*864e5; entSave(); sheetClose(); render(); appAlert('最後の確認を15日前にしました(オフラインが続いた状態)。\n次にアプリを開き直すか「今すぐ確認する」でネット確認が行われます。'); }
+function updatePlanUI(){
+  const on=paywallOn(), paid=on&&entState()==='paid';
+  const pb=document.getElementById('planBtn');
+  if(pb){ pb.style.display=on?'inline-block':'none'; pb.textContent=paid?'✓ 有料版':'🔑 無料版'; pb.classList.toggle('paid',paid); }
+  const ob=document.getElementById('openPlanBtn'); if(ob) ob.style.display=on?'block':'none';
+}
+// 有料部分の説明ページ(文法・数字・苦手の復習)
+function lockPageHtml(kind){
+  const n=Object.keys(st.weak).length;
+  const P={
+    grammar:{ic:'📘',t:'文法は有料版の機能です',b:`タイ語の文の組み立て方を${GRAM.length}項目にまとめています。どの項目にも例文と読み方が付いています。`,
+      li:['否定・疑問・過去・未来の言い方','「〜したい」「〜できる」「〜しなければ」','比較・条件・理由などのつなぎ方','類別詞・前置詞の使い方']},
+    numbers:{ic:'🔢',t:'数字タブは有料版の機能です',b:'電卓のように数字を打つと、タイ語の読み方と音声がすぐに分かります。値段・時間・部屋番号などの聞き取りに役立ちます。',
+      li:['0〜9,999,999までの読み方と音声','数字の読み方のルールの解説','数字を使った例文']},
+    weak:{ic:'😣',t:'苦手な単語の復習は有料版の機能です',b:`テストで間違えた単語は、無料版でも自動で記録されています(今${n}語)。有料版にすると、苦手な単語を一覧で見直したり、苦手だけを集めてテストしたりできます。`,
+      li:['苦手な単語の一覧','苦手だけを集めた4択テスト','2回続けて正解すると苦手から外れる']}
+  }[kind];
+  return `<div class="lock-page"><div class="lp-ic">${P.ic}</div><div class="lp-t">${P.t}</div><div class="lp-b">${P.b}</div>
+    <ul class="pw-list">${P.li.map(x=>`<li>${x}</li>`).join('')}</ul>
+    <button class="pw-btn" onclick="openPaywall()">有料版について見る</button>
+    <button class="pw-ghost" onclick="openCodeSheet()">🔑 購入コードをお持ちの方</button></div>`;
+}
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') entCheck(false); });
+window.addEventListener('online',()=>entCheck(false));
+
 function list(){
   if(st.mode==='vocab'){
-    let l=st.pos==='all'
-      ?Object.values(DATA).filter(Array.isArray).flat()
-      :DATA[st.pos]||[];
-    if(st.level==='beginner') l=l.filter(i=>i.level==='5');
+    let l=vocabArr(st.pos);
     if(st.filterUn){
       const f=st.pos==='all'
         ?l.filter(i=>!Object.values(st.learned).some(s=>s.has(i.id)))
@@ -4115,6 +4392,7 @@ function list(){
   }
   if(st.mode==='conversation'){
     let l=st.scene==='ALL'?CONV:CONV.filter(i=>i.scene===st.scene);
+    if(!isPaid()) l=l.filter(i=>canScene(i.scene));
     if(st.filterUn){ const f=l.filter(i=>!st.learned.conversation.has(i.id)); if(f.length) l=f; }
     if(st.shuffle){
       const key='conv_'+st.scene+(st.filterUn?'_u':'');
@@ -4201,7 +4479,7 @@ function renderModeTabs(){
   if(!mt) return;
   const labels=MODE_LABELS_JP;
   mt.innerHTML=Object.entries(labels).map(([k,v])=>
-    `<div class="mode-tab${k===st.mode?' active':''}" data-mode="${k}">${v}</div>`).join('');
+    `<div class="mode-tab${k===st.mode?' active':''}${canMode(k)?'':' locked'}" data-mode="${k}">${v}${canMode(k)?'':LK}</div>`).join('');
   mt.querySelectorAll('.mode-tab').forEach(t=>t.addEventListener('click',()=>{
     const prevMode=st.mode;
     st.mode=t.dataset.mode;
@@ -4240,8 +4518,9 @@ function renderSub(){
   } else if(st.mode==='conversation'){
     sr.style.display='flex';
     sr.innerHTML=SCENES.map(s=>
-      `<button class="chip ${s===st.scene?'active-conv':''}" data-sc="${s}">${s}</button>`).join('');
+      `<button class="chip ${s===st.scene?'active-conv':''}${canScene(s)?'':' locked'}" data-sc="${s}">${s}${canScene(s)?'':LK}</button>`).join('');
     sr.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+      if(!canScene(c.dataset.sc)){ openPaywall(`「${c.dataset.sc}」の会話は有料版で使えます`); return; }
       st.scene=c.dataset.sc;st.idx=0;st.flipped=false;render();
       if(typeof gtag === 'function'){
         gtag('event', 'category_view', { mode: '会話', category: st.scene });
@@ -4259,18 +4538,19 @@ function updateStickyTab(){
   if(st.mode!=='wordlist'){sr.style.display='none';return;}
   // スクロール量で表示切替(初期は非表示)
   sr.style.display=window.scrollY>170?'block':'none';
-  const modeTabs=`<button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocabSticky" style="margin-left:0;">単語</button><button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConvSticky">会話</button><button class="chip ${st.wordlistMode==='grammar'?'active-vocab':''}" id="wlModeGramSticky">文法</button><button class="chip ${st.wordlistMode==='learned'?'active-vocab':''}" id="wlModeLearnedSticky">学習済み</button><button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFavSticky">お気に入り</button><button class="chip ${st.wordlistMode==='weak'?'active-vocab':''}" id="wlModeWeakSticky">苦手</button>`;
+  const modeTabs=`<button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocabSticky" style="margin-left:0;">単語</button><button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConvSticky">会話</button><button class="chip ${st.wordlistMode==='grammar'?'active-vocab':''}${canMode('grammar')?'':' locked'}" id="wlModeGramSticky">文法${canMode('grammar')?'':LK}</button><button class="chip ${st.wordlistMode==='learned'?'active-vocab':''}" id="wlModeLearnedSticky">学習済み</button><button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFavSticky">お気に入り</button><button class="chip ${st.wordlistMode==='weak'?'active-vocab':''}" id="wlModeWeakSticky">苦手${isPaid()?'':LK}</button>`;
   if(st.wordlistMode==='favorites'||st.wordlistMode==='learned'||st.wordlistMode==='grammar'||st.wordlistMode==='weak'){
     sr.innerHTML=modeTabs;
   } else if(st.wordlistMode==='conversation'){
     sr.innerHTML=modeTabs+SCENES.map(s=>
-      `<button class="chip ${s===st.wordlistScene?'active-conv':''}" data-sc="${s}">${s}</button>`).join('');
+      `<button class="chip ${s===st.wordlistScene?'active-conv':''}${canScene(s)?'':' locked'}" data-sc="${s}">${s}${canScene(s)?'':LK}</button>`).join('');
     requestAnimationFrame(()=>{
       const activeChip=sr.querySelector('.chip[data-sc].active-conv');
       if(activeChip) activeChip.scrollIntoView({inline:'center',block:'nearest'});
       applyScrollFade(sr);
     });
     sr.querySelectorAll('[data-sc]').forEach(c=>c.addEventListener('click',()=>{
+      if(!canScene(c.dataset.sc)){ openPaywall(`「${c.dataset.sc}」の会話は有料版で使えます`); return; }
       st.wordlistScene=c.dataset.sc;
       window.scrollTo(0,0);
       render();
@@ -4297,6 +4577,21 @@ function updateStickyTab(){
   const smf=document.getElementById('wlModeFavSticky'); if(smf) smf.onclick=()=>{st.wordlistMode='favorites';window.scrollTo(0,0);render();};
 }
 
+function bindWlModes(){
+  [['wlModeVocab','vocab'],['wlModeConv','conversation'],['wlModeGram','grammar'],['wlModeLearned','learned'],['wlModeFav','favorites']].forEach(([id,m])=>{
+    const b=document.getElementById(id); if(b) b.onclick=()=>{st.wordlistMode=m;window.scrollTo(0,0);render();};
+  });
+}
+// 無料版で隠れている学習済み・お気に入りの件数
+function hiddenCount(setMap){
+  if(isPaid()) return 0;
+  let n=0;
+  Object.entries(DATA).forEach(([k,v])=>{ if(Array.isArray(v)&&setMap[k]) v.forEach(i=>{ if(setMap[k].has(i.id)&&!canWord(i)) n++; }); });
+  CONV.forEach(i=>{ if(setMap.conversation.has(i.id)&&!canScene(i.scene)) n++; });
+  GRAM.forEach(i=>{ if(setMap.grammar.has(i.id)) n++; });
+  return n;
+}
+function lockMoreHtml(text){ return `<div class="lock-more" onclick="openPaywall()">🔒 ${text}</div>`; }
 function renderWordList(){
   const lp=document.getElementById('listPage');
   const beg=st.level==='beginner';
@@ -4305,11 +4600,18 @@ function renderWordList(){
   let html=`<div id="wlModeRow" style="display:flex;gap:8px;padding:4px 12px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
     <button class="chip ${st.wordlistMode==='vocab'?'active-vocab':''}" id="wlModeVocab">単語</button>
     <button class="chip ${st.wordlistMode==='conversation'?'active-conv':''}" id="wlModeConv">会話</button>
-    <button class="chip ${st.wordlistMode==='grammar'?'active-vocab':''}" id="wlModeGram">文法</button>
+    <button class="chip ${st.wordlistMode==='grammar'?'active-vocab':''}${canMode('grammar')?'':' locked'}" id="wlModeGram">文法${canMode('grammar')?'':LK}</button>
     <button class="chip ${st.wordlistMode==='learned'?'active-vocab':''}" id="wlModeLearned">学習済み</button>
     <button class="chip ${st.wordlistMode==='favorites'?'active-vocab':''}" id="wlModeFav">お気に入り</button>
-    <button class="chip ${st.wordlistMode==='weak'?'active-vocab':''}" id="wlModeWeak">苦手${Object.keys(st.weak).length?'('+Object.keys(st.weak).length+')':''}</button>
+    <button class="chip ${st.wordlistMode==='weak'?'active-vocab':''}" id="wlModeWeak">苦手${Object.keys(st.weak).length?'('+Object.keys(st.weak).length+')':''}${isPaid()?'':LK}</button>
   </div>`;
+
+  if(!isPaid() && (st.wordlistMode==='weak'||st.wordlistMode==='grammar')){
+    lp.innerHTML=html+lockPageHtml(st.wordlistMode);
+    updateStickyTab(); bindWlModes();
+    return;
+  }
+  if(st.wordlistMode==='conversation' && !canScene(st.wordlistScene)) st.wordlistScene='ALL';
 
   if(st.wordlistMode==='weak'){
     // ── 苦手な単語(4択テストで間違えた単語) ──
@@ -4346,7 +4648,7 @@ function renderWordList(){
         const w=(DATA[pos2]||[]).find(i=>i.id===id); if(!w) return;
         // 中級者+の単語は、初心者表示のままだとカードが開けないので表示レベルを合わせる
         if(st.level==='beginner' && w.level!=='5'){ st.level='intermediate'; sto_set('s:level',st.level); }
-        const arr=(st.level==='beginner'?(DATA[pos2]||[]).filter(i=>i.level==='5'):(DATA[pos2]||[]));
+        const arr=vocabArr(pos2);
         const idx2=arr.findIndex(i=>i.id===id); if(idx2<0) return;
         st.fromList=true; st.fromListTab='weak'; st.fromListPos=pos2; st.fromListItemId=id; st.fromListMode='vocab';
         st.mode='vocab'; st.pos=pos2; st.idx=idx2; st.flipped=false; st.filterUn=false; st.shuffle=false;
@@ -4413,11 +4715,12 @@ function renderWordList(){
     // ── 学習済み一覧（単語＋会話＋文法まとめ） ──
     const learnedVocabItems=Object.entries(DATA)
       .filter(([k,v])=>Array.isArray(v) && st.learned[k])
-      .flatMap(([k,v])=>v.filter(i=>st.learned[k].has(i.id)).map(i=>({...i,_pos:k,_type:'vocab'})));
-    const learnedConvItems=CONV.filter(i=>st.learned.conversation.has(i.id)).map(i=>({...i,_type:'conv'}));
-    const learnedGramItems=GRAM.filter(i=>st.learned.grammar.has(i.id)).map(i=>({...i,_type:'gram'}));
+      .flatMap(([k,v])=>v.filter(i=>st.learned[k].has(i.id)&&canWord(i)).map(i=>({...i,_pos:k,_type:'vocab'})));
+    const learnedConvItems=CONV.filter(i=>st.learned.conversation.has(i.id)&&canScene(i.scene)).map(i=>({...i,_type:'conv'}));
+    const learnedGramItems=GRAM.filter(i=>isPaid()&&st.learned.grammar.has(i.id)).map(i=>({...i,_type:'gram'}));
     const totalLearned2=learnedVocabItems.length+learnedConvItems.length+learnedGramItems.length;
     html+=`<div style="padding:0 12px 8px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${totalLearned2}件</div>`;
+    { const hid=hiddenCount(st.learned); if(hid) html+=lockMoreHtml(`有料版の範囲の${hid}件は、有料版にすると表示されます`); }
     if(totalLearned2===0){
       html+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;">まだ「覚えた」に登録された項目がありません<br>各カードの「覚えた」ボタンから登録できます</div>`;
     }
@@ -4474,7 +4777,7 @@ function renderWordList(){
         const id=el.dataset.id;
         const pos2=el.dataset.pos;
         const beg3=st.level==='beginner';
-        const arr=(beg3?(DATA[pos2]||[]).filter(i=>i.level==='5'):(DATA[pos2]||[]));
+        const arr=vocabArr(pos2);
         const idx2=arr.findIndex(i=>i.id===id);
         if(idx2<0) return;
         st.fromList=true;
@@ -4545,14 +4848,15 @@ function renderWordList(){
     // ── お気に入りリスト（単語＋会話＋文法まとめ） ──
     const favVocabItems=Object.entries(DATA)
       .filter(([k,v])=>Array.isArray(v) && st.favorites[k])
-      .flatMap(([k,v])=>v.filter(i=>st.favorites[k].has(i.id)).map(i=>({...i,_pos:k,_type:'vocab'})));
-    const favConvItems=CONV.filter(i=>st.favorites.conversation.has(i.id)).map(i=>({...i,_type:'conv'}));
-    const favGramItems=GRAM.filter(i=>st.favorites.grammar.has(i.id)).map(i=>({...i,_type:'gram'}));
+      .flatMap(([k,v])=>v.filter(i=>st.favorites[k].has(i.id)&&canWord(i)).map(i=>({...i,_pos:k,_type:'vocab'})));
+    const favConvItems=CONV.filter(i=>st.favorites.conversation.has(i.id)&&canScene(i.scene)).map(i=>({...i,_type:'conv'}));
+    const favGramItems=GRAM.filter(i=>isPaid()&&st.favorites.grammar.has(i.id)).map(i=>({...i,_type:'gram'}));
     const totalFav=favVocabItems.length+favConvItems.length+favGramItems.length;
     html+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(201,189,166,.12);border:1px solid rgba(201,189,166,.3);border-radius:8px;padding:8px 10px;">
       ⭐ カード裏面やリストの☆をタップして追加した、後で見返したい単語・会話文・文法の一覧です
     </div>`;
     html+=`<div style="padding:0 12px 8px;font-family:'PocaIPA','IBM Plex Mono','Noto Sans Mono',monospace;font-size:13px;color:var(--muted);">全${totalFav}件</div>`;
+    { const hid=hiddenCount(st.favorites); if(hid) html+=lockMoreHtml(`有料版の範囲の${hid}件は、有料版にすると表示されます`); }
     if(totalFav===0){
       html+=`<div style="padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;">まだお気に入りに追加された項目がありません<br>各カードの☆ボタン、リストの☆アイコンから追加できます</div>`;
     }
@@ -4603,7 +4907,7 @@ function renderWordList(){
         const id=el.dataset.id;
         const pos2=el.dataset.pos;
         const beg3=st.level==='beginner';
-        const arr=(beg3?(DATA[pos2]||[]).filter(i=>i.level==='5'):(DATA[pos2]||[]));
+        const arr=vocabArr(pos2);
         const idx2=arr.findIndex(i=>i.id===id);
         if(idx2<0) return;
         st.fromList=true;
@@ -4673,9 +4977,10 @@ function renderWordList(){
   if(st.wordlistMode==='conversation'){
     // ── 会話リスト ──
     html+=`<div id="wlTabRow" style="display:flex;gap:6px;overflow-x:auto;padding:0 12px 10px;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
-      ${SCENES.map(s=>`<button class="chip ${s===st.wordlistScene?'active-conv':''}" data-sc="${s}" style="flex-shrink:0;">${s}</button>`).join('')}
+      ${SCENES.map(s=>`<button class="chip ${s===st.wordlistScene?'active-conv':''}${canScene(s)?'':' locked'}" data-sc="${s}" style="flex-shrink:0;">${s}${canScene(s)?'':LK}</button>`).join('')}
     </div>`;
     let items=st.wordlistScene==='ALL'?CONV:CONV.filter(i=>i.scene===st.wordlistScene);
+    if(!isPaid()) items=items.filter(i=>canScene(i.scene));
     const convLearnedCount=[...st.learned.conversation].filter(id=>items.some(i=>i.id===id)).length;
     html+=`<div style="margin:6px 12px 4px;font-size:12.5px;color:var(--yellow);background:rgba(201,189,166,.12);border:1px solid rgba(201,189,166,.3);border-radius:8px;padding:8px 10px;">
       💡 タップするとカードで確認できます
@@ -4695,6 +5000,7 @@ function renderWordList(){
         <div class="conv-list-jp">${item.jp.split(/[\/、]/).map(s=>s.trim()).filter(s=>s).map(s=>'･'+s).join('<br>')}</div>
       </div>`;
     });
+    if(!isPaid()){ const rest=CONV.filter(i=>!canScene(i.scene)).length; html+=lockMoreHtml(`観光・ホテル・交通・緊急の会話${rest}文は、有料版で使えます`); }
     lp.innerHTML=html;
     updateStickyTab();
     requestAnimationFrame(()=>{
@@ -4730,6 +5036,7 @@ function renderWordList(){
     const wml0=document.getElementById('wlModeLearned'); if(wml0) wml0.onclick=()=>{st.wordlistMode='learned';window.scrollTo(0,0);render();};
     const wmf0=document.getElementById('wlModeFav'); if(wmf0) wmf0.onclick=()=>{st.wordlistMode='favorites';window.scrollTo(0,0);render();};
     lp.querySelectorAll('[data-sc]').forEach(c=>c.addEventListener('click',()=>{
+      if(!canScene(c.dataset.sc)){ openPaywall(`「${c.dataset.sc}」の会話は有料版で使えます`); return; }
       const row=c.closest('div'); const saved=row?row.scrollLeft:0;
       st.wordlistScene=c.dataset.sc;
       window.scrollTo(0,0);
@@ -4776,6 +5083,7 @@ function renderWordList(){
     }
     const beg2=st.level==='beginner';
     let baseFiltered=beg2?items2.filter(i=>i.level==='5'):items2;
+    if(!isPaid()) baseFiltered=baseFiltered.filter(canWord);
     let filtered=baseFiltered;
     const q=st.wordlistSearch||'';
     if(q.trim()) filtered=filtered.filter(i=>matchesSearch(i,q));
@@ -4819,13 +5127,17 @@ function renderWordList(){
         <button class="list-fav-btn ${fav?'on':''}" data-fav-id="${item.id}" data-fav-cat="${item._pos}">${fav?'★':'☆'}</button>
       </div>`;
     });
+    if(!isPaid()){
+      if(q.trim()){ const more=items2.filter(i=>!canWord(i)&&matchesSearch(i,q)).length; if(more) ih+=lockMoreHtml(`有料版なら、ほかに${more}件見つかります`); }
+      else { const rest=items2.filter(i=>!canWord(i)).length; if(rest) ih+=lockMoreHtml(`${pos==='all'?'':(getPosLabels()[pos]||'')+'の'}残り${rest.toLocaleString()}語は、有料版で使えます`); }
+    }
     wrap.innerHTML=ih;
     wrap.querySelectorAll('.list-item').forEach(el=>{
       el.addEventListener('click',()=>{
         const id=el.dataset.id;
         const pos2=el.dataset.pos;
         const beg3=st.level==='beginner';
-        const arr=(beg3?(DATA[pos2]||[]).filter(i=>i.level==='5'):(DATA[pos2]||[]));
+        const arr=vocabArr(pos2);
         const idx2=arr.findIndex(i=>i.id===id);
         if(idx2<0) return;
         st.fromList=true;
@@ -4900,18 +5212,18 @@ function renderSettings(){
     return;
   }
   sr.style.display='flex';
-  const noCtrl=['numbers','quiz'].includes(st.mode);
+  const noCtrl=['numbers','quiz'].includes(st.mode)||!canMode(st.mode);
   if(noCtrl){ sr.style.display='none'; sr.innerHTML=''; return; }
   let h='';
   if(st.mode!=='grammar') h+=`<button class="pill" id="dirPill" data-dir="${st.dir}">${st.dir==='th-jp'?'TH→JP':'JP→TH'}</button>`;
-  if(st.mode==='vocab') h+=`<button class="pill pill-level" id="lvPill" data-level="${st.level}">${st.level==='beginner'?'初心者':'中級者+'}</button>`;
+  if(st.mode==='vocab') h+=isPaid()?`<button class="pill pill-level" id="lvPill" data-level="${st.level}">${st.level==='beginner'?'初心者':'中級者+'}</button>`:`<button class="pill pill-level" id="lvPill" data-level="beginner">基本の${FREE_WORDS.size}語</button>`;
   if(st.mode!=='grammar') h+=`<button class="pill pill-gender" id="gdPill" data-gender="${st.gender}">${st.gender==='male'?'♂ 男性語尾':'♀ 女性語尾'}</button>`;
   h+=`<button class="pill ${st.showRo?'on':''}" id="roPill">${st.showRo?'📖 発音表記あり':'📖 発音表記なし'}</button>`;
   h+=`<button class="pill ${st.filterUn?'on':''}" id="unPill">未学習だけ</button>`;
   if(st.mode!=='grammar') h+=`<button class="pill ${st.shuffle?'on':''}" id="shfPill">🔀 シャッフル</button>`;
   sr.innerHTML=h;
   const dp=document.getElementById('dirPill'); if(dp) dp.onclick=()=>{st.dir=st.dir==='th-jp'?'jp-th':'th-jp';st.flipped=false;render();};
-  const lp=document.getElementById('lvPill'); if(lp) lp.onclick=()=>{st.level=st.level==='beginner'?'intermediate':'beginner';sto_set('s:level',st.level);render();};
+  const lp=document.getElementById('lvPill'); if(lp) lp.onclick=()=>{ if(!isPaid()){ openPaywall('初心者の残りの単語と中級者+の単語は、有料版で使えます'); return; } st.level=st.level==='beginner'?'intermediate':'beginner';sto_set('s:level',st.level);render();};
   const gp=document.getElementById('gdPill'); if(gp) gp.onclick=()=>{st.gender=st.gender==='male'?'female':'male';sto_set('s:gender',st.gender);render();};
   const rp=document.getElementById('roPill'); if(rp) rp.onclick=()=>{st.showRo=!st.showRo;sto_set('s:showRo',st.showRo);render();};
   const up=document.getElementById('unPill'); if(up) up.onclick=()=>{st.filterUn=!st.filterUn;sto_set('s:filterUn',st.filterUn);st.idx=0;st.flipped=false;render();};
@@ -4928,7 +5240,7 @@ function quizPool(pos){
   const beg=(st.level==='beginner');
   const keys=(pos==='all')?Object.keys(POS_LABELS):[pos];
   const out=[];
-  keys.forEach(k=>(DATA[k]||[]).forEach(w=>{ if(w && w.th && w.jp && (!beg||w.level==='5')) out.push({id:w.id,th:w.th,ro:w.ro||'',jp:w.jp,pos:k}); }));
+  keys.forEach(k=>(DATA[k]||[]).forEach(w=>{ if(w && w.th && w.jp && (!beg||w.level==='5') && canWord(w)) out.push({id:w.id,th:w.th,ro:w.ro||'',jp:w.jp,pos:k}); }));
   return out;
 }
 // 訳語を「、」などで区切った語のどれかが正解と重なる単語は、まぎらわしいので選択肢から外す
@@ -5001,7 +5313,12 @@ function quizDraw(top){
   sp.innerHTML=renderQuiz();
   if(top) window.scrollTo(0,0);
 }
+// 無料版では使えないテストの設定
+function quizLocked(k,v){ return !isPaid() && ((k==='type'&&v==='listen')||(k==='pos'&&(v==='numbers'||v==='weak'))||(k==='level'&&v==='intermediate')); }
+const QUIZ_LOCK_MSG={listen:'「聞いて選ぶ」テストは有料版で使えます',numbers:'数字のテストは有料版で使えます',weak:'苦手な単語だけのテストは有料版で使えます',intermediate:'中級者+の単語のテストは有料版で使えます'};
+function quizFixFree(){ if(isPaid()) return; if(quiz.type==='listen') quiz.type='th-jp'; if(quiz.pos==='numbers'||quiz.pos==='weak') quiz.pos='all'; }
 function quizSet(k,v){
+  if(quizLocked(k,v)){ openPaywall(QUIZ_LOCK_MSG[v]); return; }
   if(k==='type') quiz.type=v;
   else if(k==='pos') quiz.pos=v;
   else if(k==='numRange') quiz.numRange=v;
@@ -5011,6 +5328,7 @@ function quizSet(k,v){
 }
 function quizSpeakCur(){ const q=quiz.qs[quiz.i]; if(q) speak(q.word.th); }
 function quizStart(){
+  quizFixFree();
   if(quiz.pos==='numbers'){
     const seen=new Set(), ws=[]; let guard=0;
     while(ws.length<QUIZ_N && guard++<500){ const n=quizRandNumber(quiz.numRange); if(seen.has(n)) continue; seen.add(n); ws.push(quizNumWord(n)); }
@@ -5112,15 +5430,16 @@ function renderQuiz(){
       ${wl}
       ${wrong.length?`<button class="qz-main" onclick="quizRetryWrong()">間違えた${wrong.length}問をもう一度</button>`:''}
       ${(quiz.pos==='weak' && !Object.keys(st.weak).length)?'<div class="qz-msg">🎉 苦手な単語はすべて克服しました。</div>':`<button class="${wrong.length?'qz-ghost':'qz-main'}" onclick="quizStart()">${quiz.pos==='weak'?'苦手をもう一度テストする':'同じ設定で次の'+QUIZ_N+'問'}</button>`}
-      ${Object.keys(st.weak).length?`<button class="qz-ghost" onclick="quizGoWeakList()">😣 苦手な単語を見る(${Object.keys(st.weak).length}語)</button>`:''}
+      ${Object.keys(st.weak).length?`<button class="qz-ghost" onclick="quizGoWeakList()">😣 苦手な単語を見る(${Object.keys(st.weak).length}語)${isPaid()?'':LK}</button>`:''}
       <button class="qz-ghost" onclick="quizToSetup()">設定に戻る</button>
     </div>`;
   }
   // 設定画面
+  quizFixFree();
   const isNum=(quiz.pos==='numbers'), isWeak=(quiz.pos==='weak');
   const weakN=Object.keys(st.weak).length;
   const n=isNum?99:isWeak?(weakN?4:0):quizPool(quiz.pos).length;
-  const chip=(k,v,label,on)=>`<button class="qz-chip ${on?'on':''}" onclick="quizSet('${k}','${v}')">${label}</button>`;
+  const chip=(k,v,label,on)=>{ const lk=quizLocked(k,v); return `<button class="qz-chip ${(on&&!lk)?'on':''}${lk?' locked':''}" onclick="quizSet('${k}','${v}')">${label}${lk?LK:''}</button>`; };
   return `<div class="qz">
     <div class="qz-h">📝 4択テスト</div>
     <div class="qz-sub">単語や数字を${QUIZ_N}問ずつ、4つの選択肢から選ぶテストです。</div>
@@ -5132,7 +5451,7 @@ function renderQuiz(){
     <div class="qz-chips">${Object.entries(QUIZ_NUM_RANGES).map(([k,v])=>chip('numRange',k,v,quiz.numRange===k)).join('')}</div>`
     :isWeak?`<div class="qz-sub" style="margin:12px 0 0;">テストで間違えた単語から出題します。2回続けて正解すると、苦手から外れます。</div>`
     :`<div class="qz-lbl">レベル</div>
-    <div class="qz-chips">${chip('level','beginner','初心者',st.level==='beginner')}${chip('level','intermediate','中級者+',st.level!=='beginner')}</div>`}
+    <div class="qz-chips">${chip('level','beginner',isPaid()?'初心者':'基本の'+FREE_WORDS.size+'語',!isPaid()||st.level==='beginner')}${chip('level','intermediate','中級者+',st.level!=='beginner')}</div>`}
     <div class="qz-lbl">読み(ローマ字)の表示</div>
     <div class="qz-chips">${chip('ro','1','あり',!!st.showRo)}${chip('ro','0','なし',!st.showRo)}</div>
     <button class="qz-main" onclick="quizStart()" ${n<4?'disabled':''}>${QUIZ_N}問スタート</button>
@@ -5259,13 +5578,22 @@ function render(){
   renderSub();
   renderSettings();
   updateHelpBtn();
+  updatePlanUI();
+  if(st.mode==='conversation' && !canScene(st.scene)) st.scene='ALL';
 
-  const isStatic=['numbers','quiz'].includes(st.mode);
+  const lockedMode=!canMode(st.mode);
+  const isStatic=['numbers','quiz'].includes(st.mode)||lockedMode;
   const isWordlist=(st.mode==='wordlist');
   document.getElementById('cardStage').style.display=(isStatic||isWordlist)?'none':'flex';
   document.getElementById('resetBtn').style.display=(isStatic||isWordlist)?'none':'inline';
   const progLine=document.querySelector('.progress-line');
   if(progLine) progLine.style.display=(isStatic||isWordlist)?'none':'block';
+  const lockNote=document.getElementById('lockNote');
+  if(lockNote){
+    const showLn=!isPaid() && (st.mode==='vocab'||st.mode==='conversation');
+    lockNote.style.display=showLn?'inline':'none';
+    if(showLn) lockNote.textContent=st.mode==='vocab'?`🔒 全${allWordCount().toLocaleString()}語は有料版`:`🔒 全${CONV.length}文は有料版`;
+  }
   const modeTipWrap=document.getElementById('modeTipWrap');
   if(modeTipWrap) modeTipWrap.innerHTML='';
   const subTipWrap=document.getElementById('subTipWrap');
@@ -5283,7 +5611,7 @@ function render(){
   if(isStatic){
     sp.style.display='block'; lp.style.display='none';
     if(bb) bb.style.display='none';
-    sp.innerHTML=(st.mode==='quiz')?renderQuiz():renderNumbers();
+    sp.innerHTML=lockedMode?lockPageHtml(st.mode):(st.mode==='quiz')?renderQuiz():renderNumbers();
     return;
   }
   if(isWordlist){
@@ -5882,7 +6210,7 @@ window.addEventListener('scroll',function(){
 });
 
 if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged=()=>{};
-(async()=>{ await loadAll(); render(); await checkAppUpdate(); })();
+(async()=>{ await loadAll(); render(); entCheck(false); await checkAppUpdate(); })();
 </script>
 
 <script>
