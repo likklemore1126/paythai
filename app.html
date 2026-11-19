@@ -1724,7 +1724,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-19a';
+const APP_VERSION = '2026-11-19b';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4291,7 +4291,7 @@ function openPaywall(reason){
     ${pwStateNote()}
     <div class="pw-lbl">有料版でできること</div>${pwFeatures()}
     <div class="pw-lbl">料金</div>${pwPlans()}
-    <button class="pw-btn" onclick="payOpenLP()">プランを選んで購入する</button>
+    <button class="pw-btn" onclick="payOpenLP()">購入ページへ進む</button>
     <button class="pw-ghost" onclick="openCodeSheet()">🔑 購入コードをお持ちの方</button>
     <button class="pw-close" onclick="sheetClose()">閉じる</button>`);
   if(typeof gtag==='function') gtag('event','paywall_view',{reason:reason||'plan'});
@@ -6210,7 +6210,12 @@ window.addEventListener('scroll',function(){
 });
 
 if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged=()=>{};
-(async()=>{ await loadAll(); render(); entCheck(false); await checkAppUpdate(); })();
+(async()=>{
+  await loadAll();
+  // 14日を過ぎていても、ネットにつながっていれば先に確認してから表示する(一瞬だけ無料版に見えるのを防ぐ。最大3秒)
+  if(paywallOn() && entState()==='stale' && navigator.onLine!==false) await Promise.race([entCheck(true), new Promise(r=>setTimeout(r,3000))]);
+  render(); entCheck(false); await checkAppUpdate();
+})();
 </script>
 
 <script>
