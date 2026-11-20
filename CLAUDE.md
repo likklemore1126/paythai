@@ -5,7 +5,7 @@
 - 開発者(TAKA): 非技術者。REIWA SOBA（バンコクのそば店）経営者。Claudeが実装全般を担当。
 - リポジトリ: `likklemore1126/paythai`
 - 公開URL: https://poca.takatobi.jp/app.html
-- 現バージョン: `2026-11-20d`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
+- 現バージョン: `2026-11-20e`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
 
 ## ファイル構成
 - `app.html` — アプリ本体。単語・会話・文法データもすべてJS配列としてこの中に埋め込み（約780KB超の単一ファイル）
@@ -77,6 +77,7 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
 - **アプリ側の出し分けは実装済み（2026-11-19）だが、まだ止めてある**: `PAYWALL_LIVE=false` の間は全機能が誰でも使える。確認用に `app.html?paywall=1` で開いたときだけ有効（`?paywall=0` で解除、sessionStorage `poca:pw`）
   - 中心の関数: `isPaid()` / `canWord(w)` / `canScene(sc)` / `canMode(m)` / `vocabArr(pos)`（リストからカードを開くときも同じ並びを使う）。無料の単語IDは `FREE_WORDS`（free_words.json と同じ300語）、無料シーンは `FREE_SCENES`
   - 🔒の付く所: 文法・数字タブ（説明ページ `lockPageHtml`）、会話シーン4つ、単語のレベル切替、テストの「聞いて選ぶ」「数字」「苦手」「中級者+」、リストの文法・苦手。学習済み・お気に入りは無料範囲だけ表示し、隠れた件数を案内
+  - 有料版の案内で料金カードをタップしてプランを選ぶ（最初は年間）→「〇〇で購入する」で `lp.html?buy=プラン#price` を開き、LPがそのまま Stripe の購入画面へ進む（2026-11-20e）
   - 案内画面: `openPaywall(理由)`、購入コード入力 `openCodeSheet()`、契約状態 `openPlanSheet()`。シートは閉じたら画面から取り除く（WebKitの残像対策）
   - 購入状態は localStorage `s:ent`（{code,plan,active,checkedAt}）、端末IDは `s:dev`
   - `PAY_API` が空の間は確認用テストコードだけ使える: TEST-MONTHLY / TEST-YEARLY / TEST-LIFETIME / TEST-CANCELED（次の確認で解約扱い）/ TEST-LIMIT（3台超え）
