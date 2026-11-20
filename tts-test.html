@@ -15,27 +15,25 @@ span.t{font-size:20px}
 small{display:block;color:#9a948a;font-size:11px}
 #vinfo{font-size:12px;color:#9a948a;margin-top:6px}
 </style></head><body>
-<h1>🔊 数字「7」の音声テスト(3回目)</h1>
+<h1>🔊 数字「7」の音声テスト(4回目)</h1>
 <p>① iPhoneに入っているタイ語の声を選び、② ボタンを押して聞き比べてください。一番自然に聞こえる「声」と「記号」を教えてください。</p>
 <h2>① タイ語の声</h2>
 <select id="voice"></select>
 <div id="vinfo"></div>
-<h2>② 7の書き方を変えて読ませる</h2>
+<h2>② 声の高さを変えて読ませる</h2>
 <div class="g" id="list"></div>
-<h2>③ 7が入った数字(A・Bの書き方で)</h2>
+<h2>③ 7が入った数字(声の高さ違い)</h2>
 <div class="g" id="list2"></div>
 <script>
 const T=[
- ['1','เจ็ด','今と同じ'],
- ['2','เจ็ต','前回の②'],
- ['4','เจ๊ด','前回の④'],
- ['A','เจด','少し伸ばす'],
- ['B','เจต','少し伸ばす(最後が ต)'],
- ['C','เจ๊ต','④の最後を ต に'],
- ['D','เจ่ด','少し伸ばす・低め'],
- ['E','เจ้ด','少し伸ばす・下がる'],
+ ['E','เจ้ด','今のアプリ(声の高さ 1.0)',0.85,1.0],
+ ['E1','เจ้ด','声の高さ 0.9',0.85,0.9],
+ ['E2','เจ้ด','声の高さ 0.8',0.85,0.8],
+ ['E3','เจ้ด','声の高さ 0.7',0.85,0.7],
+ ['D','เจ่ด','前回のD(1.0)',0.85,1.0],
+ ['D1','เจ่ด','Dを声の高さ 1.1',0.85,1.1],
 ];
-const T2=[['17 今','สิบเจ็ด'],['17 A','สิบเจด'],['17 B','สิบเจต'],['70 今','เจ็ดสิบ'],['70 A','เจดสิบ'],['70 B','เจตสิบ'],['77 A','เจดสิบเจด'],['7,000 A','เจดพัน']];
+const T2=[['17 今','สิบเจ้ด',1.0],['17 0.9','สิบเจ้ด',0.9],['17 0.8','สิบเจ้ด',0.8],['70 今','เจ้ดสิบ',1.0],['70 0.9','เจ้ดสิบ',0.9],['70 0.8','เจ้ดสิบ',0.8]];
 let voices=[];
 function load(){
   voices=(speechSynthesis.getVoices()||[]).filter(v=>v.lang&&v.lang.toLowerCase().startsWith('th'));
@@ -44,8 +42,8 @@ function load(){
   document.getElementById('vinfo').textContent=`タイ語の声:${voices.length}種類 / `+voices.map(v=>v.voiceURI).join(' , ');
 }
 speechSynthesis.onvoiceschanged=load; load(); setTimeout(load,800);
-function speak(text,rate){const syn=speechSynthesis;syn.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=rate||0.85;const v=voices[+document.getElementById('voice').value];if(v)u.voice=v;syn.speak(u);}
-document.getElementById('list').innerHTML=T.map((t,i)=>`<button onclick="speak(T[${i}][1],T[${i}][3])"><b>${t[0]}</b><div><span class="t">${t[1]}</span><small>${t[2]}</small></div></button>`).join('');
-document.getElementById('list2').innerHTML=T2.map((t,i)=>`<button onclick="speak(T2[${i}][1])"><b>${t[0]}</b><span class="t">${t[1]}</span></button>`).join('');
+function speak(text,rate,pitch){const syn=speechSynthesis;syn.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=rate||0.85;u.pitch=pitch||1;const v=voices[+document.getElementById('voice').value];if(v)u.voice=v;syn.speak(u);}
+document.getElementById('list').innerHTML=T.map((t,i)=>`<button onclick="speak(T[${i}][1],T[${i}][3],T[${i}][4])"><b>${t[0]}</b><div><span class="t">${t[1]}</span><small>${t[2]}</small></div></button>`).join('');
+document.getElementById('list2').innerHTML=T2.map((t,i)=>`<button onclick="speak(T2[${i}][1],0.85,T2[${i}][2])"><b>${t[0]}</b><span class="t">${t[1]}</span></button>`).join('');
 </script>
 </body></html>
