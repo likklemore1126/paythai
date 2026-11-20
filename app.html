@@ -1724,7 +1724,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-20c';
+const APP_VERSION = '2026-11-20d';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4211,8 +4211,13 @@ async function payMock(path, body){
   if(path==='/deactivate') return {ok:true};
   if(path==='/portal') return {ok:false,error:'test'};
   if(path==='/status' && c==='TEST-CANCELED') return {ok:true,plan,active:false};
-  return {ok:true,plan,active:true};
+  if(plan==='lifetime') return {ok:true,plan,active:true};
+  const end=new Date(Date.now()+(plan==='yearly'?365:30)*864e5).toISOString();
+  return {ok:true,plan,active:true,periodEnd:end,cancelAt:c==='TEST-CANCELED'?end:null};
 }
+// 期限の情報(月額・年間だけ)。periodEnd=次の更新日、cancelAt=解約の手続き済みのときの利用期限
+function entTerm(r){ if(!ent||!r) return; if('periodEnd' in r) ent.periodEnd=r.periodEnd||null; if('cancelAt' in r) ent.cancelAt=r.cancelAt||null; }
+function fmtYmd(iso){ const d=new Date(iso); return isNaN(d)?'':`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`; }
 function normCode(c){ return String(c||'').toUpperCase().replace(/[\s　]/g,'').replace(/[‐－―ー−]/g,'-'); }
 const PAY_ERR = {
   invalid:'このコードは見つかりませんでした。\n購入時のメールに書かれたコードを、もう一度確かめてください。',
@@ -4229,7 +4234,7 @@ async function entActivate(code){
   try{ r=await payCall('/activate',{code,device:deviceId()}); }catch(e){ return {ok:false,msg:PAY_ERR.network}; }
   if(!r || !r.ok){ const e=r&&r.error; return {ok:false,msg:(e==='invalid'||e==='limit'||e==='busy')?PAY_ERR[e]:(e?PAY_ERR.server:PAY_ERR.invalid)}; }
   if(!r.active) return {ok:false,msg:PAY_ERR.inactive};
-  ent={code,plan:r.plan,active:true,checkedAt:Date.now(),since:Date.now()}; entSave();
+  ent={code,plan:r.plan,active:true,checkedAt:Date.now(),since:Date.now()}; entTerm(r); entSave();
   if(typeof gtag==='function') gtag('event','paid_activate',{plan:r.plan});
   return {ok:true};
 }
@@ -4244,7 +4249,7 @@ async function entCheck(force){
   try{
     const r=await payCall('/status',{code:ent.code,device:deviceId()});
     if(r && r.ok){
-      if(r.active){ ent.active=true; ent.plan=r.plan||ent.plan; ent.checkedAt=Date.now(); }
+      if(r.active){ ent.active=true; ent.plan=r.plan||ent.plan; ent.checkedAt=Date.now(); entTerm(r); }
       else ent.active=false;
       entSave();
     } else if(r && (r.error==='invalid' || r.error==='device')){ ent.active=false; entSave(); }
@@ -4337,8 +4342,14 @@ function openPlanSheet(){
   const life=(ent.plan==='lifetime');
   const d=new Date(ent.checkedAt||Date.now());
   const masked=ent.code.length>6?ent.code.slice(0,5)+'…'+ent.code.slice(-4):ent.code;
+  const cEnd=ent.cancelAt&&fmtYmd(ent.cancelAt), pEnd=ent.periodEnd&&fmtYmd(ent.periodEnd);
+  const term=life?`<div class="pw-kv"><span>期限</span><b>なし(ずっと使えます)</b></div>`
+    :cEnd?`<div class="pw-kv"><span>利用期限</span><b>${cEnd}まで</b></div>
+    <div class="pw-note">解約の手続きが済んでいます。${cEnd}までは有料版をそのまま使えます。その後は自動で無料版に戻ります(学習記録は残ります)。</div>`
+    :pEnd?`<div class="pw-kv"><span>次の更新日</span><b>${pEnd}</b></div>`:'';
   sheetOpen(`<div class="pw-h">✓ 有料版をご利用中です</div>
     <div class="pw-kv"><span>プラン</span><b>${PLAN_LABEL[ent.plan]||ent.plan}</b></div>
+    ${term}
     <div class="pw-kv"><span>購入コード</span><b>${masked}</b></div>
     ${life?'':`<div class="pw-kv"><span>最後の確認</span><b>${d.getMonth()+1}月${d.getDate()}日</b></div>
     <div class="pw-sub">月額・年間プランは、ネットにつながっているときに1日1回、ご契約が続いているかを自動で確認します。電波のない場所でも、最後の確認から${ENT_OFFLINE_DAYS}日間はそのまま使えます。</div>
@@ -4347,11 +4358,13 @@ function openPlanSheet(){
     <div class="pw-sub">機種変更などで使わなくなった端末の登録を外すと、別の端末で使える台数が1台分空きます。</div>
     ${payTestMode()?`<div class="pw-test">【確認用】<br><button onclick="payTestStale()">最後の確認を15日前にする</button><button onclick="entCheckUI()">今すぐ契約を確認する</button></div>`:''}
     <button class="pw-close" onclick="sheetClose()">閉じる</button>`);
+  // 期限の情報をまだ受け取っていない(この機能より前にコードを入れた)ときは、その場で確認して表示し直す
+  if(!life && ent.periodEnd===undefined && !payTestMode()) entCheck(true).then(()=>{ if(document.getElementById('pwSheet') && ent && ent.periodEnd!==undefined) openPlanSheet(); });
 }
 async function payOpenPortal(){
   try{
     const r=await payCall('/portal',{code:ent.code,device:deviceId()});
-    if(r && r.ok && r.url){ window.open(r.url,'_blank'); return; }
+    if(r && r.ok && r.url){ entForceCheck=true; window.open(r.url,'_blank'); return; }
     await appAlert(r&&r.error==='test'?'確認用のテストコードのため、手続きの画面はありません。':r&&r.error==='no_subscription'?'このコードは買い切りのため、お支払いや解約の手続きはありません。':'手続きの画面を開けませんでした。時間をおいてもう一度お試しください。');
   }catch(e){ await appAlert(PAY_ERR.network); }
 }
@@ -4383,7 +4396,9 @@ function lockPageHtml(kind){
     <button class="pw-btn" onclick="openPaywall()">有料版について見る</button>
     <button class="pw-ghost" onclick="openCodeSheet()">🔑 購入コードをお持ちの方</button></div>`;
 }
-document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') entCheck(false); });
+// お支払い・解約の画面から戻ってきたときは、1日1回の制限を待たずにすぐ確認する(解約の手続きをすぐ反映するため)
+let entForceCheck=false;
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible'){ const f=entForceCheck; entForceCheck=false; entCheck(f); } });
 window.addEventListener('online',()=>entCheck(false));
 
 function list(){

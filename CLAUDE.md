@@ -5,7 +5,7 @@
 - 開発者(TAKA): 非技術者。REIWA SOBA（バンコクのそば店）経営者。Claudeが実装全般を担当。
 - リポジトリ: `likklemore1126/paythai`
 - 公開URL: https://poca.takatobi.jp/app.html
-- 現バージョン: `2026-11-20c`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
+- 現バージョン: `2026-11-20d`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
 
 ## ファイル構成
 - `app.html` — アプリ本体。単語・会話・文法データもすべてJS配列としてこの中に埋め込み（約780KB超の単一ファイル）
@@ -80,7 +80,7 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
   - 案内画面: `openPaywall(理由)`、購入コード入力 `openCodeSheet()`、契約状態 `openPlanSheet()`。シートは閉じたら画面から取り除く（WebKitの残像対策）
   - 購入状態は localStorage `s:ent`（{code,plan,active,checkedAt}）、端末IDは `s:dev`
   - `PAY_API` が空の間は確認用テストコードだけ使える: TEST-MONTHLY / TEST-YEARLY / TEST-LIFETIME / TEST-CANCELED（次の確認で解約扱い）/ TEST-LIMIT（3台超え）
-  - **決済Workerに必要な窓口**（すべてPOST・JSON、`{code, device}` を送る）: `/activate` → `{ok,plan:'monthly'|'yearly'|'lifetime',active}` または `{ok:false,error:'invalid'|'limit'}`／`/status` → `{ok,plan,active}`／`/deactivate` → `{ok}`／`/portal` → `{ok,url}`（Stripeのお客様用管理画面）
+  - **決済Workerに必要な窓口**（すべてPOST・JSON、`{code, device}` を送る）: `/activate` → `{ok,plan:'monthly'|'yearly'|'lifetime',active}` または `{ok:false,error:'invalid'|'limit'}`／`/status` → `{ok,plan,active}`（2026-11-20d〜 月額・年間は `periodEnd`(次の更新日)・`cancelAt`(解約の手続き済みのときの利用期限、無ければ null)も返す。アプリは「✓ 有料版」の画面に「次の更新日」か「利用期限 〜まで」を表示。お支払い・解約の画面から戻ったときはすぐ `/status` で確認する）／`/deactivate` → `{ok}`／`/portal` → `{ok,url}`（Stripeのお客様用管理画面）
   - `PAY_API` は設定済み（2026-11-20c、`https://thai-poca-payment.takatobi.workers.dev/api`）。そのため確認用のテストコード(TEST-…)はもう使えない。確認は Stripe サンドボックスで実際に購入して出たコードで行う
   - LP の購入ボタン: `lp.html` の `SALE_LIVE=false` の間は「準備中」のまま。`lp.html?paytest=1` で開いたときだけ押せる（`?paytest=0` で解除）。押すと `/api/checkout {plan}` → Stripe の購入画面へ
   - 購入完了画面 `thankyou.html`: `/api/session-status?session_id=` を2秒ごと最大60秒たずねてコードを表示。`SALE_LIVE=false` の間は「テスト環境」の表示を出し、アプリへのボタンは `app.html?paywall=1`
