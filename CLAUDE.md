@@ -5,7 +5,7 @@
 - 開発者(TAKA): 非技術者。REIWA SOBA（バンコクのそば店）経営者。Claudeが実装全般を担当。
 - リポジトリ: `likklemore1126/paythai`
 - 公開URL: https://poca.takatobi.jp/app.html
-- 現バージョン: `2026-11-20f`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
+- 現バージョン: `2026-11-20g`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
 
 ## ファイル構成
 - `app.html` — アプリ本体。単語・会話・文法データもすべてJS配列としてこの中に埋め込み（約780KB超の単一ファイル）
@@ -77,7 +77,7 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
 - **アプリ側の出し分けは実装済み（2026-11-19）だが、まだ止めてある**: `PAYWALL_LIVE=false` の間は全機能が誰でも使える。確認用に `app.html?paywall=1` で開いたときだけ有効（`?paywall=0` で解除、sessionStorage `poca:pw`）
   - 中心の関数: `isPaid()` / `canWord(w)` / `canScene(sc)` / `canMode(m)` / `vocabArr(pos)`（リストからカードを開くときも同じ並びを使う）。無料の単語IDは `FREE_WORDS`（free_words.json と同じ300語）、無料シーンは `FREE_SCENES`
   - 🔒の付く所: 文法・数字タブ（説明ページ `lockPageHtml`）、会話シーン4つ、単語のレベル切替、テストの「聞いて選ぶ」「数字」「苦手」「中級者+」、リストの文法・苦手。学習済み・お気に入りは無料範囲だけ表示し、隠れた件数を案内
-  - 有料版の案内で料金カードをタップしてプランを選ぶ（最初は年間）→「決済画面へ進む(〇〇)」で `lp.html?buy=プラン#price` を開き、LPがそのまま Stripe の購入画面へ進む（2026-11-20e）
+  - 有料版の案内で料金カードをタップしてプランを選ぶ（最初は年間）→「決済画面へ進む(〇〇)」で中継ページ `buy.html?plan=プラン` を開き、すぐ Stripe の決済画面へ移動（2026-11-20g。LPを経由すると一瞬LPが見えるため専用の中継ページにした）
   - 案内画面: `openPaywall(理由)`、購入コード入力 `openCodeSheet()`、契約状態 `openPlanSheet()`。シートは閉じたら画面から取り除く（WebKitの残像対策）
   - 購入状態は localStorage `s:ent`（{code,plan,active,checkedAt}）、端末IDは `s:dev`
   - `PAY_API` が空の間は確認用テストコードだけ使える: TEST-MONTHLY / TEST-YEARLY / TEST-LIFETIME / TEST-CANCELED（次の確認で解約扱い）/ TEST-LIMIT（3台超え）
@@ -85,7 +85,7 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
   - `PAY_API` は設定済み（2026-11-20c、`https://thai-poca-payment.takatobi.workers.dev/api`）。そのため確認用のテストコード(TEST-…)はもう使えない。確認は Stripe サンドボックスで実際に購入して出たコードで行う
   - LP の購入ボタン: `lp.html` の `SALE_LIVE=false` の間は「準備中」のまま。`lp.html?paytest=1` で開いたときだけ押せる（`?paytest=0` で解除）。押すと `/api/checkout {plan}` → Stripe の購入画面へ
   - 購入完了画面 `thankyou.html`: `/api/session-status?session_id=` を2秒ごと最大60秒たずねてコードを表示。`SALE_LIVE=false` の間は「テスト環境」の表示を出し、アプリへのボタンは `app.html?paywall=1`
-  - **販売開始時にやること**: ① Stripe を本番に切り替え（Worker の価格ID・シークレット・Webhook を本番の値に）② `app.html` の `PAYWALL_LIVE=true` ③ `lp.html` と `thankyou.html` の `SALE_LIVE=true` ④ `tokushoho.html` の内容（価格・条件）が実際と合っているか最終確認
+  - **販売開始時にやること**: ① Stripe を本番に切り替え（Worker の価格ID・シークレット・Webhook を本番の値に）② `app.html` の `PAYWALL_LIVE=true` ③ `lp.html`・`thankyou.html`・`buy.html` の `SALE_LIVE=true` ④ `tokushoho.html` の内容（価格・条件）が実際と合っているか最終確認
 - **購入者の確認方法（2026-11-18決定）**: 指さしタイと同じ「購入コード方式」（Stripe決済→コードをメールで送付→アプリで1回入力）。メールログインはiPhoneのホーム画面アプリでメールのリンクがSafariに開いてしまうため不採用
   - 1つのコードで使えるのは**3台まで**
   - 月額・年間は解約チェックあり：起動時にネットにつながっていれば1日1回まで状態を確認。**オフラインでも最後の確認から14日間**は有料部分を使える。それを過ぎたら次に確認できるまで無料範囲に戻る（学習記録は消さない）

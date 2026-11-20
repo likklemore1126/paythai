@@ -1725,7 +1725,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-20f';
+const APP_VERSION = '2026-11-20g';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4321,8 +4321,8 @@ function openPaywall(reason){
     <button class="pw-close" onclick="sheetClose()">閉じる</button>`);
   if(typeof gtag==='function') gtag('event','paywall_view',{reason:reason||'plan'});
 }
-// 選んだプランで購入ページを開き、そのまま Stripe の購入画面へ進む(販売前は確認用の paytest=1 を付ける)
-function payOpenLP(plan){ const q=plan?('?buy='+plan+(PAYWALL_LIVE?'':'&paytest=1')):''; window.open('lp.html'+q+'#price','_blank'); }
+// 選んだプランで中継ページ buy.html を開き、そのまま Stripe の決済画面へ進む(販売前は確認用の paytest=1 を付ける)
+function payOpenLP(plan){ window.open('buy.html?plan='+(plan||'yearly')+(PAYWALL_LIVE?'':'&paytest=1'),'_blank'); }
 function openCodeSheet(){
   sheetOpen(`<div class="pw-h">🔑 購入コードを入力</div>
     <div class="pw-sub">購入後にメールで届いたコードを入力してください。1つのコードで3台まで使えます。</div>

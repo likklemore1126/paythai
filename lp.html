@@ -556,10 +556,6 @@ function initBuy(){
   const note=document.getElementById('payNote');
   if(note){ if(SALE_LIVE) note.style.display='none'; else { note.className='pay-test'; note.textContent='【確認用】テスト決済モードです。カード番号 4242 4242 4242 4242 などのテスト用カードで購入できます(本物のお金は動きません)。'; } }
   document.querySelectorAll('.price-cta[data-plan]').forEach(b=>{ b.disabled=false; b.classList.add('on'); b.textContent='このプランで購入'; b.onclick=()=>buy(b.dataset.plan,b); });
-  // アプリの案内でプランを選んで来たとき(lp.html?buy=yearly)は、そのまま購入画面へ進む
-  let want=null; try{ want=new URLSearchParams(location.search).get('buy'); }catch(e){}
-  const btn=want && document.querySelector('.price-cta[data-plan="'+want+'"]');
-  if(btn){ try{ history.replaceState(null,'',location.pathname+'#price'); }catch(e){} buy(want,btn); }
 }
 async function buy(plan,btn){
   const msg=document.getElementById('payMsg');
