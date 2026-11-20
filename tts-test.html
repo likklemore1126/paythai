@@ -8,46 +8,68 @@ h1{font-size:18px;margin:0 0 6px}
 h2{font-size:15px;margin:22px 0 8px;color:#d49a78}
 p{font-size:13px;color:#9a948a;line-height:1.7;margin:0 0 12px}
 select{width:100%;padding:12px;border-radius:12px;background:#262523;color:#fff;border:1px solid #3b3935;font-size:15px}
-.g{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-button{display:flex;align-items:center;gap:10px;padding:13px 12px;border-radius:14px;border:1px solid #3b3935;background:#262523;color:#fff;font-size:15px;text-align:left;font-family:inherit}
-b{display:inline-block;min-width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;background:#d49a78;color:#1d1c1b;font-size:13px;flex-shrink:0}
-span.t{font-size:20px}
+.row{display:grid;grid-template-columns:76px 1fr 1fr;gap:8px;align-items:stretch;margin-bottom:8px}
+.n{display:flex;flex-direction:column;justify-content:center;font-size:18px;font-weight:600}
+.n small{font-weight:400}
+button{padding:12px 10px;border-radius:14px;border:1px solid #3b3935;background:#262523;color:#fff;font-size:14px;font-family:inherit}
+button.b{border-color:#d49a78;color:#f0c9b2}
+button:active{opacity:.6}
 small{display:block;color:#9a948a;font-size:11px}
 #vinfo{font-size:12px;color:#9a948a;margin-top:6px}
+#st{font-size:12px;color:#9a948a;margin-top:8px;min-height:1em}
 </style></head><body>
-<h1>🔊 数字「7」の音声テスト(5回目)</h1>
-<p>① iPhoneに入っているタイ語の声を選び、② ボタンを押して聞き比べてください。一番自然に聞こえる「声」と「記号」を教えてください。</p>
+<h1>🔊 数字「7」の音声テスト(6回目)</h1>
+<p>左が<b>今のアプリ</b>(全部iPhoneの声)、右が<b>B</b>(7の部分だけ録音した音、ほかはiPhoneの声)です。<br>右の方が自然か、つなぎ目が気にならないかを聞いてください。<br>※録音はテスト用です(本番用は別に用意します)。</p>
 <h2>① タイ語の声</h2>
 <select id="voice"></select>
 <div id="vinfo"></div>
-<h2>② 声の高さを変えて読ませる</h2>
-<div class="g" id="list"></div>
-<h2>③ 7が入った数字(声の高さ違い・分割)</h2>
-<div class="g" id="list2"></div>
+<h2>② 聞き比べ</h2>
+<div id="list"></div>
+<div id="st"></div>
 <script>
-const T=[
- ['E','เจ้ด','今のアプリ(声の高さ 1.0)',0.85,1.0],
- ['E1','เจ้ด','声の高さ 0.9',0.85,0.9],
- ['E2','เจ้ด','声の高さ 0.8',0.85,0.8],
- ['E3','เจ้ด','声の高さ 0.7',0.85,0.7],
- ['D','เจ่ด','前回のD(1.0)',0.85,1.0],
- ['D1','เจ่ด','Dを声の高さ 1.1',0.85,1.1],
+const R='REC';
+// [表示, 今のアプリで読む文, Bの部品(REC=録音した7)]
+const N=[
+ ['7','เจ็ด',[R]],
+ ['17','สิบเจ็ด',['สิบ',R]],
+ ['27','ยี่สิบเจ็ด',['ยี่สิบ',R]],
+ ['70','เจ็ดสิบ',[R,'สิบ']],
+ ['77','เจ็ดสิบเจ็ด',[R,'สิบ',R]],
+ ['107','หนึ่งร้อยเจ็ด',['หนึ่งร้อย',R]],
+ ['700','เจ็ดร้อย',[R,'ร้อย']],
+ ['777','เจ็ดร้อยเจ็ดสิบเจ็ด',[R,'ร้อย',R,'สิบ',R]],
+ ['1,700','หนึ่งพันเจ็ดร้อย',['หนึ่งพัน',R,'ร้อย']],
+ ['7,000','เจ็ดพัน',[R,'พัน']],
+ ['27,500','สองหมื่นเจ็ดพันห้าร้อย',['สองหมื่น',R,'พันห้าร้อย']],
+ ['70,000','เจ็ดหมื่น',[R,'หมื่น']],
 ];
-const T2=[['17 今','สิบเจ้ด',1.0],['17 0.9','สิบเจ้ด',0.9],['17 0.8','สิบเจ้ด',0.8],['17 0.7','สิบเจ้ด',0.7],['17 分割',['สิบ','เจ้ด']],
- ['70 今','เจ้ดสิบ',1.0],['70 0.9','เจ้ดสิบ',0.9],['70 0.8','เจ้ดสิบ',0.8],['70 0.7','เจ้ดสิบ',0.7],['70 分割',['เจ้ด','สิบ']],
- ['77 0.8','เจ้ดสิบเจ้ด',0.8],['77 分割',['เจ้ด','สิบ','เจ้ด']]];
-// 分割: 7の部分だけ声の高さ0.7、ほかは1.0で、続けて読む
-function speakParts(parts){const syn=speechSynthesis;syn.cancel();parts.forEach(t=>{const u=new SpeechSynthesisUtterance(t);u.lang='th-TH';u.rate=0.85;u.pitch=(t==='เจ้ด')?0.7:1;const v=voices[+document.getElementById('voice').value];if(v)u.voice=v;syn.speak(u);});}
 let voices=[];
 function load(){
   voices=(speechSynthesis.getVoices()||[]).filter(v=>v.lang&&v.lang.toLowerCase().startsWith('th'));
   const sel=document.getElementById('voice');
   sel.innerHTML=voices.length?voices.map((v,i)=>`<option value="${i}">${v.name}${/enhanced|premium/i.test(v.voiceURI)?'(高音質)':/compact/i.test(v.voiceURI)?'(標準)':''}</option>`).join(''):'<option>タイ語の声が見つかりません</option>';
-  document.getElementById('vinfo').textContent=`タイ語の声:${voices.length}種類 / `+voices.map(v=>v.voiceURI).join(' , ');
+  document.getElementById('vinfo').textContent=`タイ語の声:${voices.length}種類`;
 }
 speechSynthesis.onvoiceschanged=load; load(); setTimeout(load,800);
-function speak(text,rate,pitch){const syn=speechSynthesis;syn.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=rate||0.85;u.pitch=pitch||1;const v=voices[+document.getElementById('voice').value];if(v)u.voice=v;syn.speak(u);}
-document.getElementById('list').innerHTML=T.map((t,i)=>`<button onclick="speak(T[${i}][1],T[${i}][3],T[${i}][4])"><b>${t[0]}</b><div><span class="t">${t[1]}</span><small>${t[2]}</small></div></button>`).join('');
-document.getElementById('list2').innerHTML=T2.map((t,i)=>`<button onclick="Array.isArray(T2[${i}][1])?speakParts(T2[${i}][1]):speak(T2[${i}][1],0.85,T2[${i}][2])"><b>${t[0]}</b><span class="t">${Array.isArray(t[1])?t[1].join('・'):t[1]}</span></button>`).join('');
+const st=m=>document.getElementById('st').textContent=m;
+
+// 今のアプリと同じ: เจ็ด→เจ้ด、7だけのときは声の高さ0.7
+function sayTTS(text,pitch){return new Promise(res=>{const u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=0.85;u.pitch=pitch||1;const v=voices[+document.getElementById('voice').value];if(v)u.voice=v;let done=false;const fin=()=>{if(!done){done=true;res();}};u.onend=fin;u.onerror=fin;setTimeout(fin,6000);speechSynthesis.speak(u);});}
+function playNow(i){speechSynthesis.cancel();runId++;const t=N[i][1];sayTTS(t.replace(/เจ็ด/g,'เจ้ด'),t==='เจ็ด'?0.7:1);}
+
+// 録音の再生(Web Audio。最初のタップで有効化)
+let ctx=null, buf=null, runId=0;
+async function ready(){
+  if(!ctx){const AC=window.AudioContext||window.webkitAudioContext;ctx=new AC();}
+  if(ctx.state!=='running') await ctx.resume();
+  if(!buf){st('録音を読み込み中…');const ab=await (await fetch('audio/num7_test.m4a',{cache:'no-store'})).arrayBuffer();buf=await new Promise((ok,ng)=>ctx.decodeAudioData(ab,ok,ng));st('');}
+}
+function playRec(){return new Promise(res=>{const s=ctx.createBufferSource();s.buffer=buf;s.connect(ctx.destination);s.onended=res;s.start();});}
+async function playB(i){
+  speechSynthesis.cancel();const my=++runId;
+  try{await ready();}catch(e){st('録音を読み込めませんでした: '+e);return;}
+  for(const p of N[i][2]){ if(my!==runId) return; if(p===R) await playRec(); else await sayTTS(p,1); }
+}
+document.getElementById('list').innerHTML=N.map((n,i)=>`<div class="row"><div class="n">${n[0]}<small>${n[1]}</small></div><button onclick="playNow(${i})">今のアプリ</button><button class="b" onclick="playB(${i})">B 7だけ録音</button></div>`).join('');
 </script>
 </body></html>
