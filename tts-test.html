@@ -15,33 +15,33 @@ span.t{font-size:20px}
 small{display:block;color:#9a948a;font-size:11px}
 #vinfo{font-size:12px;color:#9a948a;margin-top:6px}
 </style></head><body>
-<h1>🔊 数字「7」の音声テスト(2回目)</h1>
-<p>① iPhoneに入っているタイ語の声を選び、② 1〜8を押して聞き比べてください。正しく「チェット」に聞こえた「声の名前」と「番号」を教えてください。</p>
+<h1>🔊 数字「7」の音声テスト(3回目)</h1>
+<p>① iPhoneに入っているタイ語の声を選び、② ボタンを押して聞き比べてください。一番自然に聞こえる「声」と「記号」を教えてください。</p>
 <h2>① タイ語の声</h2>
 <select id="voice"></select>
 <div id="vinfo"></div>
 <h2>② 7の書き方を変えて読ませる</h2>
 <div class="g" id="list"></div>
-<h2>③ 7が入った数字(1つ目の番号で正しければ、こちらも確認)</h2>
+<h2>③ 7が入った数字(A・Bの書き方で)</h2>
 <div class="g" id="list2"></div>
 <script>
 const T=[
  ['1','เจ็ด','今と同じ'],
- ['2','เจ็ต','最後を ต に'],
- ['3','เจ็ท','最後を ท に'],
- ['4','เจ๊ด','声調記号を変える'],
- ['5','เจ็ด','速さ1.0',1.0],
- ['6','เจ็ด','ゆっくり0.6',0.6],
- ['7','เจ็ดๆ','ๆ を付ける'],
- ['8','เจ็ด ครับ','後ろに ครับ'],
+ ['2','เจ็ต','前回の②'],
+ ['4','เจ๊ด','前回の④'],
+ ['A','เจด','少し伸ばす'],
+ ['B','เจต','少し伸ばす(最後が ต)'],
+ ['C','เจ๊ต','④の最後を ต に'],
+ ['D','เจ่ด','少し伸ばす・低め'],
+ ['E','เจ้ด','少し伸ばす・下がる'],
 ];
-const T2=[['17','สิบเจ็ด'],['17(2)','สิบเจ็ต'],['70','เจ็ดสิบ'],['70(2)','เจ็ตสิบ']];
+const T2=[['17 今','สิบเจ็ด'],['17 A','สิบเจด'],['17 B','สิบเจต'],['70 今','เจ็ดสิบ'],['70 A','เจดสิบ'],['70 B','เจตสิบ'],['77 A','เจดสิบเจด'],['7,000 A','เจดพัน']];
 let voices=[];
 function load(){
   voices=(speechSynthesis.getVoices()||[]).filter(v=>v.lang&&v.lang.toLowerCase().startsWith('th'));
   const sel=document.getElementById('voice');
-  sel.innerHTML=voices.length?voices.map((v,i)=>`<option value="${i}">${v.name}(${v.lang}${v.localService?'':'・オンライン'})</option>`).join(''):'<option>タイ語の声が見つかりません</option>';
-  document.getElementById('vinfo').textContent=`タイ語の声:${voices.length}種類`;
+  sel.innerHTML=voices.length?voices.map((v,i)=>`<option value="${i}">${v.name}${/enhanced|premium/i.test(v.voiceURI)?'(高音質)':/compact/i.test(v.voiceURI)?'(標準)':''}</option>`).join(''):'<option>タイ語の声が見つかりません</option>';
+  document.getElementById('vinfo').textContent=`タイ語の声:${voices.length}種類 / `+voices.map(v=>v.voiceURI).join(' , ');
 }
 speechSynthesis.onvoiceschanged=load; load(); setTimeout(load,800);
 function speak(text,rate){const syn=speechSynthesis;syn.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=rate||0.85;const v=voices[+document.getElementById('voice').value];if(v)u.voice=v;syn.speak(u);}
