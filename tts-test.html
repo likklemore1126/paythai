@@ -8,22 +8,26 @@ h1{font-size:18px;margin:0 0 6px}
 h2{font-size:15px;margin:22px 0 8px;color:#d49a78}
 p{font-size:13px;color:#9a948a;line-height:1.7;margin:0 0 12px}
 select{width:100%;padding:12px;border-radius:12px;background:#262523;color:#fff;border:1px solid #3b3935;font-size:15px}
-.row{display:grid;grid-template-columns:76px 1fr 1fr;gap:8px;align-items:stretch;margin-bottom:8px}
+.row{display:grid;grid-template-columns:64px 1fr 1fr 1fr;gap:8px;align-items:stretch;margin-bottom:8px}
 .n{display:flex;flex-direction:column;justify-content:center;font-size:18px;font-weight:600}
 .n small{font-weight:400}
-button{padding:12px 10px;border-radius:14px;border:1px solid #3b3935;background:#262523;color:#fff;font-size:14px;font-family:inherit}
+button{padding:12px 6px;border-radius:14px;border:1px solid #3b3935;background:#262523;color:#fff;font-size:14px;font-family:inherit}
 button.b{border-color:#d49a78;color:#f0c9b2}
+button.c{border-color:#7fb08a;color:#bfe3c6}
+.sl{display:flex;align-items:center;gap:10px;font-size:13px}.sl input{flex:1}
 button:active{opacity:.6}
 small{display:block;color:#9a948a;font-size:11px}
 #vinfo{font-size:12px;color:#9a948a;margin-top:6px}
 #st{font-size:12px;color:#9a948a;margin-top:8px;min-height:1em}
 </style></head><body>
-<h1>🔊 数字「7」の音声テスト(6回目)</h1>
-<p>左が<b>今のアプリ</b>(全部iPhoneの声)、右が<b>B</b>(7の部分だけ録音した音、ほかはiPhoneの声)です。<br>右の方が自然か、つなぎ目が気にならないかを聞いてください。<br>※録音はテスト用です(本番用は別に用意します)。</p>
+<h1>🔊 数字「7」の音声テスト(7回目)</h1>
+<p><b>今</b>=今のアプリ(全部iPhoneの声)／<b>B</b>=前回のもの(7だけ録音)／<b>B改</b>=Bのつなぎ目の間を詰めたもの。<br>B改は<b>同じボタンを2回押してください</b>。1回目でiPhoneの声の長さを測り、2回目から間が詰まります。<br>※録音はテスト用です(本番用は別に用意します)。</p>
 <h2>① タイ語の声</h2>
 <select id="voice"></select>
 <div id="vinfo"></div>
-<h2>② 聞き比べ</h2>
+<h2>② B改の詰め具合</h2>
+<div class="sl">ゆったり<input type="range" id="cut" min="0" max="400" step="50" value="200">詰める <span id="cutv"></span></div>
+<h2>③ 聞き比べ</h2>
 <div id="list"></div>
 <div id="st"></div>
 <script>
@@ -70,6 +74,20 @@ async function playB(i){
   try{await ready();}catch(e){st('録音を読み込めませんでした: '+e);return;}
   for(const p of N[i][2]){ if(my!==runId) return; if(p===R) await playRec(); else await sayTTS(p,1); }
 }
-document.getElementById('list').innerHTML=N.map((n,i)=>`<div class="row"><div class="n">${n[0]}<small>${n[1]}</small></div><button onclick="playNow(${i})">今のアプリ</button><button class="b" onclick="playB(${i})">B 7だけ録音</button></div>`).join('');
+// B改: 次の部品を前の部品が終わる少し前に始める
+const learned={};
+function cutMs(){return +document.getElementById('cut').value;}
+function sayTTS2(text,early){return new Promise(res=>{const u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=0.85;u.pitch=1;const v=voices[+document.getElementById('voice').value];if(v)u.voice=v;let done=false,t0=0;const fin=()=>{if(!done){done=true;res();}};
+  u.onstart=()=>{t0=performance.now(); if(early && learned[text]) setTimeout(fin,Math.max(0,learned[text]-cutMs()));};
+  u.onend=()=>{if(t0) learned[text]=performance.now()-t0; fin();};u.onerror=fin;setTimeout(fin,6000);speechSynthesis.speak(u);});}
+function playRec2(early){return new Promise(res=>{const s=ctx.createBufferSource();s.buffer=buf;s.connect(ctx.destination);s.start();setTimeout(res,Math.max(0,buf.duration*1000-(early?cutMs():0)));});}
+async function playB2(i){
+  speechSynthesis.cancel();const my=++runId;
+  try{await ready();}catch(e){st('録音を読み込めませんでした: '+e);return;}
+  const ps=N[i][2];
+  for(let k=0;k<ps.length;k++){ if(my!==runId) return; const early=k<ps.length-1; if(ps[k]===R) await playRec2(early); else await sayTTS2(ps[k],early); }
+}
+const cv=()=>document.getElementById('cutv').textContent=cutMs()+'ms';document.getElementById('cut').oninput=cv;cv();
+document.getElementById('list').innerHTML=N.map((n,i)=>`<div class="row"><div class="n">${n[0]}<small>${n[1]}</small></div><button onclick="playNow(${i})">今</button><button class="b" onclick="playB(${i})">B</button><button class="c" onclick="playB2(${i})">B改</button></div>`).join('');
 </script>
 </body></html>
