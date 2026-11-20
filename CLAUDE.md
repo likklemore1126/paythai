@@ -85,7 +85,7 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
   - `PAY_API` は設定済み（2026-11-20c、`https://thai-poca-payment.takatobi.workers.dev/api`）。そのため確認用のテストコード(TEST-…)はもう使えない。確認は Stripe サンドボックスで実際に購入して出たコードで行う
   - LP の購入ボタン: `lp.html` の `SALE_LIVE=false` の間は「準備中」のまま。`lp.html?paytest=1` で開いたときだけ押せる（`?paytest=0` で解除）。押すと `/api/checkout {plan}` → Stripe の購入画面へ
   - 購入完了画面 `thankyou.html`: `/api/session-status?session_id=` を2秒ごと最大60秒たずねてコードを表示。`SALE_LIVE=false` の間は「テスト環境」の表示を出し、アプリへのボタンは `app.html?paywall=1`
-  - **販売開始時にやること**: ① Stripe を本番に切り替え（Worker の価格ID・シークレット・Webhook を本番の値に）② `app.html` の `PAYWALL_LIVE=true` ③ `lp.html`・`thankyou.html`・`buy.html` の `SALE_LIVE=true` ④ `tokushoho.html` の内容（価格・条件）が実際と合っているか最終確認
+  - **販売開始時にやること**: ① Stripe を本番に切り替え（Worker の価格ID・シークレット・Webhook を本番の値に）② `app.html` の `PAYWALL_LIVE=true` ③ `lp.html`・`thankyou.html`・`buy.html` の `SALE_LIVE=true` ④ `tokushoho.html` の内容（価格・条件）が実際と合っているか最終確認 ⑤ サンドボックスで作ったテスト用の購入コード（poca_codes / poca_devices の行）を削除する（残すと本番でもそのコードで有料版が使えてしまう。削除はTAKAの確認を取ってから）
 - **購入者の確認方法（2026-11-18決定）**: 指さしタイと同じ「購入コード方式」（Stripe決済→コードをメールで送付→アプリで1回入力）。メールログインはiPhoneのホーム画面アプリでメールのリンクがSafariに開いてしまうため不採用
   - 1つのコードで使えるのは**3台まで**
   - 月額・年間は解約チェックあり：起動時にネットにつながっていれば1日1回まで状態を確認。**オフラインでも最後の確認から14日間**は有料部分を使える。それを過ぎたら次に確認できるまで無料範囲に戻る（学習記録は消さない）
