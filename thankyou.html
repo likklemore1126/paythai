@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) アプリと同じID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DE7T1Q55VC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  // URLの ?session_id=… は決済の番号なので、GAにはページの場所だけを送る
+  gtag('config', 'G-DE7T1Q55VC', { page_location: location.origin + location.pathname });
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>ご購入ありがとうございます - Thai Poca</title>
+<link rel="icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f3ead8; --dark:#262523; --dark2:#1d1c1b; --gold:#d49a78; --gold-deep:#a8623f;
+  --muted:#9a948a; --line-dark:#3b3935; --green:#5f8f6b; --red:#c46a5a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--dark2);color:var(--cream);font-family:'Zen Maru Gothic',-apple-system,"Hiragino Sans",sans-serif;
+  min-height:100vh;display:flex;justify-content:center;align-items:center;padding:24px 16px;}
+.card{width:100%;max-width:420px;background:var(--dark);border:1px solid var(--line-dark);border-radius:20px;padding:32px 24px;text-align:center;}
+.logo{font-size:24px;font-weight:900;letter-spacing:.5px;}
+.tagline{font-size:12px;color:var(--muted);margin:4px 0 26px;}
+.state{display:none;}.state.active{display:block;}
+.spinner{width:34px;height:34px;margin:0 auto 18px;border:3px solid var(--line-dark);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.txt{font-size:14px;line-height:1.8;}
+.icon{width:52px;height:52px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#fff;background:var(--green);}
+.icon.err{background:var(--red);}
+.title{font-size:16px;font-weight:700;margin-bottom:16px;}
+.plan{font-size:13px;color:var(--gold);margin:-8px 0 16px;}
+.code-box{background:var(--dark2);border:1px solid var(--line-dark);border-radius:14px;padding:16px;margin-bottom:14px;}
+.code-label{font-size:11.5px;color:var(--muted);margin-bottom:6px;}
+.code-value{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:22px;font-weight:700;letter-spacing:1.5px;word-break:break-all;}
+.btn{display:block;width:100%;padding:13px;font-size:14px;font-weight:700;border:none;border-radius:12px;cursor:pointer;font-family:inherit;text-decoration:none;text-align:center;margin-bottom:12px;}
+.btn.copy{background:var(--gold);color:var(--dark);}
+.btn.copy.done{background:var(--green);color:#fff;}
+.btn.open{background:var(--cream);color:var(--dark);}
+.btn.ghost{background:transparent;color:var(--cream);border:1px solid var(--line-dark);}
+.steps{text-align:left;font-size:13px;line-height:1.8;background:var(--dark2);border-radius:12px;padding:14px 16px;margin:4px 0 14px;}
+.steps b{color:var(--gold);}
+.steps ol{margin-left:1.3em;}
+.hint{text-align:left;font-size:12.5px;line-height:1.8;color:var(--muted);}
+.thanks{margin-top:18px;font-size:12.5px;line-height:1.8;color:var(--gold);}
+.err-text{font-size:13px;line-height:1.8;color:var(--muted);margin-bottom:18px;text-align:left;}
+.test{font-size:12px;color:var(--gold);border:1px dashed var(--gold);border-radius:10px;padding:8px;margin-bottom:18px;display:none;}
+/* アプリ内ブラウザ(Instagram/Threads)向けの案内。判定は指さしタイで実機確認した名前と同じ */
+.iab{display:none;text-align:left;background:#3a2a22;border:1px solid var(--gold);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.7;margin-bottom:20px;}
+.iab.show{display:block;}
+.iab b{color:var(--gold);}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="iab" id="iab"><b>⚠️ アプリはSafari(Androidは Chrome)で開いてください</b><br>
+    いまInstagramやThreadsの中でこのページを開いています。このままだとアプリをホーム画面に追加できません。下の購入コードをコピーしてから、Safariで poca.takatobi.jp/app.html を開いてください(同じコードはメールにも届きます)。</div>
+  <div class="logo">Thai Poca</div>
+  <div class="tagline">覚えて、話せるようになる。</div>
+  <div class="test" id="testNote">【確認用】Stripeのテスト環境での購入です(本物のお金は動いていません)</div>
+
+  <!-- 読み込み中 -->
+  <div class="state active" id="stLoading">
+    <div class="spinner"></div>
+    <div class="txt">ご購入ありがとうございます。<br>購入コードを発行しています…</div>
+  </div>
+
+  <!-- 発行できた -->
+  <div class="state" id="stSuccess">
+    <div class="icon">✓</div>
+    <div class="title">ご購入ありがとうございます!</div>
+    <div class="plan" id="planLabel"></div>
+    <div class="code-box">
+      <div class="code-label">あなたの購入コード</div>
+      <div class="code-value" id="codeValue">----</div>
+    </div>
+    <button type="button" class="btn copy" id="copyBtn">コードをコピー</button>
+    <div class="steps">
+      <b>有料版にする方法</b>
+      <ol>
+        <li>下のボタン(またはホーム画面のアイコン)からThai Pocaを開く</li>
+        <li>右上の「🔑 無料版」を押す</li>
+        <li>「🔑 購入コードをお持ちの方」を押して、コードを貼り付ける</li>
+      </ol>
+    </div>
+    <a href="app.html" class="btn open" id="openApp">Thai Pocaを開く</a>
+    <div class="hint">
+      ・同じ購入コードを書いたメールもお送りしています。届かないときは迷惑メールのフォルダもご確認ください。<br>
+      ・1つのコードで3台まで使えます。機種変更のときにも使うので、メールかコードを保存しておいてください。<br>
+      <span id="subHint">・月額・年間プランのお支払い方法の変更や解約は、アプリの右上の「✓ 有料版」→「お支払い・解約の手続き」からできます。</span>
+    </div>
+    <div class="thanks">タイ語の毎日が、もっと楽しくなりますように。<br>TakaTobiより</div>
+  </div>
+
+  <!-- 時間がかかっている -->
+  <div class="state" id="stTimeout">
+    <div class="icon err">!</div>
+    <div class="title">発行に時間がかかっています</div>
+    <div class="err-text">お支払いは完了しています。購入コードの発行に時間がかかることがあります。少し待ってから下のボタンを押すか、購入コードを書いたメールが届いていないかご確認ください。</div>
+    <button type="button" class="btn ghost" id="retryBtn">もう一度確認する</button>
+  </div>
+
+  <!-- session_id が無い -->
+  <div class="state" id="stMissing">
+    <div class="icon err">!</div>
+    <div class="title">購入の情報が見つかりません</div>
+    <div class="err-text">このページは、購入が終わったあとの画面から開いてください。購入コードが分からない場合は、購入時に届いたメールをご確認ください。</div>
+    <a href="lp.html" class="btn ghost">Thai Pocaのページへ</a>
+  </div>
+</div>
+<script>
+(function(){
+  // 販売開始時に true にする(lp.html の SALE_LIVE、app.html の PAYWALL_LIVE と一緒に)
+  var SALE_LIVE = false;
+  var API = 'https://thai-poca-payment.takatobi.workers.dev/api';
+  var PLAN = { monthly:['月額プラン',300], yearly:['年間プラン',3000], lifetime:['買い切り',4000] };
+  var POLL_MS = 2000, MAX = 30; // 2秒 x 30回 = 60秒
+
+  if(!SALE_LIVE){
+    document.getElementById('testNote').style.display = 'block';
+    // テスト中はアプリの有料版の出し分けが止まっているので、確認用の ?paywall=1 を付けて開く
+    document.getElementById('openApp').href = 'app.html?paywall=1';
+  }
+  var ua = navigator.userAgent || '';
+  if(/Instagram|Barcelona/.test(ua)) document.getElementById('iab').classList.add('show');
+
+  function show(id){ ['stLoading','stSuccess','stTimeout','stMissing'].forEach(function(k){ document.getElementById(k).classList.toggle('active', k===id); }); }
+  var sid = null;
+  try{ sid = new URLSearchParams(location.search).get('session_id'); }catch(e){}
+  var tries = 0;
+
+  function check(){
+    tries++;
+    fetch(API + '/session-status?session_id=' + encodeURIComponent(sid))
+      .then(function(r){ if(!r.ok) throw new Error('status ' + r.status); return r.json(); })
+      .then(function(d){
+        if(d.ready === true && d.code){
+          document.getElementById('codeValue').textContent = d.code;
+          var p = PLAN[d.plan];
+          document.getElementById('planLabel').textContent = p ? p[0] : '';
+          if(d.plan === 'lifetime') document.getElementById('subHint').style.display = 'none';
+          show('stSuccess');
+          // GA: 購入完了(同じ決済番号は1回だけ数えられる)。テスト中は送らない
+          if(SALE_LIVE && p && typeof gtag === 'function') gtag('event', 'purchase', { transaction_id: sid, currency: 'JPY', value: p[1], items: [{ item_name: p[0] }] });
+          return;
+        }
+        if(tries >= MAX){ show('stTimeout'); return; }
+        setTimeout(check, POLL_MS);
+      })
+      .catch(function(){
+        if(tries >= MAX){ show('stTimeout'); return; }
+        setTimeout(check, POLL_MS);
+      });
+  }
+
+  if(!sid){ show('stMissing'); } else { show('stLoading'); check(); }
+
+  document.getElementById('retryBtn').addEventListener('click', function(){ tries = 0; show('stLoading'); check(); });
+
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var code = document.getElementById('codeValue').textContent, btn = this;
+    function done(){ btn.textContent = 'コピーしました'; btn.classList.add('done'); setTimeout(function(){ btn.textContent = 'コードをコピー'; btn.classList.remove('done'); }, 2000); }
+    function fallback(){
+      var ta = document.createElement('textarea'); ta.value = code; ta.setAttribute('readonly',''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); done(); }catch(e){} document.body.removeChild(ta);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(done, fallback); else fallback();
+  });
+})();
+</script>
+</body>
+</html>

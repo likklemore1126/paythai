@@ -178,6 +178,12 @@ header{position:sticky;top:0;z-index:50;background:var(--cream-bg);border-bottom
 .price-card .plan-note{font-size:12px;color:var(--muted);margin-top:6px;}
 .price-cta{display:block;text-align:center;margin-top:16px;background:var(--muted-dark);color:var(--cream);opacity:.5;border-radius:12px;padding:13px;font-size:14px;font-weight:700;pointer-events:none;}
 .price-card.best .price-cta{background:var(--gold);color:var(--dark);}
+button.price-cta{width:100%;border:none;font-family:inherit;}
+.price-cta.on{opacity:1;pointer-events:auto;cursor:pointer;background:var(--cream);color:var(--dark);}
+.price-card.best .price-cta.on{background:var(--gold);color:var(--dark);}
+.price-cta.on:active{opacity:.7;}
+.price-cta.on[disabled]{opacity:.5;pointer-events:none;}
+.pay-test{display:block;margin:18px auto 0;max-width:420px;font-size:12px;text-align:center;background:#3a2a22;color:var(--gold);border:1px dashed var(--gold);border-radius:12px;padding:10px;}
 
 /* faq */
 .faq-item{border-bottom:1px solid var(--line);padding:16px 0;}
@@ -408,23 +414,24 @@ footer .copyright{color:var(--muted-dark);}
         <div class="plan-name">月額プラン</div>
         <div class="plan-price">¥300<span class="unit">/月(税込)</span></div>
         <div class="plan-note">まずは気軽に試したい方に</div>
-        <div class="price-cta">準備中</div>
+        <button type="button" class="price-cta" data-plan="monthly" disabled>準備中</button>
       </div>
       <div class="price-card best">
         <div class="badge">お得</div>
         <div class="plan-name">年間プラン</div>
         <div class="plan-price">¥3,000<span class="unit">/年(税込)</span></div>
         <div class="plan-note">月換算 250円(月額より2か月分お得)。じっくり続けたい方に</div>
-        <div class="price-cta">準備中</div>
+        <button type="button" class="price-cta" data-plan="yearly" disabled>準備中</button>
       </div>
       <div class="price-card">
         <div class="plan-name">買い切りプラン</div>
         <div class="plan-price">¥4,000<span class="unit">(税込・一括)</span></div>
         <div class="plan-note">一度払えば、ずっと使える</div>
-        <div class="price-cta">準備中</div>
+        <button type="button" class="price-cta" data-plan="lifetime" disabled>準備中</button>
       </div>
     </div>
-    <p style="font-size:12px;text-align:center;margin-top:18px;">🔧 決済機能は現在準備中です。公開はこのページ上でお知らせします。</p>
+    <p id="payNote" style="font-size:12px;text-align:center;margin-top:18px;">🔧 決済機能は現在準備中です。公開はこのページ上でお知らせします。</p>
+    <p id="payMsg" style="font-size:13px;text-align:center;margin-top:10px;color:var(--gold);min-height:1em;"></p>
 
     <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--line-dark);">
       <div class="eyebrow">はじめかた</div>
@@ -528,6 +535,37 @@ const FAQS = [
   {q:'指さしタイとどちらを使えばいいですか？',a:'旅行中にすぐ言葉を伝えたい場合は指さしタイ、タイ語そのものを覚えて話せるようになりたい場合はThai Pocaがおすすめです。併用もできます。'},
   {q:'タイ文字が読めなくても大丈夫ですか？',a:'はい。すべてのタイ語表記にローマ字(Paiboon+方式)が併記されているので、タイ文字が読めない状態からでも学習を始められます。'},
 ];
+
+/* --- 購入ボタン(Stripeの購入画面へ) ---
+   SALE_LIVE=false の間はボタンは「準備中」のまま。確認用に lp.html?paytest=1 で開いたときだけ押せる
+   (Stripeは今サンドボックス=テスト環境なので、本物のお金は動かない)。販売開始時に true にする */
+const SALE_LIVE = false;
+const PAY_API = 'https://thai-poca-payment.takatobi.workers.dev/api';
+function saleOn(){
+  if(SALE_LIVE) return true;
+  try{ const q=new URLSearchParams(location.search); if(q.get('paytest')==='1') sessionStorage.setItem('poca:paytest','1'); if(q.get('paytest')==='0') sessionStorage.removeItem('poca:paytest'); return sessionStorage.getItem('poca:paytest')==='1'; }catch(e){ return false; }
+}
+function initBuy(){
+  if(!saleOn()) return;
+  const badge=document.querySelector('.trial-badge'); if(badge) badge.style.display='none';
+  const note=document.getElementById('payNote');
+  if(note){ if(SALE_LIVE) note.style.display='none'; else { note.className='pay-test'; note.textContent='【確認用】テスト決済モードです。カード番号 4242 4242 4242 4242 などのテスト用カードで購入できます(本物のお金は動きません)。'; } }
+  document.querySelectorAll('.price-cta[data-plan]').forEach(b=>{ b.disabled=false; b.classList.add('on'); b.textContent='このプランで購入'; b.onclick=()=>buy(b.dataset.plan,b); });
+}
+async function buy(plan,btn){
+  const msg=document.getElementById('payMsg');
+  const all=document.querySelectorAll('.price-cta[data-plan]');
+  all.forEach(b=>b.disabled=true); btn.textContent='購入画面を準備しています…'; msg.textContent='';
+  try{
+    const r=await fetch(PAY_API+'/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan})});
+    const d=await r.json();
+    if(d && d.url){ location.href=d.url; return; }
+    msg.textContent=(r.status===429)?'短い時間に何度も押されたため、一時的に止めています。1分ほど待ってからお試しください。':'購入画面を開けませんでした。時間をおいて、もう一度お試しください。';
+  }catch(e){ msg.textContent='通信できませんでした。ネットにつながっているか確かめて、もう一度お試しください。'; }
+  all.forEach(b=>{ b.disabled=false; b.textContent='このプランで購入'; });
+}
+// Stripeの購入画面から「戻る」で戻ったとき(ページがそのまま復元される場合)にボタンを元に戻す
+window.addEventListener('pageshow',()=>{ document.querySelectorAll('.price-cta.on').forEach(b=>{ b.disabled=false; b.textContent='このプランで購入'; }); });
 
 function renderFeatures(){
   const el = document.getElementById('featList');
@@ -645,6 +683,7 @@ renderDemo();
 
 renderFeatures();
 renderFaq();
+initBuy();
 </script>
 </body>
 </html>
