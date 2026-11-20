@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7の音声テスト</title>
+<meta name="robots" content="noindex">
+<style>
+body{margin:0;padding:18px 16px 40px;background:#1d1c1b;color:#e8e2d6;font-family:-apple-system,"Hiragino Sans",sans-serif;}
+h1{font-size:18px;margin:0 0 6px}
+p{font-size:13px;color:#9a948a;line-height:1.7;margin:0 0 14px}
+button{display:flex;width:100%;align-items:center;gap:12px;margin:0 0 10px;padding:14px;border-radius:14px;border:1px solid #3b3935;background:#262523;color:#fff;font-size:16px;text-align:left;font-family:inherit}
+b{display:inline-block;min-width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;background:#d49a78;color:#1d1c1b;font-size:13px}
+small{color:#9a948a;font-size:12px;margin-left:auto}
+</style></head><body>
+<h1>🔊 数字「7」の音声テスト</h1>
+<p>それぞれ押して聞き比べてください。正しく「チェット(cèt)」と聞こえるものの記号(A〜G)を教えてください。<br>比較用に 6・8・17 も入れています。</p>
+<div id="list"></div>
+<script>
+const T=[
+ ['A','เจ็ด','今のアプリと同じ(速さ0.85)',0.85],
+ ['B','เจ็ด','速さ1.0',1.0],
+ ['C','7','数字の「7」をタイ語の声で',0.85],
+ ['D','๗','タイ数字の「๗」',0.85],
+ ['E','เจ็ด.','後ろに「.」',0.85],
+ ['F','เลขเจ็ด','「数字の7」という言い方',0.85],
+ ['G','เจ็ด เจ็ด','2回続けて',0.85],
+ ['比','หก','6(比較用)',0.85],
+ ['比','แปด','8(比較用)',0.85],
+ ['比','สิบเจ็ด','17(比較用)',0.85]
+];
+function speak(text,rate){const syn=window.speechSynthesis;if(!syn)return;syn.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=rate;const v=(syn.getVoices()||[]).find(v=>v.lang&&v.lang.toLowerCase().startsWith('th'));if(v)u.voice=v;syn.speak(u);}
+document.getElementById('list').innerHTML=T.map((t,i)=>`<button onclick="speak(T[${i}][1],T[${i}][3])"><b>${t[0]}</b><span style="font-size:20px">${t[1]}</span><small>${t[2]}</small></button>`).join('');
+speechSynthesis.getVoices();
+</script>
+</body></html>
