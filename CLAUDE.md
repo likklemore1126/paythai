@@ -84,7 +84,7 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
   - `PAY_API` は設定済み（2026-11-20c、`https://thai-poca-payment.takatobi.workers.dev/api`）。そのため確認用のテストコード(TEST-…)はもう使えない。確認は Stripe サンドボックスで実際に購入して出たコードで行う
   - LP の購入ボタン: `lp.html` の `SALE_LIVE=false` の間は「準備中」のまま。`lp.html?paytest=1` で開いたときだけ押せる（`?paytest=0` で解除）。押すと `/api/checkout {plan}` → Stripe の購入画面へ
   - 購入完了画面 `thankyou.html`: `/api/session-status?session_id=` を2秒ごと最大60秒たずねてコードを表示。`SALE_LIVE=false` の間は「テスト環境」の表示を出し、アプリへのボタンは `app.html?paywall=1`
-  - **販売開始時にやること**: ① Stripe を本番に切り替え（Worker の価格ID・シークレット・Webhook を本番の値に）② `app.html` の `PAYWALL_LIVE=true` ③ `lp.html` と `thankyou.html` の `SALE_LIVE=true` ④ LP の FAQ 追加・特定商取引法の表記ページ（下のLPのTODO）
+  - **販売開始時にやること**: ① Stripe を本番に切り替え（Worker の価格ID・シークレット・Webhook を本番の値に）② `app.html` の `PAYWALL_LIVE=true` ③ `lp.html` と `thankyou.html` の `SALE_LIVE=true` ④ `tokushoho.html` の内容（価格・条件）が実際と合っているか最終確認
 - **購入者の確認方法（2026-11-18決定）**: 指さしタイと同じ「購入コード方式」（Stripe決済→コードをメールで送付→アプリで1回入力）。メールログインはiPhoneのホーム画面アプリでメールのリンクがSafariに開いてしまうため不採用
   - 1つのコードで使えるのは**3台まで**
   - 月額・年間は解約チェックあり：起動時にネットにつながっていれば1日1回まで状態を確認。**オフラインでも最後の確認から14日間**は有料部分を使える。それを過ぎたら次に確認できるまで無料範囲に戻る（学習記録は消さない）
@@ -96,7 +96,8 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
 ## LP（lp.html）
 - 配色はアプリと同じ墨×砂＋テラコッタ（`--gold` という変数名のまま値はテラコッタ `#d49a78`）。マリーゴールドの黄色は使わない
 - 一番上のボタンは「無料で試す」→ `app.html`。`lp_assets/card_hero.png` は実アプリのカードを撮ったもの（アプリの見た目を変えたら撮り直す）
-- **TODO（決済の仕組みが決まったら必ず）**: FAQに「解約はいつでもできるか」「機種変更したらどうなるか」「支払い方法（Stripe）」を追加し、料金カードの「準備中」を購入ボタンに差し替え、冒頭の「有料プランは現在準備中です」を外す。特定商取引法の表記ページも用意する
+- 2026-11-20: FAQに支払い方法・解約・機種変更を追加、ローマ字の説明を教本方式に直した。特定商取引法の表記 `tokushoho.html` を追加（内容は指さしタイと同じ販売者情報。料金・自動更新・解約の条件を記載）し、LPのフッターと料金の下にリンク
+- 料金カードの「準備中」→購入ボタン、冒頭の「有料プランは現在準備中です」を消すのは `SALE_LIVE=true` で自動（`initBuy()`）
 
 ## 姉妹プロジェクト
 - 指差し単語帳（yubisashi-thai）: 観光客向け。リポジトリ `likklemore1126/yubisashi-thai`。PWA化（manifest.json/Service Worker）が別チャットで進行中の可能性あり
