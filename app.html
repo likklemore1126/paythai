@@ -1725,7 +1725,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-20e';
+const APP_VERSION = '2026-11-20f';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4294,7 +4294,7 @@ function pwPlans(){
   return `<div class="pw-plans">${Object.entries(PW_PLANS).map(([k,v])=>`<button type="button" class="pw-plan${k===pwPlan?' on':''}" data-plan="${k}" onclick="pwPick('${k}')"><b>${v[0]}</b><span>${v[1]}</span><small>${v[2]}</small></button>`).join('')}</div>
   <div class="pw-tax">価格はすべて税込です${pwPlan==='lifetime'?'':'・解約するまで自動で更新'}</div>`;
 }
-function pwBuyLabel(){ return `${PLAN_LABEL[pwPlan]}で購入する(${PW_PLANS[pwPlan][1]})`; }
+function pwBuyLabel(){ return `決済画面へ進む(${PLAN_LABEL[pwPlan]} ${PW_PLANS[pwPlan][1]})`; }
 function pwPick(k){
   pwPlan=k;
   document.querySelectorAll('.pw-plan[data-plan]').forEach(b=>b.classList.toggle('on',b.dataset.plan===k));
@@ -4316,7 +4316,7 @@ function openPaywall(reason){
     <div class="pw-lbl">有料版でできること</div>${pwFeatures()}
     <div class="pw-lbl">料金</div>${pwPlans()}
     <button class="pw-btn" id="pwBuy" onclick="payOpenLP(pwPlan)">${pwBuyLabel()}</button>
-    <div class="pw-sub" style="text-align:center;margin:8px 0 0;">お支払いの画面(Stripe)がブラウザで開きます</div>
+    <div class="pw-sub" style="text-align:center;margin:8px 0 0;">このボタンではまだ支払いは発生しません。<br>ブラウザで開く決済画面(Stripe)で、内容を確認してからお支払いください。</div>
     <button class="pw-ghost" onclick="openCodeSheet()">🔑 購入コードをお持ちの方</button>
     <button class="pw-close" onclick="sheetClose()">閉じる</button>`);
   if(typeof gtag==='function') gtag('event','paywall_view',{reason:reason||'plan'});
