@@ -11,7 +11,7 @@ b{display:inline-block;min-width:22px;height:22px;line-height:22px;text-align:ce
 small{color:#9a948a;font-size:12px;margin-left:auto}
 </style></head><body>
 <h1>🔊 数字「7」の音声テスト</h1>
-<p>それぞれ押して聞き比べてください。正しく「チェット(cèt)」と聞こえるものの記号(A〜G)を教えてください。<br>比較用に 6・8・17 も入れています。</p>
+<p>それぞれ押して聞き比べてください。正しく「チェット(cèt)」と聞こえるものの記号(A〜L)を教えてください。<br>H〜Lは7が入った数字です。比較用に 6・8 も入れています。</p>
 <div id="list"></div>
 <script>
 const T=[
@@ -22,9 +22,13 @@ const T=[
  ['E','เจ็ด.','後ろに「.」',0.85],
  ['F','เลขเจ็ด','「数字の7」という言い方',0.85],
  ['G','เจ็ด เจ็ด','2回続けて',0.85],
+ ['H','สิบเจ็ด','17・今のアプリと同じ',0.85],
+ ['I','17','17・数字のまま読ませる',0.85],
+ ['J','เจ็ดสิบ','70・今のアプリと同じ',0.85],
+ ['K','70','70・数字のまま読ませる',0.85],
+ ['L','7,777','7,777・数字のまま読ませる',0.85],
  ['比','หก','6(比較用)',0.85],
- ['比','แปด','8(比較用)',0.85],
- ['比','สิบเจ็ด','17(比較用)',0.85]
+ ['比','แปด','8(比較用)',0.85]
 ];
 function speak(text,rate){const syn=window.speechSynthesis;if(!syn)return;syn.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=rate;const v=(syn.getVoices()||[]).find(v=>v.lang&&v.lang.toLowerCase().startsWith('th'));if(v)u.voice=v;syn.speak(u);}
 document.getElementById('list').innerHTML=T.map((t,i)=>`<button onclick="speak(T[${i}][1],T[${i}][3])"><b>${t[0]}</b><span style="font-size:20px">${t[1]}</span><small>${t[2]}</small></button>`).join('');
