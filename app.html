@@ -1724,7 +1724,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-20a';
+const APP_VERSION = '2026-11-20b';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3790,18 +3790,20 @@ function buildExBox(ex) {
 // iPhone の標準のタイ語の声(Kanya)は「เจ็ด(7)」を「ジェッ」と詰まって読んでしまうため、
 // 読み上げにだけ、近い音になる書き方「เจ้ด」を渡す(画面の文字は変えない)。2026-11-20 TAKAが実機で聞き比べて決定。
 // Android など別の声では正しく読めるので、Apple の標準の声のときだけ置き換える。
-function ttsFix(text, v){
+// 「7」だけを読むときは、出だしが高くなりすぎるので声の高さを 0.7 に下げる(17 などの中では下げない)
+function ttsAppleStd(v){
   const uri=(v&&v.voiceURI)||'';
-  const appleStd = v ? (/com\.apple/i.test(uri) && !/enhanced|premium/i.test(uri)) : /iPhone|iPad|Macintosh/.test(navigator.userAgent);
-  return appleStd ? text.replace(/เจ็ด/g,'เจ้ด') : text;
+  return v ? (/com\.apple/i.test(uri) && !/enhanced|premium/i.test(uri)) : /iPhone|iPad|Macintosh/.test(navigator.userAgent);
 }
+function ttsFix(text, v){ return ttsAppleStd(v) ? text.replace(/เจ็ด/g,'เจ้ด') : text; }
+function ttsPitch(text, v){ return (ttsAppleStd(v) && String(text).trim()==='เจ็ด') ? 0.7 : 1; }
 function speak(text, rate){
   try{
     const syn=window.speechSynthesis; if(!syn||!text) return;
     syn.cancel();
     const v=(syn.getVoices()||[]).find(v=>v.lang&&v.lang.toLowerCase().startsWith('th'));
     const u=new SpeechSynthesisUtterance(ttsFix(text, v));
-    u.lang='th-TH'; u.rate=(typeof rate==='number')?rate:0.85;
+    u.lang='th-TH'; u.rate=(typeof rate==='number')?rate:0.85; u.pitch=ttsPitch(text, v);
     if(v) u.voice=v;
     syn.speak(u);
     if(typeof gtag === 'function'){
