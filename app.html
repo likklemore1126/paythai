@@ -192,6 +192,9 @@ header{padding-bottom:10px;}
 .pw-in{width:100%;box-sizing:border-box;margin-top:4px;padding:13px 14px;border-radius:12px;border:1.5px solid rgba(255,255,255,.18);background:#1d1c1b;color:#fff;font-size:18px;letter-spacing:1px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;}
 .pw-msg{min-height:20px;font-size:13.5px;line-height:1.6;margin-top:8px;color:var(--pink);white-space:pre-wrap;}
 .pw-msg.ok{color:var(--green);}
+.pw-steps{margin:12px 0 0 1.3em;font-size:14px;line-height:1.75;color:#e8e2d6;}
+.pw-steps li{margin-bottom:6px;}
+.pw-steps b{color:var(--accent);}
 .pw-note{font-size:13px;line-height:1.7;margin:10px 0 0;padding:10px 12px;border-radius:12px;background:rgba(201,189,166,.1);border:1px solid rgba(201,189,166,.28);color:var(--yellow);}
 .pw-kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:14px;}
 .pw-kv span{color:var(--muted);}
@@ -1725,7 +1728,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-21b';
+const APP_VERSION = '2026-11-21c';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4318,16 +4321,35 @@ function openPaywall(reason){
     <div class="pw-lbl">料金</div>${pwPlans()}
     <button class="pw-btn" id="pwBuy" onclick="payOpenLP(pwPlan)">${pwBuyLabel()}</button>
     <div class="pw-sub" style="text-align:center;margin:8px 0 0;">このボタンではまだ支払いは発生しません。<br>ブラウザで開く決済画面(Stripe)で、内容を確認してからお支払いください。</div>
+    ${iosSafariOnly()?'<div class="pw-note">📱 iPhoneでは、有料版は<b>ホーム画面に追加したThai Poca</b>で使います。購入のあとは、ホーム画面のアプリで購入コードを入力してください。</div>':''}
     <button class="pw-ghost" onclick="openCodeSheet()">🔑 購入コードをお持ちの方</button>
     <button class="pw-close" onclick="sheetClose()">閉じる</button>`);
   if(typeof gtag==='function') gtag('event','paywall_view',{reason:reason||'plan'});
 }
 // 選んだプランで中継ページ buy.html を開き、そのまま Stripe の決済画面へ進む(販売前は確認用の paytest=1 を付ける)
 function payOpenLP(plan){ window.open('buy.html?plan='+(plan||'yearly')+(PAYWALL_LIVE?'':'&paytest=1'),'_blank'); }
+// iPhoneのSafari(ホーム画面に追加していない)か。Safariは7日間開かないと保存した記録を消すことがあり、
+// ホーム画面のアプリとも保存場所が別なので、有料版はホーム画面のアプリだけで有効にする(2026-11-21c)
+function iosSafariOnly(){ return typeof detectPlatform==='function' && detectPlatform()==='ios' && !isStandalonePWA(); }
+function iosInstallSteps(){
+  return `<ol class="pw-steps">
+      <li>画面の下(または上)にある <b>共有ボタン</b>(□に↑のマーク)を押す</li>
+      <li>「<b>ホーム画面に追加</b>」を押す(見つからないときは、メニューを下にずらすか「その他」の中)</li>
+      <li>右上の「追加」を押す</li>
+      <li>ホーム画面にできた <b>Thai Poca のアイコン</b>から開き、右上の「🔑 無料版」→「購入コードをお持ちの方」でコードを入力</li>
+    </ol>`;
+}
 function openCodeSheet(){
+  if(iosSafariOnly()){
+    sheetOpen(`<div class="pw-h">📱 ホーム画面に追加してください</div>
+    <div class="pw-sub">iPhoneでは、有料版は<b>ホーム画面に追加したThai Poca</b>で使えます。購入コードも、ホーム画面のアプリで入力してください。</div>
+    ${iosInstallSteps()}
+    <div class="pw-note">Safariでは、しばらく開かないと保存した内容が自動で消えることがあるため、有料版はホーム画面のアプリだけで使えるようにしています。ホーム画面のアプリは、Safariとは別に記録されます(学習記録も別々です)。</div>
+    <button class="pw-close" onclick="sheetClose()">閉じる</button>`);
+    return;
+  }
   sheetOpen(`<div class="pw-h">🔑 購入コードを入力</div>
     <div class="pw-sub">購入後にメールで届いたコードを入力してください。1つのコードで3台まで使えます。</div>
-    ${(typeof detectPlatform==='function' && detectPlatform()==='ios' && !isStandalonePWA())?`<div class="pw-note">📱 <b>ホーム画面にThai Pocaを追加している方へ</b><br>ここ(Safari)で入力すると、Safariでだけ有料版になります。ホーム画面のアプリには引き継がれないので、<b>ホーム画面のアイコンから開いて、そちらで入力</b>してください。</div>`:''}
     <input id="pwCode" class="pw-in" placeholder="POCA-XXXX-XXXX" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done">
     <div id="pwMsg" class="pw-msg"></div>
     <button class="pw-btn" id="pwGo" onclick="entActivateUI()">有料版にする</button>

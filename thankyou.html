@@ -90,7 +90,7 @@ body{background:var(--dark2);color:var(--cream);font-family:'Zen Maru Gothic',-a
         <li>「🔑 購入コードをお持ちの方」を押して、コードを貼り付ける</li>
       </ol>
     </div>
-    <div class="iosnote" id="iosNote"><b>📱 ホーム画面にThai Pocaを追加している方は</b><br>このページを閉じて、<b>ホーム画面のThai Pocaのアイコン</b>から開いてください。下のボタンはSafariで開くため、ホーム画面のアプリには有料版が引き継がれません。</div>
+    <div class="iosnote" id="iosNote"><b>📱 iPhoneの方へ</b><br>有料版は<b>ホーム画面に追加したThai Poca</b>で使えます。すでに追加している方は、このページを閉じて<b>ホーム画面のアイコン</b>から開いてください。まだの方は、下のボタンでThai Pocaを開き、共有ボタン(□に↑)→「ホーム画面に追加」をしてから、ホーム画面のアイコンで開いてください。</div>
     <a href="app.html" class="btn open" id="openApp">Thai Pocaを開く</a>
     <div class="hint">
       ・同じ購入コードを書いたメールもお送りしています。届かないときは迷惑メールのフォルダもご確認ください。<br>
@@ -134,8 +134,8 @@ body{background:var(--dark2);color:var(--cream);font-family:'Zen Maru Gothic',-a
   // iPhoneは Safari とホーム画面のアプリで保存場所が別々。ホーム画面のアプリで入力してもらうよう案内する
   if(/iPhone|iPad|iPod/.test(ua)){
     document.getElementById('iosNote').style.display = 'block';
-    document.getElementById('step1').textContent = 'ホーム画面のThai Pocaのアイコンから開く(ホーム画面に追加していない方は、下のボタンから)';
-    document.getElementById('openApp').textContent = 'ホーム画面に追加していない方はこちら';
+    document.getElementById('step1').textContent = 'ホーム画面のThai Pocaのアイコンから開く(まだホーム画面に追加していない方は、先に追加してください。下の案内を参照)';
+    document.getElementById('openApp').textContent = 'まだホーム画面に追加していない方:Thai Pocaを開く';
     document.getElementById('openApp').className = 'btn ghost';
   }
 
