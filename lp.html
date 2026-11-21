@@ -259,6 +259,11 @@ button.price-cta{width:100%;border:none;font-family:inherit;}
 .dev-card ul{margin:0 0 0 18px;}
 .dev-card ul li{padding:2px 0;}
 .dev-card a{text-decoration:underline;}
+/* ブログへのリンク(指さしタイのLPと同じ、ロゴつきの丸いボタン) */
+.dev-card li.dev-blog-item{list-style:none;margin:6px 0 0 -18px;}
+.dev-card .dev-blog-link{display:inline-flex;align-items:center;gap:10px;padding:7px 16px 7px 7px;border-radius:999px;border:1px solid var(--line);background:var(--cream-bg);text-decoration:none;color:var(--dark);}
+.dev-card .dev-blog-link img{width:36px;height:36px;border-radius:50%;background:#fff;flex:0 0 auto;}
+.dev-card .dev-blog-link span{font-size:14px;font-weight:700;line-height:1.4;color:var(--dark);}
 
 /* home add guide */
 .tab-row{display:flex;gap:8px;margin-bottom:16px;}
@@ -599,12 +604,13 @@ window.addEventListener('pageshow', closeToc);
 
       <h4 class="dev-sub-h">■タイを知る・旅する</h4>
       <ul>
-        <li>タイ国政府観光庁公認「タイランド・スペシャリスト」資格</li>
+        <li>タイ国政府観光庁公認<br>「タイランド・スペシャリスト」資格</li>
         <li>タイ全土1都76県のうち29県を訪問</li>
         <li>東南アジアへの渡航30回以上</li>
         <li>海外生活約8年</li>
         <li>旅先で撮った写真をInstagramでも発信</li>
-        <li>旅行ブログを運営「<a href="https://kankoutaishi.hatenablog.com/">TRAVEL TAK@ BLOG ／ 勝手に観光大使w</a>」</li>
+        <li>旅行ブログを運営</li>
+        <li class="dev-blog-item"><a href="https://kankoutaishi.hatenablog.com/" class="dev-blog-link" target="_blank" rel="noopener"><img src="lp_assets/blog_logo.webp" width="36" height="36" alt="TRAVEL TAK@ BLOG"><span>TRAVEL TAK@ BLOG<br>勝手に観光大使w</span></a></li>
       </ul>
 
       <h4 class="dev-sub-h">■だからThai Pocaを作りました</h4>
