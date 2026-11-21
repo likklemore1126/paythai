@@ -1728,7 +1728,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-21f';
+const APP_VERSION = '2026-11-21g';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3987,8 +3987,8 @@ const HELP_TOPICS = [
 
 <b>📱 iPhoneの場合(Safari)</b>
 ① 画面下(または上部)の共有ボタン <svg class="share-ico" viewBox="0 0 24 24" aria-label="共有ボタン" role="img" style="width:1.3em;height:1.3em;vertical-align:-0.3em;margin:0 2px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M8.5 9.5H6.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-9.5a1 1 0 0 0-1-1h-2"/><path d="M12 14.5V2.8"/><path d="M8.3 6.3 12 2.6l3.7 3.7"/></svg> (四角から上向きの矢印が出たマーク)をタップ
-② メニューを下にスクロールして「ホーム画面に追加」をタップ
-③ 右上の「追加」をタップ
+② メニューの下のほうの「ホーム画面に追加」をタップ(見当たらないときは、アイコンの列の右端「表示を増やす」をタップ)
+③ 「ウェブアプリとして開く」がオン(緑)になっているのを確かめて、右上の「追加」をタップ(オフだとアイコンからもSafariで開いてしまいます)
 
 <b>🤖 Androidの場合(Chrome)</b>
 ① 右上の縦三点マーク<b>⋮</b>をタップ
@@ -4352,8 +4352,8 @@ function iosSafariOnly(){ return typeof detectPlatform==='function' && detectPla
 function iosInstallSteps(){
   return `<ol class="pw-steps">
       <li>画面の下(または上)にある <b>共有ボタン</b> <svg class="share-ico" viewBox="0 0 24 24" aria-label="共有ボタン" role="img" style="width:1.3em;height:1.3em;vertical-align:-0.3em;margin:0 2px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M8.5 9.5H6.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-9.5a1 1 0 0 0-1-1h-2"/><path d="M12 14.5V2.8"/><path d="M8.3 6.3 12 2.6l3.7 3.7"/></svg> (四角から上向きの矢印が出たマーク)を押す</li>
-      <li>「<b>ホーム画面に追加</b>」を押す(見つからないときは、メニューを下にずらすか「その他」の中)</li>
-      <li>右上の「追加」を押す</li>
+      <li>メニューの下のほうの「<b>ホーム画面に追加</b>」を押す(見当たらないときは、アイコンの列の右端「表示を増やす」を押す)</li>
+      <li>「<b>ウェブアプリとして開く</b>」がオン(緑)になっているのを確かめて、右上の「追加」を押す(オフだとアイコンからもSafariで開いてしまい、コードを入力できません)</li>
       <li>ホーム画面にできた <b>Thai Poca のアイコン</b>から開き、右上の「🔑 無料版」→「購入コードをお持ちの方」でコードを入力</li>
     </ol>`;
 }
