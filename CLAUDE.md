@@ -82,15 +82,16 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
   - 購入状態は localStorage `s:ent`（{code,plan,active,checkedAt}）、端末IDは `s:dev`
   - `PAY_API` が空の間は確認用テストコードだけ使える: TEST-MONTHLY / TEST-YEARLY / TEST-LIFETIME / TEST-CANCELED（次の確認で解約扱い）/ TEST-LIMIT（3台超え）
   - **決済Workerに必要な窓口**（すべてPOST・JSON、`{code, device}` を送る）: `/activate` → `{ok,plan:'monthly'|'yearly'|'lifetime',active}` または `{ok:false,error:'invalid'|'limit'}`／`/status` → `{ok,plan,active}`（2026-11-20d〜 月額・年間は `periodEnd`(次の更新日)・`cancelAt`(解約の手続き済みのときの利用期限、無ければ null)も返す。アプリは「✓ 有料版」の画面に「次の更新日」か「利用期限 〜まで」を表示。お支払い・解約の画面から戻ったときはすぐ `/status` で確認する）／`/deactivate` → `{ok}`／`/portal` → `{ok,url}`（Stripeのお客様用管理画面）
-  - `PAY_API` は設定済み（2026-11-20c、`https://thai-poca-payment.takatobi.workers.dev/api`）。そのため確認用のテストコード(TEST-…)はもう使えない。確認は Stripe サンドボックスで実際に購入して出たコードで行う
+  - `PAY_API` は設定済み（2026-11-20c、`https://thai-poca-payment.takatobi.workers.dev/api`）。そのため確認用のテストコード(TEST-…)はもう使えない
   - LP の購入ボタン: `lp.html` の `SALE_LIVE=false` の間は「準備中」のまま。`lp.html?paytest=1` で開いたときだけ押せる（`?paytest=0` で解除）。押すと `/api/checkout {plan}` → Stripe の購入画面へ
   - 購入完了画面 `thankyou.html`: `/api/session-status?session_id=` を2秒ごと最大60秒たずねてコードを表示。`SALE_LIVE=false` の間は「テスト環境」の表示を出し、アプリへのボタンは `app.html?paywall=1`
-  - **販売開始時にやること**: ① Stripe を本番に切り替え（Worker の価格ID・シークレット・Webhook を本番の値に）② `app.html` の `PAYWALL_LIVE=true` ③ `lp.html`・`thankyou.html`・`buy.html` の `SALE_LIVE=true` ④ `tokushoho.html` の内容（価格・条件）が実際と合っているか最終確認 ⑤ サンドボックスで作ったテスト用の購入コード（poca_codes / poca_devices の行）を削除する（残すと本番でもそのコードで有料版が使えてしまう。削除はTAKAの確認を取ってから）
+  - **販売開始時にやること**: ① Stripe を本番に切り替え（2026-11-21 済み）② `app.html` の `PAYWALL_LIVE=true` ③ `lp.html`・`thankyou.html`・`buy.html` の `SALE_LIVE=true` ④ `tokushoho.html` の内容（価格・条件）が実際と合っているか最終確認 ⑤ サンドボックスのテスト用コードの削除（2026-11-21 済み）
 - **購入者の確認方法（2026-11-18決定）**: 指さしタイと同じ「購入コード方式」（Stripe決済→コードをメールで送付→アプリで1回入力）。メールログインはiPhoneのホーム画面アプリでメールのリンクがSafariに開いてしまうため不採用
   - 1つのコードで使えるのは**3台まで**
   - 月額・年間は解約チェックあり：起動時にネットにつながっていれば1日1回まで状態を確認。**オフラインでも最後の確認から14日間**は有料部分を使える。それを過ぎたら次に確認できるまで無料範囲に戻る（学習記録は消さない）
   - 解約はStripeのお客様用管理画面（カスタマーポータル）へのリンクをアプリとLPに置く
   - 月額・年間の手数料はカード3.6%＋Stripe Billing 0.7%（買い切りは3.6%のみ）
+- **2026-11-21 Stripe を本番(ライブ)に切り替え済み**: 本番の商品 prod_VfSGL9Y9HBl7NL／価格 月額 price_1Ue7LuHNqCNFxpUGpygGcLzF・年間 price_1Ue7PzHNqCNFxpUGRDX7qT8D・買い切り price_1Ue7TFHNqCNFxpUGXM3VUB7g／Webhook we_1Ue7fTHNqCNFxpUGQtcJhIp7／キーは Thai Poca 専用の制限付きキー thai-poca-payment（Checkout Sessions 書き込み・Subscriptions 読み取り・Customer portal 書き込み）。サンドボックスのテスト用コードは削除済み。`?paywall=1`・`?paytest=1` の確認用の入口でも本物の決済になる
 - 決済の裏側（2026-11-20 サンドボックスで構築済み）: Cloudflare Worker `thai-poca-payment`（コードは `likklemore1126/yubisashi-thai-payment` の `thai-poca-payment/` フォルダ。**このリポジトリの main に push すると指さしタイの Worker も自動で公開されるので、push 前に必ずTAKAに伝える**）／Supabase「TakaTobi」組織の yubisashi-thai プロジェクトの `poca_codes`・`poca_devices`・`poca_stripe_events`／Stripe サンドボックスの商品「Thai Poca」／メールは Resend の `noreply@poca.takatobi.jp`
   - サンドボックスの価格ID: 月額 price_1UdVGdHNgdYA3siwIe2DbMLZ／年間 price_1UdVGdHNgdYA3siwQbfSMKix／買い切り price_1UdVGdHNgdYA3siwaevEGGgv
 
