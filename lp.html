@@ -59,6 +59,21 @@ header{position:sticky;top:0;z-index:50;background:var(--cream-bg);border-bottom
 .header-inner{max-width:680px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
 .logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:900;}
 .logo img{width:34px;height:34px;border-radius:9px;}
+/* 目次メニュー(指さしタイのLPと同じ形。2026-11-21) */
+.menu-btn{flex:0 0 auto;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;}
+.menu-btn span{display:block;width:18px;height:2px;background:var(--dark);position:relative;}
+.menu-btn span::before,.menu-btn span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--dark);}
+.menu-btn span::before{top:-6px;}
+.menu-btn span::after{top:6px;}
+.menu-overlay{position:fixed;inset:0;background:rgba(29,28,27,.45);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s;}
+.menu-overlay.open{opacity:1;pointer-events:auto;}
+.menu-panel{position:fixed;top:0;right:0;height:100%;width:78%;max-width:320px;background:var(--cream-bg);z-index:61;box-shadow:-8px 0 24px rgba(0,0,0,.15);transform:translateX(100%);transition:transform .25s ease,visibility .25s;padding:16px 22px 18px;overflow-y:auto;visibility:hidden;}
+.menu-panel.open{transform:translateX(0);visibility:visible;}
+.menu-panel-title{font-size:13.5px;font-weight:700;color:var(--muted-dark);margin:8px 0 10px;}
+.menu-close{position:absolute;top:14px;right:18px;width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:#fff;font-size:18px;color:var(--dark);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;}
+.menu-list{list-style:none;margin-top:14px;display:flex;flex-direction:column;}
+.menu-list a{display:block;padding:11px 4px;border-bottom:1px solid var(--line);font-size:15.5px;font-weight:700;color:var(--dark);text-decoration:none;}
+section[id],#howto{scroll-margin-top:72px;}
 .nav-actions{display:flex;align-items:center;gap:8px;}
 .btn-nav{background:var(--dark);color:var(--cream);border:none;border-radius:20px;padding:9px 16px;font-size:14.5px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;}
 
@@ -274,9 +289,44 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
     <div class="logo"><img src="icon-192.png" alt="Thai Poca"> Thai Poca</div>
     <div class="nav-actions">
       <button class="btn-nav" onclick="document.getElementById('price').scrollIntoView({behavior:'smooth'})">価格を見る</button>
+      <button class="menu-btn" type="button" onclick="openToc()" aria-label="目次を開く"><span></span></button>
     </div>
   </div>
 </header>
+
+<!-- 目次(指さしタイのLPと同じ、右から出るメニュー) -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeToc()"></div>
+<nav class="menu-panel" id="menuPanel" aria-label="目次">
+  <button class="menu-close" type="button" onclick="closeToc()" aria-label="目次を閉じる">✕</button>
+  <div class="menu-panel-title">目次</div>
+  <ul class="menu-list">
+    <li><a href="#" onclick="return tocGo('')">トップ</a></li>
+    <li><a href="#problem" onclick="return tocGo('problem')">こんなこと、ありませんか</a></li>
+    <li><a href="#about" onclick="return tocGo('about')">Thai Pocaとは</a></li>
+    <li><a href="#learn" onclick="return tocGo('learn')">6つの学び方</a></li>
+    <li><a href="#shots" onclick="return tocGo('shots')">アプリの画面</a></li>
+    <li><a href="#demo" onclick="return tocGo('demo')">カードを試す</a></li>
+    <li><a href="#flow" onclick="return tocGo('flow')">使い方</a></li>
+    <li><a href="#feature" onclick="return tocGo('feature')">便利機能</a></li>
+    <li><a href="#for" onclick="return tocGo('for')">こんな人におすすめ</a></li>
+    <li><a href="#price" onclick="return tocGo('price')">料金プラン</a></li>
+    <li><a href="#howto" onclick="return tocGo('howto')">ホーム画面に追加する方法</a></li>
+    <li><a href="#author" onclick="return tocGo('author')">開発者について</a></li>
+    <li><a href="#faq" onclick="return tocGo('faq')">よくある質問</a></li>
+  </ul>
+</nav>
+<script>
+function openToc(){ document.getElementById('menuPanel').classList.add('open'); document.getElementById('menuOverlay').classList.add('open'); }
+function closeToc(){ var p=document.getElementById('menuPanel'),o=document.getElementById('menuOverlay'); if(p)p.classList.remove('open'); if(o)o.classList.remove('open'); }
+function tocGo(id){
+  closeToc();
+  if(!id){ history.replaceState(null,'',location.pathname+location.search); window.scrollTo({top:0,behavior:'smooth'}); return false; }
+  var el=document.getElementById(id); if(!el) return true;
+  el.scrollIntoView({behavior:'smooth'}); history.replaceState(null,'','#'+id); return false;
+}
+// 戻る/進むで表示したときは目次を閉じた状態にする
+window.addEventListener('pageshow', closeToc);
+</script>
 
 <!-- 1. HERO -->
 <section class="hero">
@@ -299,7 +349,7 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
 </section>
 
 <!-- 2. 困りごと -->
-<section class="section dark">
+<section id="problem" class="section dark">
   <div class="wrap">
     <div class="eyebrow">こんなこと、ありませんか</div>
     <h2>タイ語、<br>こういう時に<br>困っていませんか？</h2>
@@ -316,7 +366,7 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
 </section>
 
 <!-- 3. Thai Pocaとは？ -->
-<section class="section">
+<section id="about" class="section">
   <div class="wrap">
     <div class="eyebrow">Thai Pocaとは？</div>
     <h2>指さすだけじゃ、<br>もう物足りない人のための<br>タイ語学習アプリ。</h2>
@@ -338,7 +388,7 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
 </section>
 
 <!-- 4. 6つの学び方 -->
-<section class="section" style="background:#fff;">
+<section id="learn" class="section" style="background:#fff;">
   <div class="wrap">
     <div class="eyebrow">6つの学び方</div>
     <h2>必要なところだけ、<br>好きな順番で。</h2>
@@ -354,7 +404,7 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
 </section>
 
 <!-- 4.5 アプリの画面 -->
-<section class="section">
+<section id="shots" class="section">
   <div class="wrap">
     <div class="eyebrow">アプリの画面</div>
     <h2>実際の画面を、<br>見てみてください。</h2>
@@ -370,7 +420,7 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
 </section>
 
 <!-- 5. CARD体験 -->
-<section class="section dark">
+<section id="demo" class="section dark">
   <div class="wrap">
     <div class="eyebrow">CARD体験</div>
     <h2>カードをめくって、<br>自分のペースで。</h2>
@@ -393,7 +443,7 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
 </section>
 
 <!-- 6. 学ぶ→覚える→使う -->
-<section class="section" style="background:#fff;">
+<section id="flow" class="section" style="background:#fff;">
   <div class="wrap">
     <div class="eyebrow">使い方はシンプル</div>
     <h2>「学ぶ」→「覚える」→<br>「試す」→「使う」</h2>
@@ -429,7 +479,7 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
 </section>
 
 <!-- 8. こんな人に -->
-<section class="section">
+<section id="for" class="section">
   <div class="wrap">
     <div class="eyebrow">こんな人におすすめ</div>
     <h2>こんな人に、<br>使ってほしい。</h2>
@@ -486,7 +536,7 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
     <p id="payMsg" style="font-size:14.5px;text-align:center;margin-top:10px;color:var(--gold);min-height:1em;"></p>
     <p style="font-size:13.5px;text-align:center;margin-top:4px;">月額・年間プランは解約の手続きをするまで自動で更新されます。<a href="tokushoho.html" style="text-decoration:underline;">特定商取引法に基づく表記</a></p>
 
-    <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--line-dark);">
+    <div id="howto" style="margin-top:40px;padding-top:32px;border-top:1px solid var(--line-dark);">
       <div class="eyebrow">はじめかた</div>
       <h2 style="font-size:20px;">ホーム画面に追加して使う</h2>
       <p style="font-size:14.5px;margin-bottom:16px;">アプリのインストールは不要です。ブラウザからホーム画面に追加するだけで、普通のアプリと同じように使えます。</p>
@@ -519,7 +569,7 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
 </section>
 
 <!-- DEV INTRO (指さしタイのLPと同じ構成) -->
-<section class="section">
+<section id="author" class="section">
   <div class="wrap">
     <div class="eyebrow">開発者について</div>
     <h2>タイが好きすぎて<br>移住しました</h2>
@@ -552,7 +602,7 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
 </section>
 
 <!-- FAQ -->
-<section class="section" style="background:#fff;">
+<section id="faq" class="section" style="background:#fff;">
   <div class="wrap">
     <div class="eyebrow">よくある質問</div>
     <h2>FAQ</h2>
