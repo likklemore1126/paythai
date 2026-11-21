@@ -51,6 +51,8 @@ body{background:var(--dark2);color:var(--cream);font-family:'Zen Maru Gothic',-a
 .err-text{font-size:13px;line-height:1.8;color:var(--muted);margin-bottom:18px;text-align:left;}
 .test{font-size:12px;color:var(--gold);border:1px dashed var(--gold);border-radius:10px;padding:8px;margin-bottom:18px;display:none;}
 /* アプリ内ブラウザ(Instagram/Threads)向けの案内。判定は指さしタイで実機確認した名前と同じ */
+.iosnote{display:none;text-align:left;background:#3a2a22;border:1px solid var(--gold);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.7;margin-bottom:12px;}
+.iosnote b{color:var(--gold);}
 .iab{display:none;text-align:left;background:#3a2a22;border:1px solid var(--gold);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.7;margin-bottom:20px;}
 .iab.show{display:block;}
 .iab b{color:var(--gold);}
@@ -83,11 +85,12 @@ body{background:var(--dark2);color:var(--cream);font-family:'Zen Maru Gothic',-a
     <div class="steps">
       <b>有料版にする方法</b>
       <ol>
-        <li>下のボタン(またはホーム画面のアイコン)からThai Pocaを開く</li>
+        <li id="step1">下のボタン(またはホーム画面のアイコン)からThai Pocaを開く</li>
         <li>右上の「🔑 無料版」を押す</li>
         <li>「🔑 購入コードをお持ちの方」を押して、コードを貼り付ける</li>
       </ol>
     </div>
+    <div class="iosnote" id="iosNote"><b>📱 ホーム画面にThai Pocaを追加している方は</b><br>このページを閉じて、<b>ホーム画面のThai Pocaのアイコン</b>から開いてください。下のボタンはSafariで開くため、ホーム画面のアプリには有料版が引き継がれません。</div>
     <a href="app.html" class="btn open" id="openApp">Thai Pocaを開く</a>
     <div class="hint">
       ・同じ購入コードを書いたメールもお送りしています。届かないときは迷惑メールのフォルダもご確認ください。<br>
@@ -128,6 +131,13 @@ body{background:var(--dark2);color:var(--cream);font-family:'Zen Maru Gothic',-a
   }
   var ua = navigator.userAgent || '';
   if(/Instagram|Barcelona/.test(ua)) document.getElementById('iab').classList.add('show');
+  // iPhoneは Safari とホーム画面のアプリで保存場所が別々。ホーム画面のアプリで入力してもらうよう案内する
+  if(/iPhone|iPad|iPod/.test(ua)){
+    document.getElementById('iosNote').style.display = 'block';
+    document.getElementById('step1').textContent = 'ホーム画面のThai Pocaのアイコンから開く(ホーム画面に追加していない方は、下のボタンから)';
+    document.getElementById('openApp').textContent = 'ホーム画面に追加していない方はこちら';
+    document.getElementById('openApp').className = 'btn ghost';
+  }
 
   function show(id){ ['stLoading','stSuccess','stTimeout','stMissing'].forEach(function(k){ document.getElementById(k).classList.toggle('active', k===id); }); }
   var sid = null;

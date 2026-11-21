@@ -1725,7 +1725,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-21a';
+const APP_VERSION = '2026-11-21b';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4327,6 +4327,7 @@ function payOpenLP(plan){ window.open('buy.html?plan='+(plan||'yearly')+(PAYWALL
 function openCodeSheet(){
   sheetOpen(`<div class="pw-h">🔑 購入コードを入力</div>
     <div class="pw-sub">購入後にメールで届いたコードを入力してください。1つのコードで3台まで使えます。</div>
+    ${(typeof detectPlatform==='function' && detectPlatform()==='ios' && !isStandalonePWA())?`<div class="pw-note">📱 <b>ホーム画面にThai Pocaを追加している方へ</b><br>ここ(Safari)で入力すると、Safariでだけ有料版になります。ホーム画面のアプリには引き継がれないので、<b>ホーム画面のアイコンから開いて、そちらで入力</b>してください。</div>`:''}
     <input id="pwCode" class="pw-in" placeholder="POCA-XXXX-XXXX" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done">
     <div id="pwMsg" class="pw-msg"></div>
     <button class="pw-btn" id="pwGo" onclick="entActivateUI()">有料版にする</button>
