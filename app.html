@@ -1728,7 +1728,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-21g';
+const APP_VERSION = '2026-11-21h';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -3992,10 +3992,11 @@ const HELP_TOPICS = [
 
 <b>🤖 Androidの場合(Chrome)</b>
 ① 右上の縦三点マーク<b>⋮</b>をタップ
-② 「アプリをインストール」または「ホーム画面に追加」をタップ
-③ 確認画面で「インストール」をタップ
+② メニューの下のほうの「ホーム画面に追加」をタップ
+③ 出てきた画面で「<b>インストール</b>」を選ぶ(「ショートカットを作成」はアイコンからもChromeで開いてしまうので選ばない)
+④ 確認画面で「インストール」をタップ
 
-※ 「ホーム画面に追加」ではなく「ショートカットを作成」しか出ない場合は、一度Chromeでこのページを再読み込みしてから、あらためて⋮メニューを開いてみてください。
+※ 「インストール」が出ず「ショートカットを作成」しか出ない場合は、一度Chromeでこのページを再読み込みしてから、あらためて⋮メニューを開いてみてください。
 
 追加が終わったら、<b>ホーム画面のアイコンから開き直して</b>ください。ブラウザのタブから開いたままだと、この案内は消えません。` }
 ];
@@ -4102,7 +4103,7 @@ function updateInstallBanner(){
   if(isStandalonePWA()){ el.style.display='none'; return; }
   const platform = detectPlatform();
   if(platform!=='ios' && platform!=='android'){ el.style.display='none'; return; }
-  const label = platform==='ios' ? '📲 共有ボタンから「ホーム画面に追加」してください(タップで詳細)' : '📲 メニューから「アプリをインストール」してください(タップで詳細)';
+  const label = platform==='ios' ? '📲 共有ボタンから「ホーム画面に追加」してください(タップで詳細)' : '📲 メニュー(⋮)の「ホーム画面に追加」から追加してください(タップで詳細)';
   el.style.background = 'rgba(201,189,166,.15)';
   el.style.color = '#c9bda6';
   el.style.borderBottom = '1.5px solid rgba(201,189,166,.4)';
