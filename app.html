@@ -169,7 +169,7 @@ header{padding-bottom:10px;}
 #planBtn.paid{border-color:rgba(159,184,160,.6);background:rgba(159,184,160,.12);color:var(--green);}
 #lockNote{display:none;float:right;margin-left:8px;background:none;border:none;padding:0;color:var(--accent);font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
 .pw-ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:350;}
-.pw-sheet{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100vw,480px);max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#232220;border-radius:20px 20px 0 0;z-index:351;padding:20px 20px max(env(safe-area-inset-bottom),20px);box-shadow:0 -10px 40px rgba(0,0,0,.5);color:var(--muted2);}
+.pw-sheet{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100vw,480px);max-height:90vh;max-height:88dvh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;background:#232220;border-radius:20px 20px 0 0;z-index:351;padding:20px 20px max(env(safe-area-inset-bottom),20px);box-shadow:0 -10px 40px rgba(0,0,0,.5);color:var(--muted2);}
 .pw-h{font-size:18px;font-weight:800;color:#fff;margin:0 0 6px;}
 .pw-reason{font-size:14px;color:var(--accent);font-weight:700;margin:0 0 12px;line-height:1.6;}
 .pw-sub{font-size:13px;color:var(--muted);line-height:1.7;margin:6px 0 10px;}
@@ -1725,7 +1725,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-20g';
+const APP_VERSION = '2026-11-21a';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4274,6 +4274,7 @@ function sheetOpen(html){
   const ov=document.createElement('div'); ov.className='pw-ov'; ov.id='pwOv'; ov.onclick=sheetClose;
   const sh=document.createElement('div'); sh.className='pw-sheet'; sh.id='pwSheet'; sh.innerHTML=html;
   document.body.appendChild(ov); document.body.appendChild(sh);
+  sh.scrollTop=0; // 開いたときは必ず一番上(見出し)から見せる
 }
 function sheetClose(){ ['pwOv','pwSheet'].forEach(id=>{ const el=document.getElementById(id); if(el) el.remove(); }); }
 function pwFeatures(){

@@ -5,7 +5,7 @@
 - 開発者(TAKA): 非技術者。REIWA SOBA（バンコクのそば店）経営者。Claudeが実装全般を担当。
 - リポジトリ: `likklemore1126/paythai`
 - 公開URL: https://poca.takatobi.jp/app.html
-- 現バージョン: `2026-11-20g`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
+- 現バージョン: `2026-11-21a`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
 
 ## ファイル構成
 - `app.html` — アプリ本体。単語・会話・文法データもすべてJS配列としてこの中に埋め込み（約780KB超の単一ファイル）
@@ -78,7 +78,7 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
   - 中心の関数: `isPaid()` / `canWord(w)` / `canScene(sc)` / `canMode(m)` / `vocabArr(pos)`（リストからカードを開くときも同じ並びを使う）。無料の単語IDは `FREE_WORDS`（free_words.json と同じ300語）、無料シーンは `FREE_SCENES`
   - 🔒の付く所: 文法・数字タブ（説明ページ `lockPageHtml`）、会話シーン4つ、単語のレベル切替、テストの「聞いて選ぶ」「数字」「苦手」「中級者+」、リストの文法・苦手。学習済み・お気に入りは無料範囲だけ表示し、隠れた件数を案内
   - 有料版の案内で料金カードをタップしてプランを選ぶ（最初は年間）→「決済画面へ進む(〇〇)」で中継ページ `buy.html?plan=プラン` を開き、すぐ Stripe の決済画面へ移動（2026-11-20g。LPを経由すると一瞬LPが見えるため専用の中継ページにした）
-  - 案内画面: `openPaywall(理由)`、購入コード入力 `openCodeSheet()`、契約状態 `openPlanSheet()`。シートは閉じたら画面から取り除く（WebKitの残像対策）
+  - 案内画面: `openPaywall(理由)`、購入コード入力 `openCodeSheet()`、契約状態 `openPlanSheet()`。シートは閉じたら画面から取り除く（WebKitの残像対策）。シートの高さは `88dvh`（iPhoneのSafariは `vh` がアドレスバーを含まない高さになり、見出しが隠れたため。2026-11-21a）
   - 購入状態は localStorage `s:ent`（{code,plan,active,checkedAt}）、端末IDは `s:dev`
   - `PAY_API` が空の間は確認用テストコードだけ使える: TEST-MONTHLY / TEST-YEARLY / TEST-LIFETIME / TEST-CANCELED（次の確認で解約扱い）/ TEST-LIMIT（3台超え）
   - **決済Workerに必要な窓口**（すべてPOST・JSON、`{code, device}` を送る）: `/activate` → `{ok,plan:'monthly'|'yearly'|'lifetime',active}` または `{ok:false,error:'invalid'|'limit'}`／`/status` → `{ok,plan,active}`（2026-11-20d〜 月額・年間は `periodEnd`(次の更新日)・`cancelAt`(解約の手続き済みのときの利用期限、無ければ null)も返す。アプリは「✓ 有料版」の画面に「次の更新日」か「利用期限 〜まで」を表示。お支払い・解約の画面から戻ったときはすぐ `/status` で確認する）／`/deactivate` → `{ok}`／`/portal` → `{ok,url}`（Stripeのお客様用管理画面）
