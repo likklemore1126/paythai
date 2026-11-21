@@ -241,6 +241,14 @@ button.price-cta{width:100%;border:none;font-family:inherit;}
 .faq-a{font-size:14.5px;color:var(--muted-dark);margin-top:8px;padding-left:22px;}
 
 /* dev intro */
+/* 開発者について: 指さしタイのLPと同じく「詳しく見る」で開く(2026-11-21) */
+.dev-toggle{display:inline-block;margin-top:2px;padding:9px 18px;border-radius:999px;border:1.5px solid var(--gold-deep);background:transparent;color:var(--gold-deep);font-size:14.5px;font-weight:700;font-family:inherit;cursor:pointer;}
+.dev-toggle[aria-expanded="true"]{background:var(--gold-deep);color:#fff;}
+.dev-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease;}
+.dev-panel>.dev-card{overflow:hidden;min-height:0;}
+.dev-panel.open{grid-template-rows:1fr;}
+.dev-panel:not(.open)>.dev-card{padding-top:0;padding-bottom:0;border-width:0;}
+.dev-panel.open>.dev-card{margin-top:18px;}
 .dev-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;color:var(--dark);}
 .dev-head{display:flex;gap:16px;align-items:center;margin-bottom:16px;}
 .dev-avatar{width:56px;height:56px;border-radius:50%;background:var(--dark);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;}
@@ -316,6 +324,11 @@ footer .copyright{color:var(--muted-on-dark);opacity:.75;}
   </ul>
 </nav>
 <script>
+function toggleDev(){
+  var p=document.getElementById('devPanel'), b=document.getElementById('devToggle');
+  var open=!p.classList.contains('open'); p.classList.toggle('open',open);
+  b.setAttribute('aria-expanded',open?'true':'false'); b.textContent=open?'閉じる ‹':'詳しく見る ›';
+}
 function openToc(){ document.getElementById('menuPanel').classList.add('open'); document.getElementById('menuOverlay').classList.add('open'); }
 function closeToc(){ var p=document.getElementById('menuPanel'),o=document.getElementById('menuOverlay'); if(p)p.classList.remove('open'); if(o)o.classList.remove('open'); }
 function tocGo(id){
@@ -573,6 +586,8 @@ window.addEventListener('pageshow', closeToc);
   <div class="wrap">
     <div class="eyebrow">開発者について</div>
     <h2>タイが好きすぎて<br>移住しました</h2>
+    <button class="dev-toggle" id="devToggle" type="button" aria-expanded="false" aria-controls="devPanel" onclick="toggleDev()">詳しく見る ›</button>
+    <div class="dev-panel" id="devPanel">
     <div class="dev-card">
       <div class="dev-head">
         <div class="dev-avatar">🐘</div>
@@ -597,6 +612,7 @@ window.addEventListener('pageshow', closeToc);
 
       <h4 class="dev-sub-h">■僕の大好きなタイをもっと身近に感じてほしい。</h4>
       <p>タイ語が話せるようになると、見える景色も、タイの人との距離も変わります。これからタイ語を学ぶ方にも、自分の言葉で話せる楽しさを感じてもらいたい。そんな思いを込めて、Thai Pocaを作っています。</p>
+    </div>
     </div>
   </div>
 </section>
