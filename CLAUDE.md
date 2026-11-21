@@ -5,7 +5,7 @@
 - 開発者(TAKA): 非技術者。REIWA SOBA（バンコクのそば店）経営者。Claudeが実装全般を担当。
 - リポジトリ: `likklemore1126/paythai`
 - 公開URL: https://poca.takatobi.jp/app.html
-- 現バージョン: `2026-11-21c`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
+- 現バージョン: `2026-11-21d`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
 
 ## ファイル構成
 - `app.html` — アプリ本体。単語・会話・文法データもすべてJS配列としてこの中に埋め込み（約780KB超の単一ファイル）
@@ -80,6 +80,7 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
   - 有料版の案内で料金カードをタップしてプランを選ぶ（最初は年間）→「決済画面へ進む(〇〇)」で中継ページ `buy.html?plan=プラン` を開き、すぐ Stripe の決済画面へ移動（2026-11-20g。LPを経由すると一瞬LPが見えるため専用の中継ページにした）
   - 案内画面: `openPaywall(理由)`、購入コード入力 `openCodeSheet()`、契約状態 `openPlanSheet()`。シートは閉じたら画面から取り除く（WebKitの残像対策）。シートの高さは `88dvh`（iPhoneのSafariは `vh` がアドレスバーを含まない高さになり、見出しが隠れたため。2026-11-21a）
   - **iPhoneは Safari とホーム画面のアプリで保存場所が別々**（Safariで入れたコードはホーム画面のアプリに引き継がれず、端末も2台分になる）。さらにSafariは7日間開かないと保存した記録を消すことがある。そのため **iPhoneのSafari(ホーム画面に追加していない状態)では購入コードを入力できない**ようにし、代わりにホーム画面に追加する手順を出す（`iosSafariOnly()` / `iosInstallSteps()`、2026-11-21c、TAKA決定）。無料版はSafariでも使える。有料版の案内と購入完了画面 `thankyou.html` にも iPhone 向けの案内を出す。Androidは同じ保存場所なので制限しない。iPad(UAがMac)は対象外
+  - **端末の数(2026-11-21d)**: 60日(Worker の `INACTIVE_DAYS`)確認のない端末は台数に数えず、次に別の端末で登録するときに外す。外れた端末は次の確認で `error:'device'` になり無料版に戻る(コードを入れ直せば使える)。買い切りも1日1回 `/status` を呼ぶ(使っている端末だと伝えるため)。`/activate`・`/status` は `devicesUsed`/`devicesMax` も返し、「✓ 有料版」の画面に「使っている端末 2台 / 3台まで(あと1台)」を表示
   - 購入状態は localStorage `s:ent`（{code,plan,active,checkedAt}）、端末IDは `s:dev`
   - `PAY_API` が空の間は確認用テストコードだけ使える: TEST-MONTHLY / TEST-YEARLY / TEST-LIFETIME / TEST-CANCELED（次の確認で解約扱い）/ TEST-LIMIT（3台超え）
   - **決済Workerに必要な窓口**（すべてPOST・JSON、`{code, device}` を送る）: `/activate` → `{ok,plan:'monthly'|'yearly'|'lifetime',active}` または `{ok:false,error:'invalid'|'limit'}`／`/status` → `{ok,plan,active}`（2026-11-20d〜 月額・年間は `periodEnd`(次の更新日)・`cancelAt`(解約の手続き済みのときの利用期限、無ければ null)も返す。アプリは「✓ 有料版」の画面に「次の更新日」か「利用期限 〜まで」を表示。お支払い・解約の画面から戻ったときはすぐ `/status` で確認する）／`/deactivate` → `{ok}`／`/portal` → `{ok,url}`（Stripeのお客様用管理画面）
