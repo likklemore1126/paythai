@@ -105,7 +105,8 @@ header{position:sticky;top:0;z-index:50;background:var(--cream-bg);border-bottom
 /* 6つの学び方 */
 .learn-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0;}
 .learn-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 14px;}
-.learn-card .lc-icon{font-size:22px;margin-bottom:6px;}
+.learn-card .lc-icon{width:38px;height:38px;border-radius:10px;background:rgba(212,154,120,.16);color:var(--gold-deep);display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+.lc-icon svg,.f-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .learn-card h3{font-size:14px;margin-bottom:4px;color:var(--dark);}
 .learn-card p{font-size:12px;margin:0;}
 
@@ -330,12 +331,12 @@ footer .copyright{color:var(--muted-dark);}
     <div class="eyebrow">6つの学び方</div>
     <h2>必要なところだけ、<br>好きな順番で。</h2>
     <div class="learn-grid">
-      <div class="learn-card"><div class="lc-icon">📚</div><h3>単語</h3><p>1,700語以上をレベル・ジャンル別に</p></div>
-      <div class="learn-card"><div class="lc-icon">💬</div><h3>会話フレーズ</h3><p>360文を6シーン別に</p></div>
-      <div class="learn-card"><div class="lc-icon">📖</div><h3>文法</h3><p>62パターンを例文つきで</p></div>
-      <div class="learn-card"><div class="lc-icon">⭐</div><h3>学習リスト</h3><p>お気に入り・覚えた単語・苦手な単語をまとめて復習</p></div>
-      <div class="learn-card"><div class="lc-icon">🔢</div><h3>数字の読み方</h3><p>独特な読み上げルールを攻略</p></div>
-      <div class="learn-card"><div class="lc-icon">📝</div><h3>4択テスト</h3><p>単語と数字を10問ずつ。聞き取り問題も</p></div>
+      <div class="learn-card"><div class="lc-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="13" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/></svg></div><h3>単語</h3><p>1,700語以上をレベル・ジャンル別に</p></div>
+      <div class="learn-card"><div class="lc-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8 0 0 1-12.3 7.2L3.5 20l1.4-4.2A8 8 0 1 1 21 11.5z"/><path d="M8.5 11.5h.01M12.5 11.5h.01M16.5 11.5h.01"/></svg></div><h3>会話フレーズ</h3><p>360文を6シーン別に</p></div>
+      <div class="learn-card"><div class="lc-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 5H8a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2.5z"/><path d="M21.5 5H16a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h6.5z"/></svg></div><h3>文法</h3><p>62パターンを例文つきで</p></div>
+      <div class="learn-card"><div class="lc-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6h10M10 12h10M10 18h10"/><path d="m3.5 6 1.5 1.5L7.5 5M3.5 12l1.5 1.5L7.5 11M3.5 18l1.5 1.5L7.5 17"/></svg></div><h3>学習リスト</h3><p>お気に入り・覚えた単語・苦手な単語をまとめて復習</p></div>
+      <div class="learn-card"><div class="lc-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg></div><h3>数字の読み方</h3><p>独特な読み上げルールを攻略</p></div>
+      <div class="learn-card"><div class="lc-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="4" width="15" height="17" rx="2"/><path d="M9 2.8h6v2.6H9z"/><path d="m8.5 13 2.5 2.5 4.5-5"/></svg></div><h3>4択テスト</h3><p>単語と数字を10問ずつ。聞き取り問題も</p></div>
     </div>
   </div>
 </section>
@@ -570,19 +571,19 @@ footer .copyright{color:var(--muted-dark);}
 
 <script>
 const FEATURES = [
-  {icon:'🔎',title:'ひらがな・ローマ字でも検索',body:'タイ文字が打てなくても大丈夫。日本語の意味、ひらがなの読み、ローマ字のどれからでも単語を探せます。'},
-  {icon:'🔊',title:'発音の読み上げ・ゆっくり再生',body:'単語も例文も会話フレーズも、タップで音声を再生。聞き取りにくい時は、ゆっくり読み上げることもできます。'},
-  {icon:'♂♀',title:'男性語尾/女性語尾の切り替え',body:'ครับ(khráp)/ค่ะ(khâ)など、男性・女性で異なる語尾をワンタップで切り替え。自分の話し方に合わせて学べます。'},
-  {icon:'🔄',title:'タイ語⇔日本語の方向切り替え',body:'タイ語を見て意味を思い出す練習も、日本語からタイ語を思い出す練習も、同じカードで両方できます。'},
-  {icon:'📝',title:'単語カードは例文つき',body:'単語だけでなく、実際の使い方が分かる例文をカードの裏に載せています。例文も読み方(ローマ字)つきです。'},
-  {icon:'🧩',title:'会話フレーズの単語解説',body:'会話フレーズを単語ごとに分けて、それぞれの意味を確認できます。丸暗記ではなく、組み立て方が分かります。'},
-  {icon:'⭐',title:'お気に入り',body:'気になる単語やフレーズに星をつけて、リストでまとめて見返せます。'},
-  {icon:'✅',title:'「覚えた」記録と未学習だけ表示',body:'覚えた単語はワンタップで記録。まだ覚えていないものだけを表示して、効率よく進められます。'},
-  {icon:'🔀',title:'シャッフル',body:'カードの順番をランダムに入れ替え。並び順で覚えてしまうのを防げます。'},
-  {icon:'🎯',title:'苦手な単語を自動で記録',body:'テストで間違えた単語は、自動で「苦手」リストへ。2回続けて正解すると外れます。苦手だけを集めたテストもできます。'},
-  {icon:'👂',title:'聞いて選ぶテスト・金額の聞き取り',body:'音声を聞いて答える問題に対応。数字のテストでは、買い物で必要になる金額の聞き取りを練習できます。'},
-  {icon:'💾',title:'学習記録のバックアップ',body:'学習記録をエクスポート/インポートできます。機種変更の時も、覚えた単語やお気に入りを引き継げます。'},
-  {icon:'📡',title:'オフライン対応',body:'一度開いておけば、電波が届かない場所でもそのまま使い続けられます。'},
+  {icon:'search',title:'ひらがな・ローマ字でも検索',body:'タイ文字が打てなくても大丈夫。日本語の意味、ひらがなの読み、ローマ字のどれからでも単語を探せます。'},
+  {icon:'sound',title:'発音の読み上げ・ゆっくり再生',body:'単語も例文も会話フレーズも、タップで音声を再生。聞き取りにくい時は、ゆっくり読み上げることもできます。'},
+  {icon:'people',title:'男性語尾/女性語尾の切り替え',body:'ครับ(khráp)/ค่ะ(khâ)など、男性・女性で異なる語尾をワンタップで切り替え。自分の話し方に合わせて学べます。'},
+  {icon:'swap',title:'タイ語⇔日本語の方向切り替え',body:'タイ語を見て意味を思い出す練習も、日本語からタイ語を思い出す練習も、同じカードで両方できます。'},
+  {icon:'note',title:'単語カードは例文つき',body:'単語だけでなく、実際の使い方が分かる例文をカードの裏に載せています。例文も読み方(ローマ字)つきです。'},
+  {icon:'blocks',title:'会話フレーズの単語解説',body:'会話フレーズを単語ごとに分けて、それぞれの意味を確認できます。丸暗記ではなく、組み立て方が分かります。'},
+  {icon:'star',title:'お気に入り',body:'気になる単語やフレーズに星をつけて、リストでまとめて見返せます。'},
+  {icon:'check',title:'「覚えた」記録と未学習だけ表示',body:'覚えた単語はワンタップで記録。まだ覚えていないものだけを表示して、効率よく進められます。'},
+  {icon:'shuffle',title:'シャッフル',body:'カードの順番をランダムに入れ替え。並び順で覚えてしまうのを防げます。'},
+  {icon:'target',title:'苦手な単語を自動で記録',body:'テストで間違えた単語は、自動で「苦手」リストへ。2回続けて正解すると外れます。苦手だけを集めたテストもできます。'},
+  {icon:'listen',title:'聞いて選ぶテスト・金額の聞き取り',body:'音声を聞いて答える問題に対応。数字のテストでは、買い物で必要になる金額の聞き取りを練習できます。'},
+  {icon:'backup',title:'学習記録のバックアップ',body:'学習記録をエクスポート/インポートできます。機種変更の時も、覚えた単語やお気に入りを引き継げます。'},
+  {icon:'offline',title:'オフライン対応',body:'一度開いておけば、電波が届かない場所でもそのまま使い続けられます。'},
 ];
 
 const FAQS = [
@@ -628,13 +629,15 @@ async function buy(plan,btn){
 // Stripeの購入画面から「戻る」で戻ったとき(ページがそのまま復元される場合)にボタンを元に戻す
 window.addEventListener('pageshow',()=>{ document.querySelectorAll('.price-cta.on').forEach(b=>{ b.disabled=false; b.textContent='このプランで購入'; }); });
 
+// 便利機能の線のアイコン(絵文字だと安っぽく見えるため、同じ太さの線で統一。2026-11-21)
+const FICONS = {"search": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20.5 20.5-4.5-4.5\"/>", "sound": "<path d=\"M4 9v6h4l5 4V5L8 9z\"/><path d=\"M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12\"/>", "people": "<circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M3 20a6 6 0 0 1 12 0\"/><circle cx=\"17\" cy=\"9\" r=\"2.5\"/><path d=\"M15.8 14.1A5 5 0 0 1 21 19\"/>", "swap": "<path d=\"M7 4 3 8l4 4M3 8h14\"/><path d=\"m17 20 4-4-4-4M21 16H7\"/>", "note": "<path d=\"M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z\"/><path d=\"M14 3v6h6M8 13h8M8 17h5\"/>", "blocks": "<rect x=\"2.5\" y=\"7\" width=\"6.5\" height=\"10\" rx=\"1.5\"/><rect x=\"10.5\" y=\"7\" width=\"4\" height=\"10\" rx=\"1.5\"/><rect x=\"16\" y=\"7\" width=\"5.5\" height=\"10\" rx=\"1.5\"/>", "star": "<path d=\"m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3l-5.5 2.9 1-6.2L3 9.6l6.2-.9z\"/>", "check": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m8 12.2 2.8 2.8L16 9.5\"/>", "shuffle": "<path d=\"M3 7h3.5c2 0 3.2 1 4.2 2.7l2.6 4.6c1 1.7 2.2 2.7 4.2 2.7H21\"/><path d=\"M3 17h3.5c1.5 0 2.5-.6 3.3-1.6M13.7 8.6c.8-1 1.8-1.6 3.3-1.6H21\"/><path d=\"m18 4 3 3-3 3M18 14l3 3-3 3\"/>", "target": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"1\"/>", "listen": "<path d=\"M4 15v-3a8 8 0 0 1 16 0v3\"/><rect x=\"3\" y=\"14\" width=\"4.5\" height=\"6.5\" rx=\"1.5\"/><rect x=\"16.5\" y=\"14\" width=\"4.5\" height=\"6.5\" rx=\"1.5\"/>", "backup": "<path d=\"M12 3v12M7 10l5 5 5-5\"/><path d=\"M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2\"/>", "offline": "<path d=\"M2 8.5a15 15 0 0 1 4.6-2.8M10.6 5.1A15 15 0 0 1 22 8.5M5 12a10 10 0 0 1 4.4-2.4M15.6 10.1A10 10 0 0 1 19 12M8.5 15.5a5 5 0 0 1 7 0M12 19.5h.01M3 3l18 18\"/>"};
 const FEAT_SHOW = 5; // 最初に見せる数。残りは「ほかの便利機能を見る」で開く
 function renderFeatures(all){
   const el = document.getElementById('featList');
   const list = all ? FEATURES : FEATURES.slice(0, FEAT_SHOW);
   el.innerHTML = list.map(f=>`
     <div class="feat-card">
-      <div class="f-icon">${f.icon}</div>
+      <div class="f-icon"><svg viewBox="0 0 24 24" aria-hidden="true">${FICONS[f.icon]}</svg></div>
       <div><h3>${f.title}</h3><p>${f.body}</p></div>
     </div>
   `).join('') + (all ? '' : `<button type="button" class="feat-more" onclick="renderFeatures(true)">ほかの便利機能を見る(あと${FEATURES.length - FEAT_SHOW}つ) ▼</button>`);
