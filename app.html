@@ -1728,7 +1728,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-21d';
+const APP_VERSION = '2026-11-21e';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4167,8 +4167,24 @@ const FREE_SCENES = ['日常会話','レストラン'];
 const ENT_KEY='s:ent', DEV_KEY='s:dev', ENT_OFFLINE_DAYS=14, ENT_CHECK_HOURS=24;
 const PLAN_LABEL = {monthly:'月額プラン', yearly:'年間プラン', lifetime:'買い切り'};
 let ent=null;
-(function(){ try{ const q=new URLSearchParams(location.search); if(q.get('paywall')==='1') sessionStorage.setItem('poca:pw','1'); if(q.get('paywall')==='0') sessionStorage.removeItem('poca:pw'); }catch(e){} })();
-function paywallOn(){ if(PAYWALL_LIVE) return true; try{ return sessionStorage.getItem('poca:pw')==='1'; }catch(e){ return false; } }
+(function(){ try{ const q=new URLSearchParams(location.search); if(q.get('paywall')==='1') sessionStorage.setItem('poca:pw','1'); if(q.get('paywall')==='0'){ sessionStorage.removeItem('poca:pw'); localStorage.removeItem('poca:pw'); } }catch(e){} })();
+function paywallOn(){ if(PAYWALL_LIVE) return true; try{ return sessionStorage.getItem('poca:pw')==='1' || localStorage.getItem('poca:pw')==='1'; }catch(e){ return false; } }
+// 販売開始前の確認用:ホーム画面のアプリには ?paywall=1 を付けられないので、
+// バージョン表示(タイトルの下の v2026-…)を3秒以内に7回押すと、この端末だけ有料・無料の区別をオン/オフできる(2026-11-21e)
+(function(){
+  if(PAYWALL_LIVE) return;
+  let n=0, t=0;
+  document.addEventListener('click', async e=>{
+    if(!e.target.closest || !e.target.closest('#verLabel')) return;
+    const now=Date.now(); if(now-t>3000) n=0; t=now; n++;
+    if(n<7) return; n=0;
+    let on=false; try{ on=localStorage.getItem('poca:pw')==='1'; }catch(err){}
+    const ok=await appConfirm(on?'【確認用】有料・無料の区別をオフに戻しますか?':'【確認用】この端末で、有料・無料の区別をオンにしますか?(販売開始前の確認用です)');
+    if(!ok) return;
+    try{ if(on){ localStorage.removeItem('poca:pw'); sessionStorage.removeItem('poca:pw'); } else localStorage.setItem('poca:pw','1'); }catch(err){}
+    location.reload();
+  });
+})();
 function payTestMode(){ return !PAY_API && paywallOn(); }
 function entLoad(){ try{ ent=JSON.parse(localStorage.getItem(ENT_KEY)||'null'); }catch(e){ ent=null; } }
 function entSave(){ try{ if(ent) localStorage.setItem(ENT_KEY,JSON.stringify(ent)); else localStorage.removeItem(ENT_KEY); }catch(e){} }
