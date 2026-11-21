@@ -150,9 +150,10 @@ header{position:sticky;top:0;z-index:50;background:var(--cream-bg);border-bottom
 .step-num{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--dark);font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center;}
 .step-body h3{font-size:15px;margin-bottom:3px;}
 .step-body p{font-size:13px;margin:0;}
-.howto-img{display:block;width:100%;max-width:260px;height:auto;margin-top:10px;border-radius:12px;border:1px solid var(--line);}
+.step-body:has(.howto-img){flex:1;min-width:0;}
+.howto-img{display:block;width:100%;max-width:260px;height:auto;margin:10px auto 0;border-radius:12px;border:1px solid var(--line);}
 .howto-img.tall{max-width:200px;}
-.howto-img.small{max-width:150px;}
+.howto-img.small{max-width:110px;}
 .howto-small{font-size:12px;opacity:.8;}
 .howto-note{font-size:12.5px;line-height:1.75;margin-top:6px;padding:12px 14px;border-radius:12px;background:rgba(212,154,120,.12);border:1px solid rgba(212,154,120,.45);}
 .howto-note b{color:var(--gold);}
@@ -484,7 +485,7 @@ footer .copyright{color:var(--muted-dark);}
           <div class="step"><div class="step-num">2</div><div class="step-body"><p>画面の下(または上)にある共有ボタン <svg class="share-ico" viewBox="0 0 24 24" aria-label="共有ボタン" role="img" style="width:1.3em;height:1.3em;vertical-align:-0.3em;margin:0 2px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M8.5 9.5H6.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-9.5a1 1 0 0 0-1-1h-2"/><path d="M12 14.5V2.8"/><path d="M8.3 6.3 12 2.6l3.7 3.7"/></svg> (四角から上向きの矢印が出たマーク)をタップ</p><img class="howto-img" src="lp_assets/howto_ios_1.webp" width="540" height="261" alt="Safariの画面の下にある共有ボタン" loading="lazy"></div></div>
           <div class="step"><div class="step-num">3</div><div class="step-body"><p>メニューの下のほうにある「ホーム画面に追加」をタップ(見当たらないときは、アイコンが並んでいる列の右端の「表示を増やす」をタップすると出てきます)</p><img class="howto-img tall" src="lp_assets/howto_ios_2.webp" width="480" height="980" alt="共有メニューの「ホーム画面に追加」" loading="lazy"></div></div>
           <div class="step"><div class="step-num">4</div><div class="step-body"><p>「ウェブアプリとして開く」が<b>オン(緑)</b>になっているのを確かめて、右上の「追加」をタップ<br><span class="howto-small">※オフのままだと、アイコンを押してもSafariで開いてしまい、有料版を使えません</span></p><img class="howto-img" src="lp_assets/howto_ios_3.webp" width="540" height="493" alt="「ウェブアプリとして開く」をオンにして「追加」" loading="lazy"></div></div>
-          <div class="step"><div class="step-num">5</div><div class="step-body"><p>ホーム画面にできた Thai Poca のアイコンから開く</p><img class="howto-img small" src="lp_assets/howto_ios_4.webp" width="320" height="230" alt="ホーム画面のThai Pocaのアイコン" loading="lazy"></div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-body"><p>ホーム画面にできた Thai Poca のアイコンから開く</p><img class="howto-img small" src="lp_assets/howto_ios_4.webp" width="270" height="300" alt="ホーム画面のThai Pocaのアイコン" loading="lazy"></div></div>
         </div>
         <p class="howto-note">📱 <b>iPhoneで有料版を使うには、ホーム画面への追加が必要です。</b>購入コードは、ホーム画面のアイコンから開いたアプリで入力してください(Safariとホーム画面のアプリは、記録が別々に保存されます)。</p>
       </div>
