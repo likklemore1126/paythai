@@ -188,6 +188,8 @@ header{position:sticky;top:0;z-index:50;background:var(--cream-bg);border-bottom
 .compare-table th{font-size:12.5px;font-weight:700;padding:14px 10px;color:var(--muted);}
 .compare-table th.paid{color:var(--dark);background:var(--gold);}
 .compare-table td:first-child{text-align:left;font-weight:700;padding-left:16px;}
+/* 項目の列は少し明るい下地＋右に線を引いて、無料版の列と区切る */
+.compare-table th:first-child,.compare-table td:first-child{background:rgba(243,234,216,.06);border-right:1px solid var(--line-dark);}
 .compare-table td.free{color:var(--cream);opacity:.72;}
 .compare-table td.paid{background:rgba(212,154,120,.12);font-weight:700;}
 .compare-table .no{color:var(--muted);opacity:1;}
