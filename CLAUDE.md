@@ -5,7 +5,7 @@
 - 開発者(TAKA): 非技術者。REIWA SOBA（バンコクのそば店）経営者。Claudeが実装全般を担当。
 - リポジトリ: `likklemore1126/paythai`
 - 公開URL: https://poca.takatobi.jp/app.html
-- 現バージョン: `2026-11-21h`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
+- 現バージョン: `2026-11-21i`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
 
 ## ファイル構成
 - `app.html` — アプリ本体。単語・会話・文法データもすべてJS配列としてこの中に埋め込み（約780KB超の単一ファイル）
@@ -103,6 +103,9 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
 - 2026-11-20: FAQに支払い方法・解約・機種変更を追加、ローマ字の説明を教本方式に直した。特定商取引法の表記 `tokushoho.html` を追加（内容は指さしタイと同じ販売者情報。料金・自動更新・解約の条件を記載）し、LPのフッターと料金の下にリンク
 - 2026-11-21 手入れ: FAQにiPhoneはホーム画面追加が必要・何台まで(3台・60日)を追加、はじめかたにiPhoneの注意、6つの学び方の後に「アプリの画面」(lp_assets/shot_*.webp、実アプリを撮ったもの。アプリの見た目を変えたら撮り直す)、便利機能は最初の5つだけ見せて「ほかの便利機能を見る」、ページの最後に「無料で試す」、料金の比較表を短く、card_hero.png を撮り直し(背景を透明に)
 - 料金カードの「準備中」→購入ボタン、冒頭の「有料プランは現在準備中です」を消すのは `SALE_LIVE=true` で自動（`initBuy()`）
+- 2026-11-21 販売前の追加: 利用規約 `terms.html`・プライバシーポリシー `privacy.html` を新設（指さしタイのものをThai Poca向けに書き換え。自動更新・3台/60日・iPhoneはホーム画面追加・14日オフライン・学習記録は端末内のみ・委託先Stripe/Supabase/Cloudflare/Resend・Googleアナリティクス）。LPのフッター・料金の下、アプリの有料版の案内(`.pw-legal`)、特商法ページからリンク。特商法の動作環境と特別な販売条件にiPhoneのホーム画面追加と60日を追記。SNS共有用の画像 `lp_assets/ogp.jpg`(1200×630)とOGPタグを lp.html・app.html に追加
+- 目次メニュー(右上の≡、指さしタイと同じ形)、開発者については「詳しく見る」で折りたたみ、ホーム画面追加の手順は実機スクショ(lp_assets/howto_ios_*.webp・howto_and_*.webp)つき
+- 「開発者自身が実際に使う言い回し」のような言い切りはTAKAの判断で削除済み（2026-11-21）。今後も書かない
 
 ## 姉妹プロジェクト
 - 指差し単語帳（yubisashi-thai）: 観光客向け。リポジトリ `likklemore1126/yubisashi-thai`。PWA化（manifest.json/Service Worker）が別チャットで進行中の可能性あり

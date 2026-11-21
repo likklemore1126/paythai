@@ -19,6 +19,17 @@
 <link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>Thai Poca — タイ語学習</title>
+<!-- SNSでリンクを共有したときのカード(2026-11-21) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thai Poca">
+<meta property="og:title" content="Thai Poca(タイポカ) ― タイ語学習アプリ">
+<meta property="og:description" content="単語・会話・文法を、カードをめくって学ぶタイ語学習アプリ。無料の300語から始められます。">
+<meta property="og:url" content="https://poca.takatobi.jp/app.html">
+<meta property="og:image" content="https://poca.takatobi.jp/lp_assets/ogp.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;700&family=Zen+Maru+Gothic:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -195,6 +206,8 @@ header{padding-bottom:10px;}
 .pw-steps{margin:12px 0 0 1.3em;font-size:14px;line-height:1.75;color:#e8e2d6;}
 .pw-steps li{margin-bottom:6px;}
 .pw-steps b{color:var(--accent);}
+.pw-legal{text-align:center;margin:8px 0 0;}
+.pw-legal a{color:inherit;text-decoration:underline;}
 .pw-note{font-size:13px;line-height:1.7;margin:10px 0 0;padding:10px 12px;border-radius:12px;background:rgba(201,189,166,.1);border:1px solid rgba(201,189,166,.28);color:var(--yellow);}
 .pw-kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:14px;}
 .pw-kv span{color:var(--muted);}
@@ -1728,7 +1741,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-21h';
+const APP_VERSION = '2026-11-21i';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4340,6 +4353,7 @@ function openPaywall(reason){
     <div class="pw-lbl">料金</div>${pwPlans()}
     <button class="pw-btn" id="pwBuy" onclick="payOpenLP(pwPlan)">${pwBuyLabel()}</button>
     <div class="pw-sub" style="text-align:center;margin:8px 0 0;">このボタンではまだ支払いは発生しません。<br>ブラウザで開く決済画面(Stripe)で、内容を確認してからお支払いください。</div>
+    <div class="pw-sub pw-legal">ご購入の前に<a href="terms.html" target="_blank" rel="noopener">利用規約</a>・<a href="privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>・<a href="tokushoho.html" target="_blank" rel="noopener">特定商取引法に基づく表記</a>をご確認ください。</div>
     ${iosSafariOnly()?'<div class="pw-note">📱 iPhoneでは、有料版は<b>ホーム画面に追加したThai Poca</b>で使います。購入のあとは、ホーム画面のアプリで購入コードを入力してください。</div>':''}
     <button class="pw-ghost" onclick="openCodeSheet()">🔑 購入コードをお持ちの方</button>
     <button class="pw-close" onclick="sheetClose()">閉じる</button>`);
