@@ -8,6 +8,8 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+  // ホーム画面のアプリから開いたか、ブラウザで開いたか(2026-11-25)。GA4の「カスタム定義」にユーザープロパティ display_mode を登録すると集計できる
+  try{ gtag('set','user_properties',{ display_mode: (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true) ? 'home_app' : 'browser' }); }catch(e){}
   gtag('config', 'G-DE7T1Q55VC');
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -1741,7 +1743,7 @@ const fRO = s => s ? s.replace(/\{PR}/g, PT[st.gender].ro).replace(/\{PSR}/g, PT
 async function sto_get(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
 async function sto_set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 // アプリのバージョン。更新のたびにこの値を変更してください(日付など分かりやすいものでOK)
-const APP_VERSION = '2026-11-21i';
+const APP_VERSION = '2026-11-25a';
 {
   const vl=document.getElementById('verLabel');
   if(vl) vl.textContent='v'+APP_VERSION;
@@ -4360,7 +4362,7 @@ function openPaywall(reason){
   if(typeof gtag==='function') gtag('event','paywall_view',{reason:reason||'plan'});
 }
 // 選んだプランで中継ページ buy.html を開き、そのまま Stripe の決済画面へ進む(販売前は確認用の paytest=1 を付ける)
-function payOpenLP(plan){ window.open('buy.html?plan='+(plan||'yearly')+(PAYWALL_LIVE?'':'&paytest=1'),'_blank'); }
+function payOpenLP(plan){ if(typeof gtag==='function') gtag('event','checkout_click',{plan:plan||'yearly',source:'app'}); window.open('buy.html?plan='+(plan||'yearly')+(PAYWALL_LIVE?'':'&paytest=1'),'_blank'); }
 // iPhoneのSafari(ホーム画面に追加していない)か。Safariは7日間開かないと保存した記録を消すことがあり、
 // ホーム画面のアプリとも保存場所が別なので、有料版はホーム画面のアプリだけで有効にする(2026-11-21c)
 function iosSafariOnly(){ return typeof detectPlatform==='function' && detectPlatform()==='ios' && !isStandalonePWA(); }

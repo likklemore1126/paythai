@@ -2,6 +2,14 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<!-- Google tag (gtag.js)。アプリ(app.html)と同じ測定IDなので、LP→アプリ→購入の流れを続けて追える(2026-11-25) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DE7T1Q55VC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DE7T1Q55VC');
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Thai Poca(タイポカ) ― 覚えて、話せるようになる。タイ語学習アプリ</title>
 <!-- SNSでリンクを共有したときのカード(2026-11-21) -->
@@ -363,7 +371,7 @@ window.addEventListener('pageshow', closeToc);
     <p class="lead">単語も。会話も。文法も。<br>必要なところから、カードをめくって学ぶ。</p>
     <div class="trial-badge">🔧 有料プランは現在準備中です</div>
     <div class="cta-row">
-      <a class="btn-primary" href="app.html">無料で試す</a>
+      <a class="btn-primary" href="app.html" data-ga="top">無料で試す</a>
     </div>
     <div class="hero-note">※アプリのインストールは不要。ブラウザから開いて、ホーム画面に追加するだけですぐ使えます。</div>
     <div class="stat-row">
@@ -643,7 +651,7 @@ window.addEventListener('pageshow', closeToc);
     <h2>まずは無料の300語から、<br>はじめてみませんか。</h2>
     <p style="font-size:14.5px;">登録もインストールも不要です。ブラウザで開けば、すぐに使えます。</p>
     <div class="cta-row">
-      <a class="btn-primary btn-light" href="app.html">無料で試す</a>
+      <a class="btn-primary btn-light" href="app.html" data-ga="bottom">無料で試す</a>
       <a class="btn-secondary btn-outline-light" href="#price">料金プランを見る</a>
     </div>
   </div>
@@ -708,6 +716,7 @@ function initBuy(){
   document.querySelectorAll('.price-cta[data-plan]').forEach(b=>{ b.disabled=false; b.classList.add('on'); b.textContent='このプランで購入'; b.onclick=()=>buy(b.dataset.plan,b); });
 }
 async function buy(plan,btn){
+  if(typeof gtag==='function') gtag('event','checkout_click',{plan:plan,source:'lp'});
   const msg=document.getElementById('payMsg');
   const all=document.querySelectorAll('.price-cta[data-plan]');
   all.forEach(b=>b.disabled=true); btn.textContent='購入画面を準備しています…'; msg.textContent='';
@@ -719,6 +728,8 @@ async function buy(plan,btn){
   }catch(e){ msg.textContent='通信できませんでした。ネットにつながっているか確かめて、もう一度お試しください。'; }
   all.forEach(b=>{ b.disabled=false; b.textContent='このプランで購入'; });
 }
+// 「無料で試す」を押した回数(上と下のどちらのボタンか)。アプリへ移る前に送れるよう transport_type:'beacon'
+document.querySelectorAll('a[data-ga]').forEach(a=>a.addEventListener('click',()=>{ if(typeof gtag==='function') gtag('event','try_free_click',{position:a.dataset.ga,transport_type:'beacon'}); }));
 // Stripeの購入画面から「戻る」で戻ったとき(ページがそのまま復元される場合)にボタンを元に戻す
 window.addEventListener('pageshow',()=>{ document.querySelectorAll('.price-cta.on').forEach(b=>{ b.disabled=false; b.textContent='このプランで購入'; }); });
 

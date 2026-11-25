@@ -5,7 +5,7 @@
 - 開発者(TAKA): 非技術者。REIWA SOBA（バンコクのそば店）経営者。Claudeが実装全般を担当。
 - リポジトリ: `likklemore1126/paythai`
 - 公開URL: https://poca.takatobi.jp/app.html
-- 現バージョン: `2026-11-21i`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
+- 現バージョン: `2026-11-25a`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
 
 ## ファイル構成
 - `app.html` — アプリ本体。単語・会話・文法データもすべてJS配列としてこの中に埋め込み（約780KB超の単一ファイル）
@@ -106,6 +106,12 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
 - 2026-11-21 販売前の追加: 利用規約 `terms.html`・プライバシーポリシー `privacy.html` を新設（指さしタイのものをThai Poca向けに書き換え。自動更新・3台/60日・iPhoneはホーム画面追加・14日オフライン・学習記録は端末内のみ・委託先Stripe/Supabase/Cloudflare/Resend・Googleアナリティクス）。LPのフッター・料金の下、アプリの有料版の案内(`.pw-legal`)、特商法ページからリンク。特商法の動作環境と特別な販売条件にiPhoneのホーム画面追加と60日を追記。SNS共有用の画像 `lp_assets/ogp.jpg`(1200×630)とOGPタグを lp.html・app.html に追加
 - 目次メニュー(右上の≡、指さしタイと同じ形)、開発者については「詳しく見る」で折りたたみ、ホーム画面追加の手順は実機スクショ(lp_assets/howto_ios_*.webp・howto_and_*.webp)つき
 - 「開発者自身が実際に使う言い回し」のような言い切りはTAKAの判断で削除済み（2026-11-21）。今後も書かない
+
+## アクセス解析（Googleアナリティクス、測定ID G-DE7T1Q55VC。app.html・thankyou.html・lp.html 共通）
+- app.html のイベント: mode_view(タブ) / category_view / card_flip / audio_play / search / favorite_add / mark_learned / help_view / quiz_start / quiz_finish / paywall_view(reason) / checkout_click(plan, source:'app') / paid_activate。ユーザープロパティ display_mode = home_app(ホーム画面のアプリ) / browser
+- lp.html(2026-11-25〜): try_free_click(position:top|bottom) / checkout_click(plan, source:'lp')
+- thankyou.html: purchase(SALE_LIVE のときだけ)
+- display_mode・plan・source・position・reason をレポートで見るには、GA4の管理 →「カスタム定義」に登録が必要（登録前のデータはさかのぼって集計されない）
 
 ## 姉妹プロジェクト
 - 指差し単語帳（yubisashi-thai）: 観光客向け。リポジトリ `likklemore1126/yubisashi-thai`。PWA化（manifest.json/Service Worker）が別チャットで進行中の可能性あり
