@@ -316,10 +316,12 @@ button.price-cta{width:100%;border:none;font-family:inherit;}
 .tab-panel.active{display:block;}
 
 /* footer */
-footer{background:var(--dark2);color:var(--muted-on-dark);padding:36px 0;font-size:13.5px;}
-footer .flinks{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px;}
-footer .flinks a{text-decoration:underline;}
-footer .copyright{color:var(--muted-on-dark);opacity:.75;}
+footer{background:var(--dark2);color:var(--muted-on-dark);padding:28px 0 32px;font-size:12.5px;}
+.ft-brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit;}
+.ft-brand img{width:30px;height:30px;border-radius:6px;display:block;}
+.ft-links{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;}
+.ft-links a{color:inherit;text-decoration:underline;}
+.ft-copy{font-size:11.5px;color:var(--muted-on-dark);opacity:.75;margin-top:18px;}
 
 @media(min-width:768px){
   .wrap{max-width:760px;}
@@ -674,14 +676,17 @@ window.addEventListener('pageshow', closeToc);
 
 <footer>
   <div class="wrap">
-    <div class="flinks">
-      <a href="https://takatobi.jp">TakaTobi公式サイト</a>
+    <a class="ft-brand" href="https://takatobi.jp/"><img src="lp_assets/takatobi_logo.png" alt="TakaTobi"><span>Thai Poca ／ Created by TakaTobi</span></a>
+    <div class="ft-links">
+      <a href="https://takatobi.jp/">TakaTobi公式サイト</a>
       <a href="https://yubisashi.takatobi.jp/lp.html">指さしタイ</a>
+    </div>
+    <div class="ft-links">
       <a href="tokushoho.html">特定商取引法に基づく表記</a>
       <a href="terms.html">利用規約</a>
       <a href="privacy.html">プライバシーポリシー</a>
     </div>
-    <div class="copyright">© TakaTobi. All rights reserved.</div>
+    <div class="ft-copy">© 2026 TakaTobi. All Rights Reserved.</div>
   </div>
 </footer>
 
