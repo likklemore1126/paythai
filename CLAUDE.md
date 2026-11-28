@@ -106,6 +106,7 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
 - 料金カードの「準備中」→購入ボタン、冒頭の「有料プランは現在準備中です」を消すのは `SALE_LIVE=true` で自動（`initBuy()`）
 - 2026-11-21 販売前の追加: 利用規約 `terms.html`・プライバシーポリシー `privacy.html` を新設（指さしタイのものをThai Poca向けに書き換え。自動更新・3台/60日・iPhoneはホーム画面追加・14日オフライン・学習記録は端末内のみ・委託先Stripe/Supabase/Cloudflare/Resend・Googleアナリティクス）。LPのフッター・料金の下、アプリの有料版の案内(`.pw-legal`)、特商法ページからリンク。特商法の動作環境と特別な販売条件にiPhoneのホーム画面追加と60日を追記。SNS共有用の画像 `lp_assets/ogp.jpg`(1200×630)とOGPタグを lp.html・app.html に追加
 - 目次メニュー(右上の≡、指さしタイと同じ形)、開発者については「詳しく見る」で折りたたみ、ホーム画面追加の手順は実機スクショ(lp_assets/howto_ios_*.webp・howto_and_*.webp)つき
+- 2026-11-28 縦長対策: はじめかたは「iPhone ▼」「Android ▼」を押すと手順が開く(最初は閉じている。`lp.html#howto` で来たら機種に合わせて自動で開く。iPhoneの注意は手順の外で常に表示)、FAQは質問だけ並べて押すと答えが開く(`toggleFaq`)、使い方はサイクル図(学ぶ→覚える→試す→使う)＋「各ステップの説明を見る」で説明を開く。Thai Pocaとはの2枚に各アプリのアイコン(`lp_assets/yubisashi_icon.png`・icon-192.png)と「指さしタイを見る ›」リンク。困りごとの4つ目を「単語学習アプリはたくさんあるけど、実際に日常使いしやすいアプリが意外と見つからない」に差し替え
 - 「開発者自身が実際に使う言い回し」のような言い切りはTAKAの判断で削除済み（2026-11-21）。今後も書かない
 
 ## アクセス解析（Googleアナリティクス、測定ID G-DE7T1Q55VC。app.html・thankyou.html・lp.html 共通）
