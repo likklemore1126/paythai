@@ -394,7 +394,6 @@ window.addEventListener('pageshow', closeToc);
     <div class="eyebrow">Thai Pocket Cards</div>
     <h1>タイ語を、<br>もっと「使える」ように。</h1>
     <p class="lead">単語も。会話も。文法も。<br>必要なところから、カードをめくって学ぶ。</p>
-    <div class="trial-badge">🔧 有料プランは現在準備中です</div>
     <div class="cta-row">
       <a class="btn-primary" href="app.html" data-ga="top">無料で試す</a>
     </div>
@@ -562,23 +561,23 @@ window.addEventListener('pageshow', closeToc);
         <div class="plan-name">月額プラン</div>
         <div class="plan-price">¥300<span class="unit">/月(税込)</span></div>
         <div class="plan-note">まずは気軽に試したい方に</div>
-        <button type="button" class="price-cta" data-plan="monthly" disabled>準備中</button>
+        <button type="button" class="price-cta" data-plan="monthly" >このプランで購入</button>
       </div>
       <div class="price-card best">
         <div class="badge">お得</div>
         <div class="plan-name">年間プラン</div>
         <div class="plan-price">¥3,000<span class="unit">/年(税込)</span></div>
         <div class="plan-note">月換算 250円(月額より2か月分お得)。じっくり続けたい方に</div>
-        <button type="button" class="price-cta" data-plan="yearly" disabled>準備中</button>
+        <button type="button" class="price-cta" data-plan="yearly" >このプランで購入</button>
       </div>
       <div class="price-card">
         <div class="plan-name">買い切りプラン</div>
         <div class="plan-price">¥4,000<span class="unit">(税込・一括)</span></div>
         <div class="plan-note">一度払えば、ずっと使える</div>
-        <button type="button" class="price-cta" data-plan="lifetime" disabled>準備中</button>
+        <button type="button" class="price-cta" data-plan="lifetime" >このプランで購入</button>
       </div>
     </div>
-    <p id="payNote" style="font-size:13.5px;text-align:center;margin-top:18px;">🔧 決済機能は現在準備中です。公開はこのページ上でお知らせします。</p>
+    <p id="payNote" style="display:none;font-size:13.5px;text-align:center;margin-top:18px;">🔧 決済機能は現在準備中です。公開はこのページ上でお知らせします。</p>
     <p id="payMsg" style="font-size:14.5px;text-align:center;margin-top:10px;color:var(--gold);min-height:1em;"></p>
     <p style="font-size:13.5px;text-align:center;margin-top:4px;">月額・年間プランは解約の手続きをするまで自動で更新されます。ご購入の前に<a href="terms.html" style="text-decoration:underline;">利用規約</a>・<a href="privacy.html" style="text-decoration:underline;">プライバシーポリシー</a>をご確認ください。<br><a href="tokushoho.html" style="text-decoration:underline;">特定商取引法に基づく表記</a></p>
 
@@ -719,7 +718,7 @@ const FAQS = [
 /* --- 購入ボタン(Stripeの購入画面へ) ---
    SALE_LIVE=false の間はボタンは「準備中」のまま。確認用に lp.html?paytest=1 で開いたときだけ押せる
    (2026-11-21〜 Stripeは本番。確認用でも本物の決済になる)。販売開始時に true にする */
-const SALE_LIVE = false;
+const SALE_LIVE = true; // 2026-11-28 販売開始
 const PAY_API = 'https://thai-poca-payment.takatobi.workers.dev/api';
 function saleOn(){
   if(SALE_LIVE) return true;

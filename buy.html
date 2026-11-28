@@ -41,7 +41,7 @@ body{background:var(--dark2);color:var(--cream);font-family:-apple-system,"Hirag
 // アプリの有料版の案内から開く中継ページ(buy.html?plan=yearly)。購入画面を作って、すぐ Stripe へ移動する
 (function(){
   // 販売開始時に true にする(app.html の PAYWALL_LIVE、lp.html と thankyou.html の SALE_LIVE と一緒に)
-  var SALE_LIVE = false;
+  var SALE_LIVE = true; // 2026-11-28 販売開始
   var API = 'https://thai-poca-payment.takatobi.workers.dev/api';
   var NAMES = { monthly:'月額プラン(¥300)', yearly:'年間プラン(¥3,000)', lifetime:'買い切り(¥4,000)' };
   var q = new URLSearchParams(location.search);

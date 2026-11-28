@@ -119,7 +119,7 @@ body{background:var(--dark2);color:var(--cream);font-family:'Zen Maru Gothic',-a
 <script>
 (function(){
   // 販売開始時に true にする(lp.html の SALE_LIVE、app.html の PAYWALL_LIVE と一緒に)
-  var SALE_LIVE = false;
+  var SALE_LIVE = true; // 2026-11-28 販売開始
   var API = 'https://thai-poca-payment.takatobi.workers.dev/api';
   var PLAN = { monthly:['月額プラン',300], yearly:['年間プラン',3000], lifetime:['買い切り',4000] };
   var POLL_MS = 2000, MAX = 30; // 2秒 x 30回 = 60秒

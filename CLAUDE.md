@@ -5,7 +5,7 @@
 - 開発者(TAKA): 非技術者。REIWA SOBA（バンコクのそば店）経営者。Claudeが実装全般を担当。
 - リポジトリ: `likklemore1126/paythai`
 - 公開URL: https://poca.takatobi.jp/app.html
-- 現バージョン: `2026-11-28b`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
+- 現バージョン: `2026-11-28c`（`APP_VERSION` / `SW_VERSION`、YYYY-MM-DDa形式で必ず一致させる）
 
 ## ファイル構成
 - `app.html` — アプリ本体。単語・会話・文法データもすべてJS配列としてこの中に埋め込み（約780KB超の単一ファイル）
@@ -75,7 +75,8 @@ console.log(Math.max(...nums), [...new Set(nums)].sort((a,b)=>a-b));
 - **有料版**: 単語すべて(初心者の残り・中級者+)／会話の全シーン（観光・ホテル・交通・緊急）／文法すべて／数字タブ／テストの中級者+と数字／お気に入り・リストが全対象
 - **価格**: 月額300円／年間3,000円／買い切り4,000円（すべて税込表記）
 - 無料範囲はそのまま開放し、有料部分をタップしたら案内を出す方針
-- **アプリ側の出し分けは実装済み（2026-11-19）だが、まだ止めてある**: `PAYWALL_LIVE=false` の間は全機能が誰でも使える。確認用に `app.html?paywall=1` で開いたときだけ有効（`?paywall=0` で解除、sessionStorage `poca:pw`）。ホーム画面のアプリでは、タイトルの下のバージョン表示を3秒以内に7回押すとオン/オフ（localStorage `poca:pw`、2026-11-21e）
+- **★2026-11-28 販売開始**: `PAYWALL_LIVE=true`・lp/thankyou/buy の `SALE_LIVE=true` に切り替え済み。LPの「準備中」表示はHTMLからも削除済み（以下は切り替え前からの仕組みの説明）
+- **アプリ側の出し分けは実装済み（2026-11-19）**: `PAYWALL_LIVE=false` の間は全機能が誰でも使える。確認用に `app.html?paywall=1` で開いたときだけ有効（`?paywall=0` で解除、sessionStorage `poca:pw`）。ホーム画面のアプリでは、タイトルの下のバージョン表示を3秒以内に7回押すとオン/オフ（localStorage `poca:pw`、2026-11-21e）
   - 中心の関数: `isPaid()` / `canWord(w)` / `canScene(sc)` / `canMode(m)` / `vocabArr(pos)`（リストからカードを開くときも同じ並びを使う）。無料の単語IDは `FREE_WORDS`（free_words.json と同じ300語）、無料シーンは `FREE_SCENES`
   - 🔒の付く所: 文法・数字タブ（説明ページ `lockPageHtml`）、会話シーン4つ、単語のレベル切替、テストの「聞いて選ぶ」「数字」「苦手」「中級者+」、リストの文法・苦手。学習済み・お気に入りは無料範囲だけ表示し、隠れた件数を案内
   - 有料版の案内で料金カードをタップしてプランを選ぶ（最初は年間）→「決済画面へ進む(〇〇)」で中継ページ `buy.html?plan=プラン` を開き、すぐ Stripe の決済画面へ移動（2026-11-20g。LPを経由すると一瞬LPが見えるため専用の中継ページにした）
